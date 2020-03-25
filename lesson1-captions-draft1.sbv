@@ -197,7 +197,7 @@ Kindleや紙の本などで読むのと比べると便利ではありません�
 データ倫理であり、彼女は応用データ倫理センターの創設ディレクターです。
 
 0:05:59.000,0:06:00.580
-サンフランシスコ大学です 
+サンフランシスコ大学です
 
 0:06:00.580,0:06:02.020
 サンフランシスコ大学ですね、ありがとうございます。
@@ -336,7 +336,7 @@ AGIは 人工知能（Artificial General Intelligence）の略です。
 ありがとうございます。
 
 0:09:00.339,0:09:06.870
-しかし私が言えることは これらの分野のすべてにおいて 少なくとも多くのバージョンでは 
+しかし私が言えることは これらの分野のすべてにおいて 少なくとも多くのバージョンでは
 
 0:09:06.870,0:09:12.760
 ディープラーニングが最もよく知られたアプローチであるということです。
@@ -435,7 +435,7 @@ AGIは 人工知能（Artificial General Intelligence）の略です。
 それから、私たちは最初のAIの冬を迎えました。
 
 0:11:19.790,0:11:26.899
-これは、MITのマービン・ミンスキー教授とパパートが ローゼンブラットの発明について 
+これは、MITのマービン・ミンスキー教授とパパートが ローゼンブラットの発明について
 
 0:11:26.899,0:11:31.810
 パーセプトロンという本を書きました。その中で 彼らが指摘したのは、
@@ -534,164 +534,141 @@ MITが「並列分散処理」という本を出版、2巻に分けてシリー�
 ミンスキーの問題を回避するためです。
 
 0:13:51.660,0:13:59.860
-And in fact, it was shown, that it was mathematically
-provable, that by adding that one extra layer
+実際に、ニューロンの層を1層追加することで、これらのニューラルネットワークを使って、
 
 0:13:59.860,0:14:07.790
-of neurons, it was enough to allow any mathematical
-model to be approximated to any level of accuracy,
+どのような数学モデルでも、どのような精度でも近似できることが
 
 0:14:07.790,0:14:10.160
-with these neural networks.
+数学的に証明されました。
 
 0:14:10.160,0:14:13.690
-And so that was like the exact opposite of
-the Minsky thing.
+これは、ミンスキーとは正反対のことでした。
 
 0:14:13.690,0:14:17.440
-That was like: “Hey there's nothing we can't
-do.
+"我々にできないことは何もない"ということが
 
 0:14:17.440,0:14:19.649
-Provably there's nothing we can't do.”
+証明できたのです。
 
 0:14:19.649,0:14:23.540
-And so that was kind of when I started getting
-involved in neural networks.
+私がニューラルネットワークに関わり始めたのは、その頃でした。
 
 0:14:23.540,0:14:25.190
-So I was - a little bit later.
+いや、少し遅れていました。
 
 0:14:25.190,0:14:28.560
-I guess I was getting involved in the early
-90s.
+私が関わったのは90年代前半だったと思います。
 
 0:14:28.560,0:14:30.779
-And they were very widely used in industry.
+その頃、業界では非常に広く使われていました。
 
 0:14:30.779,0:14:34.970
-I was using them for very boring things like
-targeted marketing for retail banks.
+私は銀行のリテール向けのターゲティングマーケティングのような、
+非常につまらないものに使っていました。
 
 0:14:34.970,0:14:40.319
-They tended to be big companies with lots
-of money that were using them.
+それらを利用している企業は、大金を持った大企業という傾向がありました。
 
 0:14:40.319,0:14:46.389
-And it certainly though was true that often
-the networks were too big or slow to be useful.
+しかし、ネットワークが大きすぎたり、遅すぎたりして
+役に立たないことが多いのも事実でした。
 
 0:14:46.389,0:14:51.870
-They were certainly useful for some things,
-but they - you know they never felt to me
+確かにいくつかのことには役立っていましたが、私には何かの理由で
 
 0:14:51.870,0:14:55.820
-like they were living up to the promise for
-some reason.
+期待通りの成果を上げているようには感じられませんでした。
 
 0:14:55.820,0:15:02.070
-Now what I didn't know, and nobody I personally
-met knew was that actually there were researchers
+私が知らなかったのは、また私が個人的に会った誰も知らなかったのは、実際には30年前に、
 
 0:15:02.070,0:15:08.510
-that had shown 30 years ago that to get practical
-good performance, you need more layers of
+実用的な性能を得るためには、より多くのニューロンの層が必要だということを示した研究者が
 
 0:15:08.510,0:15:09.510
-neurons.
+いたということです。
 
 0:15:09.510,0:15:14.430
-Even though mathematically, theoretically,
-you can get as accurate as you want with just
+数学的には、理論的には、たった一枚の層を増やせば、いくらでも精度を上げることができますが、実際には、
 
 0:15:14.430,0:15:16.019
-one extra layer.
+それ以上の層が必要なのです。
 
 0:15:16.019,0:15:20.850
-To do it with good performance, you need more
-layers.
+それを良いパフォーマンスで行うためには、より多くの層が必要です。
 
 0:15:20.850,0:15:26.100
-So when you add more layers to a neural network
-you get deep learning.
+だから、ニューラルネットワークにもっと多くの層を追加すると、
+ディープラーニングになります。
 
 0:15:26.100,0:15:29.470
-So deep doesn't mean anything like mystical.
+つまり、深いというのは神秘的な意味ではありません。
 
 0:15:29.470,0:15:32.139
-It just means more layers.
+それは単に、より多くの層を意味します。
 
 0:15:32.139,0:15:35.800
-More layers than just adding the one extra
-one.
+ただ一枚の層を追加するのではなく、より多くの層を意味します。
+
 
 0:15:35.800,0:15:39.460
-So thanks to that, neural nets are now living
-up to their potential.
+そのおかげで、ニューラルネットは今、その潜在能力を十分に発揮しています。
+
 
 0:15:39.460,0:15:42.680
-As we saw in that like what's deep learning
-good at thing.
+ディープラーニングの得意分野のスライドで見たように 
 
 0:15:42.680,0:15:46.360
-So we could now say that Rosenblatt was right.
+ローゼンブラットが正しかったと 言えるようになりました。
 
 0:15:46.360,0:15:52.600
-We have a machine that's capable of perceiving,
-recognising and identifying its surroundings
+我々は、人間の訓練や制御がなくても、周囲の環境を看取し、認識し、
 
 0:15:52.600,0:15:54.720
-without any human training or control.
+識別することができる機械を持っている。
 
 0:15:54.720,0:15:56.360
-That is - That's definitely true.
+確かにその通りです。
 
 0:15:56.360,0:16:00.420
-I don't think there's anything controversial
-about that statement based on the current
+現在の技術に基づいて、この発言に議論の余地はない
 
 0:16:00.420,0:16:01.470
-technology.
+と思います。
 
 0:16:01.470,0:16:04.939
-So we're gonna be learning how to do that.
+だから、私たちはその方法を学びます。
 
 0:16:04.939,0:16:09.290
-We're gonna be learning how to do that in
-exactly the opposite way, of probably all
+しかしあなた方の今までの数学や技術教育とは
 
 0:16:09.290,0:16:13.770
-of the other math and technical education
-you've had.
+正反対の方法で学習していきます。
 
 0:16:13.770,0:16:24.949
-We are not gonna start with a two-hour lesson
-about the sigmoid function or a study of linear
+シグモイド関数の２時間の授業や、線形代数の勉強、
 
 0:16:24.949,0:16:29.750
-algebra or a refresher course on calculus.
+微積分の復習から始めるのではありません。
 
 0:16:29.750,0:16:37.709
-And the reason for that, is that people who
-study how to teach and learn have found that
+その理由は、教え方や学び方を研究している人たちが、それがほとんどの人にとって
 
 0:16:37.709,0:16:41.639
-is not the right way to do it for most people.
+正しい方法ではないことを発見したからです。
 
 0:16:41.639,0:16:50.019
-For most people - So we work a lot based on
-the work of Professor David Perkins from Harvard
+ハーバード大学のデビッド・パーキンス教授や、同じような研究をしている他の人たちが、
 
 0:16:50.019,0:16:56.740
-and others who work at similar things, who
-talk about this idea of playing the whole
+ゲーム全体をプレイするという考え方について
 
 0:16:56.740,0:16:57.740
-game.
+話しています。
 
 0:16:57.740,0:17:01.260
-And so playing the whole game is like it's
-based on the sports analogy if you're gonna
+ゲーム全体をプレイすることは スポーツの例えに基づいています。
 
 0:17:01.260,0:17:03.949
 teach somebody baseball.
@@ -701,146 +678,120 @@ You don't take them out into a classroom and
 start teaching them about the physics of a
 
 0:17:10.791,0:17:20.320
-parabola, and how to stitch a ball, and a
-three-part history of 100 years of baseball
+教室に連れて行って放物線の物理学やボールの縫い方、
 
 0:17:20.320,0:17:24.290
-politics, and then 10 years later, you let
-them watch a game.
+100年の野球政治の3部作の歴史などを教え、10年後には試合を見させる。
 
 0:17:24.290,0:17:27.050
-And then 20 years later, you let them play
-a game.
+そして20年後にやっとゲームをさせる。
 
 0:17:27.050,0:17:31.930
-Which is kind of like how math education is
-being done, right?
+これは数学教育のやり方に似ていますよね。
 
 0:17:31.930,0:17:37.180
-Instead with baseball, step one is to say,
-hey, let's go and watch some baseball.
+野球の場合は、第一段階として、「野球を見に行こう」ということになります。
 
 0:17:37.180,0:17:38.180
-What do you think?
+どうですか？
 
 0:17:38.180,0:17:39.180
-That was fun, right?
+面白かったでしょ？ 
 
 0:17:39.180,0:17:42.060
-See that guy there...he took a run there…before
-the other guy throws a ball over there...hey,
+あの人、あそこで走者を出して、相手がボールを投げる前に、
 
 0:17:42.060,0:17:44.080
-you want to try having a hit?
+ボールを打ってみないか？
 
 0:17:44.080,0:17:47.380
-Okay, so you're going to hit the ball, and
-then I have to try to catch it, then he has
+よし、君がボールを打って、僕がキャッチして、そして君があそこへ走って...と、
 
 0:17:47.380,0:17:52.940
-to run,run,run over there...and so from step
-one, you are playing the whole game.
+ステップ１からゲーム全部をプレイしていることになります。
 
 0:17:52.940,0:17:58.920
-And just to add to that, when people start,
-they often may not have a full team, or be
+さらに付け加えるならば、人々は始めたばかりの頃には、チームが揃っていなかったり、
+
 
 0:17:58.920,0:18:03.620
-playing the full nine innings, but they still
-have a sense of what the game is, a kind of
+9イニングをフルでプレーしていなかったりもすることが多いのですが、それでもゲームの全体像を
 
 0:18:03.620,0:18:05.390
-a big picture idea.
+把握していることが多いです。
 
 0:18:05.390,0:18:12.510
-So, there is lots and lots of reasons that
-this helps most human beings, (though) not
+だから、ほとんどの人にこれが役立つ理由はたくさんありますが、
 
 0:18:12.510,0:18:14.050
-everybody, right?
+みんながみんなそうではありません。
 
 0:18:14.050,0:18:19.430
-There's a small percentage of people who like
-to build things up from the foundations and
+基礎や原則から物事を構築していくのが好きな人がごく一部いて、
 
 0:18:19.430,0:18:24.270
-the principles, and not surprisingly, they
-are massively overrepresented in a university
+驚くことではありませんが、大学ではそういう人の割合が非常に高くなっています。
 
 0:18:24.270,0:18:28.510
-setting, because the people who get to be
-academics are the people who thrive with,
+なぜなら、学者になる人たちは、（私によれば）物事の教え方が逆さまになっていることで
 
 0:18:28.510,0:18:33.350
-(according) to me, the upside down way of
-how things are taught.
+成功している人たちだからです。
 
 0:18:33.350,0:18:40.450
-But outside of universities most people learn
-best in this top-down way, where you start
+しかし、大学の外では、ほとんどの人がトップダウンの方法で最もよく学びます。
 
 0:18:40.450,0:18:42.390
-with the full context.
+完全なコンテクストから始める方法です。
 
 0:18:42.390,0:18:47.290
-So step number two in the seven principles,
-and I'm only going to mention the first three,
+ですから、7つの原則の第2段階では、最初の3つの原則にだけ言及しますが、
 
 0:18:47.290,0:18:49.620
-is to make the game worth playing.
+ゲームをプレイする価値のあるものにするということです。
 
 0:18:49.620,0:18:53.590
-Which is like, if you're playing baseball,
-you have a competition.
+野球をやっていると、競争があります。
 
 0:18:53.590,0:19:00.140
-You know, you score, you try and win, you
-bring together teams from around the community
+スコアをつけて、勝利を目指して、地域のチームを集めて、
 
 0:19:00.140,0:19:02.350
-and you have people try to beat each other.
+みんなで競い合います。
 
 0:19:02.350,0:19:08.640
-And you have leaderboards, like who's got
-the highest number of runs or whatever.
+誰が一番多くの得点を取ったかなどの リーダーボードがあります。
 
 0:19:08.640,0:19:14.800
-So this is all about making sure that the
-thing you're doing, you're doing it properly.
+これはあなたがやっていることをきちんとやっているかどうかを確認することです。
 
 0:19:14.800,0:19:23.000
-You're making it the whole thing, you're providing
-the context and the interest.
+あなたはそれを全体的なものにしてコンテクストと関心を提供しています。
 
 0:19:23.000,0:19:30.490
-So, for the fastai approach to learning deep
-learning, what this means is that today we're
+深層学習へのfastaiアプローチでは、今日はモデルを
 
 0:19:30.490,0:19:33.200
-going to train models end to end.
+最後まで訓練します。
 
 0:19:33.200,0:19:38.350
-We're going to actually train models, and
-they won't just be crappy models.
+私たちは実際にモデルを訓練します。
+そしてそれはただのくだらないモデルではありません。
 
 0:19:38.350,0:19:45.070
-They will be state-of-the-art world-class
-models from today, and we can try to have
+今日から最先端のワールドクラスのモデルです。
 
 0:19:45.070,0:19:50.910
-you build your own state-of-the-art world-class
-models from either today or next lesson, depending
+今日か次のレッスンのどちらかから(状況に応じて)、あなた自身の最先端の世界クラスのモデルを
 
 0:19:50.910,0:19:52.810
-on how things go.
+構築することを試みます。
 
 0:19:52.810,0:19:59.200
-Then, number three in the seven principles
-from Harvard is, work on the hard parts.
+そして、ハーバード大学の7つの原則の3番目は、難しい部分に取り組むことです。
 
 0:19:59.200,0:20:10.050
-Which is kind of like this idea of practice,
-deliberate practice.
+これは、この練習、意図的な練習の考え方に似ています。
 
 0:20:10.050,0:20:19.490
 Work on the hard parts means that you don't
