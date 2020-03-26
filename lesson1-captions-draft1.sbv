@@ -1518,420 +1518,341 @@ Githubを使ったことがなければ問題ありませんが、
 更新していきます。
 
 0:38:29.480,0:38:33.329
-And we will see you'll see on the course website,
-in the forum we tell you how to make sure
+そして、コースのウェブサイトやフォーラムで最新バージョンであるかの
 
 0:38:33.329,0:38:35.890
-you have the most recent versions.
+確認方法をお伝えします。
 
 0:38:35.890,0:38:40.640
-When you grab our most recent version you
-don't want to conflict with or overwrite your
-
-0:38:40.640,0:38:41.640
-changes.
+あなたが最新版を手に入れるとき、あなたの変更と衝突したり、
+上書きしたりするを避けるたいものです。
 
 0:38:41.640,0:38:50.329
-So as you start experimenting it's not a bad
-idea to like select a notebook and click duplicate
+そのために、実験を始めるときには、ノートブックを選択してDuplicate（複製）をクリックして、
 
 0:38:50.329,0:38:52.500
-and then start doing your work in the copy.
+コピーしたノートブックで作業を始めるのも悪くないでしょう。
 
 0:38:52.500,0:38:59.099
-And that way when you get an update of our
-latest course materials, it's not gonna interfere
+そうすれば、最新のコース教材の更新があったときに、あなたが実行していた実験に
 
 0:38:59.099,0:39:06.089
-with the experiments you've been running.
+支障をきたすことはありません。
 
 0:39:06.089,0:39:09.490
-So there are two important repositories to
-know about.
+このように、2つの重要なリポジトリがあります。
 
 0:39:09.490,0:39:20.089
-One is the fast book repository which we saw
-earlier, which is kind of the full book with
+一つは先ほど見たファストブックのリポジトリで、これはすべての出力や長所などが
 
 0:39:20.089,0:39:26.099
-all the outputs and pros and everything.
+掲載されている完全な本です。
 
 0:39:26.099,0:39:30.390
-And then the other one is the course V4 repository.
+そしてもう一つはコースV4のリポジトリです。
 
 0:39:30.390,0:39:34.690
-And here is the exact same notebook from the
-course V4 repository.
+これはファストブックのリポジトリにあるノートと全く同じものです。
 
 0:39:34.690,0:39:42.130
-And for this one we remove all of the pros
-and all of the pictures and all of the outputs
+このノートでは、すべての文章とすべての写真と出力を削除し、
 
 0:39:42.130,0:39:46.210
-and just leave behind the headings and the
-code.
+見出しとコードだけを残しています。
 
 0:39:46.210,0:39:51.029
-In this case you can see some outputs because
-I just ran that code, most of it.
+この場合、いくつかの出力を見ることができますが、それは私がコードを実行したからです。
 
 0:39:51.029,0:39:53.410
-There won't be any.
+他は何もない・・・
 
 0:39:53.410,0:39:56.300
-No, No, I guess we have left outputs.
+いや、出力を残していると思います。
 
 0:39:56.300,0:39:58.009
-I'm not sure to keep that or not.
+それを残しておくかどうかはわかりません。
 
 0:39:58.009,0:40:01.849
-So you may or may not see the outputs.
+なので、出力が見えても見えなくても構いません。
 
 0:40:01.849,0:40:04.259
-So the idea with this is.
+これを使うというアイデアは、
 
 0:40:04.259,0:40:10.480
-This is properly the version that you want
-to be experimenting with.
+これらがあなたが実験するために使うべきバージョンです。
 
 0:40:10.480,0:40:15.170
-Because it kind of forces you to think about
-like what's going on as you do each step,
+なぜなら、本を読んで何も考えずに実行するのではなく、各ステップを実行しながら
 
 0:40:15.170,0:40:18.799
-rather than just reading it and running it
-without thinking.
+何が起こっているのかを考えることを強制されるからです。
 
 0:40:18.799,0:40:24.059
-We kind of want you to do it in a small bare
-environment in which you thinking about like
+本に書かれていることは何だったのか、なぜこのようなことが起こったのか、
 
-0:40:24.059,0:40:28.859
-what did the book say why was this happening
-and if you forget anything then you kind of
-
-0:40:28.859,0:40:31.321
-go back to the book.
+0:40:24.059,0:40:31.321
+何か忘れてしまったら本に戻るというように、小さな裸の環境でやってほしいと思っています。
 
 0:40:31.321,0:40:36.910
-The other thing to mention is both the course
-V4 version and the fast book version at the
+もう一つは、コースV4版とファストブック版の両方に
 
 0:40:36.910,0:40:42.000
-end have a questionnaire.
+アンケートがあることです。
 
 0:40:42.000,0:40:46.529
-And a quite a few folks have told us you know
-that in amongst the reviewers and stuff that
+かなりの数の人（例えば復習している人たち）が、実際に最初にアンケートを
 
 0:40:46.529,0:40:49.990
-they actually read the questionnaire first.
+読んだと言ってくれました。
 
 0:40:49.990,0:40:57.869
-We spent many, many weeks writing the questionnaires,
-Sylvain and I.
+シルヴァンと私は何週間もかけてアンケートを書いてきました。
 
 0:40:57.869,0:41:04.380
-And the reason for that is because we try
-to think about like what do we want you to
+その理由は、それぞれのノートから何を読み取ってほしいかを
 
 0:41:04.380,0:41:07.680
-take away from each notebook.
+考えているからです。
 
 0:41:07.680,0:41:10.029
-So you kind of read the questionnaire first.
+最初にアンケートを読んでもらうと、私たちが大切だと思うことは
 
-0:41:10.029,0:41:12.150
-You can find out what are the things we think
-are important.
-
-0:41:12.150,0:41:14.940
-What are the things you should know before
-you move on.
+0:41:10.029,0:41:14.940
+何なのかが分かると思います。次に進む前に知っておくべきことは何か。
 
 0:41:14.940,0:41:18.859
-So rather than having like a summary section
-at the end saying at the end of this you should
+最後にまとめのようなセクションがあって「最後に
+知っておくべきことはこれとこれ」というのではなく、
 
 0:41:18.859,0:41:24.920
-know, blah blah blah, we instead have a questionnaire
-to do the same thing, so please make sure
+その同じ目的をアンケートで達成することにしました。
 
 0:41:24.920,0:41:27.730
-you do the questionnaire before you move onto
-the next chapter.
+なので、次の章に移る前に必ずアンケートをしてください。
 
 0:41:27.730,0:41:31.600
-You don't have to get everything right, and
-most of the time answering the questions is
+すべてを正しく理解する必要はありませんし、質問に答えるのは、
 
 0:41:31.600,0:41:37.999
-as simple as going back to that part of the
-notebook and reading the prose, but if you've
+ノートのその部分に戻って散文を読むくらい簡単です。
 
-0:41:37.999,0:41:43.289
-missed something, like do go back and read
-it because these are the things we are assuming
-
-0:41:43.289,0:41:44.960
-you know.
+0:41:37.999,0:41:44.960
+だから、何か見逃したことがあったら、ちゃんと戻って読んでください。
+私たちはあなたがこれらを知っていることを前提としています。
 
 0:41:44.960,0:41:50.420
-So if you don't know these things before you
-move on, it could get frustrating.
+だから先に進む前にこれらのことを知らないと イライラすることになりかねません。
 
 0:41:50.420,0:41:57.499
-Having said that, if you get stuck after trying
-a couple of times, do move onto the next chapter,
+とはいえ、何度かやってみてどうしても行き詰まったら、次の章に移って、
 
 0:41:57.499,0:42:00.809
-do two or three more chapters and then come
-back.
+あと2～3章をやってから戻ってきてください。
 
-0:42:00.809,0:42:04.480
-maybe by the time you've done a couple more
-chapters, you know, you will get some more
-
-0:42:04.480,0:42:05.480
-perspective.
+0:42:00.809,0:42:05.480
+もう2、3章やった後にはもうちょっと視野が広がってるかもしれません。
 
 0:42:05.480,0:42:13.099
-We try to re-explain things multiple times
-in different ways, so it's okay if you tried
+私たちは違う方法で何度も説明し直すようにしているので、
 
 0:42:13.099,0:42:17.329
-and you get stuck, then you can try moving
-on.
+もし試してみて行き詰ったとしても大丈夫です。
 
 0:42:17.329,0:42:26.410
-Alright, so, let's try running the first part
-of the notebook.
+さて、それではノートの最初の部分を実行してみましょう。
 
 0:42:26.410,0:42:37.490
-So here we are in 01 intro, so this is chapter
-1 and here is our first cell.
+これは01_introのノートブック。
+これは第1章で、ここが最初のセルです。
 
-0:42:37.490,0:42:45.481
-So I click on the cell and by default, actually,
-there will be a header in the toolbar as you
-
-0:42:45.481,0:42:46.481
-can see.
+0:42:37.490,0:42:46.481
+セルをクリックすると・・・デフォルトではツールバーにヘッダーが表示されます。
 
 0:42:46.481,0:42:47.481
-You can turn them on or off.
+これをオンにしたりオフにしたりすることができます。
 
 0:42:47.481,0:42:53.640
-I always leave them off myself and so to run
-this cell, you can either click on the play,
+私はいつもオフにしています。
+このセルを実行するには、Run（再生）ボタンを
 
 0:42:53.640,0:42:56.940
-the run button or as I mentioned, you can
-hit shift enter.
+クリックするか、先ほど言ったようにシフト・エンターキーを押してください。
 
 0:42:56.940,0:43:03.349
-So for this one this i'll just click and as
-you can see this star appears, so this says
+このセルではRunボタンをクリックします。
+すると星が表示されるので、
 
 0:43:03.349,0:43:07.880
-I'm running and now you can see this progress
-bar popping up and that is going to take a
+実行中だというのがわかり、この進行状況バーがポップアップします。
 
 0:43:07.880,0:43:15.680
-few seconds and so as it runs to print out
-some results.
+これは数秒かかります。
+実行中には、いくつかの結果が表示されます。
 
 0:43:15.680,0:43:20.740
-Don't expect to get exactly the same results
-as us, there is some randomness involved in
+私たちと全く同じ結果を期待しないでください。
+モデルのトレーニングにはランダム性がありますが、
 
 0:43:20.740,0:43:23.779
-training a model, and that's okay.
+それは大丈夫です。
 
 0:43:23.779,0:43:26.530
-Don't expect to get exactly the same time
-as us.
+我々と全く同じ時間を得ることは期待しないでください。
 
 0:43:26.530,0:43:32.510
-If this first cell takes more than five minutes
-unless you have a really old GPU that is probably
+もしあなたが本当に古いGPUを持っていない限り、この最初のセルに5分以上かかるなら、
 
 0:43:32.510,0:43:33.510
-a bad sign.
+それはおそらく悪い兆候です。
 
 0:43:33.510,0:43:38.609
-You might want to hop on the forums and figure
-out what's going wrong or maybe it only has
+フォーラムに参加して、何が問題なのかを調べてたほうがいいです。
+またはWindowsを使っている場合。
 
 0:43:38.609,0:43:43.400
-windows which really doesn't work very well
-for this moment.
+今のところWindows ではあまりうまく動作しません。
 
 0:43:43.400,0:43:45.210
-Don't worry that we don't know what all the
-code does yet.
+まだすべてのコードが何をするかわからなくても心配しないでください。
 
 0:43:45.210,0:43:52.410
-We are just making sure that we can train
-a model . So here we are, it's finished running
+私たちはただモデルを訓練できるかどうかを確認しているだけです。
+これで実行が終了しました。
 
 0:43:52.410,0:43:58.079
-and so as you can see, it's printed out some
-information and in this case it's showing
+見ての通り、いくつかの情報が出力され、この場合、何かを行う際に
 
 0:43:58.079,0:44:05.269
-me that there is an error rate of 0.005 at
-doing something.
+0.005のエラー率があることを示しています。
 
 0:44:05.269,0:44:06.569
-What is the something it's doing?
+何をしているのでしょうか？
 
 0:44:06.569,0:44:14.089
-Well, what it's doing here is it's actually
-grabbing a dataset, we call the pets dataset,
+ここで何をしているのかというと、実際にデータセットを取得しているのですが、
 
 0:44:14.089,0:44:18.849
-which is a dataset of pictures of cats and
-dogs.
+これはペットデータセットと呼ばれていて、猫と犬の写真のデータセットです。
 
 0:44:18.849,0:44:25.829
-And it's trying to figure out; which ones
-are cats and which ones are dogs.
+これはどれが猫でどれが犬なのかを調べています。
 
 0:44:25.829,0:44:32.599
-And as you can see, after about well less
-than a minute, it's able to do that with a
+見ての通り、1分もしないうちに、0.5%の誤差率で
 
 0:44:32.599,0:44:34.809
-0.5% error rate.
+これを行うことができました。
 
 0:44:34.809,0:44:37.039
-So it can do it pretty much perfectly.
+つまり、ほぼ完璧にできるということです。
 
 0:44:37.039,0:44:39.509
-So we've trained our first model.
+これで最初のモデルを訓練しました。
 
 0:44:39.509,0:44:40.539
-We have no idea how.
+どうやったのかは分かりませんし、
 
 0:44:40.539,0:44:41.799
-We don't know what we were doing.
+何をしていたのかもわかりません。
 
 0:44:41.799,0:44:44.259
-But we have indeed trained our model.
+しかし、私たちはは確かにモデルを訓練しました。
 
 0:44:44.259,0:44:46.559
-So that's a good start.
+これで良いスタートが切れました。
 
 0:44:46.559,0:44:51.309
-And as you can see, we can train models pretty
-quickly on a single computer.
+見ての通り、1台のコンピュータでかなり速く
+モデルを訓練することができます。
 
 0:44:51.309,0:44:55.089
-Which you know - Many of which you can get
-for free.
+ご存知の通り、その多くは無料で手に入入ります。
 
 0:44:55.089,0:45:00.869
-One more thing to mention is, if you have
-a Mac - doesn't matter whether you have Windows
+もう一つ、もしあなたがMacを持っているのであれば・・・　ブラウザで何を
 
 0:45:00.869,0:45:05.069
-or Mac or Linux in terms of what's running
-in the browser.
+実行しているかという点では、WindowsでもMacでもLinuxでも関係ありません。
 
 0:45:05.069,0:45:11.470
-But if you have a Mac, please don't try to
-use that GPU.
+しかし、Macを持っている人は、そのGPUを使おうとしないでください。
 
 0:45:11.470,0:45:16.150
-Mac's actually - Apple doesn't even support
-Nvidia GPUs anymore.
+Macは、いえ、 AppleはもうNvidiaのGPUすらサポートしていません。
 
 0:45:16.150,0:45:19.470
-So that's really not gonna be a great option.
+だから、それは本当に良い選択肢にはなりません。
 
 0:45:19.470,0:45:20.869
-So stick with Linux.
+だからLinuxを使って下さい。
 
 0:45:20.869,0:45:25.010
-It will make life much easier for you.
+そうすれば、あなたの生活はずっと楽になります。
 
 0:45:25.010,0:45:30.420
-Right, actually the first thing we should
-do is actually try it out.
+そうですね、最初にすべきことは実際に試してみることです。
 
 0:45:30.420,0:45:34.750
-So if - I claim we've trained a model that
-can pick cats from dogs.
+犬から猫を選ぶモデルを訓練したと言っても、
 
 0:45:34.750,0:45:37.640
-Let's make sure we can.
+本当にできるかどうか確認してみましょう。
 
 0:45:37.640,0:45:41.859
-So let's - Check out this cell.
+このセルを見てみよう。
 
-0:45:41.859,0:45:42.859
-This is interesting.
-
-0:45:42.859,0:45:43.859
-Right?
+0:45:41.859,0:45:43.859
+これは面白いでしょう？
 
 0:45:43.859,0:45:47.940
-We've created a widgets dot file upload object
-and displayed it.
+widget.FileUploadオブジェクトを作成して表示すると、
 
 0:45:47.940,0:45:50.690
-And this is actually showing us a clickable
-button.
+これは実際にクリック可能なボタンです。
 
 0:45:50.690,0:45:52.619
-So as I mentioned this is an unusual REPL.
+だから、先ほども言ったように、これは珍しいREPLです。
 
 0:45:52.619,0:45:55.319
-We can even create GUIs, in this REPL.
+このREPLではGUIを作成することもできます。
 
 0:45:55.319,0:45:58.359
-So if I click on this file upload.
+だから、私はこのファイルのアップロードをクリックして、
 
 0:45:58.359,0:46:00.170
-And I can pick “cat”.
+猫の写真を選択できます。
 
 0:46:00.170,0:46:04.130
-There we go.
+この通り。
 
 0:46:04.130,0:46:11.230
-And I can now turn that uploaded data into
-an image.
+そして、アップロードしたデータを画像に変換することができます。
 
 0:46:11.230,0:46:14.319
-There's a cat.
+猫がいます。
 
 0:46:14.319,0:46:22.510
-And now I can do predict, and it's a cat.
+そして予測をすることができ、結果は猫です。
 
 0:46:22.510,0:46:26.400
-With a 99.96% probability.
+99.96%の確率で。
 
 0:46:26.400,0:46:29.910
-So we can see we have just uploaded an image
-that we've picked out.
+ということで、自分で選んだ画像をアップロード
+できることがわかりますね。
 
-0:46:29.910,0:46:30.930
-So you should try this.
 
-0:46:30.930,0:46:31.930
-Right?
+0:46:29.910,0:46:31.930
+これをやってみてください。
 
 0:46:31.930,0:46:32.930
-Grab a picture of a cat.
+猫の写真をネットで探すか 
 
 0:46:32.930,0:46:35.579
-Find one from the Internet or go and take
-a picture of one yourself.
+自分で撮ってきて、 アップロードした写真が
 
 0:46:35.579,0:46:38.910
-And make sure that you get a picture of a
-cat.
+猫であることを確認してください。
 
 0:46:38.910,0:46:43.520
 This is something which can recognise photos
