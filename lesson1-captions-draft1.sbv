@@ -1855,127 +1855,108 @@ widget.FileUploadオブジェクトを作成して表示すると、
 猫であることを確認してください。
 
 0:46:38.910,0:46:43.520
-This is something which can recognise photos
-of cats, not line drawings of cats.
+これは猫の線画ではなく 猫の写真を認識できるものです 
 
 0:46:43.520,0:46:46.940
-And so as we'll see, in this course.
+これからのコースでわかるように、
 
 0:46:46.940,0:46:52.050
-These kinds of models can only learn from
-the kinds of information you give it.
+この種のモデルは、あなたが与えた情報からのみ
+学習することができます。
+
 
 0:46:52.050,0:46:57.130
-And so far we've only given it, as you'll
-discover, photos of cats.
+これまでのところ、私たちは猫の写真しか与えていません。
 
 0:46:57.130,0:47:06.700
-Not anime cats, not drawn cats, not abstract
-representations of cats but just photos.
+アニメの猫でもなく、描かれた猫でもなく、
+抽象的な猫の表現でもなく、ただの写真です。
 
 0:47:06.700,0:47:11.470
-So we're now gonna look at; what's actually
-happened here?
+では次に実際に何が起きたのか？というのをみていきます。
 
 0:47:11.470,0:47:15.930
-And you'll see at the moment, I am not getting
-some great information here.
+ご覧の通り、今のところ、私はここに十分な情報を得ていません。
 
 0:47:15.930,0:47:26.259
-If you see this, in your notebooks, you'll
-have to go: file, trust notebook.
+もしこういう出力をノートに見たら、 File → Trust Notebook　
+→ Trustという操作をして下さい。
 
 0:47:26.259,0:47:30.559
-And that just tells Jupiter that it's allowed
-to run the code necessary to display things,
+これはジュピターに表示に必要なコードの実行を許可すると伝えているのです。
 
 0:47:30.559,0:47:33.509
-to make sure there isn't any security problems.
+セキュリティ上の問題がないと。
 
 0:47:33.509,0:47:35.880
-And so you'll now see the outputs.
+これで出力が表示されます。
 
 0:47:35.880,0:47:39.880
-Sometimes you'll actually see some weird code
-like this.
+時々、このような奇妙なコードを見ることがあります。
 
 0:47:39.880,0:47:43.609
-This is code that actually creates outputs.
+これは以下の図を作成するコードです。
 
 0:47:43.609,0:47:46.349
-So sometimes we hide that code.
+このようなコードは基本的に隠します。
 
 0:47:46.349,0:47:47.800
-Sometimes we show it.
+しかし時には見せることもあります。
 
 0:47:47.800,0:47:51.940
-So generally speaking, you can just ignore
-the stuff like that and focus on what comes
+しかし，一般にこのようなコードは無視して、出力されている図に
 
 0:47:51.940,0:47:52.940
-out.
+集中してください。
 
 0:47:52.940,0:47:54.300
-So I'm not gonna go through these.
+ですので，毎回こういったコードを紹介するつもりはありません。
 
 0:47:54.300,0:48:00.660
-Instead I'm gonna have a look at it - same
-thing over here on the slides.
+代わりにスライドを見てみましょう。
 
 0:48:00.660,0:48:04.710
-So what we're doing here is; we're doing machine
-learning.
+ここでやっていることは、機械学習です。
 
 0:48:04.710,0:48:07.750
-Deep learning is a kind of machine learning.
+ディープラーニングは機械学習の一種です。
 
 0:48:07.750,0:48:09.170
-What is machine learning?
+機械学習とは何か。
 
 0:48:09.170,0:48:16.070
-Machine learning is, just like regular programming,
-it's a way to get computers to do something.
+機械学習とは、プログラミングと同じで、
+コンピュータに何かを処理させる方法です。
 
 0:48:16.070,0:48:22.250
-But in this case, it's pretty hard to understand
-how you would use regular programming to recognise
+しかし、写真に映っているのが猫か犬かを識別するプログラムを書くのは
 
 0:48:22.250,0:48:24.000
-dog photos from cat photos.
+想像しにくいでしょう。
 
 0:48:24.000,0:48:28.319
-How do you kind of create the loops and the
-variable assignments and the conditionals
+写真の中の犬と猫を認識するプログラムを作るために、ループや変数の代入、
 
 0:48:28.319,0:48:31.789
-to create a program that recognises dogs vs
-cats in photos.
+条件式をどう使えば良いのでしょうか？
 
 0:48:31.789,0:48:33.190
-It's super hard.
+これは大変難しいです。
 
 0:48:33.190,0:48:34.589
-Super super hard.
+本当に難しいです。
 
 0:48:34.589,0:48:41.420
-So hard, that until kind of the deep learning
-era, nobody really had a model that was remotely
+ディープラーニングの時代までは、一見簡単そうな作業（犬猫の識別）を正確にこなすモデルは
 
 0:48:41.420,0:48:43.910
-accurate at this apparently easy task.
+誰も持っていませんでした。
 
 0:48:43.910,0:48:46.970
-Because we can't write down the steps necessary.
+必要なステップを書き切れないからです。
 
-0:48:46.970,0:48:51.369
-So normally, you know, we write down a function
-that takes some inputs and goes through our
-
-0:48:51.369,0:48:52.369
-program.
-
-0:48:52.369,0:48:55.569
-Produces some results.
+0:48:46.970,0:48:55.569
+通常は、いくつかの入力を処理し，いくつかの結果を返す関数を書きます。
 
 0:48:55.569,0:49:02.530
 So this general idea where the program is
