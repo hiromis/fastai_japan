@@ -2214,174 +2214,145 @@ spend some time on it.
 そして幸運なことに、そのような方法が存在することが判明しました！
 
 0:56:16.839,0:56:21.539
-And that thing is called stochastic gradient
-descent (or SGD).
+その方法とは、確率的勾配降下法あるいはSGDと呼ばれています。
 
 0:56:21.539,0:56:26.540
-Again, we'll look at exactly how it works,
-we'll build it ourselves from scratch, but
+今後，実際にSGDがどのように動作するのかを確認し、
+スクラッチで作成しますが、
 
 0:56:26.540,0:56:28.529
-for now we don't have to worry about it.
+今のところは心配する必要はありません。
 
-0:56:28.529,0:56:34.210
-I will tell you this, though, neither SGD
-nor neural nets are at all mathematically
-
-0:56:34.210,0:56:35.210
-complex.
+0:56:28.529,0:56:35.210
+これだけは言っておきますが、SGDも
+ニューラルネットも数学的には全く複雑ではありません。
 
 0:56:35.210,0:56:38.829
-They nearly entirely are addition and multiplication.
+ほとんど足し算と掛け算だけです。
 
-0:56:38.829,0:56:45.109
-The trick is it just a lot of them--like billions
-of them--so many more than we can intuitively
-
-0:56:45.109,0:56:46.109
-grasp.
+0:56:38.829,0:56:46.109
+トリックは、足し算と掛け算を、数十億，いやそれより多く、
+私たちが直感的に把握できるより多く行っていることです。
 
 0:56:46.109,0:56:52.940
-They can do extraordinarily powerful things,
-but they're not rocket science at all.
+彼らは極めて強力ですが，ロケットのように複雑ではありませんし，
 
 0:56:52.940,0:56:58.609
-They are not complex things, and we will see
-exactly how they work.
+それらがどのように動くのかをしっかり確認します。
 
 0:56:58.609,0:57:03.049
-So that's the Arthur Samuel version, right?
+ここまでがアーサー・サミュエル版です。
 
 0:57:03.049,0:57:08.580
-Nowadays we don't use quite the same terminology,
-but we use exactly the same idea.
+今日では、用語は異なりますが、全く同じ考えを使っています。
 
 0:57:08.580,0:57:12.660
-So that function that sits in the middle,
+真ん中にあるのがアーキテクチャで
 
 0:57:12.660,0:57:14.549
-we call an architecture.
+重みを調整することで何かしらのタスクを
 
 0:57:14.549,0:57:20.779
-An architecture is the function that we're
-adjusting the weights to get it to do something.
+適切に処理するようになる関数です。
 
 0:57:20.779,0:57:24.190
-That's the architecture, that's the functional
-form of the model.
+それがアーキテクチャであり、モデルの関数形です。
+
 
 0:57:24.190,0:57:28.849
-Sometimes people say model to mean architecture,
-so don't let that confuse you too much.
+時々、モデルはアーキテクチャを意味すると言われることがありますが、
+あまり混乱させないようにしてください。
 
 0:57:28.849,0:57:30.559
-But, really the right word is architecture.
+しかし、本当に正しい言葉はアーキテクチャーです。
 
 0:57:30.559,0:57:34.619
-We don't call them weights; we call them parameters.
+私たちはそれらを「重み」とは呼ばず、「パラメータ」と呼んでいます。
 
 0:57:34.619,0:57:40.410
-Weights has a specific meaning- it's quite
-a particular kind of parameter.
+重みには特定の意味があり、非常に特殊な種類のパラメータです。
 
 0:57:40.410,0:57:46.609
-The things that come out of the model, the
-architecture with the parameters, we call
+モデルから出てくるもの、つまりパラメータを持つ
+アーキテクチャの出力を、
 
 0:57:46.609,0:57:49.809
-them predictions.
+私たちは予測と呼んでいます。
 
 0:57:49.809,0:57:55.660
-The predictions are based on two kinds of
-inputs: independent variables that's the data,
+予測は2種類の入力に基づいています：データである独立変数、
 
 0:57:55.660,0:58:03.309
-like the pictures of the cats and dogs, and
-dependent variables also known as labels,
+猫や犬の写真のようなもの、そしてラベルとして知られている従属変数、
 
-0:58:03.309,0:58:07.400
-which is like the thing saying “this is
-a cat”, “this is a dog”, “this is
-
-0:58:07.400,0:58:08.400
-a cat”.
+0:58:03.309,0:58:08.400
+これは「これは猫です」「これは犬です」といったもので、
 
 0:58:08.400,0:58:09.779
-So, that's your inputs.
+これが入力です。
 
 0:58:09.779,0:58:12.769
-So, the results are predictions.
+つまり、結果は予測です。
 
 0:58:12.769,0:58:18.670
-The measure of performance, to use Arthur
-Samuel's word, is known as the loss.
+アーサー・サミュエルの言葉を借りれば、
+パフォーマンスの尺度は、損失と呼ばれています。
 
 0:58:18.670,0:58:24.020
-So, the loss is being calculated from the
-labels on the predictions and then there's
+損失は予測値のラベルから 計算されます。
 
 0:58:24.020,0:58:26.720
-the update back to the parameters.
+そして、パラメータの更新があります。  
 
-0:58:26.720,0:58:33.210
-Okay, so, this is the same picture as we saw,
-but just putting in the words that we use
-
-0:58:33.210,0:58:34.210
-today.
+0:58:26.720,0:58:34.210
+さて、これは先ほどの図と同じですが、
+今日使う言葉を入れてみました。
 
 0:58:34.210,0:58:40.039
-So, this picture- if you forget, if I say
-these are the parameters of this used for
+私が「これがモデルを作成するためにこのアーキテクチャで
+使用されているパラメータだ」と言った時、
 
 0:58:40.039,0:58:44.220
-this architecture to create a model- you can
-go back and remind yourself what they mean.
+もし忘れてしまった場合は、もう一度この図に戻って、
+それらの意味を思い出してみてください。
 
 0:58:44.220,0:58:45.220
-What are the parameters?
+パラメータとは何か？
 
 0:58:45.220,0:58:46.500
-What are the predictions?
+予測値とは？
 
 0:58:46.500,0:58:47.500
-What is the loss?
+損失とは何か？ 
 
 0:58:47.500,0:58:53.970
-Okay, the loss of some function that measures
-the performance of the model in such a way
+パラメータを更新できるような方法でモデルのパフォーマンスを
 
 0:58:53.970,0:58:56.790
-that we can update the parameters.
+測定する関数の損失です。
 
 0:58:56.790,0:59:06.170
-So, it's important to note that deep learning
-and machine learning are not magic, right?
+ここで注意しなければならないのは、ディープラーニングや
+機械学習は魔法ではないということですね。
 
 0:59:06.170,0:59:13.380
-The model can only be created where you have
-data showing you examples of the thing that
+モデルは、学習しようとしていることの例を示すデータがあるところでしか
 
 0:59:13.380,0:59:14.869
-you're trying to learn about.
+作成できません。
 
-0:59:14.869,0:59:20.859
-It can only learn to operate on the patterns
-that you've seen in the input used to train
-
-0:59:20.859,0:59:22.030
-it, right?
+0:59:14.869,0:59:22.030
+それは訓練に使われた入力の中で見たパターンでしか
+動作を学習できないんですよね？ 
 
 0:59:22.030,0:59:27.109
-So, if we don't have any line drawings of
-cats and dogs, then there's never going to
+だから、猫や犬の画像がないと、そのアーキテクチャを作るパラメータの更新は
 
 0:59:27.109,0:59:32.519
-be an update to the parameters that makes
-the architecture and so the architect and
+絶対にありません。アーキテクチャと
 
 0:59:32.519,0:59:34.420
-the parameters together is the model.
+パラメータを合わせたものがモデルなんです。
 
 0:59:34.420,0:59:39.650
 So, to say the model, that makes the model
