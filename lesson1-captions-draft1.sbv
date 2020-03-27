@@ -2258,7 +2258,6 @@ spend some time on it.
 0:57:20.779,0:57:24.190
 それがアーキテクチャであり、モデルの関数形です。
 
-
 0:57:24.190,0:57:28.849
 時々、モデルはアーキテクチャを意味すると言われることがありますが、
 あまり混乱させないようにしてください。
@@ -2345,485 +2344,393 @@ spend some time on it.
 それは訓練に使われた入力の中で見たパターンでしか
 動作を学習できないんですよね？ 
 
-0:59:22.030,0:59:27.109
-だから、猫や犬の画像がないと、そのアーキテクチャを作るパラメータの更新は
+0:59:22.030,0:59:26.340
+だから、猫や犬の線画像がないと、
 
-0:59:27.109,0:59:32.519
-絶対にありません。アーキテクチャと
+0:59:26.340,0:59:30.800
+そのアーキテクチャを作るためのパラメータの更新がないので
 
-0:59:32.519,0:59:34.420
-パラメータを合わせたものがモデルなんです。
+0:59:30.860,0:59:34.260
+（アーキテクチャとパラメータを合わせたものがモデル）
 
 0:59:34.420,0:59:39.650
-So, to say the model, that makes the model
-better at predicting line drawings of cats
+モデルが猫や犬の線画を予測するのが上手になることはありません。
 
-0:59:39.650,0:59:43.799
-and dogs because they just, they never received
-those weight updates because they never received
-
-0:59:43.799,0:59:46.680
-those inputs.
+0:59:39.650,0:59:46.680
+それはそういう入力を受け取らなかったため、
+その重みの更新を受け取らなかったからです。
 
 0:59:46.680,0:59:51.239
-Notice also that this learning approach only
-ever creates predictions.
+また、この学習アプローチは予測値を作成するだけで
+あることにも注意してください。
 
 0:59:51.239,0:59:54.319
-It doesn't tell you what to do about it.
+それに対して何をすべきかは教えてくれません。
 
 0:59:54.319,0:59:58.019
-That's going to be very important when we
-think about things like a recommendation system
+これは、「誰かにどの製品を勧めるか」というような
+レコメンデーションシステムのようなものを考えるときに
 
 0:59:58.019,1:00:01.230
-of like “what product do we recommend to
-somebody”?
+非常に重要になるでしょう。
 
 1:00:01.230,1:00:04.950
-Well, I don't know- we don't do that, right?
+私たちはそんなことしませんよね？ 
 
 1:00:04.950,1:00:09.759
-We can predict what somebody will say about
-a product we've shown them, but we're not
+私たちが見せた製品について誰かが何を言うか予測することはできますが、
 
 1:00:09.759,1:00:11.140
-creating actions.
+私たちは行動を生み出しているわけではありません。
 
 1:00:11.140,1:00:12.310
-We're creating predictions.
+予測をしているのです。
 
 1:00:12.310,1:00:16.619
-That's a super important difference to recognize.
+これは非常に重要な違いです。
 
 1:00:16.619,1:00:22.470
-It's not enough just to have examples of input
-data like pictures of dogs and cats.
+犬や猫の絵などの入力データの例が
+あるだけでは不十分なのです。
 
 1:00:22.470,1:00:26.309
-We can't do anything without labels.
+ラベルなしでは何もできません。
 
 1:00:26.309,1:00:31.359
-And so very often, organisations say: “we
-don't have enough data”.
+企業がよく言うのは 「データが足りない」
+と言うことがよくあります。
 
 1:00:31.359,1:00:35.150
-Most of the time they mean: “we don't have
-enough labelled data”.
+ほとんどの場合は、「ラベル付きのデータが
+足りない」という意味です。
 
 1:00:35.150,1:00:39.549
-Because if a company is trying to do something
-with deep learning, often it's because they're
+なぜなら、企業がディープラーニングを使って
+何かをしようとしている場合、多くの場合、
 
 1:00:39.549,1:00:43.180
-trying to automate or improve something they're
-already doing.
+すでに行っていることを自動化したり、
+改善したりしようとしているからです。
 
-1:00:43.180,1:00:48.420
-Which means by definition they have data about
-that thing or a way to capture data about
-
-1:00:48.420,1:00:49.420
-that thing.
+1:00:43.180,1:00:49.420
+つまり、理論的には、そのデータを持っているか、
+またはそのデータを取得する方法を持っていることを意味します。
 
 1:00:49.420,1:00:50.420
-Cus they're doing it.
+それは彼らはもうそれをやっているからです。
 
 1:00:50.420,1:00:51.420
-Right?
+そうでしょう?
 
 1:00:51.420,1:00:55.089
-But often the tricky part is labelling it.
+しかし、しばしば厄介なのは、それにラベルを付けることです。
 
 1:00:55.089,1:00:57.569
-So for example in medicine.
+例えば医療における
 
 1:00:57.569,1:01:00.789
-If you're trying to build a model for radiology.
+放射線学のモデルを作成するとします。
 
-1:01:00.789,1:01:05.579
-You can almost certainly get lots of medical
-images about just about anything you can think
-
-1:01:05.579,1:01:06.579
-of.
+1:01:00.789,1:01:06.579
+思いつく限りのあらゆる医療画像を
+入手できることはほぼ間違いないでしょう。
 
 1:01:06.579,1:01:11.769
-But it might be very hard to label them according
-to malignancy of a tumour or according to
+しかし、それらを腫瘍の悪性度や髄膜腫の有無などで
 
 1:01:11.769,1:01:18.480
-whether or not meningioma is present or whatever,
-because these kinds of labels are not necessarily
-
+ラベル付けするのは非常に難しいかもしれません。
+なぜなら、少なくとも米国の医療システムでは、
 1:01:18.480,1:01:24.289
-captured in a structured way, at least in
-the US medical system.
+この種のラベルは必ずしも構造化された方法では捉えられていないからです。
 
 1:01:24.289,1:01:31.700
-So that's an important distinction that really
-impacts your kind of strategy.
+このような違いは、戦略に大きな影響を与える重要なものです。
 
-1:01:31.700,1:01:39.000
-So then a model, as we saw from the PDP book,
-a model operates in an environment.
-
-1:01:39.000,1:01:40.000
-Right?
+1:01:31.700,1:01:40.000
+モデルとは、PDPの本で見たように、モデルは環境の中で動作します。
 
 1:01:40.000,1:01:44.420
-You roll it out and you do something with.
+あなたはそれを展開して、何かをするのです。
 
 1:01:44.420,1:01:49.640
-And so then, this piece of that kind of PDP
-framework is super important.
+そして、並列分散処理のフレームワークの中のこの部分が
+非常に重要なのです。（PDP＝Parallel Distributed Processing）
 
 1:01:49.640,1:01:50.640
-Right?
+そうですよね？
 
 1:01:50.640,1:01:53.769
-You have a model that's actually doing something.
+実際に何かをしているモデルがあります。
 
 1:01:53.769,1:01:59.069
-For example, you've built a predictive policing
-model that predicts (doesn't recommend actions)
+例えば、どこで逮捕されるかを予測する（行動を推奨するわけではありません）
 
 1:01:59.069,1:02:02.460
-it predicts where an arrest might be made.
+警察のような予測モデルを構築したとします。
 
 1:02:02.460,1:02:06.670
-This is something a lot of jurisdictions in
-the US are using.
+これはアメリカの多くの管轄区域で使われているものです。
 
 1:02:06.670,1:02:10.809
-Now it's predicting that, based on data and
-based on labelled data.
+今では、データに基づいて、ラベル付けされたデータに基づいて、
+それを予測しています。
 
 1:02:10.809,1:02:20.779
-And in this case it's actually gonna be using
-(in the US) for example data where, I think,
+この場合、実際には（アメリカの）データを使っています。
 
 1:02:20.779,1:02:25.099
-depending on whether you're black or white,
-black people in the US, I think, get arrested
+黒人か白人かにもよりますが、アメリカの黒人は白人に比べて
 
 1:02:25.099,1:02:31.480
-something like seven times more often for
-say marijuana possession than whites.
+マリファナ所持で逮捕される頻度が７倍くらい高いと思います。
 
-1:02:31.480,1:02:37.579
-Even though the actual underlying amount of
-marijuana use is about the same in the two
-
-1:02:37.579,1:02:38.579
-populations.
+1:02:31.480,1:02:38.579
+実際のマリファナ使用量は白人と黒人でほぼ同じなのにもかかわらすです。
 
 1:02:38.579,1:02:42.079
-So if you start with biased data and you build
-a predictive policing model.
+偏ったデータを元に取り締まり予測モデルを構築すると、
 
 1:02:42.079,1:02:49.430
-Its prediction will say: “oh you will find
-somebody you can arrest here” based on some
+その予測はこのような偏ったデータに基づいて「ここに逮捕できる人がいるだろう」と
 
 1:02:49.430,1:02:50.430
-biased data.
+予測します。
 
 1:02:50.430,1:02:56.279
-So then, law enforcement officers might decide
-to focus their police activity on the areas
+そうすると、法執行機関の職員は、モデルが予測した地域に警察活動を
 
 1:02:56.279,1:02:58.039
-where those predictions are happening.
+集中させることに決めるかもしれません。
 
 1:02:58.039,1:03:01.940
-As a result of which they'll find more people
-to arrest.
+その結果、そこでより多くの人を逮捕することになる。
 
 1:03:01.940,1:03:05.430
-And then they'll use that, to put it back
-into the model.
+そして、それを使ってモデルに戻す。
 
 1:03:05.430,1:03:09.789
-Which will now find: “oh there's even more
-people we should be arresting in the black
+するとモデルは黒人居住区ではもっと多くの人を逮捕すべきだと
 
 1:03:09.789,1:03:12.640
-neighbourhoods” and thus it continues.
+予測するようになり、それが繰り返されるのです。
 
 1:03:12.640,1:03:17.000
-So this would be an example of how a model
-interacting with its environment creates something
+これは、モデルが環境と相互作用する中で、どのように
+正帰還フィードバックループと呼ばれるものを
 
 1:03:17.000,1:03:19.460
-called a positive feedback loop.
+作るのかの一例です。
 
 1:03:19.460,1:03:23.930
-Where the more a model is used, the more biased
-the data becomes, making the model even more
+モデルの利用増加に伴い、データはより偏ったものになり、
 
 1:03:23.930,1:03:26.440
-biased and so forth.
+モデルはさらに偏ったものになります。
 
 1:03:26.440,1:03:32.299
-So one of the things to be super careful about
-with machine learning is; recognising how
+ですから、機械学習で注意しなければならないことの1つは、
 
-1:03:32.299,1:03:38.009
-that model is actually being used and what
-kinds of things might happen as a result of
-
-1:03:38.009,1:03:39.009
-that.
+1:03:32.299,1:03:39.009
+モデルが実際にどのように使用されているかを認識し、
+その結果として起こり得るかを認識することです。
 
 1:03:39.009,1:03:48.910
-I was just going to add that this is an example
-of proxies because here arrest is being used
+これはプロキシの例であるということを伝えたいです。
 
 1:03:48.910,1:03:56.210
-as a proxy for crime, and I think that pretty
-much in all cases, the data that you actually
+なぜなら、ここでは逮捕が犯罪の代わりとして使われているからです。
+ほとんどのケースで、実際に持っているデータは、
 
 1:03:56.210,1:04:00.049
-have is a proxy for some value that you truly
-care about.
+あなたが本当に関心のある値の代理だと思います。
 
 1:04:00.049,1:04:06.109
-And that difference between the proxy and
-the actual value often ends up being significant.
+そして、往々にして，プロキシと実際の値の差は大きいのです。
 
 1:04:06.109,1:04:10.770
-Thanks, Rachel.
+ありがとう、レイチェル。
 
 1:04:10.770,1:04:13.430
-That's a really important point.
+本当に重要なポイントですね。
 
 1:04:13.430,1:04:24.219
-Okay, so let's finish off by looking at what's
-going on with this code.
+それでは最後に、このコードで何が起こっているのかを見てみましょう。
 
 1:04:24.219,1:04:34.880
-So the code we ran is, basically -- one, two,
-three, four, five, six -- lines of code.
+私たちが実行したコードは、基本的には、1,2,3,4,5,6行のコードです。
 
 1:04:34.880,1:04:39.829
-So the first line of code is an import line.
+コードの最初の行はインポート行です。
 
 1:04:39.829,1:04:46.690
-So in Python you can't use an external library
-until you import from it.
+Pythonでは、外部ライブラリをインポートしない限り、
+それらを使うことはできません。
 
-1:04:46.690,1:04:53.339
-Normally in place, people import just the
-functions and classes that they need from
-
-1:04:53.339,1:04:55.030
-the library.
+1:04:46.690,1:04:55.030
+通常はライブラリから必要な関数やクラスだけをインポートします。
 
 1:04:55.030,1:05:01.989
-But Python does provide a convenient facility
-where you can import everything from a module,
+しかし、Pythonはモジュールからすべてをインポートできる
+便利な機能を提供していて、
 
 1:05:01.989,1:05:04.410
-which is by putting a start there.
+これはそこに星をつけることで実現しています。
 
 1:05:04.410,1:05:07.029
-Most of the time, this is a bad idea.
+ほとんどの場合、これは悪い考えです。
 
 1:05:07.029,1:05:12.479
-Because, by default, the way Python works
-is that if you say import star, it doesn't
+なぜなら、デフォルトでは、Pythonの動作方法は、
+import *　を実行した場合、
 
-1:05:12.479,1:05:16.640
-only import the things that are interesting
-and important in the library you're trying
-
-1:05:16.640,1:05:18.520
-to get something from.
+1:05:12.479,1:05:18.520
+ライブラリの中であなたが使いたい重要なものだけを
+インポートするのではないからです。
 
 1:05:18.520,1:05:23.369
-But it also imports things from all the libraries
-it used, and all the libraries they used,
+実際には、使用した全てのライブラリや、使用した全てのライブラリが
+importしているものもimportするため、
 
-1:05:23.369,1:05:27.190
-and you end up kind of exploding your namespace
-in horrible ways and causing all kinds of
-
-1:05:27.190,1:05:28.760
-bugs.
+1:05:23.369,1:05:28.760
+結果的に名前空間を爆発させてしまい、多くのバグを引き起こしてしまいます。
 
 1:05:28.760,1:05:36.510
-Because fastai is designed to be used in this
-REPL environment where you want to be able
+fastaiはREPL環境で素早くプロトタイピングができるように設計されていて、
 
 1:05:36.510,1:05:41.779
-to do a lot of quick rapid prototyping, we
-actually spent a lot of time figuring out
+私たちはこの問題を避けるために多くの時間を費やしました。
 
 1:05:41.779,1:05:45.410
-how to avoid that problem so that you can
-import star safely.
+安全にimport * ができるように。
 
 1:05:45.410,1:05:49.630
-So, whether you do this or not, is entirely
-up to you.
+ですから、これをするかしないかはあなた次第です。
 
 1:05:49.630,1:05:56.609
-But rest assured that if you import star from
-a fastai library, it's actually been explicitly
+しかし、fastaiライブラリからimport * する場合は、
 
 1:05:56.609,1:06:01.999
-designed in a way that you only get the bits
-that you actually need.
+実際に必要な部分だけを取得できるように明示的に
+設計されているので安心してください。
 
 1:06:01.999,1:06:05.799
-One thing to mention is in the video you see
-it's called “fastai2.”
+一つだけ言及しておきたいのは、ビデオの中で 
+"fastai2"と呼ばれていることです。
 
 1:06:05.799,1:06:09.849
-That's because we're recording this video
-using a prerelease version.
+その理由は収録時はプレリリース版を使っているからです。
 
 1:06:09.849,1:06:19.049
-By the time you are watching the online, the
-MOOC, version of this, the 2 will be gone.
+オンライン版、MOOC版を見ている時には、2は取れているでしょう。
 
 1:06:19.049,1:06:25.609
-Something else to mention is, there are, as
-I speak, four main predefined applications
+他にも言及しておきたいことがあります。
+fastaiには4つの定義済みアプリケーションがあり、
 
 1:06:25.609,1:06:31.099
-in fastai, being vision, text, tabular and
-collaborative filtering.
+それはvision、text、テーブル、協調フィルタリングです。
 
 1:06:31.099,1:06:35.130
-We'll be learning about all of them and a
-lot more.
+それぞれについて、詳しく学んでいく予定です。
 
 1:06:35.130,1:06:41.989
-For each one, say here's vision, you can import
-from the .all, kind of meta-model, I guess
+アプリケーションはそれぞれ、例えばビジョンにしたら、
+.allからインポートすることができます。
 
 1:06:41.989,1:06:42.989
-we could call it.
+メタモデルのようなもの、と呼んでもいいかもしれませんね。
 
 1:06:42.989,1:06:48.079
-And that will give you all the stuff that
-you need for most common vision applications.
+これで、一般的なvisionアプリケーションに
+必要なほぼ全てがimportされます。
+
 
 1:06:48.079,1:06:55.779
-So, if you're using a REPL system like Jupyter
-notebook, it's going to give you all the stuff
+Jupyter NotebookのようなREPLシステムを使っていれば、
 
 1:06:55.779,1:07:01.619
-right there that you need without having to
-go back and figure it out.
+必要なものはすべてそこにあるので、戻って調べたりする必要はありません。
 
 1:07:01.619,1:07:06.559
-One of the issues with this is a lot of the
-python users don't.
+これの問題点の一つは、pythonユーザーの多くが
 
 1:07:06.559,1:07:12.450
-If they look at something like untar_data,
-they would figure out where it comes from
+例えばuntar_dataがどこから来ているのかを知るのに、
 
 1:07:12.450,1:07:14.219
-by looking at the import line.
+インポートの行を見ているのです。
 
 1:07:14.219,1:07:15.970
-And so if you import star, you can't do that
-anymore.
+しかし　import *　すると、それがわからなくなってしまうのです。
 
 1:07:15.970,1:07:19.829
-The good news, in a REPL, you don't have to.
+REPLでは戻って調べる必要がないということです。
 
-1:07:19.829,1:07:27.450
+1:07:19.829,1:07:28.670
 You can literally just type the symbol, press
 SHIFT - ENTER and it will tell you exactly
-
-1:07:27.450,1:07:28.670
-where it came from.
+調べたい記号を入力して [SHIFT - ENTER] を押すだけで、
+それがどこから来たのかを正確に教えてくれます。
 
 1:07:28.670,1:07:29.940
-As you can see.
+この通りです。
 
 1:07:29.940,1:07:33.510
-So that's super handy.
+大変便利なのです。
 
 1:07:33.510,1:07:43.859
-So in this case, for example, to do the actual
-building of the dataset, we called ImageDataLoaders.from_name_func.
+この場合、例えば、実際にデータセットを構築するために、
+ImageDataLoaders.from_name_func()を呼び出しました。
 
 1:07:43.859,1:07:51.170
-I can actually call the special doc function
-to get the documentation for that.
+このdoc関数を使えば簡単にドキュメントを確認できます。
+
 
 1:07:51.170,1:07:57.349
-As you can see, it tells me exactly everything
-to pass in, what all the defaults are, and
+ご覧のように、デフォルト値を含めて全ての引数が確認できます。
 
-1:07:57.349,1:08:07.940
-most importantly, not only what it does, but
-SHOW IN DOCS pops me over to the full documentation
-
-1:08:07.940,1:08:11.190
-including an example.
+1:07:57.349,1:08:11.190
+そして最も重要なことは、[SHOW IN DOCS]は、使用例を含む
+完全なドキュメントへのリンクになっています。
 
 1:08:11.190,1:08:17.180
-Everything in the fastAI documentation has
-an example and the cool thing is: the entire
+fastAIのドキュメントにはすべて例がついています。
 
-1:08:17.180,1:08:20.770
-documentation is written in Jupyter Notebooks.
+1:08:17.180,1:08:25.770
+さらに、それらは全てJupyter Notebookで書かれているので、
 
-1:08:20.770,1:08:25.540
-So that means you can actually open the Jupyter
-Notebook for this documentation and run the
-
-1:08:25.540,1:08:33.280
-line of code yourself and see it actually
-working and look at the outputs and so forth.
+1:08:25.770,1:08:33.280
+自分でコードを実行して、実際の動作や出力など確認できます。
 
 1:08:33.280,1:08:36.760
-Also in the documentation, you'll find that
-there are a bunch of tutorials.
+また、ドキュメントにはたくさんのチュートリアルがあります。
 
 1:08:36.760,1:08:40.501
-For example, if you look at the vision tutorial,
-it will cover lots of things but one of the
+例えば、visionのチュートリアルには多くのことが書かれていますが、
 
-1:08:40.501,1:08:44.910
-things we will cover is, as you can see in
-this case, pretty much the same kind of stuff
+1:08:40.501,1:08:47.710
+その1つは、レッスン１の内容をほぼカバーしています。
 
-1:08:44.910,1:08:47.710
-we are actually looking at in Lesson 1.
-
-1:08:47.710,1:08:53.300
-So there is a lot of documentation in fastAI
-and taking advantage of it is a pretty good
-
-1:08:53.300,1:08:54.300
-idea.
+1:08:47.710,1:08:54.300
+fastAIにはたくさんのドキュメントがあり、それを活用するのは
+とても良いアイデアだと思います。
 
 1:08:54.300,1:08:59.310
-It is fully searchable and as I mentioned,
-perhaps most importantly, every one of these
+ドキュメントは完全に検索可能ですし、おそらく最も重要なことは、
 
 1:08:59.310,1:09:05.050
-documentation pages is also a fully interactive
-Jupyter Notebook.
+これらのドキュメントのすべてが完全にインタラクティブな
+Jupyter Notebookになっていることです。
 
 1:09:05.050,1:09:13.839
-So, looking through more of this code, the
-first line after the import is something that
+そこで、このコードをさらに見てみると、importの後の最初の行は、
 
 1:09:13.839,1:09:14.910
-uses untar_ data.
+untar_dataを呼んでいます。
 
 1:09:14.910,1:09:20.020
-That will download a dataset, decompress it,
-and put it on your computer.
+これはデータセットをダウンロードして、解凍します。
 
 1:09:20.020,1:09:22.770
 If it is already downloaded, it won't download
