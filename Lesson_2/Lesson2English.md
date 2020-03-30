@@ -53,7 +53,8 @@ So that's the kind of cheating that we're trying to avoid we don't want it to me
 So we split off our validation data and what most of this are words you're seeing on the screen are from the book okay so I just copied and pasted them. 
 So if we split off our validation data and make sure that our model never sees it during training, it's completely untainted by it so we can't possibly cheat. 
 Not quite true! We can cheat, the way we could cheat is we could run we could fit a model look at the result and the validation set, change something a little bit fit another model look at the validation set change something a little bit we could do that like a hundred times until we find something with the validation set looks the best. 
-But now we might have fit the validation set, right? So if you want to be really rigorous about this you should actually set aside a third bit of data called the test set that is not used for training and it's not used for your metrics. 
+But now we might have fit the validation set, right? 
+So if you want to be really rigorous about this you should actually set aside a third bit of data called the test set that is not used for training and it's not used for your metrics. 
 It's actually, you don't look at it until the whole project has finished. 
 And this is what's used on competition platforms like Kaggle. 
 On Kaggle, after the competition finishes your performance will be measured against a data set that you have never seen. 
@@ -63,16 +64,22 @@ Now pulling out your validation and test sets is a bit subtle though.
 Here's an example of a simple little data set and this comes from a fantastic blog post that Rachel wrote that we will link to about creating effective validation sets. 
 And you can see basically you have some kind of seasonal data set. 
 Now if you just say, “Okay, fas.ai, I want to model that I want to create a my dataloader using a valid_percent of 0.2”, it would do this. 
-It would delete randomly some of the dots, right? Now, this isn't very helpful because it's we can still cheat because these dots are right in the middle of other dots and this isn't what would happen in practice. 
+It would delete randomly some of the dots, right? 
+Now, this isn't very helpful because it's we can still cheat because these dots are right in the middle of other dots and this isn't what would happen in practice. 
 What would happen in practice is we would want to predict this is sales by date right we want to predict the sales for next week. 
-Not the sales for 14 days ago 18 days ago and 29 days ago, okay? So what you actually need to do to create an effective validation set here is not do it randomly but instead chop off the end, right? And so this is what happens in all Kaggle competitions pretty much that involve time, for instance, is the thing that you have to predict is the next like two weeks or so after the last data point that they give you and this is what you should do also for your test set so again if you've got vendors that you're looking at you should say to them okay after you're all done modeling we're going to check your model against data that is one week later than you've ever seen before. 
+Not the sales for 14 days ago 18 days ago and 29 days ago, okay? 
+So what you actually need to do to create an effective validation set here is not do it randomly but instead chop off the end, right? 
+And so this is what happens in all Kaggle competitions pretty much that involve time, for instance, is the thing that you have to predict is the next like two weeks or so after the last data point that they give you and this is what you should do also for your test set so again if you've got vendors that you're looking at you should say to them okay after you're all done modeling we're going to check your model against data that is one week later than you've ever seen before. 
 And you won't be able to retrain or anything because that's what happens in practice, right? Okay. 
-There's a question, I've heard people describe overfitting as training error being below validation error does this rule of thumb end up being roughly the same as yours? Okay, so that's a great question. 
+There's a question, I've heard people describe overfitting as training error being below validation error does this rule of thumb end up being roughly the same as yours? 
+Okay, so that's a great question. 
 So, I think what they mean there is training loss versus validation loss. 
 Because we don't print training error so we do print at the end of each epoch the value of your loss function for the training set and the value of the loss function for the validation set. 
 And if you train for long enough, that's so so if it's training mostly your training loss will go down and your validation loss will go down. 
 Because by definition, loss function is defined such as a lower loss function is a better model. 
-If you start overfitting, your training loss will keep going down, right? Because like why wouldn't it? You know, you're getting better and better parameters. 
+If you start overfitting, your training loss will keep going down, right? 
+Because like why wouldn't it? 
+You know, you're getting better and better parameters. 
 But your validation loss will start to go up because actually you started fitting to the specific data points in the training set and so it's not going to actually get better. 
 It's going to get it's not going to get better for the validation set it'll start to get worse. 
 However, that does not necessarily mean that you're overfitting or at least not overfitting in a bad way as we'll see it's actually possible to be at a point where the validation loss is getting worse but the validation accuracy or error or metric is still improving. 
@@ -81,31 +88,42 @@ But for now just realize that the important thing to look at is your metric gett
 Thank you for that fantastic question. 
 The next important thing we need to learn about is called transfer learning. 
 So the next line of code said learn.fine_tune. 
-Why does it say learn.fine_tune? Fine tune is what we do when we are transfer learning so transfer learning is using a pre-trained model for a task that is different to what it was originally trained for. 
+Why does it say learn.fine_tune? 
+Fine tune is what we do when we are transfer learning so transfer learning is using a pre-trained model for a task that is different to what it was originally trained for. 
 So more jargon to understand our jargon. 
 Let's look at that. 
-What's a pre-trained model? So what happens is remember I told you the architecture we're using is called ResNet-34? So when we take that ResNet-34 that's just a just a mathematical function okay with lots of parameters that we're going to fit using machine learning. 
+What's a pre-trained model? 
+So what happens is remember I told you the architecture we're using is called ResNet-34? 
+So when we take that ResNet-34 that's just a just a mathematical function okay with lots of parameters that we're going to fit using machine learning. 
 There's a big data set called ImageNet, that contains 1.3 million pictures of a thousand different types of thing, whether it be mushrooms or animals or airplanes or hammers or whatever. 
 There's a competition or there used to be a competition that runs every year to see who could get the best accuracy on the ImageNet competition. 
 And the models that did really well, people would take those specific values of those parameters and they would make them available on the internet for anybody to download. 
 So if you download that you don't just have an architecture now you have a trained model. 
 You have a model that can recognize a thousand categories of thing in images. 
 Which probably isn't very useful unless you happen to want something that recognizes those exact thousand categories of thing. 
-But it turns out you can rather you can start with those weights in your model and then train some more epochs on your data and you'll end up with a far far more accurate model than you would if you didn't start with that pre-trained model and we'll see why in just a moment, right? But this idea of transfer learning, it's kind of, it makes intuitive sense, right? ImageNet already has some cats and some dogs in it and it's you know it can say this is a cat and this is a dog, but you want to maybe do something that recognizes lots of breeds that aren't in ImageNet. 
-Well, for it to be able to recognize cats versus dogs versus airplanes versus hammers it has to understand things like: what does metal look like? What does fur look like? What do ears look like? You know, so it can say like oh this breed of animal, this breed of dog has pointy ears and oh this thing is metal so it can't be a dog. 
+But it turns out you can rather you can start with those weights in your model and then train some more epochs on your data and you'll end up with a far far more accurate model than you would if you didn't start with that pre-trained model and we'll see why in just a moment, right?
+ But this idea of transfer learning, it's kind of, it makes intuitive sense, right? 
+ImageNet already has some cats and some dogs in it and it's you know it can say this is a cat and this is a dog, but you want to maybe do something that recognizes lots of breeds that aren't in ImageNet. 
+Well, for it to be able to recognize cats versus dogs versus airplanes versus hammers it has to understand things like: what does metal look like? 
+What does fur look like? 
+What do ears look like? 
+You know, so it can say like oh this breed of animal, this breed of dog has pointy ears and oh this thing is metal so it can't be a dog. 
 So all these kinds of concepts get implicitly learned by a pre-trained model. 
 So if you start with a pre-trained model then you don't have to learn all these features from scratch, and so transfer learning is the single most important thing for being able to use less data and less compute and get better accuracy. 
 So that's a key focus for the fastai library and a key focus for this course. 
 There's a question: I am a bit confused on the differences between loss, error, and metric. 
 Sure, so error is just one kind of metric so there's lots of different possible labels you could have. 
 Let's say you were trying to create a model which could predict how old a cat or dog is. 
-So the metric you might use is: on average, how many years were you off by? So that would be a metric. 
-On the other hand if you're trying to predict whether this is a cat or a dog your metric would be: what percentage of the time am I wrong? So that latter metric is called the error rate. 
+So the metric you might use is: on average, how many years were you off by? 
+So that would be a metric. 
+On the other hand if you're trying to predict whether this is a cat or a dog your metric would be: what percentage of the time am I wrong? 
+So that latter metric is called the error rate. 
 Okay so error is one particular metric. 
 It's a thing that measures how well you're doing and it's like it should be the thing that you most care about. 
 So you write a function or use one of fastai's predefined ones which measures how well you're doing. 
 Loss is the thing that we talked about in Lesson One so I'll give a quick summary but go back to lesson one if you don't remember. 
-Arthur Samuel talked about how a machine learning model needs some measure of performance which we can look at: when we adjust our parameters up or down does that measure of performance get better or worse? And as I mentioned earlier, some metrics possibly won't change at all if you move the parameters up and down just a little bit. 
+Arthur Samuel talked about how a machine learning model needs some measure of performance which we can look at: when we adjust our parameters up or down does that measure of performance get better or worse? 
+And as I mentioned earlier, some metrics possibly won't change at all if you move the parameters up and down just a little bit. 
 So they can't be used for this purpose of adjusting the parameters to find a better measure of performance. 
 So quite often we need to use a different function we call this the loss function and the loss function is the measure of performance that the algorithm uses to try to make the parameters better and it's something which should kind of track pretty closely to the the metric you care about but it's something which, as you change the parameters a bit, the loss should always change a bit. 
 And so there's a lot of hand waving there because we need to look at some of the math of how that works and we'll be doing that in the next couple of lessons. 
@@ -117,10 +135,14 @@ So the way by default fastai does fine tuning is that we use one epoch, which, r
 One epoch to fit just those parts of the model necessary to get the particular part of the model that's especially for your data set working. 
 And then we use as many epochs as you asked for to fit the whole model. 
 And so this is more if you for those people who might be a bit more advanced we'll see exactly how this works later on in the lessons. 
-So why does transfer learning work, and why does it work so well? The best way in my opinion to look at this is to see this paper by Zeiler and Fergus, who were actually 2012 ImageNet winners and interestingly their key insights came from their ability to visualize what's going on inside a model. 
+So why does transfer learning work, and why does it work so well? 
+The best way in my opinion to look at this is to see this paper by Zeiler and Fergus, who were actually 2012 ImageNet winners and interestingly their key insights came from their ability to visualize what's going on inside a model. 
 And so visualization very often turns out to be super important to getting great results. 
-What they were able to do was they looked -- remember I told you like a resnet 34 has 34 layers? They looked at something called AlexNet which was the previous winner of the competition, which only had seven layers. 
-At the time that was considered huge and so they took the seven layer model and they said what does the first layer of parameters look like? And they figured it out how to draw a picture of them right? And so the first layer had lots and lots of features but here are nine of them one two three four five six seven eight nine. 
+What they were able to do was they looked -- remember I told you like a resnet 34 has 34 layers? 
+They looked at something called AlexNet which was the previous winner of the competition, which only had seven layers. 
+At the time that was considered huge and so they took the seven layer model and they said what does the first layer of parameters look like? 
+And they figured it out how to draw a picture of them right? 
+And so the first layer had lots and lots of features but here are nine of them one two three four five six seven eight nine. 
 And here's what nine of those pictures look like. 
 One of them was something that could recognize diagonal lines from top left to bottom right. 
 One of them could find diagonal lines from bottom left to top right. 
@@ -179,10 +201,13 @@ So something that Sylvain points out in the book is that if you really want to m
 Perhaps for chapter one that might be a bit hard because we haven't really shown how to change things but for chapter two, which we're going to start next, you'll absolutely be able to do that. 
 Okay so let's take a 5 minute break and we'll come back at 9:55 San Francisco time.
 Okay so welcome back everybody and I think we've got a couple of questions to start with so Rachel please take it away. 
-Sure, are filters independent by that I mean if filters are pre-trained might they become less good and detecting features of previous images when fine-tuned? Oh that is a great question, so assuming I understand the question correctly, if you start with say an imagenet model and then you fine-tune it on dogs versus cats for a few epochs and you get something that's very good at recognizing dogs versus cats it's going to be much less good as an imagenet model after that, so it's not going to be very good at recognizing aeroplanes or hammers or whatever. 
+Sure, are filters independent by that I mean if filters are pre-trained might they become less good and detecting features of previous images when fine-tuned? 
+Oh that is a great question, so assuming I understand the question correctly, if you start with say an imagenet model and then you fine-tune it on dogs versus cats for a few epochs and you get something that's very good at recognizing dogs versus cats it's going to be much less good as an imagenet model after that, so it's not going to be very good at recognizing aeroplanes or hammers or whatever. 
 This is called catastrophic forgetting in the literature, the idea that as you see more images about different things to what you saw earlier that you start to forget what the things you saw earlier are. 
 So if you want to fine-tune something which is good at a new task but also continues to be good at the previous task you need to keep putting in examples of the previous task as well. 
-What are the differences between parameters and hyper parameters? If I am feeding an image of a dog as an input and then changing the hyper parameters of batch size in the model what would be an example of a parameter? So the parameters are the things that are described in lesson one that Arthur Samuel described as being the things which change what the model does, what the architecture does. 
+What are the differences between parameters and hyper parameters? 
+If I am feeding an image of a dog as an input and then changing the hyper parameters of batch size in the model what would be an example of a parameter? 
+So the parameters are the things that are described in lesson one that Arthur Samuel described as being the things which change what the model does, what the architecture does. 
 So we start with this infinitely flexible function, the thing called a neural network, that can do anything at all and the way you get it to do one thing versus another thing is by changing its parameters. 
 They are the numbers that you pass into that function so there's two types of numbers you pass into the function: there's the numbers that represent your input, like the pixels of your dog, and there's the numbers that represent their learnt parameters. 
 So in the example of something that's not a neural net, but like a checkers playing program like Arthur Samuel might have used back in the early 60s and late 50s, those parameters may have been things like: if there is a opportunity to take a piece versus an opportunity to get to the end of a board how much more value should I consider one versus the other. 
@@ -197,10 +222,14 @@ The whole book will be covered in either two or three courses.
 In the past it's generally been two courses to cover about the amount of stuff in the book but we'll see how it goes, because the book’s pretty big -- 500 pages. 
 So when you say two courses, you mean fourteen lesson? Fourteen, yes it would be like 14 or 21 lessons to get through the whole book. 
 Although having said that, by the end of the first lesson hopefully there'll be kind of like enough momentum and understanding that reading the book independently will be more useful and you'll have also kind of gained a community of folks on the forums that you can hang out with and ask questions of and so forth. 
-So in in the second part of the course we're going to be talking about putting stuff in production and so to do that, we need to understand like what are the capabilities and limitations of deep learning? What are the kinds of projects that even make sense to try to put in production? And you know one of the key things I should mention in the book and in this course is that the first two or three lessons and chapters, there's a lot of stuff which is designed not just for the coders but for, for everybody. 
+So in in the second part of the course we're going to be talking about putting stuff in production and so to do that, we need to understand like what are the capabilities and limitations of deep learning? What are the kinds of projects that even make sense to try to put in production? 
+And you know one of the key things I should mention in the book and in this course is that the first two or three lessons and chapters, there's a lot of stuff which is designed not just for the coders but for, for everybody. 
 There's lots of information about, what are the practical things you need to know to make deep learning work. 
-And so one of them, things you need to know is, “well what's deep learning actually good at at the moment?” So I'll summarize what the book says about this, but there are the kind of four key areas that we have as applications in Fastai: computer vision, text, tabular, and what I've called here “Recsys”, for recommendation systems and specifically a technique called collaborative filtering which we briefly saw... 
-Sorry another question, are there any pre-trained weights available other than the ones from Imagenet that we can use? If yes, when should we use others and when Imagenet? Oh that's a really great question. 
+And so one of them, things you need to know is, “well what's deep learning actually good at at the moment?” 
+So I'll summarize what the book says about this, but there are the kind of four key areas that we have as applications in Fastai: computer vision, text, tabular, and what I've called here “Recsys”, for recommendation systems and specifically a technique called collaborative filtering which we briefly saw... 
+Sorry another question, are there any pre-trained weights available other than the ones from Imagenet that we can use? 
+If yes, when should we use others and when Imagenet? 
+Oh that's a really great question. 
 So yes there are a lot of pre-trained models, and one way to find them.. 
 And also you're currently just showing us.. 
 Ok great. 
@@ -268,14 +297,16 @@ And so now I've got 1 2 3 4 5 6 I've got 6 kind of groups of 100 cities.
 All right and so let's stop those from randomly changing any more by just fixing them in stone there.
 Okay, so now that I've pasted them in, I've got 6 examples of what a hundred cities might look like if there was no relationship at all between temperature and R. 
 I've got their mean temperature and R in each of those six examples. 
-What I've done, is you can see here, at least for the first one, is I've plotted it, right?  You can see, in this case, there's actually a slight positive slope. 
+What I've done, is you can see here, at least for the first one, is I've plotted it, right?  
+You can see, in this case, there's actually a slight positive slope. 
 I've actually calculated the slope for each, just by using the slope function in Microsoft Excel. 
 You can see that actually, in this particular case, is just random - five times it's been negative, and it's even more negative than their 0.023. 
 So you can like, it's kind of matching our intuition here, which is that the slope of the line that we have here, is something that absolutely can often happen totally by chance. 
 It doesn't seem to be indicating any kind of real relationship at all. 
 If we wanted that slope to be more confident, we would need to look at more cities. 
 Here I've got 3,000 randomly generated numbers. 
-You can see here the slope is 0.00002, right? It's almost exactly zero, which is what we'd expect, when there's actually no relationship between C and R, and in this case there isn't - they're all random . 
+You can see here the slope is 0.00002, right? 
+It's almost exactly zero, which is what we'd expect, when there's actually no relationship between C and R, and in this case there isn't - they're all random . 
 Then if we look at lots and lots of randomly generated cities, then we can say, oh yeah, there's no slope. 
 But when you only look at a hundred, as we did here, you're going to see relationships totally coincidentally, very, very often. 
 So that's something that we need to be able to measure. 
@@ -287,13 +318,16 @@ And then we gather some data and (Rachel: have you explained what R is?) I have,
 R is the transmissibility of the virus. 
 So then we gather data of independent and dependent variables - in this case the independent variable is the thing that we think might cause the dependent variable. 
 Here the independent variable would be temperature, the dependent variable would be R. 
-So here we've gathered data - there's the data that was gathered in this example, and then we say what percentage of the time would we see this amount of relationship, which is a slope of 0.023 by chance? And as we've seen, one way to do that is by, what we would call, a simulation, which is by generating random numbers - a 100 set pairs of random numbers, a bunch of times, and seeing how often you see this relationship. 
+So here we've gathered data - there's the data that was gathered in this example, and then we say what percentage of the time would we see this amount of relationship, which is a slope of 0.023 by chance? 
+And as we've seen, one way to do that is by, what we would call, a simulation, which is by generating random numbers - a 100 set pairs of random numbers, a bunch of times, and seeing how often you see this relationship. 
 We don't actually have to do it though. 
-There's actually a simple equation we can use to jump straight to this number, which is, what percent of the time would we see that relationship by chance? And this is basically what that looks like. 
+There's actually a simple equation we can use to jump straight to this number, which is, what percent of the time would we see that relationship by chance? 
+And this is basically what that looks like. 
 We have the most likely observation, which in this case would be if there is no relationship between temperature. 
 Then the most likely slope would be zero, and sometimes you get positive slopes by chance, and sometimes you get pretty small slopes, and sometimes you get large negative slopes by chance. 
 And so, the larger the number, the less likely it is to happen, whether it be on the positive side or the negative side. 
-In our case, our question was - how often are we going to get less than negative 0.023? It would actually be somewhere down here. 
+In our case, our question was - how often are we going to get less than negative 0.023? 
+It would actually be somewhere down here. 
 I actually copy this from Wikipedia, where they were looking for positive numbers, and so they've colored in this area above the number. 
 This is the p-value, and we don't care about the math but there's a simple little equation you can use to directly figure out this number - the p-value -  from the data. 
 This is kind of how nearly all kind of medical research results tend to be shown, and folks really focus on this idea of p-values. 
@@ -322,16 +356,24 @@ And indeed, p-values appear in this paper.
 In the paper, they show the results of a multiple linear regression. 
 They put three stars next to any relationship which has a p-value of 0.01 or less. 
 There is something useful to say about a small p-value, like 0.01 or less. 
-Which is the thing that we're looking at did not, probably did not happen by chance, right? The biggest statistical error people make all the time is that they see that a p-value is not less than 0.05 and then they make the erroneous conclusion that no relationship exists, right? Which doesn't make any sense because like let's say you only had like three data points then you almost certainly won't have enough data to have a p-value of less than 0.05 for any hypothesis. 
-So like the way to check, is to go back and say, what if I picked the exact opposite null hypothesis? What if my null hypothesis was there is a relationship between temperature and R? Then do I have enough data to reject that null hypothesis, alright? And if the answer is no, then you just don't have enough data to make any conclusions at all, alright? So in this case they do have enough data to be confident that there is a relationship between temperature and R. 
+Which is the thing that we're looking at did not, probably did not happen by chance, right? 
+The biggest statistical error people make all the time is that they see that a p-value is not less than 0.05 and then they make the erroneous conclusion that no relationship exists, right? 
+Which doesn't make any sense because like let's say you only had like three data points then you almost certainly won't have enough data to have a p-value of less than 0.05 for any hypothesis. 
+So like the way to check, is to go back and say, what if I picked the exact opposite null hypothesis? 
+What if my null hypothesis was there is a relationship between temperature and R? 
+Then do I have enough data to reject that null hypothesis, alright? And if the answer is no, then you just don't have enough data to make any conclusions at all, alright? 
+So in this case they do have enough data to be confident that there is a relationship between temperature and R. 
 Now that's weird because we just looked at the graph, and we did a little back of a bit of a back-of-the-envelope in Excel and we thought this is, could it, could well be random. 
 So here's where the issue is. 
 The graph shows what we call a univariate relationship. 
 A univariate relationship shows the relationship between one independent variable and one dependent variable, and that's what you can normally show on a graph. 
 But in this case they did a multivariate model in which they looked at temperature, and humidity, and GDP per capita, and population density, and when you put all of those things into the model then you end up with statistically significant results for temperature and humidity. 
-Why does that happen? Well the reason that happens is because all these variations in the blue dots, is not random. 
-There's a reason they're different, right? And the reasons include, denser cities are going to have higher transmission, for instance, and probably more humid will have less transmission. 
-So when you do a multivariate model, it actually allows you to be more confident of your results, right? But the p-value as noted by the American Statistical Association does not tell us whether this is of practical importance. 
+Why does that happen? 
+Well the reason that happens is because all these variations in the blue dots, is not random. 
+There's a reason they're different, right? 
+And the reasons include, denser cities are going to have higher transmission, for instance, and probably more humid will have less transmission. 
+So when you do a multivariate model, it actually allows you to be more confident of your results, right? 
+But the p-value as noted by the American Statistical Association does not tell us whether this is of practical importance. 
 The thing that tells us if this is of practical as importance, is the actual slope that's found. 
 And so in this case the equation they come up with is that R = three point nine six eight minus three point O point O three eight by temperature minus point zero two four by relative humidity this is this equation is this practically important. 
 Well we can again do a little back of the envelope here, by just putting that into Excel. 
@@ -365,7 +407,9 @@ And then super important, like well, can you actually implement, you know, those
 And super super important how do you actually change things as the environment changes. 
 And, you know, interestingly a lot of these things are areas where there's not very much academic research. 
 There's a little bit. 
-And some of the papers that have been particularly around “maintenance” of like; How do you decide when your machine learning model is kind of still okay? How do you update it over time? Have had like many many many many citations, but they don't pop up very often because a lot of folks are so focused on the math. 
+And some of the papers that have been particularly around “maintenance” of like; How do you decide when your machine learning model is kind of still okay? 
+How do you update it over time? 
+Have had like many many many many citations, but they don't pop up very often because a lot of folks are so focused on the math. 
 You know. 
 And then there's the whole question of like “What constraints are in place across this whole thing?” So what you'll find in the book, is there is a whole appendix which actually goes through every one of these six things. 
 And has a whole list of examples. 
@@ -384,13 +428,19 @@ Which is to say that places that are close to each other, in this case geographi
 And so like this actually puts into the question a lot the p values that they have right. 
 Because you can't really think of these as a hundred totally separate cities. 
 Because the ones that are close to each other probably have very close behavior so maybe you should think of them as like a small number of sets of cities, you know of kind of larger geographies. 
-So these are the kinds of things that when you look actually into a model you need to like think about what are, what are the limitations?  But then to decide like well, what does that mean? What do I what do about that? You need to think of it from this kind of utility point of view, this kind of end to end, what are the actions I can take? What are the order the results point of view?  Not just null hypothesis testing. 
+So these are the kinds of things that when you look actually into a model you need to like think about what are, what are the limitations?  
+But then to decide like well, what does that mean? 
+What do I what do about that? 
+You need to think of it from this kind of utility point of view, this kind of end to end, what are the actions I can take? 
+What are the order the results point of view?  
+Not just null hypothesis testing. 
 So in this case for example there are basically four possible key ways this could end up. 
 It could end up that there really is a relationship between temperature and R, or so that's but the right hand side is. 
 Or there is no real relationship between temperature and R. 
 And we might act on the assumption that there is a relationship. 
 Or we might act on the assumption that there isn't a relationship. 
-And so you kind of want to look at each of these four possibilities and say like well what would be the economic and societal consequences?  And you know there's gonna be a huge difference in lives lost and you know economies crashing and whatever else - you know for each of these four. 
+And so you kind of want to look at each of these four possibilities and say like well what would be the economic and societal consequences?  
+And you know there's gonna be a huge difference in lives lost and you know economies crashing and whatever else - you know for each of these four. 
 The paper actually you know has shown, if their model is correct, what's the likely R value in March for like every city in the world. 
 And the likely R value in July for every city in the world. 
 And so for example if you look at kind of New England and New York, the prediction here is and also West, the other the very coast of the west coast is that in July the disease will stop spreading. 
@@ -408,7 +458,8 @@ If you assume that there will be seasonality and that summer will fix things the
 If you assume there's no seasonality and then there is, then you could end up kind of creating a larger level of expectation of destruction that actually happens and end up with your population being even more apathetic you know so that they're you know. 
 Being wrong in any direction could be a problem. 
 So one of the ways we tend to deal with this, with with this kind of modeling is we try to think about priors. 
-So our priors are basically things where we, you know rather than just having a null hypothesis, we try and start with a guess as to like well what's what's more likely?  Right so in this case if memory serves correctly I think we know that like flu viruses become inactive at 27 centigrade we know that like cold, the cold coronaviruses are seasonal. 
+So our priors are basically things where we, you know rather than just having a null hypothesis, we try and start with a guess as to like well what's what's more likely?  
+Right so in this case if memory serves correctly I think we know that like flu viruses become inactive at 27 centigrade we know that like cold, the cold coronaviruses are seasonal. 
 The 1918 flu pandemic was seasonal. 
 In every country and city that’s been studied so far, there's been quite a few studies like this. 
 They've always found climate relationships so far. 
@@ -551,7 +602,8 @@ Okay, so we're going to look at the image classifier cleaner next week.
 Let's focus on how we then get this into production. 
 So, to get it into production, we need to export the model. 
 So, what exporting the model does is that it creates a new file, which by default is called “export.pkl”, which contains the architecture and all of the parameters of the model. 
-So, that is now something that you can copy over to a server somewhere and treat it as a predefined program, right? So, then the process of using your trained model on new data kind of in production is called “inference”. 
+So, that is now something that you can copy over to a server somewhere and treat it as a predefined program, right? 
+So, then the process of using your trained model on new data kind of in production is called “inference”. 
 So, here I've created an inference learner by loading that learner back again, all right, and so obviously it doesn't make sense to do it right next to after I've saved it in a notebook. 
 But, I'm just showing you how it would work right. 
 So, this is something that you would do on your server- inference. 
