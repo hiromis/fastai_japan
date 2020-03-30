@@ -18,6 +18,8 @@ On the other hand, you might try to predict how old is the animal, or how tall i
 Anytime you're trying to predict a number, your label is a number you call that regression. 
 Okay? So those are the two main types of model classification and regressions. 
 This is very important jargon to know about. 
+
+
 So the regression model attempts to predict one or more numeric quantities such as temperature, or location, or whatever. 
 This is a bit confusing, because sometimes people use the word regression as a shortcut to a particular, for a… Like an abbreviation for a particular kind of model, called linear regression. 
 That's super confusing, because that's not what regression means. 
@@ -38,6 +40,8 @@ This is where you list the functions that you want to be the...
 That you want to be called with your data. 
 With your validation data and print it out after each epoch, and epoch is what we call it when you look at every single image in the data set once. 
 And so after you've looked at every image in the data set once we print out some information about how you're doing and the most important thing we print out is the result of calling these metrics so error rate is the name of a metric and it's a function that just prints out what percent of the validation set are being incorrectly classified by your model. 
+
+
 So our metric is a function that measures the quality of the predictions using the validation set so error rates one another common metric is accuracy which is just 1 minus error rate so very important to remember from last week we talked about loss. 
 Arthur Samuel had this important idea in machine learning that we need some way to figure out how good our how well our model is doing so that when we change the parameters we can figure out which set of parameters make that performance measurement get better or worse, that performance measurement is called the loss. 
 The loss is not necessarily the same as your metric. 
@@ -58,6 +62,8 @@ So if you want to be really rigorous about this you should actually set aside a 
 It's actually, you don't look at it until the whole project has finished. 
 And this is what's used on competition platforms like Kaggle. 
 On Kaggle, after the competition finishes your performance will be measured against a data set that you have never seen. 
+
+
 And so, that's a really helpful approach and it's actually a great idea to do that like even if you're not doing the modeling yourself. 
 So if you're if you're looking at vendors and you're just trying to decide today go with IBM or Google or Microsoft and they're all showing you how great their models are, what you should do is you should say, “Okay you go and build your models and I am going to hang on to 10% of my data and I'm not going to let you see it at all and when you're all finished, come back and then I'll run your model on the 10% of data you've never seen”. 
 Now pulling out your validation and test sets is a bit subtle though. 
@@ -78,6 +84,8 @@ Because we don't print training error so we do print at the end of each epoch th
 And if you train for long enough, that's so so if it's training mostly your training loss will go down and your validation loss will go down. 
 Because by definition, loss function is defined such as a lower loss function is a better model. 
 If you start overfitting, your training loss will keep going down, right? 
+
+
 Because like why wouldn't it? 
 You know, you're getting better and better parameters. 
 But your validation loss will start to go up because actually you started fitting to the specific data points in the training set and so it's not going to actually get better. 
@@ -98,6 +106,8 @@ So when we take that ResNet-34 that's just a just a mathematical function okay w
 There's a big data set called ImageNet, that contains 1.3 million pictures of a thousand different types of thing, whether it be mushrooms or animals or airplanes or hammers or whatever. 
 There's a competition or there used to be a competition that runs every year to see who could get the best accuracy on the ImageNet competition. 
 And the models that did really well, people would take those specific values of those parameters and they would make them available on the internet for anybody to download. 
+
+
 So if you download that you don't just have an architecture now you have a trained model. 
 You have a model that can recognize a thousand categories of thing in images. 
 Which probably isn't very useful unless you happen to want something that recognizes those exact thousand categories of thing. 
@@ -118,6 +128,8 @@ So the metric you might use is: on average, how many years were you off by?
 So that would be a metric. 
 On the other hand if you're trying to predict whether this is a cat or a dog your metric would be: what percentage of the time am I wrong? 
 So that latter metric is called the error rate. 
+
+
 Okay so error is one particular metric. 
 It's a thing that measures how well you're doing and it's like it should be the thing that you most care about. 
 So you write a function or use one of fastai's predefined ones which measures how well you're doing. 
@@ -138,6 +150,8 @@ And so this is more if you for those people who might be a bit more advanced we'
 So why does transfer learning work, and why does it work so well? 
 The best way in my opinion to look at this is to see this paper by Zeiler and Fergus, who were actually 2012 ImageNet winners and interestingly their key insights came from their ability to visualize what's going on inside a model. 
 And so visualization very often turns out to be super important to getting great results. 
+
+
 What they were able to do was they looked -- remember I told you like a resnet 34 has 34 layers? 
 They looked at something called AlexNet which was the previous winner of the competition, which only had seven layers. 
 At the time that was considered huge and so they took the seven layer model and they said what does the first layer of parameters look like? 
@@ -158,6 +172,8 @@ This is layer 2, layer 2 takes the features of layer 1 and combines them.
 so it can not just find edges that can find corners or repeating curving patterns or semi circles or full circles. 
 And so you can see for example here's a, it's kind of hard to exactly visualize these layers after layer 1. 
 You kind of have to show examples of what the filters look like. 
+
+
 But here you can see examples of parts of photos that these, this layer 2 circular filter has activated on. 
 And as you can see it's found things, with circles. 
 So interestingly this one which is this kind of blotchy gradient seems to be very good at finding sunsets. 
@@ -178,6 +194,8 @@ So it can certainly do that.
 So layer four gets to combine all the filters from layer three anyway at once. 
 And so by layer four we have something that can find dog faces for instance. 
 So you can kind of see how each layer we get like more applicatively more sophisticated features. 
+
+
 And so that's why these deep neural networks can be so incredibly powerful. 
 It's also why transfer learning can work so well. 
 Because like, if we wanted something that can find books. 
@@ -198,6 +216,8 @@ So go through it and anything that you're not sure about, the answer is in the t
 There's also a further research section after each questionnaire, for the first couple of chapters they're actually pretty simple hopefully they're pretty fun and interesting; they're things where to answer the question it's not enough to just look in the chapter, you actually have to go and do your own thinking and experimenting and googling and so forth. 
 In later chapters some of these further research things are pretty significant projects that might take a few days or even weeks and so check them out because hopefully they'll be a great way to expand your understanding of the material. 
 So something that Sylvain points out in the book is that if you really want to make the most of this then after each chapter please take the time to experiment with your own project and within the books we provide and then see if you can redo the notebooks on a new dataset. 
+
+
 Perhaps for chapter one that might be a bit hard because we haven't really shown how to change things but for chapter two, which we're going to start next, you'll absolutely be able to do that. 
 Okay so let's take a 5 minute break and we'll come back at 9:55 San Francisco time.
 Okay so welcome back everybody and I think we've got a couple of questions to start with so Rachel please take it away. 
@@ -218,6 +238,8 @@ There's a question, “I'm curious about the pacing of this course.
 I'm concerned that all the material may not be covered.” Depends what you mean by all the material. 
 We certainly won't cover everything in the world, so yeah we'll cover what we can. 
 We’ll cover what we can in seven lessons; we're certainly not covering the whole book if that's what you're wondering. 
+
+
 The whole book will be covered in either two or three courses. 
 In the past it's generally been two courses to cover about the amount of stuff in the book but we'll see how it goes, because the book’s pretty big -- 500 pages. 
 So when you say two courses, you mean fourteen lesson? Fourteen, yes it would be like 14 or 21 lessons to get through the whole book. 
@@ -238,6 +260,8 @@ And so here's lots of models zoos.
 Or you can look for pre-trained models. 
 And so yeah, there's quite a few, unfortunately not as wide a variety as I would like that most is still on Imagenet or similar kinds of general photos. 
 For example medical imaging there's hardly any. 
+
+
 There's a lot of opportunities for people to create domain-specific pre-trained models it's it's still an area that's really underdone because not enough people are working on transfer learning. 
 Okay, so as I was mentioning we've kind of got these four applications that we've talked about a bit and deep learning is pretty, you know, pretty good at all of those tabular data like spreadsheets and database tables is an area where deep learning is not always the best choice but it's particularly good for things involving high cardinality variables, that means variables that have like lots and lots of discrete levels like zip code or product ID or something like that. 
 Deep learning is really pretty great for those in particular. 
@@ -258,6 +282,8 @@ So I bought a Terry Pratchett book and then Amazon tried for months to get me to
 Now that must be because their predictive model said that people who bought one particular Terry Pratchett book are likely to also buy a other Terry Pratchett books. 
 But from the point of view of like well is this going to change my buying behavior: probably not, right, like if I liked that book I already know I like that author and I already know that like they probably wrote other things so I'll go and buy it anyway. 
 So this would be an example of like Amazon probably not being very smart, up here they're actually showing me collaborative filtering predictions rather than actually figuring out how to optimize a recommendation. 
+
+
 So an optimized recommendation would be something more like your local human bookseller might do, where they might say, “Oh! you like Terry Pratchett, well let me tell you about other kind of comedy fantasy sci-fi writers on the similar vein who you might not have heard about before”. 
 So the difference between recommendations and predictions is super important. 
 So I wanted to talk about a really important issue around interpreting models and for a case study for this I thought we let's pick something that's actually super important right now which is a model in this paper. 
@@ -278,6 +304,8 @@ So here is a spreadsheet.
 What I did was I kind of eyeballed this data and I guessed what is the mean degrees centigrade. 
 I think it's about 5. 
 What about the standard deviation of centigrade. 
+
+
 I think it's probably about 5 as well. 
 And then I did the same thing for R. 
 I think the mean R looks like it's about 1.9 to me. 
@@ -298,6 +326,8 @@ All right and so let's stop those from randomly changing any more by just fixing
 Okay, so now that I've pasted them in, I've got 6 examples of what a hundred cities might look like if there was no relationship at all between temperature and R. 
 I've got their mean temperature and R in each of those six examples. 
 What I've done, is you can see here, at least for the first one, is I've plotted it, right?  
+
+
 You can see, in this case, there's actually a slight positive slope. 
 I've actually calculated the slope for each, just by using the slope function in Microsoft Excel. 
 You can see that actually, in this particular case, is just random - five times it's been negative, and it's even more negative than their 0.023. 
@@ -318,6 +348,8 @@ And then we gather some data and (Rachel: have you explained what R is?) I have,
 R is the transmissibility of the virus. 
 So then we gather data of independent and dependent variables - in this case the independent variable is the thing that we think might cause the dependent variable. 
 Here the independent variable would be temperature, the dependent variable would be R. 
+
+
 So here we've gathered data - there's the data that was gathered in this example, and then we say what percentage of the time would we see this amount of relationship, which is a slope of 0.023 by chance? 
 And as we've seen, one way to do that is by, what we would call, a simulation, which is by generating random numbers - a 100 set pairs of random numbers, a bunch of times, and seeing how often you see this relationship. 
 We don't actually have to do it though. 
@@ -338,6 +370,8 @@ Here's the thing - they are terrible.
 You almost always shouldn't be using them. 
 Don't just trust me. 
 Trust the American Statistical Association. 
+
+
 They point out six things about p-values, and those include: p-values do not measure the probability that the hypothesis is true, or,  the probability that the data were produced by random choice alone. 
 Now we know this because we just saw that, if we use more data, if we sample three thousand random cities rather than a hundred, we get a much smaller value. 
 So p-values don't just tell you about how big a relationship is, but they actually tell you about a combination of that, and, how much data did you collect. 
@@ -358,6 +392,8 @@ They put three stars next to any relationship which has a p-value of 0.01 or les
 There is something useful to say about a small p-value, like 0.01 or less. 
 Which is the thing that we're looking at did not, probably did not happen by chance, right? 
 The biggest statistical error people make all the time is that they see that a p-value is not less than 0.05 and then they make the erroneous conclusion that no relationship exists, right? 
+
+
 Which doesn't make any sense because like let's say you only had like three data points then you almost certainly won't have enough data to have a p-value of less than 0.05 for any hypothesis. 
 So like the way to check, is to go back and say, what if I picked the exact opposite null hypothesis? 
 What if my null hypothesis was there is a relationship between temperature and R? 
@@ -378,6 +414,8 @@ The thing that tells us if this is of practical as importance, is the actual slo
 And so in this case the equation they come up with is that R = three point nine six eight minus three point O point O three eight by temperature minus point zero two four by relative humidity this is this equation is this practically important. 
 Well we can again do a little back of the envelope here, by just putting that into Excel. 
 Let's say there was one place it had a temperature of ten centigrade and a humidity of forty, then if this equation is correct R would be about two point seven somewhere with the temperature of 35 centigrade and a humidity of eighty will be about point eight. 
+
+
 So is this practically important? Oh my god yes, right? 
 Two different cities, with different climates can be, if they're the same in every other way, and this model is correct then one city would have no spread of disease (because R is less than 1), one would have massive exponential explosion. 
 So we can see from this model that if the modeling is correct, then this is a highly practically significant result. 
@@ -398,6 +436,8 @@ So to link up there kind of the levers to the objective via the data we collect,
 And this is all like it seems pretty obvious when you say it like this but when we started work with Optimal Decisions in 1999, nobody was doing this in insurance,
 Everybody in insurance was simply doing a predictive model to guess how likely people were to crash their car, and then pricing was set by like adding 20% or whatever.
 It was just done in a very kind of naive way.
+
+
 So what I did is I, you know, over many years took this basic process and tried to help lots of companies figure out how to use it to turn predictive models into actions.
 So the starting point in like actually getting value in a particular model is thinking about what is it you're trying to do, and you know what are the sources of value in that thing you're trying to do.
 The levers - what are the things you can change? 
@@ -418,6 +458,8 @@ And lots of questions that companies and organizations can use to try and think 
 We have a question. 
 Sure, just a moment. 
 So I was going to say, so do check out this appendix because it actually originally appeared as a blog post and I think, except for my covid-19 posts that I did with Rachel, it's actually the most popular blog post I've ever written. 
+
+
 It’s had hundreds of thousands of views. 
 And it kind of represents like 20 years of hard won insights about like how you actually get value from machine learning and practice and what you actually have to ask. 
 So please check it out because hopefully you'll find it helpful. 
@@ -438,6 +480,8 @@ So in this case for example there are basically four possible key ways this coul
 It could end up that there really is a relationship between temperature and R, or so that's but the right hand side is. 
 Or there is no real relationship between temperature and R. 
 And we might act on the assumption that there is a relationship. 
+
+
 Or we might act on the assumption that there isn't a relationship. 
 And so you kind of want to look at each of these four possibilities and say like well what would be the economic and societal consequences?  
 And you know there's gonna be a huge difference in lives lost and you know economies crashing and whatever else - you know for each of these four. 
@@ -458,6 +502,8 @@ If you assume that there will be seasonality and that summer will fix things the
 If you assume there's no seasonality and then there is, then you could end up kind of creating a larger level of expectation of destruction that actually happens and end up with your population being even more apathetic you know so that they're you know. 
 Being wrong in any direction could be a problem. 
 So one of the ways we tend to deal with this, with with this kind of modeling is we try to think about priors. 
+
+
 So our priors are basically things where we, you know rather than just having a null hypothesis, we try and start with a guess as to like well what's what's more likely?  
 Right so in this case if memory serves correctly I think we know that like flu viruses become inactive at 27 centigrade we know that like cold, the cold coronaviruses are seasonal. 
 The 1918 flu pandemic was seasonal. 
@@ -478,6 +524,8 @@ So that from there, you can kind of build on top of it, as you like.
 So to do that; we are going to download and curate our own dataset. 
 And you're going to do the same thing. 
 You're going to train your own model, on that dataset, and then you're going to create an application, and then you're going to host it. 
+
+
 Right? Now, there're lots of ways to curate an image dataset; you might have some photos on your own computer, there might be stuff at work you can use. 
 One of the easiest though, is just to download stuff off the internet. 
 There’s lots of services for downloading stuff off the internet. 
@@ -498,6 +546,8 @@ So we're going to start from the assumption that you've already signed up.
 But you can find it, just go: Bing, Bing Image Search API. 
 And at the moment they give you seven days with a pretty high quota for free. 
 And then after that, you can keep using it as long as you like but they kind of limit it to like three transactions per second or something. 
+
+
 Which is still plenty. 
 You can still do thousands for free so it's at the moment it's pretty great even for free. 
 So what will happen is when you sign up for Bing Image Search, or any of these kind of services, they'll give you an API key. 
@@ -518,6 +568,8 @@ So after that I can call get_image_files which is a fast.ai function that will j
 And you can see it's given me bears/black/ and then lots of numbers. 
 So one of the things you have to be careful of is that a lot of the stuff you download will turn out to be like not images at all and will break. 
 So you can call verify_images to check that all of these file names are actual images. 
+
+
 And in this case I didn't have any failed, so there's it's empty. 
 But if you did have some, then you would call Path.unlink to unlink. 
 Path.unlink is part of the Python standard library and it deletes a file. 
@@ -538,6 +590,8 @@ You tell fast.ai what your independent variable is and what your dependent varia
 So what your labels are and what your input data is. 
 So in this case our input data are images and our labels are categories. 
 So category is going to be either grizzly, or black, or teddy. 
+
+
 So that's the first thing you tell it. 
 Now that's the block's parameter. 
 And then you tell it - how do you get a list of all of the, in this case file names, right. 
@@ -558,6 +612,8 @@ That these are basically functions that get applied to each image.
 And so each image is going to be resized to 128 by 128 square. 
 So we're going to be learning more about DataBlock API soon. 
 But basically the process is going to be -- it's going to call whatever is get_items, which is a list of image files. 
+
+
 And then it’s going to call get_x,  get_y so in this case  there's no get_x but there is a get_y so it's just parent label. 
 And then it's going to call the create method for each of these two things - it's going to create an image and it's going to create a category. 
 And so I'm going to call the item_tfms,  which is resize. 
@@ -578,6 +634,8 @@ So the details don't matter, I just wanted to point out that like a lot of these
 It's literally something that you just pass in a few data loaders to and it stores them in an attribute. 
 And pass and gives you the first one back as .train and second one back as .valid. 
 So we can create our DataLoaders by first of all creating the DataBlock ,and then we call the DataLoaders, passing in our path to create DLs. 
+
+
 And then you can call show_batch on that. 
 You can call show_batch pretty much anything in fast.ai to see your data. 
 And look, we've got some grizzlies, we've got a teddy, we've got a grizzly. 
@@ -598,6 +656,8 @@ This one was the one that's predicted to be a black bear and the label was “gr
 These ones here are not actually wrong. 
 This is predicted to be “black” and it's actually black. 
 But, the reason they appear in this is because these are the ones that the model was the least confident about. 
+
+
 Okay, so we're going to look at the image classifier cleaner next week. 
 Let's focus on how we then get this into production. 
 So, to get it into production, we need to export the model. 
