@@ -1,0 +1,3446 @@
+0:00:00.520,0:00:04.020
+So, uh, hello everybody and welcome back to
+
+0:00:04.690,0:00:07.319
+Practical deep learning for coders. This is lesson two
+
+0:00:08.260,0:00:10.000
+and
+
+0:00:10.000,0:00:12.599
+and in the last lesson we
+
+0:00:13.570,0:00:19.500
+Started training our first models. We didn't really have any idea how that training was really working
+
+0:00:19.500,0:00:22.439
+But we were looking at a high-level at what was going on
+
+0:00:23.109,0:00:24.519
+and
+
+0:00:24.519,0:00:26.519
+We learned about
+
+0:00:26.560,0:00:28.240
+what is
+
+0:00:28.240,0:00:30.510
+Machine learning and how does that work?
+
+0:00:31.390,0:00:33.390
+and
+
+0:00:34.180,0:00:35.860
+We
+
+0:00:35.860,0:00:37.420
+realized that
+
+0:00:37.420,0:00:43.260
+Based on how machine learning worked that there are some fundamental limitations on on what it can do
+
+0:00:43.719,0:00:46.259
+And we've talked about some of those limitations now
+
+0:00:46.260,0:00:50.820
+We also talked about how after you've trained a machine learning model you end up with a program
+
+0:00:51.309,0:00:56.249
+which behaves much like a normal program or something with the inputs and a thing in the middle and
+
+0:00:56.829,0:00:58.449
+outputs
+
+0:00:58.449,0:01:00.449
+so today we're gonna
+
+0:01:00.850,0:01:02.850
+finish up talking about
+
+0:01:03.280,0:01:05.820
+Talking about that and we're going to then look at how we get those
+
+0:01:06.400,0:01:09.119
+Models into production and what some of the issues with doing that?
+
+0:01:10.000,0:01:12.000
+might be I
+
+0:01:12.939,0:01:14.939
+Wanted to remind you that there are
+
+0:01:15.369,0:01:19.438
+Two sets of books. I sorry two sets of notebooks available to you
+
+0:01:20.590,0:01:23.100
+One is the the the fast book
+
+0:01:24.009,0:01:29.249
+Repo the full actual notebooks containing all the text of the O'Reilly book
+
+0:01:30.220,0:01:32.939
+and so this lets you see
+
+0:01:33.460,0:01:35.939
+Everything that I'm telling you in much more detail
+
+0:01:36.430,0:01:43.319
+And then as well as that there's the course v4 repo which contains exactly the same notebooks
+
+0:01:43.320,0:01:46.680
+But with all the pros stripped away to help you study
+
+0:01:47.140,0:01:52.439
+so that's where you really want to be doing your experiment and your practice and so maybe as you
+
+0:01:52.780,0:01:58.949
+Listen to the video. You can kind of switch back and forth between the video and reading or do one and then the other
+
+0:01:59.530,0:02:04.320
+And then put it away and have a look at the course fee for notebooks and try to remember like okay
+
+0:02:04.320,0:02:09.239
+What was this section about and run the code and see what happens and change it and so forth
+
+0:02:11.830,0:02:13.830
+So we were looking at
+
+0:02:16.780,0:02:19.860
+This line of code where we looked at how we created
+
+0:02:20.800,0:02:22.800
+our our data
+
+0:02:23.080,0:02:26.790
+by passing in information, perhaps most importantly
+
+0:02:27.370,0:02:31.230
+Some way to label the data and we talked about the importance of labeling
+
+0:02:31.230,0:02:35.250
+And in this case this particular data set whether it's a cat or a dog
+
+0:02:35.290,0:02:39.059
+You can tell by whether it's an uppercase or a lowercase letter in the first
+
+0:02:39.970,0:02:43.139
+Position that's just how this data set if they tell you when the readme works
+
+0:02:44.320,0:02:50.699
+And we are also looked particularly at this idea of valid percent equals zero point two and like what does that mean?
+
+0:02:50.700,0:02:55.679
+It creates a validation set and that was something I wanted to talk more about
+
+0:02:56.740,0:03:00.540
+The first thing I do want to do though is point out that this particular
+
+0:03:04.330,0:03:07.320
+Labeling function returns something that's either true or false
+
+0:03:09.610,0:03:15.179
+And actually this data set as we'll see later also tells also contains the actual breed of
+
+0:03:15.910,0:03:20.429
+37 different cat and dog breeds so you can you can also grab that from the filename
+
+0:03:21.910,0:03:29.249
+In each of those two cases. We're trying to predict a category. Is it a cat or is it a dog or is it a
+
+0:03:30.190,0:03:34.739
+German Shepherd or a beagle or a ragdoll cat or whatever?
+
+0:03:35.440,0:03:42.389
+When you're trying to predict a category, so when the label is a category, we call that a classification model
+
+0:03:43.750,0:03:45.519
+on the other hand
+
+0:03:45.519,0:03:50.879
+You might try to predict. How old is the animal or how tall is it?
+
+0:03:51.640,0:03:52.959
+or
+
+0:03:52.959,0:03:58.469
+Something like that, which is like a continuous number that could be like 13.2 or 26.5 or whatever
+
+0:03:59.110,0:04:05.729
+Anytime you're trying to predict a number your label is a number you call that regression, okay?
+
+0:04:05.730,0:04:07.860
+So those are the two main types of model
+
+0:04:08.410,0:04:13.919
+Classification and regressions. This is very important. Jargon to know about so the regression model
+
+0:04:14.769,0:04:19.379
+Attempts to predict one or more numeric quantities such as temperature or location or whatever
+
+0:04:20.400,0:04:27.229
+this is a bit confusing because sometimes people use the word regression as a shortcut to a particular a like a
+
+0:04:27.810,0:04:31.310
+abbreviation for a particular kind of model called linear regression
+
+0:04:33.180,0:04:39.139
+That's super confusing because that's not what regression means linear regression is just a particular kind of regression
+
+0:04:39.419,0:04:43.189
+but I just wanted to warn you of that when you start talking about regression a lot of
+
+0:04:44.580,0:04:48.590
+People will assume you're talking about linear regression even though that's not what the word means
+
+0:04:50.790,0:04:57.589
+All right, so I wanted to talk about this valid percent zero point two thing, so as we described valid percent
+
+0:04:58.470,0:05:04.850
+grabs in this case twenty percent of the data if it's zero point two and puts it aside like in a separate bucket and
+
+0:05:05.220,0:05:07.220
+Then when you train your model
+
+0:05:07.650,0:05:10.190
+Your model doesn't get to look at that data at all
+
+0:05:10.770,0:05:17.780
+That data is only used to decide to show you how accurate your model is
+
+0:05:20.010,0:05:22.010
+So if you train for too long
+
+0:05:23.070,0:05:27.229
+And or with not enough data and/or a model with too many parameters
+
+0:05:27.599,0:05:33.889
+After a while the accuracy of your model will actually get worse and this is called overfitting
+
+0:05:34.349,0:05:38.419
+Right. So we use the validation set to ensure that we're not
+
+0:05:38.940,0:05:40.940
+overfitting the
+
+0:05:42.000,0:05:45.019
+Next line of code that we looked at is this one
+
+0:05:45.750,0:05:51.500
+where we created something called a learner we'll be learning a lot more about that that a learner is basically more is
+
+0:05:51.780,0:05:53.780
+something which contains your data and
+
+0:05:54.990,0:05:56.130
+your
+
+0:05:56.130,0:05:59.630
+Architecture that is the mathematical function that you're optimizing
+
+0:06:00.630,0:06:07.699
+And so a learner is the thing that tries to figure out what are the parameters which best cause this function?
+
+0:06:07.949,0:06:11.779
+To match the labels in this data
+
+0:06:12.449,0:06:14.689
+so we're talking a lot more about that, but basically
+
+0:06:15.240,0:06:19.760
+This particular function resinate 34 is the name of a particular architecture
+
+0:06:19.979,0:06:23.449
+Which is just very good for computer vision problems
+
+0:06:24.030,0:06:24.930
+in fact
+
+0:06:24.930,0:06:30.829
+The name really is ResNet and then 34 tells you how many layers there are so you can use ones with bigger numbers
+
+0:06:31.080,0:06:38.330
+Here to get more parameters that will take to train take more memory more likely to overfit that could also
+
+0:06:39.990,0:06:41.990
+Create more complex models
+
+0:06:42.480,0:06:46.759
+Right now though. I wanted to focus on this part here, which is metrics equals error rate
+
+0:06:47.580,0:06:54.199
+this is where you list the functions that you want to be the that you want to be called with your data with your
+
+0:06:54.330,0:06:56.330
+Validation data and print it out
+
+0:06:56.430,0:06:58.430
+after each epoch and
+
+0:06:58.770,0:07:00.120
+epoch is
+
+0:07:00.120,0:07:04.730
+is what we call it when you look at every single image in the data set once and
+
+0:07:05.670,0:07:12.259
+so after you've looked at every image in the data set once we print out some information about how you're doing and
+
+0:07:12.450,0:07:17.300
+The most important thing we print out is the result of calling these metrics
+
+0:07:17.550,0:07:23.240
+so error rate is the name of a metric and it's a function that just prints out what percent of the
+
+0:07:23.520,0:07:26.570
+Validation set are being incorrectly classified by your model
+
+0:07:28.920,0:07:34.820
+So our metrics a function that measures the quality of the predictions using the validation set
+
+0:07:35.370,0:07:40.370
+So error rates one another common metric is accuracy, which is just 1 minus error rate
+
+0:07:41.190,0:07:45.410
+So very important to remember from last week. We talked about loss
+
+0:07:46.680,0:07:53.329
+Arthur Samuel had this important idea in machine learning that we need some way to figure out how
+
+0:07:54.300,0:08:01.759
+Good our how well our model is doing so that when we change the parameters we can figure out which set of parameters make that
+
+0:08:02.880,0:08:04.880
+Performance measurement get better or worse
+
+0:08:05.190,0:08:07.669
+That performance measurement is called the loss
+
+0:08:08.190,0:08:09.900
+the loss is
+
+0:08:09.900,0:08:13.489
+Not necessarily the same as your metric
+
+0:08:14.670,0:08:19.850
+the reason why is a bit subtle and we'll be seeing it in a lot of detail once we delve into the math in the
+
+0:08:19.850,0:08:21.850
+coming lessons, but basically
+
+0:08:22.560,0:08:26.869
+You need a function. You need a loss function
+
+0:08:27.390,0:08:33.470
+Where if you change the parameters by just a little bit up or just a little bit down you can see if the loss gets
+
+0:08:33.470,0:08:39.739
+A little bit better or a little bit worse and it turns out that error rate and accuracy doesn't tell you that at all
+
+0:08:39.990,0:08:43.370
+Because you might change the parameters base much such a small amount
+
+0:08:43.920,0:08:49.499
+That none of your dog's predictions start becoming hats and none of your cat predictions start becoming dogs
+
+0:08:49.500,0:08:53.609
+So like your predictions don't change and your error rate doesn't change so
+
+0:08:54.400,0:08:59.249
+Loss and metric are closely related, but the metric is the thing that you care about
+
+0:08:59.980,0:09:07.110
+The loss is the thing which your computer is using as the measurement of performance to decide how to update your parameters
+
+0:09:08.920,0:09:10.920
+So we measure
+
+0:09:11.860,0:09:17.490
+Overfitting by looking at the metrics on the validation set so fast AI
+
+0:09:17.860,0:09:21.210
+always uses the validation set to print out your metrics and
+
+0:09:22.480,0:09:29.970
+Overfitting is like the key thing that machine learning is about it's all about. How do we find a model?
+
+0:09:30.640,0:09:37.949
+Which fits the data not just for the data that we're training with but for data that the training algorithm hasn't seen before
+
+0:09:41.170,0:09:42.760
+So
+
+0:09:42.760,0:09:43.960
+overfitting
+
+0:09:43.960,0:09:45.520
+results when
+
+0:09:45.520,0:09:47.520
+our model is basically
+
+0:09:47.890,0:09:51.059
+Cheating a model can cheat by saying
+
+0:09:51.060,0:09:51.670
+Oh
+
+0:09:51.670,0:09:56.969
+I've seen this exact picture before and I remember that that's a picture of a cat
+
+0:09:57.400,0:10:00.719
+So it might not have learnt what cats look like in general
+
+0:10:00.720,0:10:01.360
+It just remembers
+
+0:10:01.360,0:10:07.050
+you know that images one four and eight cats and two and three and five dogs and
+
+0:10:07.450,0:10:12.989
+Learns nothing actually about what they really look like. So that's the kind of cheating that we're trying to avoid
+
+0:10:12.990,0:10:14.990
+we don't want it to memorize our
+
+0:10:15.250,0:10:17.250
+particular data set
+
+0:10:17.980,0:10:19.980
+So we sped off our validation data
+
+0:10:20.530,0:10:25.559
+And what most of this are these words you're seeing on the screen are from the book. Okay, so I just copied and pasted them
+
+0:10:26.950,0:10:29.009
+so if we split off our validation data
+
+0:10:30.010,0:10:35.729
+And make sure that our model sees it during training. It's completely untainted by it so we can't possibly cheat
+
+0:10:36.790,0:10:38.849
+Not quite true we can cheat
+
+0:10:39.460,0:10:45.599
+The way we could cheat is we could run we could fit a model look at the result and the validation set
+
+0:10:46.120,0:10:48.719
+Change something a little bit fit another model
+
+0:10:48.720,0:10:52.200
+Look at the validation set change something a little bit we could do that like a hundred times
+
+0:10:53.050,0:10:55.770
+Until we find something with the validation set looks the best
+
+0:10:56.350,0:10:58.710
+But now we might have fit to the validation set
+
+0:10:59.230,0:11:04.779
+Right. So if you want to be really rigorous about this, you should actually set aside a third
+
+0:11:05.330,0:11:11.470
+Bit of data called the test set that is not used for training and it's not used for your metrics
+
+0:11:12.320,0:11:15.249
+It's actually you don't look at it until the Haab projects finished
+
+0:11:15.920,0:11:19.149
+And this is what's used on competition platforms like Kegel
+
+0:11:20.060,0:11:23.380
+on Kegel after the competition finishes
+
+0:11:24.200,0:11:26.560
+Your performance will be measured
+
+0:11:27.260,0:11:29.500
+Against a data set that you have never seen
+
+0:11:30.410,0:11:32.410
+and so
+
+0:11:32.990,0:11:34.990
+That's a really helpful
+
+0:11:35.390,0:11:40.030
+Approach and it's actually a great idea to do that. Like even if you're not doing the modeling yourself
+
+0:11:40.700,0:11:42.230
+so if you're
+
+0:11:42.230,0:11:44.529
+If you're looking at vendors
+
+0:11:44.530,0:11:51.550
+And you're just trying to decide today go with IBM or Google or Microsoft and they're all showing you how great their models are
+
+0:11:52.820,0:11:56.379
+What you should do is you should say okay you go and build your models
+
+0:11:56.780,0:12:02.019
+And I am going to hang on to 10% of my data and I'm not going to let you see it at all
+
+0:12:02.450,0:12:08.050
+And when you're all finished to come back and then I'll run your model on the tip as 10% of data. You've never seen
+
+0:12:09.320,0:12:11.320
+now
+
+0:12:12.470,0:12:14.210
+Pulling out your
+
+0:12:14.210,0:12:16.840
+Validation and test sets is a bit subtle, though
+
+0:12:17.690,0:12:22.149
+here's an example of a simple little data set and this comes from a
+
+0:12:23.000,0:12:28.419
+Fantastic blog post that Rachel wrote that we will link to about creating effective validation sets
+
+0:12:29.390,0:12:35.170
+And you can see basically you have some kind of seasonal data set here. Now if you just say
+
+0:12:35.750,0:12:38.529
+okay, first day I want to model that I want to create a
+
+0:12:39.230,0:12:43.570
+My data loader using a valid percent of 0.2
+
+0:12:44.420,0:12:48.250
+It would do this. It would delete randomly some of the dots
+
+0:12:49.190,0:12:51.190
+right now
+
+0:12:51.380,0:12:53.210
+This isn't very helpful
+
+0:12:53.210,0:12:58.449
+Because it's we can still cheat because these dots are right in the middle of other dots
+
+0:12:58.940,0:13:00.670
+And this isn't what would happen in practice?
+
+0:13:00.670,0:13:05.110
+What would happen in practice is we would want to predict this is sales by date, right?
+
+0:13:05.110,0:13:08.620
+We want to predict the sales for next week. Not the sales for
+
+0:13:09.200,0:13:12.539
+14 days ago 18 days ago and 29 days ago, okay
+
+0:13:13.089,0:13:18.178
+So what you actually need to do to create an effective validation set here is not do it randomly. But instead
+
+0:13:19.179,0:13:20.649
+chop off
+
+0:13:20.649,0:13:22.149
+the end
+
+0:13:22.149,0:13:29.368
+Right. And so this is what happens in all kaggle competitions pretty much that involve time for instance is the thing that you have to
+
+0:13:29.369,0:13:34.979
+Predict is the next like two weeks or so after the last data point that they give you
+
+0:13:35.889,0:13:38.459
+And this is what you should do also for your test set
+
+0:13:38.920,0:13:42.569
+So again, if you've got vendors that you're looking at you should say to them
+
+0:13:42.569,0:13:48.269
+Okay, after you're all done modeling, we're going to check your model against a data
+
+0:13:48.269,0:13:50.789
+that is one week later than you've ever seen before and
+
+0:13:51.339,0:13:55.018
+You won't be able to retrain or anything because that's what happens in practice, right?
+
+0:13:56.619,0:14:00.119
+Oops, there's a question. I've heard people describe
+
+0:14:00.639,0:14:07.048
+Overfitting as training error being below validation error. Does this rule of thumb end up being roughly the same as yours?
+
+0:14:07.569,0:14:09.420
+Okay, so that's a great question
+
+0:14:09.420,0:14:14.429
+So I think what they mean, there is training loss versus validation loss
+
+0:14:15.189,0:14:17.519
+Because we don't print training error
+
+0:14:18.040,0:14:24.449
+so we do print at the end of each epoch the value of your loss function for the training set and the value of the
+
+0:14:24.449,0:14:26.789
+loss function for the validation set and
+
+0:14:28.329,0:14:32.428
+If you train for long enough that's so so if it's training mostly
+
+0:14:33.160,0:14:36.449
+Your training loss will go down and your validation loss will go down
+
+0:14:37.480,0:14:39.480
+because by definition
+
+0:14:40.989,0:14:45.449
+Loss function is to find such as a lower loss function is a better model
+
+0:14:46.329,0:14:48.329
+if you start overfitting
+
+0:14:48.369,0:14:55.949
+Your training loss will keep going down. Right because like why wouldn't it, you know, you're getting better and better parameters
+
+0:14:57.790,0:15:00.360
+But your validation loss will start to go up
+
+0:15:01.149,0:15:06.928
+Because actually you started fitting to the specific data points in the training set. And so it's not going to actually get better
+
+0:15:06.929,0:15:10.319
+It's going to get it's not going to get better for the validation set. It'll start to get worse
+
+0:15:11.470,0:15:13.329
+however
+
+0:15:13.329,0:15:14.769
+That does not
+
+0:15:14.769,0:15:20.128
+Necessarily mean that you're overfitting or at least not overfitting in a bad way as we'll see
+
+0:15:20.379,0:15:23.639
+It's actually possible to be at a point where the validation
+
+0:15:24.279,0:15:30.118
+Loss is getting worse but the validation accuracy or error or metric is still improving
+
+0:15:31.269,0:15:33.220
+So I'm not going to describe
+
+0:15:33.220,0:15:37.290
+How that would happen mathematically yet because we need to learn more about loss functions
+
+0:15:37.290,0:15:43.379
+But we will but for now just realize that the important thing to look at is your metric
+
+0:15:44.110,0:15:48.389
+Getting worse not your loss function getting worse
+
+0:15:49.749,0:15:51.749
+Thank you for that. Fantastic question
+
+0:15:55.689,0:16:03.178
+The next important thing we need to learn about is called transfer learning. So the next line of code said learned fine tuned
+
+0:16:03.699,0:16:05.699
+Why does it say learn dot fine to?
+
+0:16:06.220,0:16:08.459
+Fine tune is what we do when we are
+
+0:16:08.980,0:16:16.559
+Transfer learning so transfer learning is using a pre trained model for a task that is different to what it was originally trained for
+
+0:16:16.809,0:16:23.969
+So more. Jargon to understand our jargon, let's look at that. What's a pre trained model? So what happens is remember?
+
+0:16:23.970,0:16:26.850
+I told you the architecture we're using is called resonate 34
+
+0:16:27.819,0:16:32.279
+So when we take that resonate 34, that's just a just a mathematical function
+
+0:16:32.619,0:16:37.169
+Okay with lots of parameters that we're going to fit using machine learning
+
+0:16:40.420,0:16:46.649
+There's a big data set called imagenet that contains 1.3 million pictures of a thousand different types of thing
+
+0:16:47.949,0:16:52.618
+Mushrooms or animals or aeroplanes or hammers or whatever?
+
+0:16:54.730,0:16:59.189
+There's a competition or they used to be a competition that runs every year to see who could get the best
+
+0:16:59.529,0:17:03.448
+Accuracy on the imagenet competition and the models that did really well
+
+0:17:04.240,0:17:05.889
+people would take
+
+0:17:05.889,0:17:12.359
+Those specific values of those parameters and they would make them available on the internet for anybody to download
+
+0:17:12.610,0:17:17.130
+So if you download that you don't just have an architecture now you have a trained model
+
+0:17:17.230,0:17:20.730
+You have a model that can recognize a thousand
+
+0:17:21.880,0:17:24.510
+categories of thing in images
+
+0:17:25.779,0:17:31.169
+Which probably isn't very useful unless you happen to want something that recognizes those exact thousand categories of thing
+
+0:17:32.260,0:17:34.260
+But it turns out you can
+
+0:17:36.370,0:17:42.209
+Rather you can with those weights in your model and then train some more epochs
+
+0:17:43.000,0:17:46.949
+On your data and you'll end up with a far far more
+
+0:17:47.230,0:17:53.610
+Accurate model than you would if you didn't start with that pre train model and we'll see why in just a moment, right?
+
+0:17:54.610,0:17:58.829
+But this idea of transfer learning it's kind of it makes intuitive sense, right?
+
+0:18:00.429,0:18:04.649
+Imagenet already has some cats and some dogs and it's you know
+
+0:18:04.650,0:18:06.779
+It can say this is a cat and this is a dog
+
+0:18:06.779,0:18:10.889
+But you want to maybe do something that recognizes lots of breeds that aren't an image net
+
+0:18:11.529,0:18:18.719
+Well for it to be able to recognize cats versus dogs versus airplanes versus hammers. It has to understand things like
+
+0:18:19.720,0:18:26.339
+What does metal look like what is fur look like what it is look like you know so it can say like oh this breed
+
+0:18:26.340,0:18:31.770
+Of animal this breed of dog has pointy ears and oh this thing is metal. So it can't be a dog
+
+0:18:32.529,0:18:37.709
+So all these kinds of concepts get implicitly learned by a pre trained model
+
+0:18:38.470,0:18:42.839
+So if you start with a pre trained model, then you don't it. You don't have to learn all these features
+
+0:18:43.630,0:18:47.849
+from scratch and so transfer learning is the
+
+0:18:48.370,0:18:55.679
+Single most important thing for being able to use less data and less compute and get better accuracy
+
+0:18:56.080,0:19:01.500
+So that's a key focus for the FASTA eye library and a key focus for this course
+
+0:19:03.820,0:19:10.590
+There's a question and I am a bit confused on the differences between loss error and metric
+
+0:19:14.559,0:19:16.559
+Sure, so
+
+0:19:19.029,0:19:21.029
+Era is just one
+
+0:19:21.460,0:19:27.840
+Kind of metric. So there's lots of different possible labels. You could have let's say you are trying to create a model
+
+0:19:28.360,0:19:30.599
+which could predict how old a
+
+0:19:31.240,0:19:33.220
+cat or dog is
+
+0:19:33.220,0:19:34.510
+so
+
+0:19:34.510,0:19:39.569
+The metric you might use is on average how many years were you off by?
+
+0:19:41.590,0:19:48.209
+So that would be a metric on the other hand if you're trying to predict whether this is a cat or a dog
+
+0:19:48.700,0:19:50.669
+Your metric would be
+
+0:19:50.669,0:19:52.669
+What percentage of the time am I wrong?
+
+0:19:53.230,0:20:00.809
+So that latter metric is called the error rate. Okay, so error is one particular metric. It's a thing that measures
+
+0:20:01.359,0:20:05.879
+How well you're doing and it's like it should be the thing that you most care about
+
+0:20:06.039,0:20:09.959
+So you you write a function or use one of fast a i's predefined ones
+
+0:20:11.019,0:20:13.019
+Which measures how well you're doing?
+
+0:20:15.820,0:20:17.769
+Loss
+
+0:20:17.769,0:20:22.049
+Is the thing that we talked about in Lesson one, so I'll give a quick summary
+
+0:20:22.059,0:20:24.059
+But go back to lesson one if you don't remember
+
+0:20:24.970,0:20:29.939
+Arthur Samuel talked about how a machine learning model needs some measure of performance
+
+0:20:31.269,0:20:38.638
+Which we can look at when we adjust our parameters our pour down. Does that measure of performance get better or worse and
+
+0:20:39.609,0:20:41.609
+as I mentioned earlier
+
+0:20:42.519,0:20:44.519
+Some metrics
+
+0:20:44.710,0:20:50.999
+Possibly won't change at all if you move the parameters up and down just a little bit so they can't be used
+
+0:20:51.609,0:20:56.789
+For this purpose of adjusting the parameters to find a better measure of performance. So quite often
+
+0:20:56.789,0:20:59.309
+We need to use a different function
+
+0:20:59.309,0:21:01.309
+we call this the loss function and
+
+0:21:01.389,0:21:07.139
+the loss function is the measure of performance that the algorithm uses to try to make the parameters better and
+
+0:21:07.509,0:21:13.229
+It's something which should kind of track pretty closely to the the metric you care about
+
+0:21:13.869,0:21:20.159
+But it's something which as you change the parameters a bit the loss should always change a bit
+
+0:21:20.159,0:21:21.159
+and so
+
+0:21:21.159,0:21:22.779
+There's a lot of hand waving there
+
+0:21:22.779,0:21:27.659
+Because we need to look at some of the math of how that works and we'll be doing that in the next couple of lessons
+
+0:21:31.450,0:21:33.450
+Thanks to their great questions
+
+0:21:35.499,0:21:41.579
+Okay, so fine tuning is a particular transfer learning technique where the
+
+0:21:42.519,0:21:45.508
+When you're still showing your picture and not the slides
+
+0:21:51.350,0:21:56.600
+So fine-tuning is a transfer learning technique where the weights this is not quite the right word
+
+0:21:56.600,0:22:02.809
+We should say the parameters where the parameters of a pre-trained model are updated by training for additional epochs
+
+0:22:03.030,0:22:05.689
+Using a different task to that used for pre training
+
+0:22:05.690,0:22:13.400
+So pre training the tasks that have been imaged met classification and then our different tasks might be recognizing cats versus dogs
+
+0:22:15.990,0:22:17.990
+So the way
+
+0:22:18.690,0:22:24.650
+By default fast AI does fine tuning is that we use one epoch, which remember is one
+
+0:22:25.799,0:22:32.779
+looking at every image in the data set once one epoch to fit just those parts of the model necessary to
+
+0:22:33.390,0:22:36.349
+Get the particular part of the model. That's
+
+0:22:36.870,0:22:39.409
+Especially for your data set working
+
+0:22:40.020,0:22:41.730
+And then we use
+
+0:22:41.730,0:22:44.900
+as many epochs as you asked for to fit the whole model and
+
+0:22:45.000,0:22:48.319
+So this is more if you for those people who might be a bit more advanced
+
+0:22:48.320,0:22:52.460
+We'll see exactly how this works later on in the lessons
+
+0:22:53.789,0:22:57.139
+So why does transfer learning work and why does it work? So well?
+
+0:22:58.049,0:23:04.099
+the best way in my opinion to look at this is to see this paper by Zeiler and furgus who were actually
+
+0:23:05.700,0:23:07.700
+2012 imagenet winners and
+
+0:23:08.340,0:23:09.809
+interestingly
+
+0:23:09.809,0:23:16.309
+Their key insights came from their ability to visualize what's going on inside a model and so our visualization
+
+0:23:16.470,0:23:19.459
+Very often turns out to be super important to getting great results
+
+0:23:20.520,0:23:25.489
+What they were able to do was they looked remember I told you like a resinate 34 has 34 layers
+
+0:23:26.400,0:23:28.320
+They looked at
+
+0:23:28.320,0:23:34.909
+Something called Alec's net which was the previous winner of the competition, which only had seven layers at the time that was considered huge
+
+0:23:35.580,0:23:40.580
+And so they took the seven layer model and they said what is the first layer of?
+
+0:23:40.950,0:23:46.340
+Parameters look like and they figured it out how to draw a picture of them, right?
+
+0:23:46.340,0:23:49.340
+and so the first layer had
+
+0:23:50.970,0:23:56.900
+Lots and lots of features but here are nine of them. One, two, three, four, five six, seven eight nine and
+
+0:23:57.960,0:24:00.620
+Here's what nine of those pictures look like
+
+0:24:00.620,0:24:04.219
+One of them was something that could recognize diagonal lines from top left to bottom
+
+0:24:04.470,0:24:04.960
+right
+
+0:24:04.960,0:24:08.039
+One of them could find diagonal lines from bottom left to top right?
+
+0:24:08.320,0:24:12.179
+one of them could find gradients that went from the top of orange to the bottom of
+
+0:24:12.909,0:24:18.389
+Blue some of them were able, you know, one of them was specifically for finding things that were green
+
+0:24:19.030,0:24:22.530
+And so forth right so for each of these nine
+
+0:24:24.549,0:24:26.939
+They're called filters there are features
+
+0:24:28.659,0:24:32.009
+So then something really interesting they did was they looked at for each one of these
+
+0:24:32.799,0:24:38.999
+Each one of these filters each one of these features and we'll learn kind of mathematically about what these actually mean
+
+0:24:39.730,0:24:41.650
+In the coming lessons, but for now
+
+0:24:41.650,0:24:46.169
+Let's just recognize them and saying oh there's something that looks at diagonal lines and something that looks at gradients
+
+0:24:46.690,0:24:50.280
+And they found in the actual images in imagenet
+
+0:24:52.390,0:24:59.339
+Specific examples of parts of photos that match that filter so for this top left filter here are nine
+
+0:25:00.130,0:25:04.559
+actual patches of real photos that match that filter and as you can see
+
+0:25:04.559,0:25:11.399
+They're all diagonal lines. And so here's the four the green one. Here's parts of actual photos that match the green one
+
+0:25:11.950,0:25:18.210
+So layer one is super super simple. And one of the interesting things to note here. Is that something that can recognize?
+
+0:25:18.730,0:25:24.030
+Gradients and patches of color and lines is likely to be useful for lots of other tasks as well
+
+0:25:24.030,0:25:28.169
+Not just imagenet so you can kind of see how something that can do this
+
+0:25:29.020,0:25:31.020
+might also be good at
+
+0:25:31.419,0:25:34.079
+Many many other computer vision tasks as well
+
+0:25:35.380,0:25:37.380
+This is layer 2 layer
+
+0:25:37.390,0:25:41.579
+2 takes the features of layer 1 and combines them
+
+0:25:42.429,0:25:48.029
+so it can not just find edges that can find corners or
+
+0:25:49.299,0:25:57.089
+Repeating curving patterns or semi circles or full circles. And so you can see for example, here's a
+
+0:25:58.990,0:26:02.760
+It's kind of hard to exactly visualize these
+
+0:26:04.419,0:26:09.359
+Layers after layer 1 you kind of have to show examples of what the filters look like
+
+0:26:10.150,0:26:17.009
+but here you can see examples of parts of photos that these this layer 2 circular filter has
+
+0:26:17.840,0:26:19.840
+activated on
+
+0:26:20.030,0:26:22.869
+And as you can see, it's found things with circles
+
+0:26:23.390,0:26:30.490
+so interestingly this one which is this kind of blotchy gradient seems to be very good at finding sunsets and
+
+0:26:30.950,0:26:35.649
+this repeating vertical pattern is very good at finding like curtains and wheat
+
+0:26:36.380,0:26:38.330
+fields and stuff
+
+0:26:38.330,0:26:44.139
+So the further we get layer three then gets to combine all the kinds of features in layer
+
+0:26:44.540,0:26:50.920
+Two and remember, we're only seeing Zoar anything here are twelve of the features, but actually there's probably hundreds of them
+
+0:26:50.920,0:26:53.320
+I don't remember exactly an alux net, but there's lots
+
+0:26:53.750,0:27:00.700
+But by the time we get to layer three by combining features from layer two, it already has something which is finding
+
+0:27:01.700,0:27:06.189
+Text so this is a feature which can find bits of image that contain text
+
+0:27:07.130,0:27:09.130
+It's already got something which can find
+
+0:27:10.130,0:27:13.780
+repeating geometric patterns and you see this is not just like a
+
+0:27:15.710,0:27:18.340
+Matching specific pixel patterns. This is like a
+
+0:27:19.190,0:27:24.249
+Semantic concept it can find repeating circles or repeating squares or repeating hexagons
+
+0:27:24.920,0:27:28.450
+Great, so it's it's really like computing. It's not just
+
+0:27:29.240,0:27:36.700
+Matching a template and remember we know that neural networks can solve any possible computable function so it can certainly do that
+
+0:27:38.960,0:27:41.710
+So layer four gets to combine
+
+0:27:42.290,0:27:48.489
+All the filters from layer three anyway at once and so by layer four, we have something that can find dog faces
+
+0:27:49.220,0:27:51.220
+for instance
+
+0:27:51.470,0:27:53.470
+so you can kind of see how
+
+0:27:54.410,0:27:59.499
+Each layer, we get like more applicative lis more sophisticated features
+
+0:27:59.630,0:28:04.360
+And so that's why these deep neural networks can be so incredibly powerful
+
+0:28:05.150,0:28:11.200
+It's also why transfer learning can work so well because like if we wanted something that can find
+
+0:28:11.990,0:28:15.550
+Books, and I don't think there's a book category in imagenet
+
+0:28:15.680,0:28:21.549
+Well, it's actually already got something that can find text as an earlier filter, which I guess it must be using to find
+
+0:28:21.560,0:28:24.700
+Maybe there's a category for library or something or a bookshelf
+
+0:28:26.390,0:28:32.660
+So when you use transfer learning you can take advantage of all of these pre I learnt
+
+0:28:33.150,0:28:38.089
+Features to find things that are as combinations of these or existing features
+
+0:28:38.310,0:28:45.440
+That's why transfer learning can be done so much more quickly and so much less data than traditional approaches
+
+0:28:47.250,0:28:53.119
+One important thing to realize then is that these techniques for computer vision are not just good at
+
+0:28:53.700,0:28:55.170
+recognizing photos
+
+0:28:55.170,0:29:01.430
+There's all kinds of things you can turn into pictures. For example, these are example these are
+
+0:29:01.980,0:29:08.329
+sounds that have been tuned into pictures by representing their frequencies over time and
+
+0:29:09.120,0:29:13.880
+It turns out that if you convert a sound into these kinds of pictures
+
+0:29:14.580,0:29:18.380
+You can get basically state-of-the-art results at sound detection
+
+0:29:19.260,0:29:22.489
+Just by using the exact same resonate
+
+0:29:23.160,0:29:25.160
+learner that we've already seen
+
+0:29:25.860,0:29:29.449
+We need to highlight that it's 945. So if you want to take a break soon
+
+0:29:30.720,0:29:32.720
+a really cool example
+
+0:29:33.000,0:29:37.640
+From I think this is our very first year of running fast AI one of our students
+
+0:29:38.880,0:29:45.499
+Created pictures they worked at Splunk in anti-fraud and they created pictures of users moving their mouths
+
+0:29:45.500,0:29:48.530
+And if I remember correctly as they moved their mouths
+
+0:29:48.740,0:29:55.310
+He basically drew a picture of where the mouse moved and the color depended on how fast they moved and these
+
+0:29:55.830,0:29:59.630
+circular blobs is where they clicked the left or the right mouse button and
+
+0:30:00.570,0:30:05.389
+It's blank. They then well, he what he did actually for the through the course as a
+
+0:30:06.210,0:30:12.560
+Project for the course is he tried to see whether he could use this these pictures with exactly the same approach?
+
+0:30:12.560,0:30:17.839
+We saw in lesson 1 to create an anti fraud model and it worked
+
+0:30:17.840,0:30:24.620
+So well that Splunk ended up patenting a new product based on this technique and you can actually check it out
+
+0:30:24.620,0:30:30.859
+there's a blog post about it on the internet where they describe this breakthrough anti-fraud approach which literally came from
+
+0:30:32.190,0:30:37.219
+One of our really amazing and brilliant and creative students after lesson one of the course
+
+0:30:39.180,0:30:43.580
+Another cool example of this is looking at different
+
+0:30:44.880,0:30:46.380
+viruses and
+
+0:30:46.380,0:30:51.109
+Again, turning them into pictures and you can kind of see how they've got here. This is from a paper
+
+0:30:51.630,0:30:53.630
+Check out the book for the citation
+
+0:30:54.240,0:30:58.729
+they've got three examples of a particular virus called VB 80 and another
+
+0:30:59.070,0:31:05.179
+example of a particular virus called fake rien and you can see each case the pictures all look kind of similar and
+
+0:31:05.850,0:31:06.800
+That's why again
+
+0:31:06.800,0:31:11.900
+they can get state-of-the-art results in in virus detection by turning the
+
+0:31:12.300,0:31:16.610
+Kind of program signatures into pictures and putting it through image recognition
+
+0:31:20.040,0:31:25.820
+So in the book you'll find a list of all of the terms all of the most important terms
+
+0:31:25.820,0:31:29.270
+We've seen both so far and what they mean. I'm not going to read through them
+
+0:31:29.270,0:31:35.270
+but I want you to please because these are the these are the terms that we're going to be using from now on and
+
+0:31:35.520,0:31:37.520
+You've got to know what they mean
+
+0:31:37.710,0:31:43.789
+because if you don't you're going to be really confused because I'll be talking about labels and architectures and models and parameters and
+
+0:31:44.130,0:31:50.359
+They have very specific exact meanings and they'll be using those exact meanings. So please review this
+
+0:31:51.990,0:31:58.909
+So to remind you this is where we got to we we ended up with Arthur Samuels overall
+
+0:31:59.970,0:32:05.299
+Approach and we replaced his terms with our terms. So we have an architecture
+
+0:32:05.970,0:32:12.380
+Which contains parameters as inputs and we more parameters and the data as inputs?
+
+0:32:13.200,0:32:16.669
+So that the architecture press the parameters of the model
+
+0:32:17.850,0:32:20.480
+With the inputs they used to calculate predictions
+
+0:32:20.820,0:32:26.990
+They are compared to the labels with a loss function and that loss function is used to update the parameters
+
+0:32:27.600,0:32:32.449
+Many many times to make them better and better until the loss gets nice and super low
+
+0:32:34.890,0:32:37.279
+So this is the end of chapter 1 of the book
+
+0:32:38.010,0:32:44.059
+it's really important to look at the questionnaire because the questionnaire is the thing where you can check whether you
+
+0:32:45.640,0:32:52.020
+Have taken away from this book of this chapter the stuff that we hope you have so go through it and
+
+0:32:53.380,0:32:57.599
+Anything that you're not sure about the tech that the answer is in the text
+
+0:32:57.640,0:33:02.640
+So just go back to earlier in the book and you will in the chapter and you will find the answers
+
+0:33:04.390,0:33:10.950
+There's also a further research section after each questionnaire for the first couple of chapters, they're actually pretty simple
+
+0:33:11.050,0:33:16.380
+Hopefully they're pretty fun and interesting. They're things were to answer the question. It's not enough to just look in the chapter
+
+0:33:16.900,0:33:22.410
+You actually have to go and do your own thinking and experimenting and googling and so forth
+
+0:33:23.260,0:33:30.600
+In later chapters, some of these further research things are pretty significant projects that might take a few days or even weeks
+
+0:33:31.210,0:33:32.980
+and so
+
+0:33:32.980,0:33:35.939
+yeah, you know check them out because hopefully they'll be a great way to
+
+0:33:36.820,0:33:38.820
+Expand your understanding of the material
+
+0:33:41.200,0:33:45.990
+So something that still found points out in the book is that if you really want to make the most of this
+
+0:33:46.150,0:33:47.550
+then after each chapter
+
+0:33:47.550,0:33:54.419
+Please take the time to experiment with your own project and within the books you provide we provide and then see if you can
+
+0:33:55.090,0:33:59.699
+Redo the the notebooks on a new data set and perhaps for chapter one
+
+0:33:59.700,0:34:04.169
+That might be a bit hard because we haven't really shown how to change things but for chapter four chapter two
+
+0:34:04.540,0:34:07.440
+Which we're going to start next you'll absolutely be able to do that
+
+0:34:08.920,0:34:15.089
+Okay, so let's take a break and we'll come back at 9:55
+
+0:34:16.390,0:34:18.390
+San Francisco time
+
+0:34:18.970,0:34:25.770
+Okay, so welcome back everybody and I think we've got a couple of questions to start with. So Rachel, please take it away. Sure
+
+0:34:26.530,0:34:29.130
+Our filters independent by that
+
+0:34:29.130,0:34:35.430
+I mean if filters are pre-trained might they become less good and detecting features of previous images when fine-tuned. Oh
+
+0:34:36.340,0:34:38.340
+That is a great question
+
+0:34:39.460,0:34:47.310
+So assuming I understand the question correctly if if you start with say an image NIT model and then you you fine-tune it on
+
+0:34:47.890,0:34:54.299
+Dogs versus cats for a few epochs and you get something that's very good at recognizing dogs versus cats
+
+0:34:56.380,0:34:58.900
+It's got to be much less good as an image net model after that
+
+0:34:58.910,0:35:03.879
+So it's not going to be very good at recognizing aeroplanes or or hammers or whatever
+
+0:35:05.810,0:35:07.810
+This is called catastrophic
+
+0:35:07.850,0:35:12.190
+Forgetting in the literature the idea that as you like see more images
+
+0:35:12.260,0:35:16.960
+About different things to what you saw earlier that you start to forget what the things you saw earlier?
+
+0:35:18.860,0:35:22.150
+So if you want to fine-tune something which is
+
+0:35:22.850,0:35:27.009
+Good at a new task but also continues to be good at the previous task
+
+0:35:27.010,0:35:30.700
+You need to keep putting in examples of the previous task as well
+
+0:35:33.800,0:35:38.890
+And what are the example what are the differences between parameters and hyper parameters
+
+0:35:40.070,0:35:46.150
+If I am feeding an image of a dog as an input and then changing the hyper parameters of batch size and the model
+
+0:35:46.280,0:35:48.370
+What would be an example of a parameter?
+
+0:35:49.880,0:35:52.150
+So the parameters are the things that
+
+0:35:53.540,0:35:58.240
+are described in lesson one that Arthur Samuel described as being
+
+0:35:59.870,0:36:01.870
+The things which change
+
+0:36:02.060,0:36:08.769
+What the model does what the architecture does so we start with this infinitely flexible function
+
+0:36:08.770,0:36:11.860
+The thing called a neural network that can do anything at all
+
+0:36:12.860,0:36:14.600
+and
+
+0:36:14.600,0:36:15.740
+the
+
+0:36:15.740,0:36:21.009
+The way you get it to do one thing versus another thing is by changing its parameters. They're there
+
+0:36:21.010,0:36:27.070
+They are the numbers that you pass into that function. So there's two types of numbers you pass into the function
+
+0:36:27.070,0:36:34.059
+There's the numbers that represent your input like the pixels of your dog. And there's the numbers that represent
+
+0:36:35.720,0:36:37.720
+Their learnt parameters
+
+0:36:38.150,0:36:42.430
+So in the example of something that's not a neural net but like a checkers playing program
+
+0:36:43.070,0:36:49.330
+Like Arthur Samuel might have used back in the early 60s and late 50s. Those parameters may have been things like
+
+0:36:50.600,0:36:52.600
+if there is a
+
+0:36:53.240,0:36:57.099
+Opportunity to take a piece versus an opportunity to get to the end of a board
+
+0:36:57.950,0:37:01.599
+How much more value should I consider one versus the other?
+
+0:37:01.870,0:37:07.120
+You know, it's twice as important or it's three times as important that two versus three, that would be an example of a parameter
+
+0:37:09.060,0:37:10.410
+In a
+
+0:37:10.410,0:37:12.000
+neural network
+
+0:37:12.000,0:37:19.069
+Parameters are a much more abstract concept and so a detailed understanding of what they are will come in the next lesson or two
+
+0:37:19.590,0:37:23.990
+But it's the same basic idea there the numbers which change
+
+0:37:25.020,0:37:28.640
+What the model does to be something that recognizes?
+
+0:37:29.550,0:37:35.060
+malignant tumors versus cats versus dogs versus colorizer splack and white pictures
+
+0:37:36.810,0:37:38.810
+Whereas the hyper parameter is
+
+0:37:39.420,0:37:41.420
+the choices about
+
+0:37:41.940,0:37:43.110
+What?
+
+0:37:43.110,0:37:49.670
+What numbers do you pass to the function when you act the actual fitting function to decide how that fitting process happens?
+
+0:37:50.580,0:37:52.020
+it
+
+0:37:52.020,0:37:57.140
+There's a question. I'm curious about the pacing of this course. I'm concerned that all the material may not be covered
+
+0:37:58.350,0:38:02.420
+It depends what you mean by all the material we certainly won't cover everything in the world
+
+0:38:03.720,0:38:05.720
+So yeah
+
+0:38:07.110,0:38:10.370
+We'll cover what we can well cover what we can in seven lessons
+
+0:38:11.790,0:38:18.440
+We're certainly not covering the whole book if that's what you're wondering. The whole book will be covered in either two or three courses
+
+0:38:19.320,0:38:23.600
+In the past. It's generally been two courses to cover about the amount of stuff in the book
+
+0:38:24.750,0:38:28.909
+But we'll see how it goes because the books pretty big 500 pages
+
+0:38:29.190,0:38:32.569
+So when you say two courses you mean fourteen lesson 14
+
+0:38:32.570,0:38:35.870
+Yes, it would be like 14 or 21 lessons to get through the whole book
+
+0:38:37.530,0:38:39.740
+Well, though having said that by the end of the first lesson
+
+0:38:39.840,0:38:45.350
+Hopefully there'll be kind of like enough momentum and understanding that the reading the book independently will be more
+
+0:38:45.780,0:38:47.930
+useful and you'll have also kind of
+
+0:38:49.200,0:38:54.049
+Gained a community of folks on the forums that you can hang out with and ask questions of and so forth
+
+0:38:56.580,0:39:03.620
+So in in the second part of the course, we're going to be talking about putting stuff in production and
+
+0:39:05.280,0:39:09.830
+We're so to do that we need to understand like what are the capabilities and limitations of
+
+0:39:11.100,0:39:13.100
+Deep learning what are the kinds of?
+
+0:39:13.290,0:39:16.250
+projects that even makes sense to try to put in production
+
+0:39:17.100,0:39:20.809
+And you know one of the key things I should mention in the book and in this core
+
+0:39:20.940,0:39:23.669
+Is that the first two or three lessons and chapters?
+
+0:39:24.310,0:39:27.600
+there's a lot of stuff which is designed not just for
+
+0:39:28.150,0:39:33.359
+the coders but for for everybody there's lots of information about like
+
+0:39:34.270,0:39:37.409
+What are the practical things you need to know to make deep learning work?
+
+0:39:37.450,0:39:42.329
+And so one of them things you need to know is like well what's deep learning actually good at at the moment
+
+0:39:43.870,0:39:46.740
+So I'll summarize what the book says about this but
+
+0:39:47.560,0:39:50.250
+there are the kind of four key areas that we
+
+0:39:51.100,0:39:54.539
+Have as applications in faster a computer vision text
+
+0:39:54.850,0:40:02.309
+Tabular and what I've called here XE assistance for recommendation systems and specifically a technique called collaborative filtering which we briefly saw
+
+0:40:02.890,0:40:10.589
+Sorry, another question and is are there any pre trained weights available other than the ones from imagenet that we can use if?
+
+0:40:10.750,0:40:14.520
+Yes, when should we use others in one imagenet? Oh, that's a really great question
+
+0:40:15.370,0:40:16.810
+so
+
+0:40:16.810,0:40:20.730
+yes, there are a lot of pre trained models and
+
+0:40:21.370,0:40:26.280
+One way to find them. But also you're currently just showing us what you can great
+
+0:40:27.370,0:40:29.819
+Now one great way to find them is you can look up
+
+0:40:31.540,0:40:33.540
+Models ooh
+
+0:40:33.580,0:40:38.430
+Which is a common name for like places that have lots of different models
+
+0:40:39.760,0:40:43.289
+And so here's lots of models is or you can look for
+
+0:40:44.920,0:40:46.920
+Pre-trained models
+
+0:40:49.030,0:40:53.609
+And so yeah, there's quite a few um, unfortunately
+
+0:40:55.750,0:41:03.599
+Not as wide a variety as I would like that most is still on image net or similar kinds of general photos
+
+0:41:04.240,0:41:06.689
+for example medical imaging there's hardly any
+
+0:41:08.980,0:41:14.010
+There's a lot of opportunities for people to create domain-specific pre-trained models, it's it's still an area
+
+0:41:14.010,0:41:17.549
+That's really underdone because not enough people are working on transfer learning
+
+0:41:20.569,0:41:27.489
+Okay, so as I was mentioning we've kind of got these four applications that we've talked about a bit
+
+0:41:28.880,0:41:34.569
+And deep learning is pretty, you know, pretty good at all of those
+
+0:41:36.529,0:41:43.268
+Tabular data like spreadsheets and database tables is an area where dick learning is not always the best choice
+
+0:41:43.549,0:41:47.528
+But it's particularly good for things involving high cardinality variables
+
+0:41:47.599,0:41:52.509
+that means variables that have like lots and lots of discrete levels like zip code or
+
+0:41:53.059,0:41:55.239
+Product ID or something like that
+
+0:41:56.079,0:41:59.349
+deep loadings really pretty great for those in particular
+
+0:42:02.779,0:42:07.599
+For text it's pretty great at things like classification and translation
+
+0:42:08.059,0:42:14.169
+It's actually terrible for conversation. And so that's that's been something that's been a huge disappointment for a lot of companies
+
+0:42:14.170,0:42:16.359
+I tried to create these like conversation BOTS
+
+0:42:17.299,0:42:19.509
+but actually deep learning isn't good at
+
+0:42:20.329,0:42:22.309
+providing accurate information
+
+0:42:22.309,0:42:26.319
+it's good at providing things that sound accurate and sound compelling but
+
+0:42:26.390,0:42:29.680
+That we don't really have great ways yet of actually making sure it's correct
+
+0:42:33.559,0:42:37.959
+One big issue for recommendation systems collaborative filtering is that
+
+0:42:38.960,0:42:41.019
+Deep learning is focused on making predictions
+
+0:42:42.259,0:42:48.459
+Which don't necessarily actually mean creating useful recommendations. We'll see what that means in a moment
+
+0:42:49.789,0:42:52.569
+Deep learning is also good at multimodal
+
+0:42:53.269,0:42:55.269
+That means things where you've got
+
+0:42:55.970,0:43:02.139
+Multiple different types of data so you might have some tabular data including a text column and an image
+
+0:43:03.650,0:43:05.710
+Then some collaborative filtering data
+
+0:43:06.349,0:43:09.699
+And combining that all together is something that deep learning is really good at
+
+0:43:10.519,0:43:12.519
+so for example
+
+0:43:13.309,0:43:19.569
+Putting captions on photos is something which deep learning is pretty good at although again
+
+0:43:19.569,0:43:21.289
+It's not very good at being accurate
+
+0:43:21.289,0:43:26.289
+So what you know might say this is a picture of two birds when it's actually a picture of three birds
+
+0:43:27.829,0:43:29.829
+And then this other category
+
+0:43:30.880,0:43:31.930
+there's
+
+0:43:31.930,0:43:38.550
+Lots and lots of things that you can do with deep learning by being creative about the use of these kinds of other
+
+0:43:39.160,0:43:46.080
+Application based approaches for example an approach that we developed for natural language processing called you LM fit
+
+0:43:46.080,0:43:48.080
+They're all you're learning in the course
+
+0:43:48.670,0:43:55.200
+It turns out that it's also fantastic you're doing protein analysis. If you think of the different proteins as being different words
+
+0:43:56.200,0:44:00.030
+And they're in a sequence which has some kind of state and meaning
+
+0:44:00.490,0:44:07.409
+It turns out that you will M fit works really well for protein analysis so often it's about kind of being being creative
+
+0:44:08.350,0:44:13.649
+So to decide like for the product that you're trying to build is deep learning gonna work
+
+0:44:14.290,0:44:17.969
+Well for it in the end you kind of just have to try it and see
+
+0:44:20.800,0:44:26.370
+But if you if you do a search, you know, hopefully you can find examples about the people that have tried something similar
+
+0:44:27.040,0:44:30.060
+Even if you can't that doesn't mean it's not going to work
+
+0:44:31.780,0:44:38.790
+So, for example, I mentioned the collaborative filtering issue where a recommendation and a prediction are not necessarily the same thing
+
+0:44:39.310,0:44:41.310
+You can see this on
+
+0:44:41.440,0:44:45.870
+Amazon for example quite often so I bought a terry pratchet book and
+
+0:44:46.210,0:44:50.610
+Then Amazon tried for months to get me to buy more terry pratchet books
+
+0:44:50.830,0:44:58.620
+now that must be because their predictive model said that people who bought one particular terry patcher book are likely to also by
+
+0:44:58.620,0:45:00.520
+other terry pratchet books
+
+0:45:00.520,0:45:04.530
+But from the point of view of like well is this going to change my buying behavior?
+
+0:45:05.200,0:45:07.800
+Probably not right like if I liked that book
+
+0:45:07.800,0:45:11.999
+I already know I like that author and I already know that like they probably wrote other things
+
+0:45:12.000,0:45:15.510
+So I'll go and buy it anyway, so this would be an example of like Amazon
+
+0:45:16.450,0:45:19.980
+Probably not being very smart up here. They're actually showing me
+
+0:45:20.680,0:45:25.919
+Collaborative filtering predictions rather than actually figuring out how to optimize a recommendation
+
+0:45:26.500,0:45:30.510
+So an optimized recommendation would be something more like your local
+
+0:45:31.120,0:45:35.399
+Human bookseller might do where they might say. Oh you like Terry Pratchett
+
+0:45:35.770,0:45:42.840
+Well, let me tell you about other kind of comedy fantasy sci-fi writers on the similar vein who you might not have heard about before
+
+0:45:44.200,0:45:49.139
+So the difference between recommendations and predictions is super important
+
+0:45:50.619,0:45:55.079
+so I wanted to talk about a really important issue around interpreting models and
+
+0:45:56.170,0:46:01.200
+For a case study for this I thought we let's pick something that's actually super important right now
+
+0:46:01.530,0:46:03.689
+Which is a model in this paper?
+
+0:46:03.690,0:46:06.960
+One of the things we're going to try and do in this course is learn how to read papers
+
+0:46:07.720,0:46:11.730
+So here is a paper, which you I would love for everybody to read
+
+0:46:12.310,0:46:18.179
+Called high temperature and high humidity reduce the transmission of kovat 19. Now. This is a very important issue
+
+0:46:18.730,0:46:21.419
+Because if the claim of this paper is true
+
+0:46:21.420,0:46:23.420
+then that would mean that this is going to be a
+
+0:46:23.530,0:46:29.159
+Seasonal disease and if this is a seasonal disease and it's going to have massive policy implications
+
+0:46:30.880,0:46:36.540
+So, let's try and find out how this was modeled and understand how to interpret this model
+
+0:46:38.590,0:46:40.590
+So, this is a
+
+0:46:41.530,0:46:45.659
+Key picture from the paper and what they've done here is they've
+
+0:46:46.270,0:46:51.119
+taken a hundred cities in China and they've plotted the temperature on one axis in
+
+0:46:51.490,0:46:59.070
+Celsius and are on the other axis where R is a measure of transmissibility. It says for each person that has this
+
+0:46:59.590,0:47:00.970
+disease
+
+0:47:00.970,0:47:02.970
+How many people on average will they?
+
+0:47:03.790,0:47:09.749
+infect so if R is under 1 then the disease will not spread is over R is
+
+0:47:10.720,0:47:14.010
+Higher than like 2 it's going to spread incredibly quickly
+
+0:47:15.369,0:47:20.459
+And basically R is going to you know, any high R is going to create an exponential transmission impact
+
+0:47:21.670,0:47:25.590
+And you can see in this case. They have plotted a best fit line
+
+0:47:26.350,0:47:28.240
+through here
+
+0:47:28.240,0:47:30.750
+Them and then they've made a claim that there's some particular
+
+0:47:32.260,0:47:38.699
+Relationship in terms of a formula that R is one point nine nine minus 0.02 three times temperature
+
+0:47:39.760,0:47:41.470
+so
+
+0:47:41.470,0:47:45.780
+very obvious concern I would have looking at this picture is that
+
+0:47:47.560,0:47:53.340
+This might just be random maybe there's no relationship at all, but just if you picked a hundred
+
+0:47:54.010,0:47:58.709
+Cities at random perhaps they were sometimes show this level of relationship
+
+0:48:00.160,0:48:06.480
+So one simple way to kind of see that would be to actually do it in a spreadsheet
+
+0:48:07.780,0:48:08.859
+so
+
+0:48:08.859,0:48:16.619
+Yes, here is a spreadsheet where what I did was I kind of eyeballed this data and I guessed about what is the main?
+
+0:48:16.839,0:48:24.029
+Degrees centigrade I think it's about five and what's about the standard deviation of centigrade? I think it's probably about five as well
+
+0:48:24.819,0:48:28.979
+and then I did the same thing for our I think I mean our looks like it's about
+
+0:48:29.260,0:48:34.020
+1.9 to me and it looks like the standard deviation of R is probably about 0.5
+
+0:48:35.589,0:48:40.409
+So what I then did was I just jumped over here and I created a
+
+0:48:41.440,0:48:42.819
+random
+
+0:48:42.819,0:48:47.519
+Normal value so a random value from a normal distribution from a normal distribution
+
+0:48:47.530,0:48:53.849
+So a bell curve with that particular mean and standard deviation of temperature and that particular
+
+0:48:54.339,0:48:59.699
+Mean and standard deviation of R. And so this would be an example of
+
+0:49:00.549,0:49:02.020
+a city that
+
+0:49:02.020,0:49:07.889
+Might be in this data set of a hundred cities something with nine degrees Celsius and an hour of 1.1
+
+0:49:07.890,0:49:13.349
+So that would be nine degrees Celsius and an hour of 1.1. So something about here
+
+0:49:14.950,0:49:18.359
+And so then I just copied that formula down
+
+0:49:20.380,0:49:22.380
+100 times
+
+0:49:22.420,0:49:25.290
+So here are a hundred cities
+
+0:49:25.960,0:49:31.889
+that could be in China right where this is assuming that there is no relationship between
+
+0:49:32.260,0:49:35.010
+temperature and R right there just random numbers
+
+0:49:36.490,0:49:37.690
+and
+
+0:49:37.690,0:49:43.290
+So each time I recalculate that so if I hit control equals it will just recalculate it
+
+0:49:44.290,0:49:46.290
+Right I get different numbers
+
+0:49:46.839,0:49:49.979
+Okay, because they're random and so you can see at the top here
+
+0:49:50.740,0:49:52.740
+I've then got the average of
+
+0:49:54.579,0:49:59.339
+All of the temperatures and the average of all of the hours and the average of all the temperatures
+
+0:50:02.290,0:50:07.290
+Varies and the average of all of the odds varies as well. So then I
+
+0:50:09.040,0:50:12.119
+What I did was I copied those random numbers
+
+0:50:14.530,0:50:16.530
+Over here
+
+0:50:17.230,0:50:23.490
+Let's actually do it so I'll go copy these 100 random numbers and paste them
+
+0:50:25.960,0:50:27.760
+Here
+
+0:50:27.760,0:50:33.389
+Here here here. And so now I've got
+
+0:50:34.839,0:50:40.979
+1 2 3 4 5 6 I've got 6 kind of groups of 100 cities
+
+0:50:41.289,0:50:43.559
+all right, and so let's
+
+0:50:45.220,0:50:51.359
+Stop those from randomly changing any more by just fixing them in stone there
+
+0:50:57.789,0:51:00.329
+Okay, so now that I've pasted them in I've got
+
+0:51:01.030,0:51:08.489
+6 examples of what a hundred cities might look like if there was no relationship at all between temperature and R and
+
+0:51:09.579,0:51:13.589
+I've got their mean temperature and R in each of those six examples
+
+0:51:13.630,0:51:19.079
+And what I've done is you can see here at least for the first one is I've plotted it
+
+0:51:19.630,0:51:22.710
+Right and you can see in this case. There's actually a
+
+0:51:23.680,0:51:25.680
+slight positive slope and
+
+0:51:26.500,0:51:28.500
+I've actually calculated
+
+0:51:30.549,0:51:32.549
+The slope
+
+0:51:33.010,0:51:38.010
+For each just by using the slope function in Microsoft Excel and you can see that actually
+
+0:51:39.430,0:51:41.430
+In this particular case is just random
+
+0:51:42.460,0:51:44.490
+Five times it's been
+
+0:51:45.369,0:51:47.818
+Negative and it's even more negative than their
+
+0:51:48.460,0:51:50.460
+0.023
+
+0:51:50.559,0:51:55.109
+And so you can like it's kind of matching our intuition here
+
+0:51:55.109,0:51:58.499
+which is that this the slope of the line that we have here is
+
+0:51:59.829,0:52:07.079
+Something that absolutely can often happen totally by chance. It doesn't seem to be indicating any kind of real relationship at all
+
+0:52:07.990,0:52:11.819
+if we wanted that slope to be like
+
+0:52:12.490,0:52:18.689
+More confident we would need to look at more cities. So like here I've got
+
+0:52:21.549,0:52:27.149
+3,000 randomly generated numbers and you can see here. The slope is
+
+0:52:28.930,0:52:35.760
+0.0002 right. It's almost exactly zero, which is what we'd expect right when there's actually no relationship between C and R
+
+0:52:35.760,0:52:37.949
+And in this case there isn't they're all random
+
+0:52:38.740,0:52:44.219
+Then if we look at lots and lots of randomly generated cities, then we can say oh, yeah, there's there's no slope
+
+0:52:44.590,0:52:49.379
+But when you only look at a hundred as we did here you're going to see relationships
+
+0:52:51.010,0:52:58.139
+Totally coincidentally very very often. All right, so that's something that we need to be able to measure and
+
+0:52:58.690,0:53:01.649
+So one way to measure that is we use something called a p-value
+
+0:53:02.590,0:53:05.159
+So a p-value here's our p-value works
+
+0:53:05.470,0:53:12.600
+we start out with something called a null hypothesis and the null hypothesis is basically what's what's our
+
+0:53:13.270,0:53:16.800
+starting point assumption so our starting point assumption might be oh
+
+0:53:16.800,0:53:24.179
+There's no relationship between temperature and R. And then we gather some data and have you explained what R is I have. Yes
+
+0:53:24.390,0:53:26.390
+How is the transmissibility of the virus?
+
+0:53:28.180,0:53:35.310
+So then we gather data of independent and dependent variables, so in this case the independent variable is the thing that we think
+
+0:53:36.130,0:53:43.290
+Might cause the dependent variable. So here the independent variable would be temperature the dependent variable would be R. So here we've gathered data
+
+0:53:43.990,0:53:46.379
+There's the data that was gathered in this example
+
+0:53:46.380,0:53:51.960
+And then we say what does centage of the time would we see this amount of relationship?
+
+0:53:51.960,0:53:55.830
+which is a slope of 0.02 3 by chance and
+
+0:53:56.260,0:54:00.090
+as we've seen one way to do that is by what we would call a
+
+0:54:00.190,0:54:07.260
+simulation which is by generating random numbers 100 set pairs of random numbers a bunch of times and seeing how often
+
+0:54:07.510,0:54:09.600
+You see this this relationship?
+
+0:54:11.140,0:54:13.830
+We don't actually have to do it that though, there's actually a
+
+0:54:14.710,0:54:22.290
+Simple equation we can use to jump straight to this number which is what percent of the time would we see that relationship by chance?
+
+0:54:25.150,0:54:27.150
+And
+
+0:54:27.580,0:54:31.110
+This is basically what that looks like we have the
+
+0:54:31.780,0:54:37.439
+Most likely observation which in this case would be if there is no relationship between temperature
+
+0:54:37.590,0:54:40.410
+then the most likely slope would be zero and
+
+0:54:41.410,0:54:47.039
+sometimes you get positive slopes by chance and sometimes you get
+
+0:54:48.160,0:54:50.219
+pretty small slopes and sometimes you get
+
+0:54:51.010,0:54:54.180
+large negative slopes by chance and so
+
+0:54:54.520,0:54:55.410
+the you know
+
+0:54:55.410,0:55:00.569
+the larger the number the less likely it is to happen whether it be on the positive side or the negative side and
+
+0:55:00.910,0:55:02.969
+so in our case our question was
+
+0:55:04.390,0:55:10.529
+How often are we going to get less than negative 0.02 3 so it would actually be somewhere down here
+
+0:55:10.930,0:55:14.430
+And I actually copy this from Wikipedia where they were looking for positive numbers
+
+0:55:14.560,0:55:18.090
+And so they've colored in this area above the number
+
+0:55:18.370,0:55:25.380
+So this is the p-value and so you can we don't care about the math, but there's a simple little equation you can use to
+
+0:55:25.960,0:55:27.960
+directly figure out
+
+0:55:28.780,0:55:32.460
+This number the p-value from the data
+
+0:55:34.360,0:55:37.589
+So this is kind of how nearly all
+
+0:55:38.710,0:55:41.879
+kind of medical research results tend to be shown and
+
+0:55:42.850,0:55:47.519
+Folks really focus on this idea of p-values and indeed in this particular study
+
+0:55:48.220,0:55:51.090
+As well see in a moment. They reported p-values
+
+0:55:52.120,0:55:57.539
+So probably a lot of you have seen p-values in your previous lives. They come up in a lot of different domains
+
+0:55:59.110,0:56:01.110
+Here's the thing
+
+0:56:01.180,0:56:05.039
+They are terrible you almost always shouldn't be using them
+
+0:56:05.950,0:56:09.119
+Don't just trust me trust the American Statistical Association
+
+0:56:10.330,0:56:12.870
+They point out six things about p-values
+
+0:56:13.570,0:56:19.529
+And those include p-values do not measure the probability that the hypothesis is true
+
+0:56:20.080,0:56:23.610
+Or the probability that the data were produced by random choice alone
+
+0:56:24.040,0:56:31.110
+now we know this because we just saw that if we use more data, right so if we sample
+
+0:56:32.020,0:56:37.350
+Three thousand random cities rather than 100 we get a much
+
+0:56:38.080,0:56:43.080
+Smaller value, right? So p-values don't just tell you about how big a relationship is
+
+0:56:43.090,0:56:48.539
+But they actually tell you about a combination of that and how much data did you collect? All right, so
+
+0:56:49.060,0:56:53.039
+So they don't measure the probability. The hypothesis is true. So therefore
+
+0:56:54.430,0:56:59.610
+Conclusions and policy decisions should not be based on whether a p-value passes some threshold
+
+0:57:02.500,0:57:04.500
+P-value does not measure
+
+0:57:04.780,0:57:06.780
+the importance of a result
+
+0:57:07.150,0:57:10.349
+Right because again, it could just tell you that you collected lots of data
+
+0:57:10.810,0:57:18.269
+Which doesn't tell you that the results actually of any practical import and so by itself. It does not provide a good measure of evidence
+
+0:57:20.500,0:57:27.840
+So Frank Harrell who is somebody who I read his book and it's a really important part of my learning
+
+0:57:27.840,0:57:31.590
+He's a professor of biostatistics has a number of great articles about this
+
+0:57:33.370,0:57:34.810
+He says
+
+0:57:34.810,0:57:39.029
+Null hypothesis, testing and p-values have done significant harm to science
+
+0:57:39.700,0:57:44.520
+And he wrote another piece called and the whole hypothesis significance testing never worked
+
+0:57:45.550,0:57:47.230
+so
+
+0:57:47.230,0:57:48.730
+I've shown you what?
+
+0:57:48.730,0:57:56.070
+p-values are so that you know why they don't work not so that you can use them right, but they're a super important part of
+
+0:57:57.010,0:58:03.570
+machine learning because they come up all the time in making just you know, when people saying this is how we decide whether
+
+0:58:04.270,0:58:06.630
+your drug worked or whether there is a
+
+0:58:07.330,0:58:11.580
+Epidemiological relationship or whatever and indeed
+
+0:58:12.220,0:58:14.220
+p-values appear in this paper
+
+0:58:14.710,0:58:18.149
+so in the paper, they show the results of a
+
+0:58:19.030,0:58:21.030
+multiple linear regression
+
+0:58:21.310,0:58:24.840
+And they put three stars next to any
+
+0:58:25.480,0:58:29.070
+Relationship which has a p-value of 0.01 or less?
+
+0:58:30.880,0:58:32.880
+So
+
+0:58:34.420,0:58:39.240
+There is something useful to say about a small p-value like 0.01 or less
+
+0:58:40.150,0:58:43.890
+Which is the thing that we're looking at did not probably did not happen by chance
+
+0:58:44.440,0:58:46.390
+right the biggest
+
+0:58:46.390,0:58:52.259
+statistical error people make all the time is that they see that a p-value is not less than
+
+0:58:52.660,0:58:55.080
+0.05 and then they make the erroneous
+
+0:58:55.660,0:58:57.660
+conclusion that no
+
+0:58:58.090,0:59:00.120
+relationship exists, right
+
+0:59:01.060,0:59:05.399
+Which doesn't make any sense because like let's say you only had like three data points
+
+0:59:06.039,0:59:11.999
+Then you almost certainly won't have enough data to have a p-value of less than 0.05 for any
+
+0:59:13.299,0:59:19.619
+Hypothesis, so like the way to check is to go back and say what if I picked the exact opposite null hypothesis
+
+0:59:20.140,0:59:24.210
+What if my null hypothesis was there is a relationship between temperature and R
+
+0:59:24.789,0:59:27.059
+Then do I have enough data to?
+
+0:59:28.029,0:59:32.129
+Reject that null hypothesis. All right, and if the answer is no
+
+0:59:32.950,0:59:34.359
+then
+
+0:59:34.359,0:59:38.338
+You just don't have enough data to make any conclusions at all. All right
+
+0:59:38.890,0:59:45.569
+so in this case, they do have enough data to be confident that there is a relationship between
+
+0:59:46.329,0:59:48.329
+temperature and ah
+
+0:59:48.490,0:59:49.779
+Now, that's weird
+
+0:59:49.779,0:59:54.989
+because we just looked at the graph and we did a little back of a bit of a back-of-the-envelope in Excel and we thought
+
+0:59:55.509,0:59:58.019
+This is could it could well be random so
+
+1:00:00.039,1:00:02.039
+Here's where the issue is
+
+1:00:02.619,1:00:08.518
+the graph shows what we call a univariate relationship a univariate relationship shows the relationship between
+
+1:00:08.890,1:00:13.319
+One independent variable and one dependent variable and that's what you can normally show on a graph
+
+1:00:14.019,1:00:16.169
+but in this case they did a
+
+1:00:16.990,1:00:19.259
+multivariate model in which they looked at temperature and
+
+1:00:20.259,1:00:21.609
+humidity and
+
+1:00:21.609,1:00:23.559
+GDP per capita and
+
+1:00:23.559,1:00:25.559
+population density
+
+1:00:25.599,1:00:33.179
+And when you put all of those things into the model, then you end up with statistically significant results for temperature and humidity
+
+1:00:33.730,1:00:37.079
+Why does that happen? Well, the reason that happens is because
+
+1:00:38.950,1:00:43.169
+All these variation in the blue dots is not random
+
+1:00:43.420,1:00:47.159
+There's a reason they're different right and the reasons include
+
+1:00:48.069,1:00:51.538
+denser cities are going to have higher transmission for instance and
+
+1:00:52.150,1:00:57.180
+Probably more humid who have less transmission. So when you do a
+
+1:00:59.109,1:01:06.689
+Multivariate model, it actually allows you to be more confident of your results, right?
+
+1:01:09.309,1:01:16.169
+But the p-value as noted by the American Statistical Association does not tell us whether this is a practical importance
+
+1:01:17.109,1:01:21.119
+The thing that tells us is this is practical as importance is the actual slope
+
+1:01:21.910,1:01:23.940
+That's found and so in this case
+
+1:01:25.930,1:01:33.719
+The equation they come up with is that R equals three point nine six eight minus three point
+
+1:01:33.720,1:01:38.130
+Oh point O three eight by temperature minus point zero two four by relative humidity
+
+1:01:38.170,1:01:44.909
+This is this equation is this practically important? Well, we can again do a little back of the envelope here
+
+1:01:47.710,1:01:49.710
+By just putting that into
+
+1:01:50.800,1:01:58.680
+Excel let's say there was one place. It had a temperature of ten centigrade and a humidity of forty then if this equation is
+
+1:01:58.680,1:02:00.960
+Correct, R would be about two point seven
+
+1:02:01.840,1:02:05.340
+Somewhere with the temperature of 35 centigrade and a humidity of eighty
+
+1:02:06.070,1:02:08.070
+Will be about point eight
+
+1:02:08.380,1:02:12.630
+So is this practically important? Oh my god. Yes, right
+
+1:02:13.360,1:02:16.259
+two different cities with different climates
+
+1:02:16.960,1:02:20.369
+Can be if they're the same in every other way and this model is correct
+
+1:02:21.010,1:02:28.290
+Then one city would have no spread of disease because R is less than 1 1 would have massive exponential explosion
+
+1:02:29.650,1:02:31.000
+so
+
+1:02:31.000,1:02:38.400
+We can see from this model that if the modeling is correct, then this is a highly practically significant result
+
+1:02:38.400,1:02:43.799
+So this is how you determine practical significance of your models is not with p-values
+
+1:02:44.380,1:02:47.579
+But with looking at kind of actual outcomes
+
+1:02:48.910,1:02:51.180
+So, how do you think about?
+
+1:02:52.360,1:02:54.539
+the practical importance
+
+1:02:55.150,1:03:00.420
+Of a model and how do you turn a predictive model into something useful in production?
+
+1:03:01.000,1:03:05.880
+so I spent many many years thinking about this and I actually
+
+1:03:06.490,1:03:08.230
+created a
+
+1:03:08.230,1:03:11.190
+With some other great folks actually created a paper about it
+
+1:03:13.330,1:03:15.330
+Designing great data products
+
+1:03:17.320,1:03:19.180
+And
+
+1:03:19.180,1:03:21.180
+This is largely based on
+
+1:03:22.270,1:03:24.840
+Ten years of work I did at a company
+
+1:03:24.840,1:03:28.920
+I founded called optimal decisions group and optimal decisions group was
+
+1:03:29.230,1:03:33.849
+focused on a question of helping insurance companies what prices to set
+
+1:03:34.520,1:03:35.960
+and
+
+1:03:35.960,1:03:41.919
+Insurance companies up until that point had focused on predictive modeling actuaries in particular
+
+1:03:42.619,1:03:44.619
+Spent their time trying to figure out
+
+1:03:46.190,1:03:50.649
+How likely is it that you're going to crash your car and if you do how much damage might you have?
+
+1:03:51.440,1:03:55.779
+And then based on that try to figure out what price they should set for your policy
+
+1:03:56.809,1:04:01.449
+So for this company what we did was we decided to use a different approach
+
+1:04:01.700,1:04:05.950
+Which I ended up calling the drivetrain approach which is described here
+
+1:04:06.829,1:04:08.359
+to
+
+1:04:08.359,1:04:13.749
+Just set insurance prices and indeed to do all kinds of other things and so for the Insurance example
+
+1:04:14.720,1:04:17.709
+the objective would be if an insurance company would be
+
+1:04:18.559,1:04:20.559
+how do I maximize my
+
+1:04:21.049,1:04:23.049
+let's say five-year profit and
+
+1:04:23.539,1:04:28.419
+Then what inputs can we control? Can we control which what I call levers?
+
+1:04:29.029,1:04:32.229
+so in this case, it would be what price can I set and
+
+1:04:32.779,1:04:39.339
+Then data is data, which can tell you as you change your levers. How does that change your objective?
+
+1:04:39.470,1:04:46.299
+So if I start increasing my price to people who are likely to crash their car, then will get less of them
+
+1:04:46.299,1:04:52.059
+Which means we have less costs, but at the same time we'll also have less revenue coming in. For example
+
+1:04:52.609,1:05:00.369
+So to link up there kind of the levers to the objective via the data, we collect we build models that described how the levers
+
+1:05:01.160,1:05:03.160
+influence objective and this is all like
+
+1:05:03.740,1:05:08.469
+It seems pretty obvious. What do you say it like this, but when we started work with
+
+1:05:09.200,1:05:16.839
+Optimal decisions in 1999. Nobody was doing this an insurance everybody in insurance was simply doing a predictive model
+
+1:05:18.020,1:05:23.709
+To guess how likely people were to crash their car and then pricing was set by like adding
+
+1:05:24.500,1:05:28.149
+20% or whatever. It was just done in a very kind of naive way
+
+1:05:29.329,1:05:31.250
+so
+
+1:05:31.250,1:05:32.559
+what I did is I a
+
+1:05:32.559,1:05:39.339
+You know over many years took this basic process and tried to help lots of companies cigarette how to use it to turn
+
+1:05:40.010,1:05:42.010
+predictive models into actions
+
+1:05:43.160,1:05:45.160
+so the starting point
+
+1:05:45.170,1:05:51.300
+in like actually getting value in a particular model is thinking about what is it you're trying to do and you know
+
+1:05:51.300,1:05:53.519
+What are the sources of value in that thing you're trying to do?
+
+1:05:54.190,1:06:00.810
+The levers what are the things you can change? Like? What's the point of a predictive model if you can't do anything about it, right?
+
+1:06:02.170,1:06:06.270
+Figuring out ways to find what data you you don't have which ones suitable what's available?
+
+1:06:06.460,1:06:09.480
+then thinking about what approaches to analytics you can then take
+
+1:06:10.180,1:06:12.180
+and then super important like
+
+1:06:12.730,1:06:13.750
+well
+
+1:06:13.750,1:06:18.869
+Can you actually implement, you know those changes and super super important?
+
+1:06:18.910,1:06:22.500
+how do you actually change things as the environment changes and
+
+1:06:22.750,1:06:29.489
+You know interestingly a lot of these things areas where there's not very much academic research. There's a little bit and
+
+1:06:31.359,1:06:37.289
+Some of the papers that have been particularly around maintenance of like how do you decide when your machine learning model is kind of?
+
+1:06:38.109,1:06:43.919
+Still okay. How do you update it over time? I've had like many many many many citations
+
+1:06:44.650,1:06:49.889
+But they don't pop up very often because a lot of folks are so focused on the math, you know
+
+1:06:50.859,1:06:55.169
+And then there's the whole question of like what constraints are in place across this whole thing
+
+1:06:55.270,1:07:01.259
+So what you'll find in the book is there is a whole appendix which actually goes through every one of these
+
+1:07:01.599,1:07:05.068
+six things and has a whole list of
+
+1:07:05.770,1:07:09.540
+Examples written so this is an example of how to like think about
+
+1:07:11.050,1:07:18.149
+Value and lots of questions that companies and organizations can use to try and think about
+
+1:07:19.960,1:07:22.949
+You know all of these different pieces of the actual
+
+1:07:24.190,1:07:30.569
+Puzzle of getting stuff into production and actually into an effective product. We have a question. Sure just a moment
+
+1:07:30.569,1:07:36.959
+so as I say so do check out this appendix because it actually originally appeared as a blog post and I think except for my
+
+1:07:37.540,1:07:40.409
+covered 19 posts that I did with Rachel
+
+1:07:40.410,1:07:46.260
+it's actually the most popular blog post I've ever written it said hundreds of thousands of views and it kind of represents like
+
+1:07:47.319,1:07:49.180
+20 years of hard one
+
+1:07:49.180,1:07:53.700
+um insights about like how you actually get value from
+
+1:07:54.190,1:07:59.099
+Machine learning and practice and what you actually have to ask. So, please check it out because hopefully you'll find it helpful
+
+1:07:59.930,1:08:01.930
+so when we think about like think
+
+1:08:02.870,1:08:10.420
+About this for the question of how should people think about the relationship between seasonality and transmissibility of Kovan 19
+
+1:08:13.130,1:08:16.840
+You kind of need to dig really deeply into the questions about like oh
+
+1:08:18.200,1:08:22.510
+Not just what what's that? What are those numbers in the data? But what does it really look like, right?
+
+1:08:22.510,1:08:27.369
+so one of the things in the paper that they show is actual maps right of
+
+1:08:28.040,1:08:29.840
+temperature and
+
+1:08:29.840,1:08:32.829
+humidity and ah, right and
+
+1:08:33.650,1:08:37.659
+you can see like not surprisingly that humidity and
+
+1:08:38.330,1:08:40.330
+temperature in China
+
+1:08:40.520,1:08:46.419
+What we would call um order correlated which is to say that places that are close to each other in this case
+
+1:08:46.730,1:08:48.939
+geographically have similar temperatures and
+
+1:08:49.490,1:08:51.490
+similar humidities and
+
+1:08:51.530,1:08:53.270
+so like
+
+1:08:53.270,1:08:57.520
+This actually puts into the question the a lot the p values
+
+1:08:58.160,1:09:03.519
+That they have right because you you can't really think of these as a hundred totally separate cities
+
+1:09:03.920,1:09:07.420
+Because the ones that are close to each other probably have very close behavior
+
+1:09:07.420,1:09:10.180
+so maybe you should think of them as like a small number of
+
+1:09:10.940,1:09:14.200
+Sets of cities, you know of kind of larger geographies
+
+1:09:15.020,1:09:16.370
+so
+
+1:09:16.370,1:09:21.700
+these are the kinds of things that when you look actually into a model you need to like think about what are the
+
+1:09:22.310,1:09:27.700
+What are the limitations but then to decide like well, what does that mean? What do I what do I do about that?
+
+1:09:29.720,1:09:36.340
+You you need to think of it from this kind of utility point of view this kind of end to end
+
+1:09:37.070,1:09:40.299
+what are the actions I can take order the results point of view not just
+
+1:09:41.210,1:09:44.500
+Null hypothesis testing. So in this case, for example
+
+1:09:46.520,1:09:48.760
+There are basically four possible
+
+1:09:49.430,1:09:55.570
+Key ways. This could end up it could end up that there really is a relationship between
+
+1:09:56.630,1:09:58.630
+temperature and R or
+
+1:09:59.720,1:10:05.050
+So that's but the right hand side is or there is no real relationship between temperature and R and
+
+1:10:06.350,1:10:09.610
+We might act on the assumption that there is a relationship
+
+1:10:10.100,1:10:15.220
+Or we might act on the assumption that there isn't a relationship and so you kind of want to look at each of these four
+
+1:10:16.040,1:10:18.040
+possibilities and say like well, what would be the
+
+1:10:19.250,1:10:21.250
+economic and societal consequences
+
+1:10:22.070,1:10:25.329
+And you know, there's gonna be a huge difference in
+
+1:10:26.000,1:10:30.220
+Lives lost and you know economy is crashing and whatever else - you know
+
+1:10:30.980,1:10:32.980
+for each of these for
+
+1:10:34.760,1:10:40.420
+The the paper actually, you know has shown if their model is correct
+
+1:10:40.550,1:10:48.219
+What's the likely our value in March feel like every city in the world and the likely our value in July?
+
+1:10:48.950,1:10:53.800
+for every city in the world, and so for example, if you look at kind of New England and New York
+
+1:10:54.530,1:11:00.009
+The prediction here is and also West cut the other the very coast of the west coast. Is that in July
+
+1:11:01.640,1:11:03.640
+The disease will stop spreading
+
+1:11:03.800,1:11:07.090
+Now, you know in a that happens if they're right then
+
+1:11:07.880,1:11:13.089
+That's gonna be a disaster because I think it's very likely in America and also the UK
+
+1:11:13.790,1:11:15.790
+That people will say Oh
+
+1:11:15.980,1:11:21.669
+Turns out this disease is not a problem. You know, it didn't really take off at all. The scientists were wrong
+
+1:11:22.160,1:11:25.240
+people will go back to their previous day-to-day life and
+
+1:11:25.820,1:11:32.679
+We could see what happened in 1918 flu virus of like the second go around when winter hits
+
+1:11:33.740,1:11:35.740
+could be much worse than
+
+1:11:36.200,1:11:41.260
+Than the start right? So like there's these kind of like huge potential
+
+1:11:42.320,1:11:48.489
+policy impacts depending on whether this is true or false and so - think about it -
+
+1:11:49.280,1:11:55.179
+Yes. I also just wanted to say that it would be it would be very irresponsible to think. Oh
+
+1:11:55.730,1:11:57.999
+Summers gonna solve it. We don't need to act now
+
+1:11:58.760,1:12:05.800
+Just in that this is something growing exponentially and could do a huge huge amount of damage. Yeah. Yes. Okay, it already has done
+
+1:12:06.650,1:12:07.450
+by the way
+
+1:12:07.450,1:12:11.530
+if you assume that there will be seasonality and that
+
+1:12:11.990,1:12:17.949
+Summer will fix things then it couldn't beat you to be apathetic. Now if you assume there's no seasonality and
+
+1:12:18.650,1:12:23.949
+then there is then you could end up kind of creating a larger level of
+
+1:12:25.210,1:12:30.449
+Expectation of destruction that actually happens and end up with your population being even more apathetic, you know
+
+1:12:30.449,1:12:34.559
+So that they're you know being wrong in any direction to be a problem. So
+
+1:12:35.350,1:12:40.409
+One of the ways we tend to deal with this with with this kind of modeling is we try to think about priors
+
+1:12:41.230,1:12:45.750
+So our priors are basically things where we you know, rather than just having a null hypothesis
+
+1:12:46.150,1:12:52.230
+We try and start with a guess as to like, well, what's what's more likely right? So in this case?
+
+1:12:54.070,1:13:00.420
+If memory serves correctly, I think we know that like flu viruses become inactive at 27 centigrade
+
+1:13:00.730,1:13:03.209
+We know that like cold the cold
+
+1:13:04.120,1:13:09.509
+Coronaviruses are seasonal the 1918 the 1918 flu
+
+1:13:10.449,1:13:12.250
+epidemic was seasonal
+
+1:13:12.250,1:13:17.909
+In every country and city that's been studied so far. There's been quite a few studies like this
+
+1:13:17.909,1:13:21.059
+They've always found climate relationships so far
+
+1:13:21.159,1:13:25.469
+so maybe we'd say well prior belief is that this thing is probably
+
+1:13:25.780,1:13:29.190
+Seasonal and so they would say well this particular paper adds
+
+1:13:30.010,1:13:32.010
+Some evidence to that
+
+1:13:32.230,1:13:34.230
+so like it shows like
+
+1:13:34.300,1:13:38.250
+how incredibly complex it is to use a
+
+1:13:39.340,1:13:46.560
+Model in practice for in this case policy discussions but also for like organizational decisions
+
+1:13:47.230,1:13:49.230
+because you know, there's always
+
+1:13:49.719,1:13:53.759
+Complexities there's always uncertainties. And so you actually have to think about the
+
+1:13:54.429,1:13:59.729
+The utility, you know and your best guesses and try to combine everything together as best as you can
+
+1:14:00.400,1:14:02.400
+okay, so
+
+1:14:03.250,1:14:05.250
+With all that said
+
+1:14:07.659,1:14:08.890
+It's still
+
+1:14:08.890,1:14:10.890
+nice to be able to get our
+
+1:14:11.590,1:14:16.350
+our models up and running even if you know even just a predictive model is
+
+1:14:17.170,1:14:22.589
+sometimes useful of its own sometimes it's useful to prototype something and sometimes it's just
+
+1:14:23.230,1:14:28.919
+It's got to be part of some bigger picture. So rather than try to create some huge into end model here
+
+1:14:28.920,1:14:30.920
+We thought we would just show you how to
+
+1:14:31.780,1:14:33.780
+get your
+
+1:14:35.020,1:14:37.020
+Your PI torch fast AI model
+
+1:14:37.570,1:14:39.000
+up and running
+
+1:14:39.000,1:14:45.180
+In his raw a form as possible so that from there you can kind of build on top of it as you like
+
+1:14:45.610,1:14:47.610
+So to do that
+
+1:14:47.710,1:14:49.510
+we are going to
+
+1:14:49.510,1:14:53.699
+Download and curate our own data set and you're going to do the same thing
+
+1:14:54.340,1:14:58.139
+you've got to train your own model on that data set and then you're going to
+
+1:14:58.960,1:15:02.340
+Create an application and then you're going to host it know
+
+1:15:03.100,1:15:05.020
+now
+
+1:15:05.020,1:15:10.169
+There's lots of ways to create curate an image data set you might have some photos on your own computer
+
+1:15:11.110,1:15:13.110
+There might be stuff at work you can use
+
+1:15:15.160,1:15:20.789
+One of the easiest though is just to download stuff of the internet there's lots of services for downloading stuff off the internet
+
+1:15:21.640,1:15:26.459
+We're going to be using Bing image search here because they're super easy to use
+
+1:15:27.010,1:15:33.119
+A lot of the other kind of easy to use things require breaking the Terms of Service of websites
+
+1:15:33.610,1:15:36.869
+so like we're not going to show you how to do that, but
+
+1:15:37.420,1:15:40.410
+There's lots of examples that do show you how to do that
+
+1:15:40.870,1:15:43.140
+So you can check them out as well if you if you want to
+
+1:15:43.690,1:15:47.850
+Being image search is actually pretty great at least at the moment these things change a lot
+
+1:15:47.850,1:15:50.430
+so keep an eye on our website to see
+
+1:15:51.460,1:15:53.460
+If we've changed our recommendation
+
+1:15:53.710,1:16:00.000
+The biggest problem with being image search is that the signup process is a nightmare?
+
+1:16:00.730,1:16:06.390
+At least at the moment. I feel like one of the hardest parts of this book is just signing up to their damn API
+
+1:16:07.240,1:16:11.610
+Which requires going through a sure it's called cognitive services as your cognitive services
+
+1:16:11.710,1:16:17.220
+So we'll make sure that all that information is on the website for you to follow through just how to sign up
+
+1:16:17.830,1:16:19.830
+So we're going to start from the assumption
+
+1:16:20.410,1:16:22.410
+That you've already signed up
+
+1:16:25.060,1:16:27.060
+But you can find it just go being
+
+1:16:28.510,1:16:36.090
+Being Image Search API and at the moment they give you seven days with a pretty high
+
+1:16:38.140,1:16:41.010
+Pretty high quota for free and then after that
+
+1:16:42.430,1:16:44.430
+You can keep using it
+
+1:16:44.650,1:16:46.650
+as long as you like
+
+1:16:46.750,1:16:53.709
+But they kind of limit it to like three transactions per second or something, which is plenty you can still do thousands for free
+
+1:16:53.710,1:16:56.530
+So it's at the moment. It's pretty great. Even for free
+
+1:16:58.460,1:16:59.480
+So
+
+1:16:59.480,1:17:01.250
+What will happen is?
+
+1:17:01.250,1:17:06.220
+When you sign up for being image search or any of these kind of services, they'll give you an API key
+
+1:17:06.290,1:17:11.649
+So just replace the xxx here with the API key that they give you
+
+1:17:11.750,1:17:14.740
+Okay, so that's now going to be called key
+
+1:17:16.070,1:17:18.070
+In fact, let's do it over here
+
+1:17:20.060,1:17:24.399
+Okay, so you'll put in your key and then there's a
+
+1:17:25.400,1:17:29.530
+function we've created called search images Bing, which is just a super tiny little
+
+1:17:31.520,1:17:35.200
+Function as you can see, it's just two lines of code. Just trying to save a little bit of time
+
+1:17:37.340,1:17:39.340
+Which will take some
+
+1:17:39.470,1:17:44.919
+Take your API key and some search term and return a list of URLs that match that search term
+
+1:17:46.160,1:17:48.160
+as you can see for
+
+1:17:48.830,1:17:50.510
+using
+
+1:17:50.510,1:17:54.609
+This particular service. You have to install a particular
+
+1:17:55.730,1:17:59.530
+Package, so we show you how to do that on the site as well
+
+1:18:00.380,1:18:02.620
+so once you've done so you'll be able to run this and
+
+1:18:03.740,1:18:06.909
+That will return by default. I think 150
+
+1:18:07.610,1:18:09.050
+URLs
+
+1:18:09.050,1:18:12.969
+Okay, so faster Y comes with a download URL function
+
+1:18:12.970,1:18:17.439
+So he let's just download one of those images just to check and open it up
+
+1:18:17.440,1:18:22.240
+And so what I did was I searched for grizzly bear and here I have a grizzly bear
+
+1:18:24.110,1:18:26.230
+So then what I did was I said, okay
+
+1:18:26.230,1:18:32.589
+Let's try and create a create a model that can recognize grizzly bears versus black bears versus teddy bears
+
+1:18:33.590,1:18:36.520
+So that way I can find out I could set up some video
+
+1:18:38.270,1:18:41.919
+Recognition system near our campsite when we're out camping that
+
+1:18:42.530,1:18:43.960
+Gives me bear warnings
+
+1:18:43.960,1:18:48.520
+But if it's a teddy bear coming then it doesn't warn me and wake me up because that would not be scary at all
+
+1:18:49.460,1:18:52.450
+So then I just go through each of those three bear types
+
+1:18:53.030,1:18:54.890
+Create a directory
+
+1:18:54.890,1:19:00.669
+With the name of grizzly or black or teddy bear searched being for that particular search term
+
+1:19:03.110,1:19:05.000
+Along with bear
+
+1:19:05.000,1:19:09.370
+And download and so download images is a first day I function as well
+
+1:19:10.430,1:19:13.360
+So after that I can call get image files
+
+1:19:13.460,1:19:18.610
+Which is a faster a function that will just return recursively all of the image files
+
+1:19:19.040,1:19:24.640
+Inside this path and you can see it's given me bears black and then lots of numbers
+
+1:19:27.260,1:19:28.790
+So
+
+1:19:28.790,1:19:33.490
+one of the things you have to be careful of is that a lot of the stuff you download will turn out to be like
+
+1:19:33.490,1:19:37.990
+not images at all and will break so you can call verify images to
+
+1:19:38.450,1:19:41.559
+Check that all of these file names are actual images
+
+1:19:42.800,1:19:50.559
+And in this case, I didn't have any failed. So there's it's empty. But if you did have some then you would call
+
+1:19:51.920,1:19:58.149
+path unlink unlink path to unlink is part of the Python standard library and it deletes a file and
+
+1:19:59.240,1:20:02.169
+Map is something that will call this function
+
+1:20:02.990,1:20:06.189
+for every element of this collection
+
+1:20:06.830,1:20:08.830
+this is part of a
+
+1:20:08.870,1:20:10.730
+special
+
+1:20:10.730,1:20:13.450
+FASTA a class called L. It's basically
+
+1:20:14.180,1:20:16.570
+It's kind of a mix between the Python standard library
+
+1:20:17.330,1:20:23.169
+List class and a numpy array class then we'll be learning more about it later in this course
+
+1:20:23.600,1:20:29.769
+But it basically tries to make it super easy to do kind of more functional style programming in Python
+
+1:20:30.830,1:20:34.809
+So in this case, it's going to unlink every thing that's in the failed
+
+1:20:35.420,1:20:37.420
+List, which is probably what we want
+
+1:20:37.880,1:20:42.550
+Now because there are all the images that fail to verify. Alright, so we've now got
+
+1:20:43.550,1:20:49.570
+a path that contains a whole bunch of images and they're classified according to
+
+1:20:50.510,1:20:54.070
+black grizzly or Teddy based on what folder they're in and
+
+1:20:54.680,1:21:01.840
+So to create so we're going to create a model and so to create a model. The first thing we need to do is to
+
+1:21:02.360,1:21:04.280
+Tell fast AI
+
+1:21:04.280,1:21:07.419
+What kind of data we have and how its structured?
+
+1:21:08.690,1:21:15.550
+Now in part in lesson 1 of the course, we did that by using what we call a factory method
+
+1:21:15.620,1:21:22.359
+Which is we just said image data loader start from name and it did it all for us
+
+1:21:23.869,1:21:26.289
+Those factory methods are fine for
+
+1:21:27.020,1:21:30.159
+Beginners, but now we're into lesson two. We're not quite beginners anymore
+
+1:21:30.170,1:21:35.799
+So we're going to show you the super super flexible way to use data in whatever format you like
+
+1:21:35.960,1:21:40.119
+And it's called the data block API. And so the data block API
+
+1:21:45.050,1:21:47.800
+Looks like this here's the data block API
+
+1:21:49.340,1:21:55.600
+You tell first AI what your independent variable is and what your dependent variable is
+
+1:21:55.600,1:22:02.019
+So what your labels are and what your input data is. So in this case our input data are images
+
+1:22:03.170,1:22:08.619
+And our labels are categories. So category is going to be either grizzly or black
+
+1:22:09.260,1:22:11.179
+or teddy
+
+1:22:11.179,1:22:13.239
+So that's the first thing you tell it now
+
+1:22:13.239,1:22:19.178
+That's the block's parameter and then you tell it how do you get a list of all of the in this case file names?
+
+1:22:19.520,1:22:24.759
+Right, and we just saw how to do that because Peters called the function ourselves if the function is called get image files
+
+1:22:24.889,1:22:28.149
+so we tell it what function to use to get that list of items and
+
+1:22:29.090,1:22:34.989
+Then you tell it how do you split the data into a validation set and a training set?
+
+1:22:34.989,1:22:39.968
+And so we're going to use something called a random spitter which just spits it randomly and we're going to point
+
+1:22:40.130,1:22:42.130
+30% of it into the validation set
+
+1:22:42.469,1:22:48.669
+we're also going to set the random seed which ensures that every time we run this the validation set will be the same and
+
+1:22:49.760,1:22:55.389
+Then you say okay. How do you label the data? And this is the name of a function called parent label?
+
+1:22:55.389,1:22:57.789
+And so that's going to look for each
+
+1:22:59.300,1:23:05.560
+Item at the name of the parent so this this particular one would become a black bear now
+
+1:23:05.560,1:23:07.560
+This is like the most common way for
+
+1:23:09.469,1:23:16.178
+Image datasets to be represented is that they get put the different images get the files get put into folder according to their label
+
+1:23:17.119,1:23:18.679
+and
+
+1:23:18.679,1:23:21.579
+Then finally here we've got something called item transforms
+
+1:23:21.920,1:23:25.359
+we're be learning a lot more about transforms in a moment that these are basically
+
+1:23:25.580,1:23:33.070
+functions that get applied to each image and so each image is going to be resized to 100 and twenty-eight by
+
+1:23:33.560,1:23:35.560
+128 square
+
+1:23:35.960,1:23:38.950
+So we're going to be learning more about datablock api soon
+
+1:23:39.200,1:23:44.619
+but basically the process is going to be it's going to call whatever is get items which is a list of image files and
+
+1:23:45.650,1:23:50.320
+Then I'm going to call get X get Y. So in this case, there's no get X but there is a get Y
+
+1:23:50.320,1:23:55.659
+So it's just parent label and then it's going to call the create method for each of these two things
+
+1:23:55.660,1:23:57.789
+It's going to create an image and it's going to create a category
+
+1:23:58.520,1:24:01.990
+Instead. I'm going to call the item transforms, which is resize
+
+1:24:02.930,1:24:06.249
+And then the next thing it does is it puts it into something called a data loader?
+
+1:24:06.250,1:24:10.030
+A data loader is something that grabs a few images at a time?
+
+1:24:10.400,1:24:14.890
+I think by default at 64 and puts them all into a single
+
+1:24:14.890,1:24:19.090
+It's got a batch. It just grabs 64 images and sticks them all together
+
+1:24:19.760,1:24:23.499
+And the reason it does that is it then puts them all onto the GPU at once
+
+1:24:24.380,1:24:26.920
+so it can pass them all to the
+
+1:24:27.230,1:24:33.640
+Model through the GPU in one go and that's going to let the GPU go much faster as we'll be learning about
+
+1:24:34.730,1:24:36.879
+And then finally, we don't use any here
+
+1:24:37.190,1:24:43.960
+We can have something called batch transforms, which we will talk about later and then somewhere in the mineral about here
+
+1:24:44.480,1:24:51.250
+Conceptually is the splitter which is the thing that splits into the training set and the validation set
+
+1:24:51.410,1:24:55.209
+So this is a super flexible way to tell fast AI
+
+1:24:56.510,1:25:00.489
+how to work with your data and so at the end of that
+
+1:25:01.280,1:25:08.199
+It returns an object of type data loaders. That's why we always call these things deals, right?
+
+1:25:08.390,1:25:12.579
+So data loaders has a validation and a training
+
+1:25:12.860,1:25:14.150
+data loader and
+
+1:25:14.150,1:25:20.470
+a data loader as I just mentioned is something that grabs a batch of a few items at a time and puts it on the
+
+1:25:20.470,1:25:22.250
+GPU for you
+
+1:25:22.250,1:25:26.530
+So this is basically the entire code of data loaders
+
+1:25:27.470,1:25:31.269
+So the details don't matter. I just wanted to point out that like a lot of these
+
+1:25:31.850,1:25:34.629
+Concepts in fast AI when you actually look at what they are
+
+1:25:34.630,1:25:36.460
+They're they're incredibly simple
+
+1:25:36.460,1:25:42.100
+but all things it's literally something that you just pass in a few data loaders to edit store some in an attribute and
+
+1:25:42.410,1:25:47.359
+Pass and gives you the first one backers train and second one backers valid
+
+1:25:49.199,1:25:51.090
+So
+
+1:25:51.090,1:25:53.210
+we can create our
+
+1:25:55.230,1:26:02.359
+Data loaders by first of all creating the data block and then we call the data loaders passing in our path to create deals and
+
+1:26:02.940,1:26:05.029
+Then you can call show batch on that
+
+1:26:05.030,1:26:10.280
+You can call show bachelor pretty much anything in fast AI to see your data and look we've got some Grizzlies
+
+1:26:10.280,1:26:12.280
+We've got a teddy we've got a grizzly
+
+1:26:14.280,1:26:16.280
+So you get the idea right
+
+1:26:17.880,1:26:22.699
+I'm going to look at these different. I'm going to look at data augmentation next week
+
+1:26:22.699,1:26:27.469
+So I'm going to skip over data-orientation and let's just jump straight into trading your model
+
+1:26:31.710,1:26:35.089
+So once we've got two yells we can just like in
+
+1:26:35.760,1:26:39.199
+Lesson one call CNN learner to create a
+
+1:26:39.719,1:26:43.038
+Resonate we're going to create a smaller resonant this time or isn't it 18?
+
+1:26:43.590,1:26:49.519
+Again asking for error rate we can then call dot fine-tune again. So you see it's all the same lines of code
+
+1:26:49.519,1:26:50.999
+we've already seen and
+
+1:26:50.999,1:26:55.819
+You can see our error rate goes down from nine to one. So we've got one percent error
+
+1:26:56.519,1:27:02.719
+And after training for about 25 seconds, so you can see you know, we've only got 450 images
+
+1:27:03.690,1:27:10.789
+we've trained for well less than a minute and we only have let's look at the confusion matrix so we can say I
+
+1:27:11.400,1:27:18.559
+Want to create a classification interpretation class. I want to look at the confusion matrix and the confusion matrix as you can see
+
+1:27:18.659,1:27:21.768
+It's something that says for things that are actually black bears
+
+1:27:22.650,1:27:24.769
+How many are predicted to be black bears?
+
+1:27:25.559,1:27:26.610
+versus
+
+1:27:26.610,1:27:28.610
+grizzly bears versus
+
+1:27:28.679,1:27:33.859
+Teddy bears. So the diagonal are the ones that are all correct. And so it looks like we've got two errors
+
+1:27:33.860,1:27:38.150
+We've got one grizzly that was predicted be black one black that was predictable grizzly
+
+1:27:40.889,1:27:42.889
+Super super useful
+
+1:27:43.469,1:27:47.239
+Method is plot top losses, and that'll actually show me
+
+1:27:48.809,1:27:56.119
+What my errors actually look like so this one here was predicted to be a grizzly bear but the label was black bear
+
+1:27:56.770,1:28:00.450
+This one was the one that's predictably a black bear and the label was grizzly bear
+
+1:28:02.500,1:28:04.800
+These ones here are not actually wrong there
+
+1:28:04.830,1:28:11.160
+this is predicted to be black and it's actually black but the reason they appear in this is because these are the ones that the
+
+1:28:12.730,1:28:15.540
+Model was the least confident about
+
+1:28:16.780,1:28:19.829
+Okay, so we're going to look at the image classifier cleaner next week
+
+1:28:20.800,1:28:23.789
+Let's focus on how we then get this into production
+
+1:28:24.700,1:28:25.930
+so
+
+1:28:25.930,1:28:27.930
+To get it into production
+
+1:28:28.150,1:28:30.150
+We need to
+
+1:28:30.580,1:28:38.519
+Export the model. So what exporting the model does is it creates a new file which by default is called export pickle?
+
+1:28:39.280,1:28:41.170
+Which contains?
+
+1:28:41.170,1:28:43.920
+The architecture and all of the parameters of the model
+
+1:28:44.170,1:28:50.160
+so that is now something that you can copy over to a server somewhere and
+
+1:28:50.710,1:28:52.710
+treat it as a
+
+1:28:52.900,1:29:00.030
+Predefined program right? So then so the the process of using your trained model
+
+1:29:01.150,1:29:04.920
+On new data kind of in production is called inference
+
+1:29:05.410,1:29:10.019
+So here I've created an inference learner by loading that learner back again
+
+1:29:10.390,1:29:17.640
+All right, and so obviously it doesn't make sense to do it right next to after I've saved it in a notebook
+
+1:29:17.640,1:29:23.459
+But I'm just showing you how it work. Right? So this is something that you would do on your server in inference and
+
+1:29:24.730,1:29:31.470
+Remember that once you have trained a model, you can just treat it as a program you can pass inputs to it
+
+1:29:31.470,1:29:33.990
+So this is now our our program
+
+1:29:33.990,1:29:40.590
+this is our Bayer predictor so I can now call predict on it and I can pass it an image and
+
+1:29:41.200,1:29:43.200
+It will tell me
+
+1:29:43.210,1:29:45.210
+Here is it is?
+
+1:29:45.490,1:29:47.999
+99.999% sure that this is a grizzly
+
+1:29:49.240,1:29:53.280
+So I think what we're going to do here is we're going to wrap it up here
+
+1:29:54.160,1:29:57.180
+And next week we'll finish off by
+
+1:29:58.750,1:30:00.750
+Creating an actual GUI
+
+1:30:01.180,1:30:02.680
+for our
+
+1:30:02.680,1:30:04.510
+bear classifier
+
+1:30:04.510,1:30:06.370
+We will
+
+1:30:06.370,1:30:08.140
+show how to
+
+1:30:08.140,1:30:10.140
+Run it for free on a service call
+
+1:30:10.920,1:30:12.570
+binder
+
+1:30:12.570,1:30:14.570
+and
+
+1:30:16.530,1:30:23.150
+Yeah, and then I think we'll be ready to dive into some of the some of the details of what's going on behind the scenes
+
+1:30:23.849,1:30:27.379
+Um any questions or anything else before we wrap up Rachel?
+
+1:30:28.860,1:30:34.339
+Now, okay, great. All right. Thanks everybody. So we
+
+1:30:37.409,1:30:39.679
+Hopefully, yeah, I think from here on
+
+1:30:40.830,1:30:42.179
+We've covered
+
+1:30:42.179,1:30:49.279
+You know, most of the key kind of underlying foundational stuff from a machine-learning point of view that we're going to need to cover
+
+1:30:51.000,1:30:53.060
+So we'll be able to ready to dive into
+
+1:30:54.840,1:30:58.310
+Lower-level details of how deep learning works behind the scenes
+
+1:31:00.540,1:31:03.889
+And I think that'll be starting from next week, so see you then
