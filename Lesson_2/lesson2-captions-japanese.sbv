@@ -1721,170 +1721,160 @@ Which is a model in this paper?
 One of the things we're going to try and do in this course is learn how to read papers
 
 0:46:07.720,0:46:11.730
-裕美　ー　ここから
-So here is a paper, which you I would love for everybody to read
+というわけで、皆さんに読んでいただきたいのがこちらの論文です。
 
 0:46:12.310,0:46:18.179
-Called high temperature and high humidity reduce the transmission of kovat 19. Now. This is a very important issue
+高温多湿がCOVID-19の感染を減少させるという論文で、これは非常に重要な問題です.
 
 0:46:18.730,0:46:21.419
-Because if the claim of this paper is true
+もしこの論文の主張が本当ならば、
 
 0:46:21.420,0:46:23.420
-then that would mean that this is going to be a
+これは季節性の病気であることを意味し、
 
 0:46:23.530,0:46:29.159
-Seasonal disease and if this is a seasonal disease and it's going to have massive policy implications
+もしこれが季節性の病気であれば、大規模な政策的な意味合いを持つことになります。
 
 0:46:30.880,0:46:36.540
-So, let's try and find out how this was modeled and understand how to interpret this model
+これがどのようにモデル化されたのかを調べて、このモデルをどのように解釈するかを理解しましょう。
 
 0:46:38.590,0:46:40.590
-So, this is a
+これが
 
 0:46:41.530,0:46:45.659
-Key picture from the paper and what they've done here is they've
+論文からの重要な図です。
 
 0:46:46.270,0:46:51.119
-taken a hundred cities in China and they've plotted the temperature on one axis in
+彼らは中国の100の都市の気温を1つの軸に摂氏でプロットし
 
-0:46:51.490,0:46:59.070
-Celsius and are on the other axis where R is a measure of transmissibility. It says for each person that has this
-
-0:46:59.590,0:47:00.970
-disease
+0:46:51.490,0:47:00.970
+もう1つの軸にはRをプロットしました。 Rは感染性の尺度です。各人がこの病気に感染した場合
 
 0:47:00.970,0:47:02.970
-How many people on average will they?
+平均で何人を感染させるかを表しています。
 
 0:47:03.790,0:47:09.749
-infect so if R is under 1 then the disease will not spread is over R is
+つまり、Rが1以下であれば、この病気は広まりません。
 
 0:47:10.720,0:47:14.010
-Higher than like 2 it's going to spread incredibly quickly
+もしＲが２より高ければ 信じられないほど早く広がります。
 
 0:47:15.369,0:47:20.459
-And basically R is going to you know, any high R is going to create an exponential transmission impact
+基本的に、Rが高くなると、指数関数的に感染が拡大します。
 
-0:47:21.670,0:47:25.590
-And you can see in this case. They have plotted a best fit line
-
-0:47:26.350,0:47:28.240
-through here
+0:47:21.670,0:47:28.240
+このケースでは、ここに最適な線をプロットしています。
 
 0:47:28.240,0:47:30.750
-Them and then they've made a claim that there's some particular
+そして、彼らは、
 
 0:47:32.260,0:47:38.699
-Relationship in terms of a formula that R is one point nine nine minus 0.02 three times temperature
+Rは1.99から0.023かける温度を引いたものであるという公式に基づいて、ある特定の関係があると主張しています。
 
 0:47:39.760,0:47:41.470
-so
+ここで
 
 0:47:41.470,0:47:45.780
-very obvious concern I would have looking at this picture is that
+この図を見ていて私が懸念しているのは、
 
 0:47:47.560,0:47:53.340
-This might just be random maybe there's no relationship at all, but just if you picked a hundred
+これは単なるランダムなものかもしれない、もしかしたら全く関係がないのかもしれない、ということです。
 
 0:47:54.010,0:47:58.709
-Cities at random perhaps they were sometimes show this level of relationship
+100の都市をランダムに選ぶと、この程度の関係性を示すことがあるのかもしれません。
 
-0:48:00.160,0:48:06.480
-So one simple way to kind of see that would be to actually do it in a spreadsheet
-
-0:48:07.780,0:48:08.859
-so
+0:48:00.160,0:48:08.859
+それを確かめる簡単な方法としては、実際にスプレッドシートを使ってみるという方法があります。
 
 0:48:08.859,0:48:16.619
-Yes, here is a spreadsheet where what I did was I kind of eyeballed this data and I guessed about what is the main?
+これがスプレッドシートです。 ここで私がやったのは、このデータを見て、平均気温が何度かを推測してみました。
 
 0:48:16.839,0:48:24.029
-Degrees centigrade I think it's about five and what's about the standard deviation of centigrade? I think it's probably about five as well
+約5度だと思います。 摂氏の標準偏差は？　たぶん同じように5くらいだと思います。
 
 0:48:24.819,0:48:28.979
-and then I did the same thing for our I think I mean our looks like it's about
+そして、Rについても同じことをしました。平均Rは私には
 
 0:48:29.260,0:48:34.020
-1.9 to me and it looks like the standard deviation of R is probably about 0.5
+1.9くらいに見えます。 そして、Rの標準偏差はおそらく0.5くらいだと思います。
 
 0:48:35.589,0:48:40.409
-So what I then did was I just jumped over here and I created a
+そこで、私はここにジャンプして、
 
 0:48:41.440,0:48:42.819
-random
+ランダムな
 
 0:48:42.819,0:48:47.519
-Normal value so a random value from a normal distribution from a normal distribution
+正規値、つまり正規分布からのランダムな値を作成しました。
 
 0:48:47.530,0:48:53.849
-So a bell curve with that particular mean and standard deviation of temperature and that particular
+つまり温度の特定の平均と標準偏差とRの特定の平均と標準偏差の
 
 0:48:54.339,0:48:59.699
-Mean and standard deviation of R. And so this would be an example of
+ベルカーブです。 これは架空の
 
 0:49:00.549,0:49:02.020
-a city that
+100の都市の
 
 0:49:02.020,0:49:07.889
-Might be in this data set of a hundred cities something with nine degrees Celsius and an hour of 1.1
+データセットの中にあるかもしれない都市の例です。摂氏9度、Rが1.1の都市。
 
 0:49:07.890,0:49:13.349
-So that would be nine degrees Celsius and an hour of 1.1. So something about here
+摂氏9度、Rが1.1で、このあたりになります。
 
 0:49:14.950,0:49:18.359
-And so then I just copied that formula down
+だから、この式を100回
 
 0:49:20.380,0:49:22.380
-100 times
+コピーしました。
 
 0:49:22.420,0:49:25.290
-So here are a hundred cities
+ここに中国にあるかもしれない
 
 0:49:25.960,0:49:31.889
-that could be in China right where this is assuming that there is no relationship between
+100の都市がありますが、これは気温とRの間に
 
 0:49:32.260,0:49:35.010
-temperature and R right there just random numbers
+関係がないと仮定した、ただのランダムな数値です。
 
 0:49:36.490,0:49:37.690
-and
+そして
 
 0:49:37.690,0:49:43.290
-So each time I recalculate that so if I hit control equals it will just recalculate it
+だから再計算するたびに（コントロール・イコールを押すと再計算されます）
 
 0:49:44.290,0:49:46.290
-Right I get different numbers
+ランダムなので、違う数字が出てきます。
 
 0:49:46.839,0:49:49.979
-Okay, because they're random and so you can see at the top here
+上の方には、
 
 0:49:50.740,0:49:52.740
-I've then got the average of
+全温度の平均と
 
 0:49:54.579,0:49:59.339
-All of the temperatures and the average of all of the hours and the average of all the temperatures
+全Rの平均。全ての温度の
 
 0:50:02.290,0:50:07.290
-Varies and the average of all of the odds varies as well. So then I
+平均値が変化し、Rも同様に変化します。そこで
 
 0:50:09.040,0:50:12.119
-What I did was I copied those random numbers
+私がしたのはこれらの乱数をここに
 
 0:50:14.530,0:50:16.530
-Over here
+コピーしたことです。
 
 0:50:17.230,0:50:23.490
-Let's actually do it so I'll go copy these 100 random numbers and paste them
+実際にやってみましょう。100個の乱数をコピーして
 
 0:50:25.960,0:50:27.760
-Here
+ここと、
 
 0:50:27.760,0:50:33.389
-Here here here. And so now I've got
+ここと、 ここと、 こことに貼り付けます。これで
 
 0:50:34.839,0:50:40.979
-1 2 3 4 5 6 I've got 6 kind of groups of 100 cities
+1 2 3 4 5 6 100個の都市のグループが６つできました。
 
 0:50:41.289,0:50:43.559
 all right, and so let's
