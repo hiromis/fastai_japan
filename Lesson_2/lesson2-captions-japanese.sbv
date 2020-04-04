@@ -1877,178 +1877,179 @@ Rは1.99から0.023かける温度を引いたものであるという公式に�
 1 2 3 4 5 6 100個の都市のグループが６つできました。
 
 0:50:41.289,0:50:43.559
-all right, and so let's
+これでこれ以上
 
 0:50:45.220,0:50:51.359
-Stop those from randomly changing any more by just fixing them in stone there
+ランダムに変化しないように固定しておきます。
 
 0:50:57.789,0:51:00.329
-Okay, so now that I've pasted them in I've got
+さて、これで貼り付けました。
 
 0:51:01.030,0:51:08.489
-6 examples of what a hundred cities might look like if there was no relationship at all between temperature and R and
+気温とRの関係が全くないとしたら、100の都市はどのようになるのか、6つの例が出てきました。
 
 0:51:09.579,0:51:13.589
-I've got their mean temperature and R in each of those six examples
+これら6つの例の平均温度とRはここにあります。
 
 0:51:13.630,0:51:19.079
-And what I've done is you can see here at least for the first one is I've plotted it
+私がした事は、これを見て下さい、最初の例をプロットしました。
 
 0:51:19.630,0:51:22.710
-Right and you can see in this case. There's actually a
+この場合、実際には
 
 0:51:23.680,0:51:25.680
-slight positive slope and
+若干、プラスの傾きがあります。
 
 0:51:26.500,0:51:28.500
-I've actually calculated
+私は実際に、
 
 0:51:30.549,0:51:32.549
-The slope
+それぞれの傾きを
 
 0:51:33.010,0:51:38.010
-For each just by using the slope function in Microsoft Excel and you can see that actually
+Microsoft Excelの傾き関数を使って計算しました。見ての通り、
 
 0:51:39.430,0:51:41.430
-In this particular case is just random
+この特定のケースでは、 ただランダムであることがわかります。
 
 0:51:42.460,0:51:44.490
-Five times it's been
+5回は
 
 0:51:45.369,0:51:47.818
-Negative and it's even more negative than their
+負の値を示しています。そして、それは彼らの
 
 0:51:48.460,0:51:50.460
-0.023
+0.023よりもさらに負の値を示しています。
 
 0:51:50.559,0:51:55.109
-And so you can like it's kind of matching our intuition here
+このように、私たちの直感と一致しています。
 
 0:51:55.109,0:51:58.499
-which is that this the slope of the line that we have here is
+つまり、この線の傾きは、完全に
 
 0:51:59.829,0:52:07.079
-Something that absolutely can often happen totally by chance. It doesn't seem to be indicating any kind of real relationship at all
+偶然に起こることが多いということです。 実際の関係を示しているようには見えません。
 
 0:52:07.990,0:52:11.819
-if we wanted that slope to be like
+もし、この傾きを
 
 0:52:12.490,0:52:18.689
-More confident we would need to look at more cities. So like here I've got
+もっと自信を持って示したいのであれば、もっと多くの都市を 調べる必要があります。
 
 0:52:21.549,0:52:27.149
-3,000 randomly generated numbers and you can see here. The slope is
+ここに3,000個のランダムに生成された数字があります。この傾きは
 
 0:52:28.930,0:52:35.760
-0.0002 right. It's almost exactly zero, which is what we'd expect right when there's actually no relationship between C and R
+0.00002であるのがわかりますね？これは我々の期待通りほぼ0です。実際にCとRの間には関係がない場合、
 
 0:52:35.760,0:52:37.949
-And in this case there isn't they're all random
+これらはランダムに生成された数字で関係がありません。
 
 0:52:38.740,0:52:44.219
-Then if we look at lots and lots of randomly generated cities, then we can say oh, yeah, there's there's no slope
+そして、ランダムに生成されたたくさんの都市のデータを見てみると、「ああ、そうだ、傾きはない」と言えるでしょう。
 
 0:52:44.590,0:52:49.379
-But when you only look at a hundred as we did here you're going to see relationships
+しかし、今回のように１００個の都市だけを見た場合には、非常に多くの場合、
 
 0:52:51.010,0:52:58.139
-Totally coincidentally very very often. All right, so that's something that we need to be able to measure and
+全く偶然に関係性があることがわかります。だから、それを測定する必要があります。
 
 0:52:58.690,0:53:01.649
-So one way to measure that is we use something called a p-value
+これを測定する一つの方法は、p値と呼ばれるものを使うことです。
 
 0:53:02.590,0:53:05.159
-So a p-value here's our p-value works
+p値、ここではp値がどのように機能するかを説明します。
 
 0:53:05.470,0:53:12.600
-we start out with something called a null hypothesis and the null hypothesis is basically what's what's our
+まず帰無仮説と呼ばれるものから始めます。帰無仮説とは、基本的には出発点の
 
 0:53:13.270,0:53:16.800
-starting point assumption so our starting point assumption might be oh
+仮定のことです。 例えば我々の出発点の仮定は、
 
 0:53:16.800,0:53:24.179
-There's no relationship between temperature and R. And then we gather some data and have you explained what R is I have. Yes
+温度とRの間には何の関係もないというものかもしれません。そして、いくつかのデータを集めて、（レイチェル：Rとは何か説明してくれましたか？ ジェレミー：はい、しました)
 
 0:53:24.390,0:53:26.390
-How is the transmissibility of the virus?
+Rはウイルスの透過性です。
 
 0:53:28.180,0:53:35.310
-So then we gather data of independent and dependent variables, so in this case the independent variable is the thing that we think
+そして、独立変数と従属変数のデータを収集します。 この場合、独立変数とは、
 
 0:53:36.130,0:53:43.290
-Might cause the dependent variable. So here the independent variable would be temperature the dependent variable would be R. So here we've gathered data
+従属変数を引き起こすと思われるものです。ここでは、独立変数は温度で、従属変数はRです。ここでデータを収集しました。
 
 0:53:43.990,0:53:46.379
-There's the data that was gathered in this example
+この例で収集したデータはこれです。
 
 0:53:46.380,0:53:51.960
-And then we say what does centage of the time would we see this amount of relationship?
+そして、何％の割合でこれくらいの関連性を偶然で見ることがあるでしょうか？
 
 0:53:51.960,0:53:55.830
-which is a slope of 0.02 3 by chance and
+ここでは0.023の傾きです。
 
 0:53:56.260,0:54:00.090
-as we've seen one way to do that is by what we would call a
+これまで見てきたように、これを行う1つの方法は、いわゆる
 
 0:54:00.190,0:54:07.260
-simulation which is by generating random numbers 100 set pairs of random numbers a bunch of times and seeing how often
+シミュレーションと呼ばれるもので、乱数を生成して、100組の乱数のペアを何回か繰り返して、この関係がどのくらいの頻度で
 
 0:54:07.510,0:54:09.600
-You see this this relationship?
+見られるかを計測するというものです。
 
 0:54:11.140,0:54:13.830
-We don't actually have to do it that though, there's actually a
+しかし、実際にそれをする必要はありません。実際には、
 
 0:54:14.710,0:54:22.290
-Simple equation we can use to jump straight to this number which is what percent of the time would we see that relationship by chance?
+which is what percent of the time would we see that relationship by chance?
+この数値を求めるのに使える簡単な方程式があります。ここ言えば、その関係性を偶然見てしまうのは何％なのかです。
 
 0:54:25.150,0:54:27.150
-And
+そして
 
 0:54:27.580,0:54:31.110
-This is basically what that looks like we have the
+これは基本的にはこのようになります。ここに「最も可能性の高い観測」がありますが、
 
 0:54:31.780,0:54:37.439
-Most likely observation which in this case would be if there is no relationship between temperature
+この場合、温度との間に関係がなければ、
 
 0:54:37.590,0:54:40.410
-then the most likely slope would be zero and
+最も可能性の高い傾きはゼロという事。
 
 0:54:41.410,0:54:47.039
-sometimes you get positive slopes by chance and sometimes you get
+偶然、正の傾きが得られることもあれば、
 
 0:54:48.160,0:54:50.219
-pretty small slopes and sometimes you get
+かなり小さな傾きが得られることもあり、
 
 0:54:51.010,0:54:54.180
-large negative slopes by chance and so
+また時には大きな負の傾きが得られます。
 
 0:54:54.520,0:54:55.410
-the you know
+このように、
 
 0:54:55.410,0:55:00.569
-the larger the number the less likely it is to happen whether it be on the positive side or the negative side and
+数字が大きくなるほど、それが正の側であろうと負の側であろうと、その可能性は低くなります。
 
 0:55:00.910,0:55:02.969
-so in our case our question was
+私たちの場合、疑問だったのは
 
 0:55:04.390,0:55:10.529
-How often are we going to get less than negative 0.02 3 so it would actually be somewhere down here
+どのくらいの頻度で0.023以下の負の値を得ることができるのか。それは実際にはこの辺のどこかになるでしょう。
 
 0:55:10.930,0:55:14.430
-And I actually copy this from Wikipedia where they were looking for positive numbers
+実はこれをウィキペディアからコピーしたのですが、正の数字を探していたので、
 
 0:55:14.560,0:55:18.090
-And so they've colored in this area above the number
+数字の上のこの部分に色をつけています。
 
 0:55:18.370,0:55:25.380
-So this is the p-value and so you can we don't care about the math, but there's a simple little equation you can use to
+これがp値です。数学は気にしていませんが、この数値、つまりp値を
 
 0:55:25.960,0:55:27.960
-directly figure out
+データから直接計算するのに使える 
 
 0:55:28.780,0:55:32.460
-This number the p-value from the data
+簡単な小さな方程式があります。
 
 0:55:34.360,0:55:37.589
 So this is kind of how nearly all
