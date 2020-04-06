@@ -2052,823 +2052,800 @@ which is what percent of the time would we see that relationship by chance?
 簡単な小さな方程式があります。
 
 0:55:34.360,0:55:37.589
-So this is kind of how nearly all
+これは、ほとんどすべての
 
 0:55:38.710,0:55:41.879
-kind of medical research results tend to be shown and
+医学研究の結果がこのような形で示される傾向があり、
 
 0:55:42.850,0:55:47.519
-Folks really focus on this idea of p-values and indeed in this particular study
+人々はこのp値という考えに注目します。実際に、この特定の研究でも、
 
 0:55:48.220,0:55:51.090
-As well see in a moment. They reported p-values
+後ほどご紹介するように、p値が報告されています。
 
 0:55:52.120,0:55:57.539
-So probably a lot of you have seen p-values in your previous lives. They come up in a lot of different domains
+おそらく、多くの人が以前p値を見たことがあるでしょう。それらは様々な分野で出てきます。
 
 0:55:59.110,0:56:01.110
-Here's the thing
+ここからが問題なのですが、
 
 0:56:01.180,0:56:05.039
-They are terrible you almost always shouldn't be using them
+これはひどいものです。使うべきではありません。
 
 0:56:05.950,0:56:09.119
-Don't just trust me trust the American Statistical Association
+私だけを信用しないでください。アメリカ統計協会を信じて下さい。
 
 0:56:10.330,0:56:12.870
-They point out six things about p-values
+彼らはp値について6つのことを指摘しています。
 
 0:56:13.570,0:56:19.529
-And those include p-values do not measure the probability that the hypothesis is true
+その中には次のようなものがあります。p値は仮説が真である確率を測るものでも、
 
 0:56:20.080,0:56:23.610
-Or the probability that the data were produced by random choice alone
+あるいはデータがランダムな選択だけで作られた確率を測るものでもない、ということです。
 
 0:56:24.040,0:56:31.110
-now we know this because we just saw that if we use more data, right so if we sample
+これは今学んだように、より多くのデータを使用した場合、
 
 0:56:32.020,0:56:37.350
-Three thousand random cities rather than 100 we get a much
+100の都市ではなく3000の都市を無作為にサンプリングした場合、
 
 0:56:38.080,0:56:43.080
-Smaller value, right? So p-values don't just tell you about how big a relationship is
+得られる値ははるかに小さくなるのです。つまり、p値は関係性の大きさを教えてくれるだけではなく、
 
 0:56:43.090,0:56:48.539
-But they actually tell you about a combination of that and how much data did you collect? All right, so
+実際にはそれらを組み合わせて、どれだけのデータを収集したかを教えてくれるのです。
 
 0:56:49.060,0:56:53.039
-So they don't measure the probability. The hypothesis is true. So therefore
+つまり、仮説が真である確率を測定するものではないのです。
 
 0:56:54.430,0:56:59.610
-Conclusions and policy decisions should not be based on whether a p-value passes some threshold
+したがって、結論や政策決定は、P値がある閾値を通過したかどうかに基づいて行われるべきではありません。
 
 0:57:02.500,0:57:04.500
-P-value does not measure
+P値は結果の重要性を
 
 0:57:04.780,0:57:06.780
-the importance of a result
+測定するものではありません。
 
 0:57:07.150,0:57:10.349
-Right because again, it could just tell you that you collected lots of data
+なぜなら、繰り返しになりますが、P値は、あなたが多くのデータを収集したことを教えてくれるだけで、
 
 0:57:10.810,0:57:18.269
-Which doesn't tell you that the results actually of any practical import and so by itself. It does not provide a good measure of evidence
+結果が実際に実用的なものであることを教えてくれるわけではないからです。それは証拠の良い尺度にはなりません。
 
 0:57:20.500,0:57:27.840
-So Frank Harrell who is somebody who I read his book and it's a really important part of my learning
+フランク・ハレルという人がいますが、私は彼の本を読みました。本当に大切な学習の一部です。
 
 0:57:27.840,0:57:31.590
-He's a professor of biostatistics has a number of great articles about this
+彼は生物統計学の教授で、このことについて多くの素晴らしい記事を書いています。
 
 0:57:33.370,0:57:34.810
-He says
+彼は
 
 0:57:34.810,0:57:39.029
-Null hypothesis, testing and p-values have done significant harm to science
+帰無仮説検定とp値が科学に大きな害を与えていると言っています。
 
 0:57:39.700,0:57:44.520
-And he wrote another piece called and the whole hypothesis significance testing never worked
+彼は「帰無仮説有意性検定は全く機能しなかった」という別の記事も書いています。
 
 0:57:45.550,0:57:47.230
-so
+という事で、
 
 0:57:47.230,0:57:48.730
-I've shown you what?
+私はp値が何であるかを示したのは、
 
 0:57:48.730,0:57:56.070
-p-values are so that you know why they don't work not so that you can use them right, but they're a super important part of
+なぜ機能しないのかを知るためであって、それを使えるようにするためではありません。しかし、それらは機械学習の超重要な部分で、
 
 0:57:57.010,0:58:03.570
-machine learning because they come up all the time in making just you know, when people saying this is how we decide whether
+それはいつも出てきます。「この薬が効くのかどうか」とか、
 
 0:58:04.270,0:58:06.630
-your drug worked or whether there is a
+「疫学的な関係があるかどうか」などと、
 
 0:58:07.330,0:58:11.580
-Epidemiological relationship or whatever and indeed
+判断するために度々取り上げられます。
 
 0:58:12.220,0:58:14.220
-p-values appear in this paper
+そしてこの論文にもp値が出てきます。
 
 0:58:14.710,0:58:18.149
-so in the paper, they show the results of a
+この論文では、多重線形回帰の結果が
 
 0:58:19.030,0:58:21.030
-multiple linear regression
+示されています。
 
 0:58:21.310,0:58:24.840
-And they put three stars next to any
+彼らは、p値が0.01以下の関係の隣に
 
 0:58:25.480,0:58:29.070
-Relationship which has a p-value of 0.01 or less?
+3つの星をつけています。
 
 0:58:30.880,0:58:32.880
-So
+さて、
 
 0:58:34.420,0:58:39.240
-There is something useful to say about a small p-value like 0.01 or less
+0.01以下のような小さなp値については、何か役に立つことがあります。
 
 0:58:40.150,0:58:43.890
-Which is the thing that we're looking at did not probably did not happen by chance
+それは、私たちが見ているものは、おそらく偶然起こったのでないという事です。
 
 0:58:44.440,0:58:46.390
-right the biggest
+人々がいつも犯している
 
 0:58:46.390,0:58:52.259
-statistical error people make all the time is that they see that a p-value is not less than
+最大の統計的ミスは、p値が0.05以下ではないことを見て
 
 0:58:52.660,0:58:55.080
-0.05 and then they make the erroneous
+関係が存在しないという誤った結論を
 
-0:58:55.660,0:58:57.660
-conclusion that no
-
-0:58:58.090,0:59:00.120
-relationship exists, right
+0:58:55.660,0:59:00.120
+下してしまうことです
 
 0:59:01.060,0:59:05.399
-Which doesn't make any sense because like let's say you only had like three data points
+それは意味不明です。なぜなら、3つのデータポイントしかなかったとすると、
 
 0:59:06.039,0:59:11.999
-Then you almost certainly won't have enough data to have a p-value of less than 0.05 for any
+どの仮説に対してもp値が0.05未満になるような十分なデータはほぼ確実に得られないからです。
 
 0:59:13.299,0:59:19.619
-Hypothesis, so like the way to check is to go back and say what if I picked the exact opposite null hypothesis
+そこで、確認する方法としては、戻って、「もし私が全く逆の帰無仮説を選んだとしたらどうだろうか？」と考えるのです。
 
 0:59:20.140,0:59:24.210
-What if my null hypothesis was there is a relationship between temperature and R
+もし私の帰無仮説が、「温度とRの間に関係がある」だったとしたらどうでしょうか？
 
 0:59:24.789,0:59:27.059
-Then do I have enough data to?
+その帰無仮説を棄却するのに十分なデータがあるでしょうか？
 
 0:59:28.029,0:59:32.129
-Reject that null hypothesis. All right, and if the answer is no
+答えがノーなら、
 
 0:59:32.950,0:59:34.359
-then
+それは
 
 0:59:34.359,0:59:38.338
-You just don't have enough data to make any conclusions at all. All right
+どの結論を出すのにも十分なデータがないだけですよね？
 
 0:59:38.890,0:59:45.569
-so in this case, they do have enough data to be confident that there is a relationship between
+この場合、彼らは温度とRの間に関係があると確信するのに
 
 0:59:46.329,0:59:48.329
-temperature and ah
+十分なデータを持っています。
 
 0:59:48.490,0:59:49.779
-Now, that's weird
+これは変です。
 
 0:59:49.779,0:59:54.989
-because we just looked at the graph and we did a little back of a bit of a back-of-the-envelope in Excel and we thought
+なぜならたった先ほど、グラフを見て、エクセルで手早く計算して、これは、
 
 0:59:55.509,0:59:58.019
-This is could it could well be random so
+ランダムかもしれないという結論に至ったからです。
 
 1:00:00.039,1:00:02.039
-Here's where the issue is
+問題はここにあります。
 
 1:00:02.619,1:00:08.518
-the graph shows what we call a univariate relationship a univariate relationship shows the relationship between
+このグラフは、一変量関係と呼ばれるものを示しています。一変量関係は、
 
 1:00:08.890,1:00:13.319
-One independent variable and one dependent variable and that's what you can normally show on a graph
+1つの独立変数と1つの従属変数の間の関係を示します。それが普通のグラフに表示できるものです。
 
 1:00:14.019,1:00:16.169
-but in this case they did a
+しかし、このケースでは、
 
 1:00:16.990,1:00:19.259
-multivariate model in which they looked at temperature and
+多変量モデルを用いて、気温、
 
 1:00:20.259,1:00:21.609
-humidity and
+湿度、
 
 1:00:21.609,1:00:23.559
-GDP per capita and
+一人当たりGDP、
 
 1:00:23.559,1:00:25.559
-population density
+人口密度を調べました。
 
 1:00:25.599,1:00:33.179
-And when you put all of those things into the model, then you end up with statistically significant results for temperature and humidity
+そして、それらをすべてモデルに入れると、温度と湿度について統計的に有意な結果が得られることになります。
 
 1:00:33.730,1:00:37.079
-Why does that happen? Well, the reason that happens is because
+なぜそうなるのでしょうか？なぜこのようなことが起こるのかというと、
 
 1:00:38.950,1:00:43.169
-All these variation in the blue dots is not random
+青い点のこれらのすべての変化は無作為ではないのです。
 
 1:00:43.420,1:00:47.159
-There's a reason they're different right and the reasons include
+異なっているのには理由がありますよね？その理由としては、
 
 1:00:48.069,1:00:51.538
-denser cities are going to have higher transmission for instance and
+例えば、密度の高い都市ほど透過率が高いでしょう。
 
 1:00:52.150,1:00:57.180
-Probably more humid who have less transmission. So when you do a
+湿度の高い都市ほど透過率は低くなります。
 
 1:00:59.109,1:01:06.689
-Multivariate model, it actually allows you to be more confident of your results, right?
+多変量モデルを使うと結果に自信が持てるようになります。
 
 1:01:09.309,1:01:16.169
-But the p-value as noted by the American Statistical Association does not tell us whether this is a practical importance
+しかし、アメリカ統計協会が指摘しているように、p値は、これが実際に重要かどうかを教えてくれるものではありません。
 
 1:01:17.109,1:01:21.119
-The thing that tells us is this is practical as importance is the actual slope
+これが実用的に重要かどうかを教えてくれるのは、グラフの傾きです。
 
 1:01:21.910,1:01:23.940
-That's found and so in this case
+この場合、
 
 1:01:25.930,1:01:33.719
-The equation they come up with is that R equals three point nine six eight minus three point
+彼らが出してきた方程式は R = 3.968から0.0383かける温度を引き、
 
 1:01:33.720,1:01:38.130
-Oh point O three eight by temperature minus point zero two four by relative humidity
+それから0.0224かける相対湿度を引いたものです。
 
 1:01:38.170,1:01:44.909
-This is this equation is this practically important? Well, we can again do a little back of the envelope here
+これはこの方程式です。これは実用的に重要でしょうか？ ここでまた、手早く
 
 1:01:47.710,1:01:49.710
-By just putting that into
+エクセルに入力してみましょう。
 
 1:01:50.800,1:01:58.680
-Excel let's say there was one place. It had a temperature of ten centigrade and a humidity of forty then if this equation is
+温度が10℃で湿度が40％の場所があったとします。
 
 1:01:58.680,1:02:00.960
-Correct, R would be about two point seven
+この式が正しいとすると Rは約2.7になります。 
 
 1:02:01.840,1:02:05.340
-Somewhere with the temperature of 35 centigrade and a humidity of eighty
+温度が35℃で湿度が80％の場所では
 
 1:02:06.070,1:02:08.070
-Will be about point eight
+約0.8になります。
 
 1:02:08.380,1:02:12.630
-So is this practically important? Oh my god. Yes, right
+これは実質的に重要でしょうか？何てことでしょう、そうです。
 
 1:02:13.360,1:02:16.259
-two different cities with different climates
+異なる気候を持つ２つの異なる都市は、
 
 1:02:16.960,1:02:20.369
-Can be if they're the same in every other way and this model is correct
+もし他のすべての点で同じであって、このモデルが正しければ、
 
 1:02:21.010,1:02:28.290
-Then one city would have no spread of disease because R is less than 1 1 would have massive exponential explosion
+１つの都市では病気が広がらず（Rが1より小さいので）、１つの都市では大規模な指数関数的爆発が起こるでしょう。
 
 1:02:29.650,1:02:31.000
-so
+ですから、
 
 1:02:31.000,1:02:38.400
-We can see from this model that if the modeling is correct, then this is a highly practically significant result
+もしこのモデルが正しければ、これは非常に実用的に重要な結果であることがわかります。
 
 1:02:38.400,1:02:43.799
-So this is how you determine practical significance of your models is not with p-values
+このように、モデルの実用的な重要性を判断する方法は、p値ではなく、
 
 1:02:44.380,1:02:47.579
-But with looking at kind of actual outcomes
+実際の結果を見て判断することです。
 
 1:02:48.910,1:02:51.180
-So, how do you think about?
+ですから、モデルの実用的な重要性を
 
 1:02:52.360,1:02:54.539
-the practical importance
+どのように考え、
 
 1:02:55.150,1:03:00.420
-Of a model and how do you turn a predictive model into something useful in production?
+予測モデルをどのようにして生産に役立つものに変えていけばいいのでしょう。
 
 1:03:01.000,1:03:05.880
-so I spent many many years thinking about this and I actually
+私はこのことについて何年も考えてきました。
 
 1:03:06.490,1:03:08.230
-created a
+そして
 
 1:03:08.230,1:03:11.190
-With some other great folks actually created a paper about it
+実際に他の素晴らしい人たちと一緒に論文を作成しました。
 
 1:03:13.330,1:03:15.330
-Designing great data products
+「優れたデータ製品の設計」
 
 1:03:17.320,1:03:19.180
-And
+これは
 
 1:03:19.180,1:03:21.180
-This is largely based on
+私が設立した
 
 1:03:22.270,1:03:24.840
-Ten years of work I did at a company
+オプティマル・ディシジョン・グループという会社で
 
 1:03:24.840,1:03:28.920
-I founded called optimal decisions group and optimal decisions group was
+10年に渡って行ってきた仕事に基づいています。オプティマル・ディシジョンズ・グループは
 
 1:03:29.230,1:03:33.849
-focused on a question of helping insurance companies what prices to set
+保険会社がどのような価格を設定すべきかを把握することに重点を置いていました。
 
 1:03:34.520,1:03:35.960
-and
+それまで
 
 1:03:35.960,1:03:41.919
-Insurance companies up until that point had focused on predictive modeling actuaries in particular
+保険会社は、予測モデリングに重点を置いていました。特にアクチュアリーは、
 
 1:03:42.619,1:03:44.619
 Spent their time trying to figure out
 
 1:03:46.190,1:03:50.649
-How likely is it that you're going to crash your car and if you do how much damage might you have?
+車を衝突させる可能性がどの程度あるのか、また衝突した場合の損害はどの程度なのかを把握し、
 
 1:03:51.440,1:03:55.779
-And then based on that try to figure out what price they should set for your policy
+それに基づいて保険会社がどのような価格を設定すべきかを考えることに時間を費やしていました。
 
 1:03:56.809,1:04:01.449
-So for this company what we did was we decided to use a different approach
+この会社の場合は、別のアプローチ、
 
-1:04:01.700,1:04:05.950
-Which I ended up calling the drivetrain approach which is described here
-
-1:04:06.829,1:04:08.359
-to
+1:04:01.700,1:04:08.359
+つまりここで説明したドライブトレインアプローチというものを使って、
 
 1:04:08.359,1:04:13.749
-Just set insurance prices and indeed to do all kinds of other things and so for the Insurance example
+保険の価格を設定だけではなく他にもいろいろなことに活用してきました。保険の例で言うと、
 
 1:04:14.720,1:04:17.709
-the objective would be if an insurance company would be
+保険会社の目的は、いかにして
 
 1:04:18.559,1:04:20.559
-how do I maximize my
+5年間の利益を
 
 1:04:21.049,1:04:23.049
-let's say five-year profit and
+最大化するかということです。
 
 1:04:23.539,1:04:28.419
-Then what inputs can we control? Can we control which what I call levers?
+そのために、どのようなインプットをコントロールすることができるでしょか。私はこれをレバーと呼びます。
 
 1:04:29.029,1:04:32.229
-so in this case, it would be what price can I set and
+この場合、それは設定する価格です。
 
 1:04:32.779,1:04:39.339
-Then data is data, which can tell you as you change your levers. How does that change your objective?
+そして、データは、レバーを変えることで目的がどう変わるかを知ることのできるデータです。
 
 1:04:39.470,1:04:46.299
-So if I start increasing my price to people who are likely to crash their car, then will get less of them
+例えば、車を衝突させる可能性の高い人たちの価格を上げれば、そういう人たちの数は減り、
 
 1:04:46.299,1:04:52.059
-Which means we have less costs, but at the same time we'll also have less revenue coming in. For example
+コストは減りますが、同時に収入も減ることになります。
 
 1:04:52.609,1:05:00.369
-So to link up there kind of the levers to the objective via the data, we collect we build models that described how the levers
+そこで、収集したデータを介して、目的とレバーを結びつけるために、レバーがどのように目的に影響を与えるかを説明する
 
 1:05:01.160,1:05:03.160
-influence objective and this is all like
+モデルを構築しました。
 
 1:05:03.740,1:05:08.469
-It seems pretty obvious. What do you say it like this, but when we started work with
+このように言うと、当たり前のことのように思えますが、
 
 1:05:09.200,1:05:16.839
-Optimal decisions in 1999. Nobody was doing this an insurance everybody in insurance was simply doing a predictive model
+私たちが1999年にオプティマル・ディシジョンズの仕事を始めたときには、保険業界では誰もこのようなことをしていませんでした。
 
 1:05:18.020,1:05:23.709
-To guess how likely people were to crash their car and then pricing was set by like adding
+保険業界では誰もが予測モデルを使って 車を衝突させる可能性を推測していました。 
 
-1:05:24.500,1:05:28.149
-20% or whatever. It was just done in a very kind of naive way
-
-1:05:29.329,1:05:31.250
-so
+1:05:24.500,1:05:31.250
+そして価格設定は20％とか何かを追加して設定するなど、非常にナイーブな方法で行われていました。
 
 1:05:31.250,1:05:32.559
-what I did is I a
+私がしたことは、
 
 1:05:32.559,1:05:39.339
-You know over many years took this basic process and tried to help lots of companies cigarette how to use it to turn
+この基本的なプロセスを何年にもわたって、多くの企業が予測モデルを行動に移すために、このプロセスをどのように使うかを理解する
 
 1:05:40.010,1:05:42.010
-predictive models into actions
+手助けをしてきたことです。
 
 1:05:43.160,1:05:45.160
-so the starting point
+特定のモデルで
 
 1:05:45.170,1:05:51.300
-in like actually getting value in a particular model is thinking about what is it you're trying to do and you know
+実際に価値を得るための出発点は、自分が何をしようとしているのかを考えることであり、
 
 1:05:51.300,1:05:53.519
-What are the sources of value in that thing you're trying to do?
+自分がしようとしていることの価値の源泉は何かを知ることです。
 
 1:05:54.190,1:06:00.810
-The levers what are the things you can change? Like? What's the point of a predictive model if you can't do anything about it, right?
+レバーとは、私たちが何を変えることができるのか？何もできないのであれば、予測モデルの意味はないでしょう。
 
 1:06:02.170,1:06:06.270
-Figuring out ways to find what data you you don't have which ones suitable what's available?
+自分が持っていないデータを見つける方法や、適切なデータ、利用可能なデータを見つけ出し、
 
 1:06:06.460,1:06:09.480
-then thinking about what approaches to analytics you can then take
+その上でどのようなアプローチでアナリティクスに取り組むかを考えます。
 
-1:06:10.180,1:06:12.180
-and then super important like
-
-1:06:12.730,1:06:13.750
-well
+1:06:10.180,1:06:13.750
+そして超重要なのは、
 
 1:06:13.750,1:06:18.869
-Can you actually implement, you know those changes and super super important?
+その変更を実際に実行できるかどうかです。そして、環境の変化に合わせて
 
 1:06:18.910,1:06:22.500
-how do you actually change things as the environment changes and
+実際にどのように変化させていくかということも非常に重要です。
 
 1:06:22.750,1:06:29.489
-You know interestingly a lot of these things areas where there's not very much academic research. There's a little bit and
+興味深いことに、これらのことの多くは、学術的な研究があまり行われていない分野です。少しはありますが。
 
 1:06:31.359,1:06:37.289
-Some of the papers that have been particularly around maintenance of like how do you decide when your machine learning model is kind of?
+「メンテナンス」に関する論文の中には、機械学習モデルがまだ大丈夫かどうかをどうやって判断するのか、
 
 1:06:38.109,1:06:43.919
-Still okay. How do you update it over time? I've had like many many many many citations
+どうやって更新して行ったらいいのか、などがあります。たくさんの引用がありましたが、
 
 1:06:44.650,1:06:49.889
-But they don't pop up very often because a lot of folks are so focused on the math, you know
+多くの人が数学に集中しているため、あまり頻繁には出てきませんでした。
 
 1:06:50.859,1:06:55.169
-And then there's the whole question of like what constraints are in place across this whole thing
+そして、「この全体にはどんな制約があるのか」という全体的な質問があります。
 
 1:06:55.270,1:07:01.259
-So what you'll find in the book is there is a whole appendix which actually goes through every one of these
+この本の中には、この６つのことを一つ一つ解説した付録がついています。
 
 1:07:01.599,1:07:05.068
-six things and has a whole list of
+そして、例のリストがあります。
 
 1:07:05.770,1:07:09.540
-Examples written so this is an example of how to like think about
+これは、価値について考える方法の一例です。
 
 1:07:11.050,1:07:18.149
-Value and lots of questions that companies and organizations can use to try and think about
+また、企業や組織が実際の生産に向けて、効果的な製品にするために、
 
 1:07:19.960,1:07:22.949
-You know all of these different pieces of the actual
+これらの異なるパズルの
 
 1:07:24.190,1:07:30.569
-Puzzle of getting stuff into production and actually into an effective product. We have a question. Sure just a moment
+すべての部分について考えてみるために使える質問もたくさんあります。質問があります。はい、ちょっと待ってください。
 
 1:07:30.569,1:07:36.959
-so as I say so do check out this appendix because it actually originally appeared as a blog post and I think except for my
+だから私が言おうとしていたので、この付録をチェックしてみてください。なぜならこの付録は実は元々ブログ記事として登場したもので、
 
 1:07:37.540,1:07:40.409
-covered 19 posts that I did with Rachel
+私がレイチェルと一緒に書いたcovid-19の記事を除けば、
 
 1:07:40.410,1:07:46.260
-it's actually the most popular blog post I've ever written it said hundreds of thousands of views and it kind of represents like
+実は今まで書いたブログ記事の中で最も人気のあるもので、数十万回の閲覧数を誇ります。そしてそれは、
 
 1:07:47.319,1:07:49.180
-20 years of hard one
+20年間の苦労して勝ち取った
 
 1:07:49.180,1:07:53.700
-um insights about like how you actually get value from
+実際にどのように機械学習から価値を得るのか、
 
 1:07:54.190,1:07:59.099
-Machine learning and practice and what you actually have to ask. So, please check it out because hopefully you'll find it helpful
+そして実際に何を尋ねなければならないのかという洞察のようなものです。ぜひチェックしてみてください。参考になれば幸いです。
 
 1:07:59.930,1:08:01.930
-so when we think about like think
+季節性とcovid-19の伝染性の関係について
 
 1:08:02.870,1:08:10.420
-About this for the question of how should people think about the relationship between seasonality and transmissibility of Kovan 19
+人々はどのように考えるべきか、という質問について考えるときには、
 
 1:08:13.130,1:08:16.840
-You kind of need to dig really deeply into the questions about like oh
+データの中の数字が何なのかだけでなく、
 
 1:08:18.200,1:08:22.510
-Not just what what's that? What are those numbers in the data? But what does it really look like, right?
+実際にはどのように見えるのか、という質問を深く掘り下げる必要があります。
 
 1:08:22.510,1:08:27.369
-so one of the things in the paper that they show is actual maps right of
+論文の中で、彼らが示しているものの一つは、実際の地図です。 
 
 1:08:28.040,1:08:29.840
-temperature and
+温度と
 
 1:08:29.840,1:08:32.829
-humidity and ah, right and
+湿度とRの地図です。
 
 1:08:33.650,1:08:37.659
-you can see like not surprisingly that humidity and
+驚くことではありませんが、
 
 1:08:38.330,1:08:40.330
-temperature in China
+中国の湿度と気温は、
 
 1:08:40.520,1:08:46.419
-What we would call um order correlated which is to say that places that are close to each other in this case
+私たちが自動相関と呼んでいるものです。つまり、地理的に近い場所では、
 
-1:08:46.730,1:08:48.939
-geographically have similar temperatures and
-
-1:08:49.490,1:08:51.490
-similar humidities and
+1:08:46.730,1:08:51.490
+気温も湿度も似ています。
 
 1:08:51.530,1:08:53.270
-so like
+このように、
 
 1:08:53.270,1:08:57.520
-This actually puts into the question the a lot the p values
+彼らが示したp値に疑惑が出てきます。
 
 1:08:58.160,1:09:03.519
-That they have right because you you can't really think of these as a hundred totally separate cities
+なぜなら、これらの都市を100個の全く別の都市とは考えられないからです。
 
 1:09:03.920,1:09:07.420
-Because the ones that are close to each other probably have very close behavior
+互いに近接している都市は、おそらく非常に似たような傾向が見られ、
 
 1:09:07.420,1:09:10.180
-so maybe you should think of them as like a small number of
+これらを少数の「都市の集合体」のようなものと
 
-1:09:10.940,1:09:14.200
-Sets of cities, you know of kind of larger geographies
-
-1:09:15.020,1:09:16.370
-so
+1:09:10.940,1:09:16.370
+考えるべきかもしれません。大地域のような。
 
 1:09:16.370,1:09:21.700
-these are the kinds of things that when you look actually into a model you need to like think about what are the
+このように実際にモデルを検討する際には、何が限界なのかを考える必要があります。 
 
 1:09:22.310,1:09:27.700
-What are the limitations but then to decide like well, what does that mean? What do I what do I do about that?
+そして、それが何を意味するのか？それについてどうすればいいのか？
 
 1:09:29.720,1:09:36.340
-You you need to think of it from this kind of utility point of view this kind of end to end
+このようなユーティリティ（実用性）の観点から考える必要があります。
 
 1:09:37.070,1:09:40.299
-what are the actions I can take order the results point of view not just
+最初から最後まで、私にできる行動は何か、それによってどんな結果になるのか。
 
 1:09:41.210,1:09:44.500
-Null hypothesis testing. So in this case, for example
+ただの帰無仮説検定ではありません。このケースでは、
 
 1:09:46.520,1:09:48.760
-There are basically four possible
+基本的にここでは4つの主な結果が考えられます。
 
-1:09:49.430,1:09:55.570
-Key ways. This could end up it could end up that there really is a relationship between
-
-1:09:56.630,1:09:58.630
-temperature and R or
+1:09:49.430,1:09:58.630
+一つ目の可能性は「温度とRの間には実際に関係がある」です。
 
 1:09:59.720,1:10:05.050
-So that's but the right hand side is or there is no real relationship between temperature and R and
+それはこの右側です。あるいは、温度とRの間には実際には関係がないということです。
 
 1:10:06.350,1:10:09.610
-We might act on the assumption that there is a relationship
+そして、関係があると仮定して行動するかもしれません。
 
 1:10:10.100,1:10:15.220
-Or we might act on the assumption that there isn't a relationship and so you kind of want to look at each of these four
+あるいは、関係がないと仮定して行動するかもしれません。
 
 1:10:16.040,1:10:18.040
-possibilities and say like well, what would be the
+だから、４つの可能性をそれぞれ見て、
 
 1:10:19.250,1:10:21.250
-economic and societal consequences
+経済的、社会的な結果はどうなるのかと考える必要があります。　
 
 1:10:22.070,1:10:25.329
-And you know, there's gonna be a huge difference in
+それぞれ大きな違いがあります。
 
 1:10:26.000,1:10:30.220
-Lives lost and you know economy is crashing and whatever else - you know
+失われた命の数や、経済の崩壊、その他何でもあります。
 
 1:10:30.980,1:10:32.980
-for each of these for
+その四つの一つ一つに。
 
 1:10:34.760,1:10:40.420
-The the paper actually, you know has shown if their model is correct
+この論文の中には、もし彼らのモデルが正しければ、
 
 1:10:40.550,1:10:48.219
-What's the likely our value in March feel like every city in the world and the likely our value in July?
+3月の世界の全ての都市のR値はどうなるかを示しています。そして、世界の全ての都市の7月のR値はどうなるか。
 
 1:10:48.950,1:10:53.800
-for every city in the world, and so for example, if you look at kind of New England and New York
+例えば、ニューイングランドやニューヨークを見てみましょう。 
 
 1:10:54.530,1:11:00.009
-The prediction here is and also West cut the other the very coast of the west coast. Is that in July
+この予測では、西海岸の海岸線も含めて、7月には
 
 1:11:01.640,1:11:03.640
-The disease will stop spreading
+病気が広がらなくなると予測されています。
 
 1:11:03.800,1:11:07.090
-Now, you know in a that happens if they're right then
+もしそうなったら、もし彼らの予測が正しければ、
 
 1:11:07.880,1:11:13.089
-That's gonna be a disaster because I think it's very likely in America and also the UK
+それは大惨事になります。なぜならアメリカやイギリスでは、
 
-1:11:13.790,1:11:15.790
-That people will say Oh
+1:11:13.790,1:11:16.790
+「ああ、この病気は問題ではないことがわかった」と言われる可能性が高いと思います。
 
-1:11:15.980,1:11:21.669
-Turns out this disease is not a problem. You know, it didn't really take off at all. The scientists were wrong
+1:11:16.980,1:11:21.669
+「実際には全く流行しなかった」とか「科学者は間違っていた」などと。
 
 1:11:22.160,1:11:25.240
-people will go back to their previous day-to-day life and
+人々は以前の日常生活に戻ります。
 
 1:11:25.820,1:11:32.679
-We could see what happened in 1918 flu virus of like the second go around when winter hits
+1918年に起こったように,冬時期のインフルエンザウイルスの第2波は
 
 1:11:33.740,1:11:35.740
-could be much worse than
+最初よりもずっと悪い状態に
 
 1:11:36.200,1:11:41.260
-Than the start right? So like there's these kind of like huge potential
+なりました。これが真か偽かによって、
 
 1:11:42.320,1:11:48.489
-policy impacts depending on whether this is true or false and so - think about it -
+政策に大きな影響を与える可能性があります。考えてみましょう。 
 
 1:11:49.280,1:11:55.179
-Yes. I also just wanted to say that it would be it would be very irresponsible to think. Oh
+はい？私が言いたかったのは、「夏になれば解決する」と考えるのは非常に無責任だということです。
 
 1:11:55.730,1:11:57.999
-Summers gonna solve it. We don't need to act now
+「今すぐに行動する必要はない」と。
 
 1:11:58.760,1:12:05.800
-Just in that this is something growing exponentially and could do a huge huge amount of damage. Yeah. Yes. Okay, it already has done
+これは指数関数的に成長しているものであり、膨大な被害をもたらす可能性があるということだけです。被害はすでに起きているのですが。
 
 1:12:06.650,1:12:07.450
-by the way
+どっちにしても問題です。
 
 1:12:07.450,1:12:11.530
-if you assume that there will be seasonality and that
+もし季節性があると仮定して、夏が解決すると仮定したら、
 
 1:12:11.990,1:12:17.949
-Summer will fix things then it couldn't beat you to be apathetic. Now if you assume there's no seasonality and
+今は無関心になるかもしれません。逆にもし季節性がないと仮定したものの、
 
 1:12:18.650,1:12:23.949
-then there is then you could end up kind of creating a larger level of
+季節性があった場合、滅亡への予想が実際に起こるよりも大きくなり、
 
 1:12:25.210,1:12:30.449
-Expectation of destruction that actually happens and end up with your population being even more apathetic, you know
+国民がさらに無関心になることになるかもしれない
 
 1:12:30.449,1:12:34.559
-So that they're you know being wrong in any direction to be a problem. So
+どの方向に間違っても問題になります。 
 
 1:12:35.350,1:12:40.409
-One of the ways we tend to deal with this with with this kind of modeling is we try to think about priors
+ですから、この種のモデリングを行う際の対処法の1つは、prior(事前)について考えてみることです。
 
-1:12:41.230,1:12:45.750
-So our priors are basically things where we you know, rather than just having a null hypothesis
+1:12:41.230,1:12:45.750￥
+prior(事前)とは、基本的には、帰無仮説を持つのではなく、
 
 1:12:46.150,1:12:52.230
-We try and start with a guess as to like, well, what's what's more likely right? So in this case?
+何がより可能性が高いのかを推測することです。 この場合、
 
 1:12:54.070,1:13:00.420
-If memory serves correctly, I think we know that like flu viruses become inactive at 27 centigrade
+記憶が正しければ、インフルエンザウイルスが27℃で不活性化することがわかっています。
 
 1:13:00.730,1:13:03.209
-We know that like cold the cold
+そして風邪のコロナウイルスは
 
 1:13:04.120,1:13:09.509
-Coronaviruses are seasonal the 1918 the 1918 flu
+季節性があることがわかっています。1918年のインフルエンザの
 
 1:13:10.449,1:13:12.250
-epidemic was seasonal
+大流行は季節性でした。
 
 1:13:12.250,1:13:17.909
-In every country and city that's been studied so far. There's been quite a few studies like this
+これまでに研究された全ての国や都市で
 
 1:13:17.909,1:13:21.059
-They've always found climate relationships so far
+今のところほとんどは常に気候との関係を発見しています。 
 
 1:13:21.159,1:13:25.469
+だから私たちの事前の推測は多分これは季節的なもので、
 so maybe we'd say well prior belief is that this thing is probably
 
 1:13:25.780,1:13:29.190
-Seasonal and so they would say well this particular paper adds
+そしてこの論文は、それにいくつかの
 
 1:13:30.010,1:13:32.010
-Some evidence to that
+証拠を加えているということになるでしょう。
 
 1:13:32.230,1:13:34.230
-so like it shows like
+このように、
 
 1:13:34.300,1:13:38.250
-how incredibly complex it is to use a
+モデルを実際に使用して、
 
 1:13:39.340,1:13:46.560
-Model in practice for in this case policy discussions but also for like organizational decisions
+この場合の政策議論だけでなく、組織的判断などに使用することがいかに複雑であるかわかると思います。
 
 1:13:47.230,1:13:49.230
-because you know, there's always
+なぜなら、ご存じのように、
 
 1:13:49.719,1:13:53.759
-Complexities there's always uncertainties. And so you actually have to think about the
+常に複雑さや不確実性があるからです。だから、実際には
 
 1:13:54.429,1:13:59.729
-The utility, you know and your best guesses and try to combine everything together as best as you can
+ユーティリティと自分の最善の推測を考えて、できる限りすべてを組み合わせるようにしなければなりません。
 
-1:14:00.400,1:14:02.400
-okay, so
-
-1:14:03.250,1:14:05.250
-With all that said
+1:14:00.400,1:14:05.250
+そう言ったところで
 
 1:14:07.659,1:14:08.890
-It's still
+それでもやっぱり
 
 1:14:08.890,1:14:10.890
-nice to be able to get our
+モデルを
 
 1:14:11.590,1:14:16.350
-our models up and running even if you know even just a predictive model is
+稼働させることができたらいいなと思います。ただ予測モデルであっても、
 
 1:14:17.170,1:14:22.589
-sometimes useful of its own sometimes it's useful to prototype something and sometimes it's just
+それ自体が有用な場合もありますし、何かをプロトタイプ化することが役立つこともあります。 
 
 1:14:23.230,1:14:28.919
-It's got to be part of some bigger picture. So rather than try to create some huge into end model here
+時には、何か大きなものの一部になることもあります。だから、ここでは巨大なエンドツーエンドのモデルを作ろうとするのではなく、
 
 1:14:28.920,1:14:30.920
-We thought we would just show you how to
+私たちは、どのようにして
 
 1:14:31.780,1:14:33.780
-get your
+Pytorchと
 
 1:14:35.020,1:14:37.020
-Your PI torch fast AI model
+FastAIのモデルを
 
 1:14:37.570,1:14:39.000
-up and running
+稼働させるかを説明することにしました。
 
 1:14:39.000,1:14:45.180
-In his raw a form as possible so that from there you can kind of build on top of it as you like
+可能な限り生の状態で。そこから、あなたの好きなように、その上に構築することができます。
 
 1:14:45.610,1:14:47.610
-So to do that
+そのためには、
 
 1:14:47.710,1:14:49.510
-we are going to
+自分のデータセットを
 
 1:14:49.510,1:14:53.699
-Download and curate our own data set and you're going to do the same thing
+ダウンロードし、キュレーションする必要があります。そして、あなたも同じことをします。
 
 1:14:54.340,1:14:58.139
-you've got to train your own model on that data set and then you're going to
+そのデータセットを使って自分のモデルを学習し、
 
 1:14:58.960,1:15:02.340
-Create an application and then you're going to host it know
+アプリケーションを作成して、それを公開するのです。
 
 1:15:03.100,1:15:05.020
-now
+さて，
 
 1:15:05.020,1:15:10.169
-There's lots of ways to create curate an image data set you might have some photos on your own computer
+画像データセットを作成する方法はたくさんあります。自分のパソコンに写真があるかもしれませんし
 
 1:15:11.110,1:15:13.110
-There might be stuff at work you can use
+職場であるものを使うかもしれません。
 
 1:15:15.160,1:15:20.789
-One of the easiest though is just to download stuff of the internet there's lots of services for downloading stuff off the internet
+しかし、最も簡単な方法は、インターネットから画像をダウンロードすることです。 インターネットからダウンロードできるサービスはたくさんあります。
 
 1:15:21.640,1:15:26.459
-We're going to be using Bing image search here because they're super easy to use
+ここではBing Image Searchを使います。とても使いやすいからです。　
 
 1:15:27.010,1:15:33.119
-A lot of the other kind of easy to use things require breaking the Terms of Service of websites
+他の多くのサービスはサイトの利用規約違反を犯す必要があります。
 
 1:15:33.610,1:15:36.869
-so like we're not going to show you how to do that, but
+そのため、ここではその方法をお見せしません。
 
 1:15:37.420,1:15:40.410
-There's lots of examples that do show you how to do that
+しかし、その方法を示す例はたくさんあります。
 
 1:15:40.870,1:15:43.140
-So you can check them out as well if you if you want to
+だから、どうしても知りたかったら、あなたはそれらを調べることができます。
 
 1:15:43.690,1:15:47.850
-Being image search is actually pretty great at least at the moment these things change a lot
+Bingの画像検索は、今のところとても良いです。こういったものは頻繁に変わり、
 
 1:15:47.850,1:15:50.430
-so keep an eye on our website to see
+おすすめが変わることもあるので、
 
 1:15:51.460,1:15:53.460
-If we've changed our recommendation
+ウェブサイトで確認してみてください。
 
 1:15:53.710,1:16:00.000
-The biggest problem with being image search is that the signup process is a nightmare?
+Bing Image Searchの最大の問題点は、登録手続きが悪夢のようだということです。
 
 1:16:00.730,1:16:06.390
-At least at the moment. I feel like one of the hardest parts of this book is just signing up to their damn API
+今のところは。この本の最も難しい部分の1つは、彼らのAPIにサインアップすることのような気がします。
 
 1:16:07.240,1:16:11.610
-Which requires going through a sure it's called cognitive services as your cognitive services
+それにはAzureを経由する必要があります。それは Azure Cognitive Services と呼ばれていて
 
 1:16:11.710,1:16:17.220
-So we'll make sure that all that information is on the website for you to follow through just how to sign up
+だから、私たちは、サインアップする方法がわかるように、すべての情報がウェブサイト上にあることを確認しておきます。
 
 1:16:17.830,1:16:19.830
-So we're going to start from the assumption
+ということで、すでにサインアップされているという前提で
 
 1:16:20.410,1:16:22.410
-That you've already signed up
+話を進めていきます。
 
 1:16:25.060,1:16:27.060
-But you can find it just go being
+Bing Image Search APIで検索
 
 1:16:28.510,1:16:36.090
-Being Image Search API and at the moment they give you seven days with a pretty high
+今のところ、7日間あまり制限なく
 
 1:16:38.140,1:16:41.010
-Pretty high quota for free and then after that
+無料で利用できます。その後も
 
 1:16:42.430,1:16:44.430
-You can keep using it
+利用できますが、
 
 1:16:44.650,1:16:46.650
 as long as you like
