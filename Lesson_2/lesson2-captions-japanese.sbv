@@ -964,760 +964,759 @@ fine tuningは転移学習のテクニックで、これは、重み、これは
 ImageNetの画像でもこれらがあることを知っておいてください。
 
 0:24:52.390,0:24:59.339
-Specific examples of parts of photos that match that filter so for this top left filter here are nine
+左上のフィルターにはそのフィルターにマッチする実際の写真の９つのパッチがあります。
 
 0:25:00.130,0:25:04.559
-actual patches of real photos that match that filter and as you can see
+
 
 0:25:04.559,0:25:11.399
-They're all diagonal lines. And so here's the four the green one. Here's parts of actual photos that match the green one
+そして、ここには4つの緑のフィルターがあり、緑のフィルターにマッチした写真の一部があります。
 
 0:25:11.950,0:25:18.210
-So layer one is super super simple. And one of the interesting things to note here. Is that something that can recognize?
+第一層は単純です。ここで注目すべきは、
 
 0:25:18.730,0:25:24.030
-Gradients and patches of color and lines is likely to be useful for lots of other tasks as well
+グラデーションや色や線のパッチを認識できるものは、imagenetだけでなく
 
 0:25:24.030,0:25:28.169
-Not just imagenet so you can kind of see how something that can do this
+他の多くのタスクにも使える可能性があるということです。
 
 0:25:29.020,0:25:31.020
-might also be good at
+こういうことができると
 
 0:25:31.419,0:25:34.079
-Many many other computer vision tasks as well
+ImageNet以外のタスクもこなせる可能性があるのです。
 
 0:25:35.380,0:25:37.380
-This is layer 2 layer
+これが第二層で、
 
 0:25:37.390,0:25:41.579
-2 takes the features of layer 1 and combines them
+第一層で得た特徴を受け取り、組み合わせて
 
 0:25:42.429,0:25:48.029
-so it can not just find edges that can find corners or
+エッジだけでなく、角や
 
 0:25:49.299,0:25:57.089
-Repeating curving patterns or semi circles or full circles. And so you can see for example, here's a
+カーブの繰り返す、半円や円を見つけます。例えば、ここには
 
 0:25:58.990,0:26:02.760
-It's kind of hard to exactly visualize these
+第二層以降を正確に可視化するのは
 
 0:26:04.419,0:26:09.359
-Layers after layer 1 you kind of have to show examples of what the filters look like
+難しいと思います。
 
 0:26:10.150,0:26:17.009
-but here you can see examples of parts of photos that these this layer 2 circular filter has
+しかし、第二層のフィルターが写真のどんな部分に発火しているかの例があります。
 
 0:26:17.840,0:26:19.840
-activated on
+
 
 0:26:20.030,0:26:22.869
-And as you can see, it's found things with circles
+そして、ご覧の通り、円のようなものを見つけていて、
 
 0:26:23.390,0:26:30.490
-so interestingly this one which is this kind of blotchy gradient seems to be very good at finding sunsets and
+興味深いことにこのぼやけたようなグラデーションは夕日を見つけるのに非常に適しているようです。
 
 0:26:30.950,0:26:35.649
-this repeating vertical pattern is very good at finding like curtains and wheat
+そして、この繰り返しの縦のパターンは、カーテンや小麦畑などを見つけるのに非常に適しています。
 
 0:26:36.380,0:26:38.330
-fields and stuff
+
 
 0:26:38.330,0:26:44.139
-So the further we get layer three then gets to combine all the kinds of features in layer
+このようにして、レイヤー3をさらに進めると、レイヤー2にあるすべての種類の特徴を組み合わせることができるようになります。
 
 0:26:44.540,0:26:50.920
-Two and remember, we're only seeing Zoar anything here are twelve of the features, but actually there's probably hundreds of them
+ここでは12種類の特徴しか見ていませんが、実際には数百個の特徴があるでしょう。
 
 0:26:50.920,0:26:53.320
-I don't remember exactly an alux net, but there's lots
+AlexNetが実際にいくつの特徴があるか覚えていませんが、AlexNetにはたくさんの特徴があります。
 
 0:26:53.750,0:27:00.700
-But by the time we get to layer three by combining features from layer two, it already has something which is finding
+しかし、第二層の要素を組み合わせて第三層に到達することには、
 
 0:27:01.700,0:27:06.189
-Text so this is a feature which can find bits of image that contain text
+テキストを見つけることができて、この特徴は画像のテキストを見つけられます。
 
 0:27:07.130,0:27:09.130
-It's already got something which can find
+これはすでに
 
 0:27:10.130,0:27:13.780
-repeating geometric patterns and you see this is not just like a
+幾何学的な繰り返しを見つけることができます。お分かりのとおり、
 
 0:27:15.710,0:27:18.340
-Matching specific pixel patterns. This is like a
+特定のピクセルパターンとのマッチングではありません。
 
 0:27:19.190,0:27:24.249
-Semantic concept it can find repeating circles or repeating squares or repeating hexagons
+これは意味的な概念のようなもので，円、四角形、六角形の繰り返しを見つけられます。
 
 0:27:24.920,0:27:28.450
-Great, so it's it's really like computing. It's not just
+素晴らしいですね。これが計算で、ただのテンプレートマッチング
 
 0:27:29.240,0:27:36.700
-Matching a template and remember we know that neural networks can solve any possible computable function so it can certainly do that
+ではりません。ニューラルネットワークは計算可能な任意の関数を解けることを覚えておいてください。確かにこういった計算ができます。
 
 0:27:38.960,0:27:41.710
-So layer four gets to combine
+第4層は第3層のフィルタを
 
 0:27:42.290,0:27:48.489
-All the filters from layer three anyway at once and so by layer four, we have something that can find dog faces
+一度にすべて組み合わせることができます。そして第4層では、例えば犬の顔を見つけることができるものができます。
 
 0:27:49.220,0:27:51.220
-for instance
+
 
 0:27:51.470,0:27:53.470
-so you can kind of see how
+そして、このように、
 
 0:27:54.410,0:27:59.499
-Each layer, we get like more applicative lis more sophisticated features
+各レイヤーでは、より応用的に洗練された機能が得られるようになっています。
 
 0:27:59.630,0:28:04.360
-And so that's why these deep neural networks can be so incredibly powerful
+これがニューラルネットワークを強力たらしめている要因です。
 
 0:28:05.150,0:28:11.200
-It's also why transfer learning can work so well because like if we wanted something that can find
+それはまた、転移学習が非常にうまく機能する理由でもあります。なぜなら、
 
 0:28:11.990,0:28:15.550
-Books, and I don't think there's a book category in imagenet
+もし本を見つけたいとしても、本はImageNetにはないと思いますが、
 
 0:28:15.680,0:28:21.549
-Well, it's actually already got something that can find text as an earlier filter, which I guess it must be using to find
+学習済みモデルはすでに本を見つけるのに必要なフィルターを獲得しているからです。
 
 0:28:21.560,0:28:24.700
-Maybe there's a category for library or something or a bookshelf
+もしかしたら図書館や本棚のカテゴリーはあるかもしれません。
 
 0:28:26.390,0:28:32.660
-So when you use transfer learning you can take advantage of all of these pre I learnt
+ですから、転移学習では事前に学習した
 
 0:28:33.150,0:28:38.089
-Features to find things that are as combinations of these or existing features
+特徴や既存の特徴の組み合わせを使うことができるのです。
 
 0:28:38.310,0:28:45.440
-That's why transfer learning can be done so much more quickly and so much less data than traditional approaches
+これが、従来のアプローチに比べて、転移学習が高速かつ少データで機能する理由です。
 
 0:28:47.250,0:28:53.119
-One important thing to realize then is that these techniques for computer vision are not just good at
+ここで重要なことは、コンピュータビジョンのためのこれらの技術は写真を認識するのが得意なだけではないということです。
 
 0:28:53.700,0:28:55.170
-recognizing photos
+
 
 0:28:55.170,0:29:01.430
-There's all kinds of things you can turn into pictures. For example, these are example these are
+画像で表現できるものは多くあります。例えば、これらは
 
 0:29:01.980,0:29:08.329
-sounds that have been tuned into pictures by representing their frequencies over time and
+時間の経過とともに周波数を表現して画像化した音です。
 
 0:29:09.120,0:29:13.880
-It turns out that if you convert a sound into these kinds of pictures
+そして、音をこのような画像に変換すれば、
 
 0:29:14.580,0:29:18.380
-You can get basically state-of-the-art results at sound detection
+音検知の最高精度を達成できるのです。
 
 0:29:19.260,0:29:22.489
-Just by using the exact same resonate
+単に既に見てきたのと同様ResNetと
 
 0:29:23.160,0:29:25.160
-learner that we've already seen
+learnerを使うことでできるのです。
 
 0:29:25.860,0:29:29.449
-We need to highlight that it's 945. So if you want to take a break soon
+9:45ですが、休憩しますか？
 
 0:29:30.720,0:29:32.720
-a really cool example
+転移学習の非常に良い例は
 
 0:29:33.000,0:29:37.640
-From I think this is our very first year of running fast AI one of our students
+、これは1年目のFastAIの生徒がやったことだと思いますが、
 
 0:29:38.880,0:29:45.499
-Created pictures they worked at Splunk in anti-fraud and they created pictures of users moving their mouths
+Splunkでの仕事ですが、ユーザのマウスの動きを写真にして、詐欺対策を行いました。
 
 0:29:45.500,0:29:48.530
-And if I remember correctly as they moved their mouths
+私の記憶が正しければ、彼らはマウスの動くを画像にして、
 
 0:29:48.740,0:29:55.310
-He basically drew a picture of where the mouse moved and the color depended on how fast they moved and these
+その動きの速さに応じて色分けしました。
 
 0:29:55.830,0:29:59.630
-circular blobs is where they clicked the left or the right mouse button and
+丸は左もしくは右クリックを表します。
 
 0:30:00.570,0:30:05.389
-It's blank. They then well, he what he did actually for the through the course as a
+それから、彼が実際にコースのプロジェクトとして行ったことは、
 
 0:30:06.210,0:30:12.560
-Project for the course is he tried to see whether he could use this these pictures with exactly the same approach?
+作成した画像に対して転移学習が使えるかどうかを確認しました。
 
 0:30:12.560,0:30:17.839
-We saw in lesson 1 to create an anti fraud model and it worked
+レッスン1で詐欺行為防止モデルを作り、それが動くことを見ましたが、
 
 0:30:17.840,0:30:24.620
-So well that Splunk ended up patenting a new product based on this technique and you can actually check it out
+Splunkは転移学習を活用したプロダクトで特許を取得しています。
 
 0:30:24.620,0:30:30.859
-there's a blog post about it on the internet where they describe this breakthrough anti-fraud approach which literally came from
+そして、このことについてのブログが公開されており、このアプローチが
 
 0:30:32.190,0:30:37.219
-One of our really amazing and brilliant and creative students after lesson one of the course
+私たちの優秀で創造的な受講生がレッスン1の後に思いついたものに基づいていることも書いてあります。
 
 0:30:39.180,0:30:43.580
-Another cool example of this is looking at different
+もう一つの素晴らしい例は、様々な
 
 0:30:44.880,0:30:46.380
-viruses and
+ウイルスを調べて、
 
 0:30:46.380,0:30:51.109
-Again, turning them into pictures and you can kind of see how they've got here. This is from a paper
+同様に画像に変換したものです。これは論文からの引用ですが、
 
 0:30:51.630,0:30:53.630
-Check out the book for the citation
+本を参照してください。
 
 0:30:54.240,0:30:58.729
-they've got three examples of a particular virus called VB 80 and another
+彼らは、VB80と呼ばれるウイルスのサンプルを3つと、
 
 0:30:59.070,0:31:05.179
-example of a particular virus called fake rien and you can see each case the pictures all look kind of similar and
+fake rienと呼ばれるウイルスの例をもってきて、画像に変換しました。
 
 0:31:05.850,0:31:06.800
-That's why again
+これによって
 
 0:31:06.800,0:31:11.900
-they can get state-of-the-art results in in virus detection by turning the
+彼らは、プログラムシグナルのようなものを画像に変換し、画像認識を行うことで、
 
 0:31:12.300,0:31:16.610
-Kind of program signatures into pictures and putting it through image recognition
+ウイルス検知の最高精度を達成しました。
 
 0:31:20.040,0:31:25.820
-So in the book you'll find a list of all of the terms all of the most important terms
+本には、これまでに紹介してきた最も重要な単語のリスト
 
 0:31:25.820,0:31:29.270
-We've seen both so far and what they mean. I'm not going to read through them
+がその意味と一緒に掲載されています。ここでは読み上げませんが、
 
 0:31:29.270,0:31:35.270
-but I want you to please because these are the these are the terms that we're going to be using from now on and
+みなさんはチェックしてください、というのもここに載っている単語は今後使いますし、
 
 0:31:35.520,0:31:37.520
-You've got to know what they mean
+意味も含めて把握してください。
 
 0:31:37.710,0:31:43.789
-because if you don't you're going to be really confused because I'll be talking about labels and architectures and models and parameters and
+というのも、これから説明するラベル、アーキテクチャ、モデル、パラメータ
 
 0:31:44.130,0:31:50.359
-They have very specific exact meanings and they'll be using those exact meanings. So please review this
+には特定の意味があり、その意味で使われるからです。
 
 0:31:51.990,0:31:58.909
-So to remind you this is where we got to we we ended up with Arthur Samuels overall
+確認ですが、ここまでがアーサー・サミュエルのアプローチに関して、学んだことで、
 
 0:31:59.970,0:32:05.299
-Approach and we replaced his terms with our terms. So we have an architecture
+彼の用語を私たちの用語に置き換えると、アーキテクチャというものがあり、
 
 0:32:05.970,0:32:12.380
-Which contains parameters as inputs and we more parameters and the data as inputs?
+それは、パラメータとデータを入力として受け取ります。
 
 0:32:13.200,0:32:16.669
-So that the architecture press the parameters of the model
+つまり、アーキテクチャはモデルのパラメータと、
 
 0:32:17.850,0:32:20.480
-With the inputs they used to calculate predictions
+データを受け取って予測を計算します。
 
 0:32:20.820,0:32:26.990
-They are compared to the labels with a loss function and that loss function is used to update the parameters
+予測は損失関数によってラベルと比較され、損失関数はパラメータの更新に使われます。
 
 0:32:27.600,0:32:32.449
-Many many times to make them better and better until the loss gets nice and super low
+この処理は損失が小さくなまで何回も繰り返されます。
 
 0:32:34.890,0:32:37.279
-So this is the end of chapter 1 of the book
+ここまでがfast bookの第一章です。
 
 0:32:38.010,0:32:44.059
-it's really important to look at the questionnaire because the questionnaire is the thing where you can check whether you
+そして、クイズに答えてみることを強くお勧めします。なぜなら、クイズは、みなさんが
 
 0:32:45.640,0:32:52.020
-Have taken away from this book of this chapter the stuff that we hope you have so go through it and
+その章から私たちが理解してほしいことをちゃんと学んだかを確認するためにあり、
 
 0:32:53.380,0:32:57.599
-Anything that you're not sure about the tech that the answer is in the text
+不確かなものについてはその章に説明があるので、
 
 0:32:57.640,0:33:02.640
-So just go back to earlier in the book and you will in the chapter and you will find the answers
+少し戻って、答えを見つけてください。
 
 0:33:04.390,0:33:10.950
-There's also a further research section after each questionnaire for the first couple of chapters, they're actually pretty simple
+そして、はじめのいくつかの章に関しては発展的なリサーチの節もありますが、非常に単純です。
 
 0:33:11.050,0:33:16.380
-Hopefully they're pretty fun and interesting. They're things were to answer the question. It's not enough to just look in the chapter
+それらは、興味深く楽しめるものと思って書きました。ただ本を読むだけでは答えがわからず、
 
 0:33:16.900,0:33:22.410
-You actually have to go and do your own thinking and experimenting and googling and so forth
+自分で検索したり、実験しないと答えはでないと思います。
 
 0:33:23.260,0:33:30.600
-In later chapters, some of these further research things are pretty significant projects that might take a few days or even weeks
+さらに後の方の章ではこういったリサーチは重たくなってくるので、数日、場合によっては数週間かかるかもしれません。
 
 0:33:31.210,0:33:32.980
-and so
+
 
 0:33:32.980,0:33:35.939
-yeah, you know check them out because hopefully they'll be a great way to
+はい、それらは、きっと理解の助けになるので必ずトライしてみてください。
 
 0:33:36.820,0:33:38.820
-Expand your understanding of the material
+
 
 0:33:41.200,0:33:45.990
-So something that still found points out in the book is that if you really want to make the most of this
+もう一つ、この本を最大限活用する上でのポイントは章を読み終えるごとに、
 
 0:33:46.150,0:33:47.550
-then after each chapter
+
 
 0:33:47.550,0:33:54.419
-Please take the time to experiment with your own project and within the books you provide we provide and then see if you can
+少し時間をとって、その章の知識で自分のプロジェクトに取り組むことです。
 
 0:33:55.090,0:33:59.699
-Redo the the notebooks on a new data set and perhaps for chapter one
+つまり、ノートブックの内容を新しいデータで再実行するのです。
 
 0:33:59.700,0:34:04.169
-That might be a bit hard because we haven't really shown how to change things but for chapter four chapter two
+第一章でこれをするのは少々難しいかもしれませんが、
 
 0:34:04.540,0:34:07.440
-Which we're going to start next you'll absolutely be able to do that
+第二章以降ではできるようになると思います。
 
 0:34:08.920,0:34:15.089
-Okay, so let's take a break and we'll come back at 9:55
+それでは、9:55まで休憩をとりましょう。
 
 0:34:16.390,0:34:18.390
-San Francisco time
+
 
 0:34:18.970,0:34:25.770
-Okay, so welcome back everybody and I think we've got a couple of questions to start with. So Rachel, please take it away. Sure
+さて、再開しましょう。次に進む前に質問に答えましょう。Rachel、お願いします。
 
 0:34:26.530,0:34:29.130
-Our filters independent by that
+モデルは再学習した場合、
 
 0:34:29.130,0:34:35.430
-I mean if filters are pre-trained might they become less good and detecting features of previous images when fine-tuned. Oh
+事前学習でのデータセットに対するパフォーマンスが悪化するのでしょうか？
 
 0:34:36.340,0:34:38.340
-That is a great question
+素晴らしい質問ですね。
 
 0:34:39.460,0:34:47.310
-So assuming I understand the question correctly if if you start with say an image NIT model and then you you fine-tune it on
+質問の内容は、ImageNetで訓練したモデルを犬と猫のデータセットで
 
 0:34:47.890,0:34:54.299
-Dogs versus cats for a few epochs and you get something that's very good at recognizing dogs versus cats
+fine tuningすると、犬と猫を認識するのには優れているが、
 
 0:34:56.380,0:34:58.900
-It's got to be much less good as an image net model after that
+ImageNetのデータセットに対してはそれほど優れていないのではないか？ということです。
 
 0:34:58.910,0:35:03.879
-So it's not going to be very good at recognizing aeroplanes or or hammers or whatever
+確かに、飛行機やハンマーを認識するのはそれほど上手ではないでしょうし、これは
 
 0:35:05.810,0:35:07.810
-This is called catastrophic
+破滅的忘却と呼ばれるものです。
 
 0:35:07.850,0:35:12.190
-Forgetting in the literature the idea that as you like see more images
+考えは、事前に見たデータセットと異なるものを見れば見るほど
 
 0:35:12.260,0:35:16.960
-About different things to what you saw earlier that you start to forget what the things you saw earlier?
+事前に見たものを忘れていくというものです。
 
 0:35:18.860,0:35:22.150
-So if you want to fine-tune something which is
+もしこの破滅的忘却を防ぎたければ、つまり、
 
 0:35:22.850,0:35:27.009
-Good at a new task but also continues to be good at the previous task
+新たなタスクと以前のタスクの両方で優れているモデルを作りたければ、
 
 0:35:27.010,0:35:30.700
-You need to keep putting in examples of the previous task as well
+fine tuningを行う際に、事前のタスクで使ったサンプルも与える必要があります。
 
 0:35:33.800,0:35:38.890
-And what are the example what are the differences between parameters and hyper parameters
+パラメータとハイパーパラメータの違いはなんですか？
 
 0:35:40.070,0:35:46.150
-If I am feeding an image of a dog as an input and then changing the hyper parameters of batch size and the model
+入力として犬の画像を与え、ハイパーパラメータであるバッチサイズやモデルを変えた場合、
 
 0:35:46.280,0:35:48.370
-What would be an example of a parameter?
+何がパラメータですか？
 
 0:35:49.880,0:35:52.150
-So the parameters are the things that
+パラメータは、
 
 0:35:53.540,0:35:58.240
-are described in lesson one that Arthur Samuel described as being
+レッスン1で伝えたように、アーサー・サミュエルによれば、
 
 0:35:59.870,0:36:01.870
-The things which change
+それは、
 
 0:36:02.060,0:36:08.769
-What the model does what the architecture does so we start with this infinitely flexible function
+モデルがすることやアーキテクチャがすることを変えるものです。私たちは、無限に柔軟な関数から始め、
 
 0:36:08.770,0:36:11.860
-The thing called a neural network that can do anything at all
+それこそがニューラルネットワークですが、それはなんでもできるものですが、
 
 0:36:12.860,0:36:14.600
-and
+
 
 0:36:14.600,0:36:15.740
-the
+
 
 0:36:15.740,0:36:21.009
-The way you get it to do one thing versus another thing is by changing its parameters. They're there
+実際にニューラルネットワークができることを調整するのがパラメータです。
 
 0:36:21.010,0:36:27.070
-They are the numbers that you pass into that function. So there's two types of numbers you pass into the function
+パラメータは関数に渡す数値です。関数に渡す数字は2種類あります。
 
 0:36:27.070,0:36:34.059
-There's the numbers that represent your input like the pixels of your dog. And there's the numbers that represent
+1つは入力データ、例えば犬の写真のピクセルを表す数字でもう1つは学習で得られた
 
 0:36:35.720,0:36:37.720
-Their learnt parameters
+パラメータです。
 
 0:36:38.150,0:36:42.430
-So in the example of something that's not a neural net but like a checkers playing program
+ニューラルネットワーク以外の例としては、アーサー・サミュエルが60年代に
 
 0:36:43.070,0:36:49.330
-Like Arthur Samuel might have used back in the early 60s and late 50s. Those parameters may have been things like
+使ったかもしれないチェッカープログラムがあるでしょう。そのパラメータは
 
 0:36:50.600,0:36:52.600
-if there is a
+もしあれば、
 
 0:36:53.240,0:36:57.099
-Opportunity to take a piece versus an opportunity to get to the end of a board
+ピースをとるか、ボードの端まで進むかの確率を表していたでしょう。
 
 0:36:57.950,0:37:01.599
-How much more value should I consider one versus the other?
+どちらの選択肢をより多くとるようにするかというものです。
 
 0:37:01.870,0:37:07.120
-You know, it's twice as important or it's three times as important that two versus three, that would be an example of a parameter
+例えば、一方より他方が2倍、3倍重要であるというものです。
 
 0:37:09.060,0:37:10.410
-In a
+
 
 0:37:10.410,0:37:12.000
-neural network
+ニューラルネットワークにおいては
 
 0:37:12.000,0:37:19.069
-Parameters are a much more abstract concept and so a detailed understanding of what they are will come in the next lesson or two
+パラメータはより抽象的なもので、詳しく理解するのは次回か次次回のレッスンになるでしょう。
 
 0:37:19.590,0:37:23.990
-But it's the same basic idea there the numbers which change
+ですが、基本的なアイディアは同じで、それは、
 
 0:37:25.020,0:37:28.640
-What the model does to be something that recognizes?
+モデルが何か認識する動作を変更する数字であるということです。
 
 0:37:29.550,0:37:35.060
-malignant tumors versus cats versus dogs versus colorizer splack and white pictures
+悪性腫瘍であったり、犬か猫、カラー写真か白黒写真を認識するというようなものです。
 
 0:37:36.810,0:37:38.810
-Whereas the hyper parameter is
+一方で、ハイパーパラメータは
 
 0:37:39.420,0:37:41.420
-the choices about
+次のようなものに関する選択です。
 
 0:37:41.940,0:37:43.110
-What?
+
 
 0:37:43.110,0:37:49.670
-What numbers do you pass to the function when you act the actual fitting function to decide how that fitting process happens?
+例えば、関数を調整する際、どのようなプロセスを経るかといったものです。
 
 0:37:50.580,0:37:52.020
-it
+
 
 0:37:52.020,0:37:57.140
-There's a question. I'm curious about the pacing of this course. I'm concerned that all the material may not be covered
+このコースの進度が気になります。本の内容は全てカバーするのでしょうか？
 
 0:37:58.350,0:38:02.420
-It depends what you mean by all the material we certainly won't cover everything in the world
+答えは全ての内容として、何を意味するかに依りますが、本当に全てをカバーするのは無理でしょう。
 
 0:38:03.720,0:38:05.720
-So yeah
 
 0:38:07.110,0:38:10.370
-We'll cover what we can well cover what we can in seven lessons
+実際には7回のレッスンでカバーできるものをカバーします。
 
 0:38:11.790,0:38:18.440
-We're certainly not covering the whole book if that's what you're wondering. The whole book will be covered in either two or three courses
+つまり、本全体をカバーすることはできないでしょう。本全体をカバーするには、例年だと、
 
 0:38:19.320,0:38:23.600
-In the past. It's generally been two courses to cover about the amount of stuff in the book
+追加で2もしくは3つのコースが必要でした。通常はコース2つで本全体ですね。
 
 0:38:24.750,0:38:28.909
-But we'll see how it goes because the books pretty big 500 pages
+ですが、どうなるかはわかりません。というのもこの本は500ページもありますから。
 
 0:38:29.190,0:38:32.569
-So when you say two courses you mean fourteen lesson 14
+コース2つというのは、レッスン14回ということですか？
 
 0:38:32.570,0:38:35.870
-Yes, it would be like 14 or 21 lessons to get through the whole book
+はい、14か21回で本が終わると思います。
 
 0:38:37.530,0:38:39.740
-Well, though having said that by the end of the first lesson
+先週の授業でお伝えした通り、
 
 0:38:39.840,0:38:45.350
-Hopefully there'll be kind of like enough momentum and understanding that the reading the book independently will be more
+授業と独立して読み進めるのも理解の助けにはなると思います。
 
 0:38:45.780,0:38:47.930
-useful and you'll have also kind of
+そして、コミュニティ、
 
 0:38:49.200,0:38:54.049
-Gained a community of folks on the forums that you can hang out with and ask questions of and so forth
+つまり、フォーラムに参加して、質問を投稿したり回答することも有用です。
 
 0:38:56.580,0:39:03.620
-So in in the second part of the course, we're going to be talking about putting stuff in production and
+このコースの第二部では、作成したモデルをどうプロダクションに載せるかについても話します。
 
 0:39:05.280,0:39:09.830
-We're so to do that we need to understand like what are the capabilities and limitations of
+ですので、深層学習の限界や能力について理解することも
 
 0:39:11.100,0:39:13.100
-Deep learning what are the kinds of?
+必要になってきます。
 
 0:39:13.290,0:39:16.250
-projects that even makes sense to try to put in production
+例えば、どんなプロジェクトが本番環境に載せるのに適しているかといったことですね。
 
 0:39:17.100,0:39:20.809
-And you know one of the key things I should mention in the book and in this core
+そして、このコースと本の中で言及すべき大事なことは、
 
 0:39:20.940,0:39:23.669
-Is that the first two or three lessons and chapters?
+最初の2〜3回もしくは章では、
 
 0:39:24.310,0:39:27.600
-there's a lot of stuff which is designed not just for
+コーダだけでなく、全ての人が対象の
 
 0:39:28.150,0:39:33.359
-the coders but for for everybody there's lots of information about like
+内容、例えば深層学習を動かすのに必要なものも含まれています。
 
 0:39:34.270,0:39:37.409
-What are the practical things you need to know to make deep learning work?
+
 
 0:39:37.450,0:39:42.329
-And so one of them things you need to know is like well what's deep learning actually good at at the moment
+例えば、それらは、深層学習が現時点で得意とするものです。
 
 0:39:43.870,0:39:46.740
-So I'll summarize what the book says about this but
+ですから、本に書いてあることをまとめました。
 
 0:39:47.560,0:39:50.250
-there are the kind of four key areas that we
+4つの分野があります。
 
 0:39:51.100,0:39:54.539
-Have as applications in faster a computer vision text
+この分野はfastaiのapplicationモジュールにあるもので、
 
 0:39:54.850,0:40:02.309
-Tabular and what I've called here XE assistance for recommendation systems and specifically a technique called collaborative filtering which we briefly saw
+コンピュータビジョン、テキスト，テーブル、そして推薦システムのための協調フィルタリングです。
 
 0:40:02.890,0:40:10.589
-Sorry, another question and is are there any pre trained weights available other than the ones from imagenet that we can use if?
+質問です。ImageNet以外の事前学習済みモデルで利用可能なものはありますか？
 
 0:40:10.750,0:40:14.520
-Yes, when should we use others in one imagenet? Oh, that's a really great question
+いつImageNet以外のものを使うべきかというのは良い質問です。
 
 0:40:15.370,0:40:16.810
-so
+
 
 0:40:16.810,0:40:20.730
-yes, there are a lot of pre trained models and
+たくさんの事前学習済みモデルがあります。
 
 0:40:21.370,0:40:26.280
-One way to find them. But also you're currently just showing us what you can great
+いくつか探し方がありますが、良い探し方は、
 
 0:40:27.370,0:40:29.819
-Now one great way to find them is you can look up
+つまり、最初に見るべきは、
 
 0:40:31.540,0:40:33.540
-Models ooh
+model zooです。
 
 0:40:33.580,0:40:38.430
-Which is a common name for like places that have lots of different models
+これは多種多様なモデルがある場所で，
 
 0:40:39.760,0:40:43.289
-And so here's lots of models is or you can look for
+あなたが探しているもの、特に事前学習済みモデルなら
 
 0:40:44.920,0:40:46.920
-Pre-trained models
+見つけられます。
 
 0:40:49.030,0:40:53.609
-And so yeah, there's quite a few um, unfortunately
+たくさんありますが、ここには残念なことに、
 
 0:40:55.750,0:41:03.599
-Not as wide a variety as I would like that most is still on image net or similar kinds of general photos
+それほど多様ではなく、多くはImageNetやそれに類似したもので
 
 0:41:04.240,0:41:06.689
-for example medical imaging there's hardly any
+医用画像のものはほとんどありませんね。
 
 0:41:08.980,0:41:14.010
-There's a lot of opportunities for people to create domain-specific pre-trained models, it's it's still an area
+ドメイン固有の事前学習済みモデルを作る機会は多くあると思いますが、
 
 0:41:14.010,0:41:17.549
-That's really underdone because not enough people are working on transfer learning
+十分多くの人が転移学習に取り組んでいるようではないのですね。
 
 0:41:20.569,0:41:27.489
-Okay, so as I was mentioning we've kind of got these four applications that we've talked about a bit
+さて，4つのアプリケーションがあると話しました、そして、
 
 0:41:28.880,0:41:34.569
-And deep learning is pretty, you know, pretty good at all of those
+深層学習はこれら全てにおいて非常に優れていますが、
 
 0:41:36.529,0:41:43.268
-Tabular data like spreadsheets and database tables is an area where dick learning is not always the best choice
+スプレッドシートやデータベースのテーブルにおいては深層学習が最善とは限りません。
 
 0:41:43.549,0:41:47.528
-But it's particularly good for things involving high cardinality variables
+しかし、深層学習は高濃度変数が含まれる場合に有効です。
 
 0:41:47.599,0:41:52.509
-that means variables that have like lots and lots of discrete levels like zip code or
+高濃度とは、郵便番号やプロダクトIDのように非常に多くのカテゴリ
 
 0:41:53.059,0:41:55.239
-Product ID or something like that
+をもつ変数のことです。
 
 0:41:56.079,0:41:59.349
-deep loadings really pretty great for those in particular
+深層学習はそれを除けば大変素晴らしく、例えば
 
 0:42:02.779,0:42:07.599
-For text it's pretty great at things like classification and translation
+自然言語処理においては、分類や翻訳で良いパフォーマンスを発揮しています。
 
 0:42:08.059,0:42:14.169
-It's actually terrible for conversation. And so that's that's been something that's been a huge disappointment for a lot of companies
+しかし、会話は苦手ですし、このことは多くの企業をがっかりさせてきました。
 
 0:42:14.170,0:42:16.359
-I tried to create these like conversation BOTS
+以前、作ろうとしたこともありますが、
 
 0:42:17.299,0:42:19.509
-but actually deep learning isn't good at
+深層学習は会話において、
 
 0:42:20.329,0:42:22.309
-providing accurate information
+正確な情報を提供するのが苦手なのです。
 
 0:42:22.309,0:42:26.319
-it's good at providing things that sound accurate and sound compelling but
+でもそれっぽく聞こえるものを返すのは得意です。
 
 0:42:26.390,0:42:29.680
-That we don't really have great ways yet of actually making sure it's correct
+しかし、返答の正確性を正しいことを確認する方法がありません。
 
 0:42:33.559,0:42:37.959
-One big issue for recommendation systems collaborative filtering is that
+また、推薦システムにおける問題点の一つは
 
 0:42:38.960,0:42:41.019
-Deep learning is focused on making predictions
+真相学習は予測に注力していることで、
 
 0:42:42.259,0:42:48.459
-Which don't necessarily actually mean creating useful recommendations. We'll see what that means in a moment
+予測というのは必ずしも良い推薦をすることを意味しません。すぐにどういうことか確認します。
 
 0:42:49.789,0:42:52.569
-Deep learning is also good at multimodal
+深層学習はまた、マルチモーダルも得意です。
 
 0:42:53.269,0:42:55.269
-That means things where you've got
+マルチモーダルとは、
 
 0:42:55.970,0:43:02.139
-Multiple different types of data so you might have some tabular data including a text column and an image
+数種類のデータを入力とするものです。例えば、テキストとの列を含むテーブルデータと画像、
 
 0:43:03.650,0:43:05.710
-Then some collaborative filtering data
+そして、協調フィルタリングのデータ、
 
 0:43:06.349,0:43:09.699
-And combining that all together is something that deep learning is really good at
+の組み合わせからなるデータなどが深層学習が得意とするものです。
 
 0:43:10.519,0:43:12.519
-so for example
+例えば、
 
 0:43:13.309,0:43:19.569
-Putting captions on photos is something which deep learning is pretty good at although again
+写真のキャプション生成は深層学習が大変得意としているものですが、
 
 0:43:19.569,0:43:21.289
-It's not very good at being accurate
+正確であるというのは不得意です。
 
 0:43:21.289,0:43:26.289
-So what you know might say this is a picture of two birds when it's actually a picture of three birds
+ですから、実際には3羽の鳥が映っている写真に対して2羽の鳥であると言うといったものです。
 
 0:43:27.829,0:43:29.829
-And then this other category
+そして、
 
 0:43:30.880,0:43:31.930
-there's
+他にも、
 
 0:43:31.930,0:43:38.550
-Lots and lots of things that you can do with deep learning by being creative about the use of these kinds of other
+深層学習でできる想像的なことは沢山ありますし
 
 0:43:39.160,0:43:46.080
 Application based approaches for example an approach that we developed for natural language processing called you LM fit
 
 0:43:46.080,0:43:48.080
-They're all you're learning in the course
+これらはどれもコースで説明します。
 
 0:43:48.670,0:43:55.200
-It turns out that it's also fantastic you're doing protein analysis. If you think of the different proteins as being different words
+例えば、タンパク質分析も素晴らしいです。もし、様々なタンパク質を異なる単語ととらえれば、
 
 0:43:56.200,0:44:00.030
-And they're in a sequence which has some kind of state and meaning
+それらは列の中である種の状態や意味をもち、
 
 0:44:00.490,0:44:07.409
-It turns out that you will M fit works really well for protein analysis so often it's about kind of being being creative
+ULMFitがタンパク質分析に使えることが分かったのです。
 
 0:44:08.350,0:44:13.649
-So to decide like for the product that you're trying to build is deep learning gonna work
+ですので、あなたが作ろうと思ったものに深層学習が使えるかもしれませんし、
 
 0:44:14.290,0:44:17.969
-Well for it in the end you kind of just have to try it and see
+実際に試してみるのも良いでしょう。
 
 0:44:20.800,0:44:26.370
-But if you if you do a search, you know, hopefully you can find examples about the people that have tried something similar
+そして、検索してみれば、似たようなことに挑戦した人々を見つけられるかもしれません。
 
 0:44:27.040,0:44:30.060
-Even if you can't that doesn't mean it's not going to work
+また、見つからないからうまく行かないと言うことではありません。
 
 0:44:31.780,0:44:38.790
-So, for example, I mentioned the collaborative filtering issue where a recommendation and a prediction are not necessarily the same thing
+協調フィルタリングの弱点に言及しましたが、それは、推薦と予測は同じではないと言うことです。
 
 0:44:39.310,0:44:41.310
-You can see this on
+この例はアマゾンで
 
 0:44:41.440,0:44:45.870
-Amazon for example quite often so I bought a terry pratchet book and
+よく起きています。私がTerry Pratchettの本を買った後、
 
 0:44:46.210,0:44:50.610
-Then Amazon tried for months to get me to buy more terry pratchet books
+アマゾンは数ヶ月に渡ってTerry Pratchettの本を推薦していましたが、
 
 0:44:50.830,0:44:58.620
-now that must be because their predictive model said that people who bought one particular terry patcher book are likely to also by
+それはアマゾンの予測モデルがTerry Patcherの本を買った人はまた買うと言っているからでしょう。
 
 0:44:58.620,0:45:00.520
-other terry pratchet books
+
 
 0:45:00.520,0:45:04.530
-But from the point of view of like well is this going to change my buying behavior?
+しかし，推薦というのは購買行動を多少左右するべきでしょう？
 
 0:45:05.200,0:45:07.800
-Probably not right like if I liked that book
+おそらく、ある本が好きだったら、
 
 0:45:07.800,0:45:11.999
-I already know I like that author and I already know that like they probably wrote other things
+私がその著者が好きで、その著者の別の本が好きであることも分かっているでしょう。
 
 0:45:12.000,0:45:15.510
-So I'll go and buy it anyway, so this would be an example of like Amazon
+ですから、そういった本は買うでしょう。
 
 0:45:16.450,0:45:19.980
-Probably not being very smart up here. They're actually showing me
+これはアマゾンの例ですがあまり賢くないですね。単に私に
 
 0:45:20.680,0:45:25.919
-Collaborative filtering predictions rather than actually figuring out how to optimize a recommendation
+推薦システムの最適化を行うのではなく協調フィルタリングの予測結果をただ見せているだけなのです。
 
 0:45:26.500,0:45:30.510
-So an optimized recommendation would be something more like your local
+最適化された推薦システムというのは、どちらかというと最寄りの書店の
 
 0:45:31.120,0:45:35.399
-Human bookseller might do where they might say. Oh you like Terry Pratchett
+店員のように振舞うものでしょう。あなたはTerry Pratchettが好きなんですね、
 
 0:45:35.770,0:45:42.840
-Well, let me tell you about other kind of comedy fantasy sci-fi writers on the similar vein who you might not have heard about before
+なら、コメディ、ファンタジー、SFなどから同じようなテイストで聞いたことがないかもしれない本を教えましょう。
 
 0:45:44.200,0:45:49.139
-So the difference between recommendations and predictions is super important
+この推薦と予測の違いは大変重要です。
 
 0:45:50.619,0:45:55.079
-so I wanted to talk about a really important issue around interpreting models and
+ですので、モデル解釈とこのような重要な問題について話したいのです。
 
 0:45:56.170,0:46:01.200
-For a case study for this I thought we let's pick something that's actually super important right now
+ケーススタディとして、今非常に重要なことを取りあげましょう。
 
 0:46:01.530,0:46:03.689
-Which is a model in this paper?
+この論文におけるモデルはどちらでしょう？
 
 0:46:03.690,0:46:06.960
-One of the things we're going to try and do in this course is learn how to read papers
+このコースで挑戦することの1つは論文の読み方を学ぶことです。
 
 0:46:07.720,0:46:11.730
 裕美　ー　ここから
