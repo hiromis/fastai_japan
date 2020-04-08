@@ -1,1724 +1,1722 @@
 0:00:00.520,0:00:04.020
-So, uh, hello everybody and welcome back to
+それでは皆さん、こんにちは。そして、
 
 0:00:04.690,0:00:07.319
-Practical deep learning for coders. This is lesson two
+コーダのための実践的ディープラーニングへお帰りなさい。今回はレッスン2です。
 
 0:00:08.260,0:00:10.000
-and
+そして、
 
 0:00:10.000,0:00:12.599
-and in the last lesson we
+前回のレッスンでは
 
 0:00:13.570,0:00:19.500
-Started training our first models. We didn't really have any idea how that training was really working
+最初のモデルのトレーニングを開始しました。実際にトレーニングがどのようなものかは考えずに
 
 0:00:19.500,0:00:22.439
-But we were looking at a high-level at what was going on
+より高いレベルでどうなっているかを見ていました。
 
 0:00:23.109,0:00:24.519
-and
+そして、
 
 0:00:24.519,0:00:26.519
-We learned about
+私たちは
 
 0:00:26.560,0:00:28.240
-what is
+機械学習とは
 
 0:00:28.240,0:00:30.510
-Machine learning and how does that work?
+何であるか、そしてどのように機能するかを学びました。
 
 0:00:31.390,0:00:33.390
-and
+さらに
 
 0:00:34.180,0:00:35.860
-We
+私たちは
 
 0:00:35.860,0:00:37.420
-realized that
 
 0:00:37.420,0:00:43.260
-Based on how machine learning worked that there are some fundamental limitations on on what it can do
+機械学習がどう動くかに基づいて考えると、そもそも機械学習にはできることの制限があることを認識しました。
 
 0:00:43.719,0:00:46.259
-And we've talked about some of those limitations now
+そして、そういった制限についても話しました。
 
 0:00:46.260,0:00:50.820
-We also talked about how after you've trained a machine learning model you end up with a program
+さらに、機械学習モデルを訓練した後に、
 
 0:00:51.309,0:00:56.249
-which behaves much like a normal program or something with the inputs and a thing in the middle and
+通常のプログラムのように振る舞うプログラムができあがることについても話しました：入力、中間にあるもの（モデル）、そして
 
 0:00:56.829,0:00:58.449
-outputs
+出力です。
 
 0:00:58.449,0:01:00.449
-so today we're gonna
+さて、今日は
 
 0:01:00.850,0:01:02.850
-finish up talking about
+この話を終わらせてから
 
 0:01:03.280,0:01:05.820
-Talking about that and we're going to then look at how we get those
+実際に訓練したモデルを
 
 0:01:06.400,0:01:09.119
-Models into production and what some of the issues with doing that?
+本番環境にのせる方法とそうする上での問題点について話します。
 
 0:01:10.000,0:01:12.000
-might be I
+そして
 
 0:01:12.939,0:01:14.939
-Wanted to remind you that there are
+2冊の本について再度説明したいです。
 
 0:01:15.369,0:01:19.438
-Two sets of books. I sorry two sets of notebooks available to you
+失礼、実際にはノートブックですね。
 
 0:01:20.590,0:01:23.100
-One is the the the fast book
+一つは、fast bookで
 
 0:01:24.009,0:01:29.249
-Repo the full actual notebooks containing all the text of the O'Reilly book
+オライリー本の執筆で実際に使ったノートブックのレポジトリで、
 
 0:01:30.220,0:01:32.939
-and so this lets you see
+実際に
 
 0:01:33.460,0:01:35.939
-Everything that I'm telling you in much more detail
+私が伝えることとプラスアルファを動かすことができます。
 
 0:01:36.430,0:01:43.319
-And then as well as that there's the course v4 repo which contains exactly the same notebooks
+そして、もう一つはこのコースのレポジトリで、レッスンで扱うものと同じノートブックですが、
 
 0:01:43.320,0:01:46.680
-But with all the pros stripped away to help you study
+あなた方の理解のために説明文などは消してあります。
 
 0:01:47.140,0:01:52.439
-so that's where you really want to be doing your experiment and your practice and so maybe as you
+ですので、それらのノートブックは授業を聞きながら実行したり、自分で色々試したりできます。
 
 0:01:52.780,0:01:58.949
-Listen to the video. You can kind of switch back and forth between the video and reading or do one and then the other
+そして、ビデオと本を行ったり来たりすることも、どちらか片方を先に終わらせてからもう片方を進めることもできます。
 
 0:01:59.530,0:02:04.320
-And then put it away and have a look at the course fee for notebooks and try to remember like okay
+それから、このノートブックを見て、
 
 0:02:04.320,0:02:09.239
-What was this section about and run the code and see what happens and change it and so forth
+セクションの内容を思い出して、コードを実行して、何が起きるかを見て、コードを少し変えるとどうなるかを確認するといった使い方をしてください。
 
 0:02:11.830,0:02:13.830
-So we were looking at
+さて、私たちが
 
 0:02:16.780,0:02:19.860
-This line of code where we looked at how we created
+見ていたこの行ではデータセットを
 
 0:02:20.800,0:02:22.800
-our our data
+作るために
 
 0:02:23.080,0:02:26.790
-by passing in information, perhaps most importantly
+おそらく最も重要であろうラベルの付け方を教えたり
 
 0:02:27.370,0:02:31.230
-Some way to label the data and we talked about the importance of labeling
+私たちはラベル付けの重要性についても話しましたね
 
 0:02:31.230,0:02:35.250
-And in this case this particular data set whether it's a cat or a dog
+そして、今回は、犬と猫のデータセットを使っています。
 
 0:02:35.290,0:02:39.059
-You can tell by whether it's an uppercase or a lowercase letter in the first
+このデータセットではファイル名の頭文字が大文字か小文字かでラベルが決まっています。
 
 0:02:39.970,0:02:43.139
-Position that's just how this data set if they tell you when the readme works
+これは、このデータセットがそう作られているからです。
 
 0:02:44.320,0:02:50.699
-And we are also looked particularly at this idea of valid percent equals zero point two and like what does that mean?
+そして、特に、このvalid_pct=0.2というものを確認しました。
 
 0:02:50.700,0:02:55.679
-It creates a validation set and that was something I wanted to talk more about
+これは、バリデーションセットを作るもので、バリデーションセットについては今後詳しく話したいと思っています。
 
 0:02:56.740,0:03:00.540
-The first thing I do want to do though is point out that this particular
+まず最初に指摘しておきたいのは、この特定のラベリング関数は
 
 0:03:04.330,0:03:07.320
-Labeling function returns something that's either true or false
+真か偽のどちらかを返すということです。
 
 0:03:09.610,0:03:15.179
-And actually this data set as we'll see later also tells also contains the actual breed of
+このデータセットには、後ほど見るように、37種類の猫と犬の実際の品種も
 
 0:03:15.910,0:03:20.429
-37 different cat and dog breeds so you can you can also grab that from the filename
+このデータセットには、後ほど見るように、37種類の猫と犬の実際の品種も含まれており、ファイル名から取得できます。
 
 0:03:21.910,0:03:29.249
-In each of those two cases. We're trying to predict a category. Is it a cat or is it a dog or is it a
+これら2つのケースでは、カテゴリを予測します。それらは、「猫なのか犬なのか？」、
 
 0:03:30.190,0:03:34.739
-German Shepherd or a beagle or a ragdoll cat or whatever?
+「ジャーマンシェパードなのかビーグルなのかラグドールなのか？」といったものです。
 
 0:03:35.440,0:03:42.389
-When you're trying to predict a category, so when the label is a category, we call that a classification model
+カテゴリーを予測しようとしているとき、つまりラベルがカテゴリーであるとき、それを分類モデルと呼びます。
 
 0:03:43.750,0:03:45.519
-on the other hand
+一方で、
 
 0:03:45.519,0:03:50.879
-You might try to predict. How old is the animal or how tall is it?
+動物の年齢や身長、
 
 0:03:51.640,0:03:52.959
-or
+あるいは、
 
 0:03:52.959,0:03:58.469
-Something like that, which is like a continuous number that could be like 13.2 or 26.5 or whatever
+そういったものを予測しようとするとき、対象は13.2や26.5といった連続値です。
 
 0:03:59.110,0:04:05.729
-Anytime you're trying to predict a number your label is a number you call that regression, okay?
+数字を予測しようとするときはいつでも、そのラベルは回帰と呼ばれる数字です。
 
 0:04:05.730,0:04:07.860
-So those are the two main types of model
+これらが主に用いられる2種類のモデルで、
 
 0:04:08.410,0:04:13.919
-Classification and regressions. This is very important. Jargon to know about so the regression model
+分類と回帰と呼ばれるものです。これは非常に重要な専門用語なのでしっかり覚えてください。回帰モデルは、
 
 0:04:14.769,0:04:19.379
-Attempts to predict one or more numeric quantities such as temperature or location or whatever
+温度や場所などの1つ以上の数値量を予測しようとします。
 
 0:04:20.400,0:04:27.229
-this is a bit confusing because sometimes people use the word regression as a shortcut to a particular a like a
+これは少し紛らわしいですね。時々、回帰という言葉は
 
 0:04:27.810,0:04:31.310
-abbreviation for a particular kind of model called linear regression
+線形回帰と呼ばれる特定のモデルをさすことがあります。
 
 0:04:33.180,0:04:39.139
-That's super confusing because that's not what regression means linear regression is just a particular kind of regression
+しかし、線形回帰は回帰ではないので、大変紛らわしいです。
 
 0:04:39.419,0:04:43.189
-but I just wanted to warn you of that when you start talking about regression a lot of
+線形回帰は特定の種類の回帰に過ぎないことに注意してください。
 
 0:04:44.580,0:04:48.590
-People will assume you're talking about linear regression even though that's not what the word means
+回帰について話し始めると、線形回帰ではないのに多くの人は線形回帰のことを話していると思い込むでしょう。
 
 0:04:50.790,0:04:57.589
-All right, so I wanted to talk about this valid percent zero point two thing, so as we described valid percent
+さて、私はこのvalid_percent 0.2について話したいと思います。先ほど説明したように、
 
 0:04:58.470,0:05:04.850
-grabs in this case twenty percent of the data if it's zero point two and puts it aside like in a separate bucket and
+先ほど説明したように、valid_percentはデータの20パーセントを別のバケツに入れておき、
 
 0:05:05.220,0:05:07.220
-Then when you train your model
+モデルを訓練するときには
 
 0:05:07.650,0:05:10.190
-Your model doesn't get to look at that data at all
+そのデータを使いません。
 
 0:05:10.770,0:05:17.780
-That data is only used to decide to show you how accurate your model is
+そのデータは、モデルがどれだけ正確であるかを示すためだけに使用されます。
 
 0:05:20.010,0:05:22.010
-So if you train for too long
+ですから、もしあなたがあまりにも長い間、
 
 0:05:23.070,0:05:27.229
-And or with not enough data and/or a model with too many parameters
+あるいは十分なデータを持たずに、あるいはパラメータが多すぎるモデルを使って
 
 0:05:27.599,0:05:33.889
-After a while the accuracy of your model will actually get worse and this is called overfitting
+トレーニングした場合、しばらくするとモデルの精度は実際に悪くなります。これをオーバーフィットと呼びます。
 
 0:05:34.349,0:05:38.419
-Right. So we use the validation set to ensure that we're not
+そこで、オーバーフィットしていないことを確認するために検証セット
 
 0:05:38.940,0:05:40.940
-overfitting the
+を使用します。
 
 0:05:42.000,0:05:45.019
-Next line of code that we looked at is this one
+次に見たコードの行はこの行で、
 
 0:05:45.750,0:05:51.500
-where we created something called a learner we'll be learning a lot more about that that a learner is basically more is
+Learnerと呼ばれるものを作成しました。Learnerについては今後深く学ぶ予定ですが、基本的には
 
 0:05:51.780,0:05:53.780
-something which contains your data and
+データセットと
 
 0:05:54.990,0:05:56.130
-your
+あなたの
 
 0:05:56.130,0:05:59.630
-Architecture that is the mathematical function that you're optimizing
+アーキテクチャ、つまり最適化する数学的な関数を持ちます。
 
 0:06:00.630,0:06:07.699
-And so a learner is the thing that tries to figure out what are the parameters which best cause this function?
+つまり、learnerとは関数がデータのラベルに最も適合するような
 
 0:06:07.949,0:06:11.779
-To match the labels in this data
+パラメータを見つけ出すものです。
 
 0:06:12.449,0:06:14.689
-so we're talking a lot more about that, but basically
+詳しく説明しましたが、要するに、
 
 0:06:15.240,0:06:19.760
-This particular function resinate 34 is the name of a particular architecture
+このresnet34という関数がアーキテクチャの名前で、
 
 0:06:19.979,0:06:23.449
-Which is just very good for computer vision problems
+このアーキテクチャは、コンピュータビジョンに適している
 
 0:06:24.030,0:06:24.930
-in fact
+ことが知られています。
 
 0:06:24.930,0:06:30.829
-The name really is ResNet and then 34 tells you how many layers there are so you can use ones with bigger numbers
+本当の名前はResNetで34は層の数を表していて、この数字が大きくなると、
 
 0:06:31.080,0:06:38.330
-Here to get more parameters that will take to train take more memory more likely to overfit that could also
+より多くのパラメータが学習に使われるのでよりメモリを消費し、さらに過学習しやすくなりますが、
 
 0:06:39.990,0:06:41.990
-Create more complex models
+より複雑なモデルを作れます。
 
 0:06:42.480,0:06:46.759
-Right now though. I wanted to focus on this part here, which is metrics equals error rate
+しかし、今はmetrics=error_rateに注目しましょう。
 
 0:06:47.580,0:06:54.199
-this is where you list the functions that you want to be the that you want to be called with your data with your
+ここでは、バリデーション時に使いたい関数を列挙し、
 
 0:06:54.330,0:06:56.330
-Validation data and print it out
+それらの結果は毎エポック後に
 
 0:06:56.430,0:06:58.430
-after each epoch and
+プリントされます。
 
 0:06:58.770,0:07:00.120
-epoch is
+エポックとは、
 
 0:07:00.120,0:07:04.730
-is what we call it when you look at every single image in the data set once and
+データセットの全ての画像を見ることを意味します。
 
 0:07:05.670,0:07:12.259
-so after you've looked at every image in the data set once we print out some information about how you're doing and
+つまり、データセットを1周するたびに、モデルに関する情報がプリントされ、
 
 0:07:12.450,0:07:17.300
-The most important thing we print out is the result of calling these metrics
+最も重要なことですが、これらのメトリクスの結果もプリントされます。
 
 0:07:17.550,0:07:23.240
-so error rate is the name of a metric and it's a function that just prints out what percent of the
+error_rateはメトリクスの1つで、バリデーションセットのうち，何%の画像が
 
 0:07:23.520,0:07:26.570
-Validation set are being incorrectly classified by your model
+誤って分類されたかをプリントします。
 
 0:07:28.920,0:07:34.820
-So our metrics a function that measures the quality of the predictions using the validation set
+つまり、バリデーションセットを使って予測の質を計算しているのです。
 
 0:07:35.370,0:07:40.370
-So error rates one another common metric is accuracy, which is just 1 minus error rate
+1 - error_rateで計算される正確度も一般的なメトリクスです。
 
 0:07:41.190,0:07:45.410
-So very important to remember from last week. We talked about loss
+先週のレッスンで大変重要なことを話しました。アーサー・サミュエルは
 
 0:07:46.680,0:07:53.329
-Arthur Samuel had this important idea in machine learning that we need some way to figure out how
+機械学習における重要な損失という考えを持っていました。モデルの性能がどれくらい良いかを把握するためには
 
 0:07:54.300,0:08:01.759
-Good our how well our model is doing so that when we change the parameters we can figure out which set of parameters make that
+何らかの方法が必要で、パラメータを変更したときに、どのパラメータのセットが性能を良くするか悪くするかを
 
 0:08:02.880,0:08:04.880
-Performance measurement get better or worse
+把握することができます。
 
 0:08:05.190,0:08:07.669
-That performance measurement is called the loss
+パフォーマンスの基準は損失ですが、
 
 0:08:08.190,0:08:09.900
-the loss is
+必ずしも
 
 0:08:09.900,0:08:13.489
-Not necessarily the same as your metric
+メトリクスと同じとは限りません。
 
 0:08:14.670,0:08:19.850
-the reason why is a bit subtle and we'll be seeing it in a lot of detail once we delve into the math in the
+その理由は少し微妙で、今後のレッスンで数学を掘り下げていくと
 
 0:08:19.850,0:08:21.850
-coming lessons, but basically
+詳細が見えてきますが 、
 
 0:08:22.560,0:08:26.869
-You need a function. You need a loss function
+基本的には関数が必要で、
 
 0:08:27.390,0:08:33.470
-Where if you change the parameters by just a little bit up or just a little bit down you can see if the loss gets
+パラメータを少しだけ上げたり下げたりして、 損失が少し良くなったか悪くなったか
 
 0:08:33.470,0:08:39.739
-A little bit better or a little bit worse and it turns out that error rate and accuracy doesn't tell you that at all
+を見ることができる損失関数が必要です。
 
 0:08:39.990,0:08:43.370
-Because you might change the parameters base much such a small amount
+予測が犬から猫に変わるほどパラメータを変化させるわけではない
 
 0:08:43.920,0:08:49.499
-That none of your dog's predictions start becoming hats and none of your cat predictions start becoming dogs
+ので精度やエラーレートでは不十分なのです。
 
 0:08:49.500,0:08:53.609
-So like your predictions don't change and your error rate doesn't change so
+予測が同じならエラーレートも同じはずです。
 
 0:08:54.400,0:08:59.249
-Loss and metric are closely related, but the metric is the thing that you care about
+損失とメトリックは密接に関連していますが、メトリックはあなたが気にしているもので、
 
 0:08:59.980,0:09:07.110
-The loss is the thing which your computer is using as the measurement of performance to decide how to update your parameters
+損失はパフォーマンスの測定値としてコンピュータがパラメータをどのように更新するかを決定するために使用しているものです。
 
 0:09:08.920,0:09:10.920
-So we measure
+損失はパフォーマンスの測定値として
 
 0:09:11.860,0:09:17.490
-Overfitting by looking at the metrics on the validation set so fast AI
+コンピュータがパラメータをどのように更新するかを決定するために使用しているものです。
 
 0:09:17.860,0:09:21.210
-always uses the validation set to print out your metrics and
+FastAIは常に検証セットを使用してメトリクスを出力します。
 
 0:09:22.480,0:09:29.970
-Overfitting is like the key thing that machine learning is about it's all about. How do we find a model?
+オーバーフィッティングは重要で、学習しているデータだけでなく、
 
 0:09:30.640,0:09:37.949
-Which fits the data not just for the data that we're training with but for data that the training algorithm hasn't seen before
+学習アルゴリズムが見たことのないデータに適合するモデルをどうやって見つけるかということです。
 
 0:09:41.170,0:09:42.760
-So
+つまり
 
 0:09:42.760,0:09:43.960
-overfitting
+過学習は
 
 0:09:43.960,0:09:45.520
-results when
+モデルが
 
 0:09:45.520,0:09:47.520
-our model is basically
+不正行為が
 
 0:09:47.890,0:09:51.059
-Cheating a model can cheat by saying
+している結果とも言えます。
 
 0:09:51.060,0:09:51.670
-Oh
+
 
 0:09:51.670,0:09:56.969
-I've seen this exact picture before and I remember that that's a picture of a cat
+モデルは、「これと同じ写真を見たことがある、それは猫の写真だ」と言うことでごまかすことができます。
 
 0:09:57.400,0:10:00.719
-So it might not have learnt what cats look like in general
+つまり、一般的に猫がどのように見えるかを学習していないかもしれませんが
 
 0:10:00.720,0:10:01.360
-It just remembers
+、画像1〜4と8が猫で、
 
 0:10:01.360,0:10:07.050
-you know that images one four and eight cats and two and three and five dogs and
+画像2〜3と5が犬であることを覚えているだけで
 
 0:10:07.450,0:10:12.989
-Learns nothing actually about what they really look like. So that's the kind of cheating that we're trying to avoid
+猫がどういうものかという概念は学習していないのです。これが、絶対に避けたいタイプのズルです。
 
 0:10:12.990,0:10:14.990
-we don't want it to memorize our
+つまり、モデルが特定のデータセットを
 
 0:10:15.250,0:10:17.250
-particular data set
+丸暗記するのは避けたいのです。
 
 0:10:17.980,0:10:19.980
-So we sped off our validation data
+なので、バリデーションデータを作るのです。
 
 0:10:20.530,0:10:25.559
-And what most of this are these words you're seeing on the screen are from the book. Okay, so I just copied and pasted them
+画面に表示されている文章は本からコピーしてきました。
 
 0:10:26.950,0:10:29.009
-so if we split off our validation data
+検証データを分割して、
 
 0:10:30.010,0:10:35.729
-And make sure that our model sees it during training. It's completely untainted by it so we can't possibly cheat
+モデルが学習中にそれを見ないようにすれば、完全にデータに汚染されないので、ごまかすことはできません。
 
 0:10:36.790,0:10:38.849
-Not quite true we can cheat
+そうではありません。ごまかすことはできます。
 
 0:10:39.460,0:10:45.599
-The way we could cheat is we could run we could fit a model look at the result and the validation set
+ごまかす方法としては、モデルをフィットさせて結果と検証セットを見て、
 
 0:10:46.120,0:10:48.719
-Change something a little bit fit another model
+何かを少し変更して別のモデルをフィットさせて検証セットを見て、
 
 0:10:48.720,0:10:52.200
-Look at the validation set change something a little bit we could do that like a hundred times
+何かを少し変更して、検証セットが一番良さそうなものが見つかるまで
 
 0:10:53.050,0:10:55.770
-Until we find something with the validation set looks the best
+100回くらい繰り返してみることができます。
 
 0:10:56.350,0:10:58.710
-But now we might have fit to the validation set
+そうするとバリデーションセットに適合しているかもしれませんね。
 
 0:10:59.230,0:11:04.779
-Right. So if you want to be really rigorous about this, you should actually set aside a third
+ですから、もしこれを本当に厳密に行いたいのであれば、テストセットと呼ばれる3番目のデータを用意しておくべきです。
 
 0:11:05.330,0:11:11.470
-Bit of data called the test set that is not used for training and it's not used for your metrics
+訓練にもメトリクス計算にも使わないテストデータを作るのです。
 
 0:11:12.320,0:11:15.249
-It's actually you don't look at it until the Haab projects finished
+これは実際には、プロジェクト全体が終了するまで見ることはありません。
 
 0:11:15.920,0:11:19.149
-And this is what's used on competition platforms like Kegel
+これは、Kaggleのようなコンペテイションプラットフォームで使われているものです。
 
 0:11:20.060,0:11:23.380
-on Kegel after the competition finishes
+Kaggleでは、コンペテイション後、
 
 0:11:24.200,0:11:26.560
-Your performance will be measured
+見たことのないデータセットに対して
 
 0:11:27.260,0:11:29.500
-Against a data set that you have never seen
+パフォーマンスが測定されます。
 
 0:11:30.410,0:11:32.410
-and so
+
 
 0:11:32.990,0:11:34.990
-That's a really helpful
+これは本当に有益なアプローチで、
 
 0:11:35.390,0:11:40.030
-Approach and it's actually a great idea to do that. Like even if you're not doing the modeling yourself
+自分でモデリングをしていなくても、実際にそうするのは素晴らしいアイデアです。
 
 0:11:40.700,0:11:42.230
-so if you're
+
 
 0:11:42.230,0:11:44.529
-If you're looking at vendors
+もしあなたがベンダーを見ていて、
 
 0:11:44.530,0:11:51.550
-And you're just trying to decide today go with IBM or Google or Microsoft and they're all showing you how great their models are
+今日はIBMかGoogleかMicrosoftにしようと決めようとしていて、彼らのモデルがどれだけ素晴らしいかを見せてくれているなら、
 
 0:11:52.820,0:11:56.379
-What you should do is you should say okay you go and build your models
+あなたがすべきことは、「OK、あなたはモデルを作成して、
 
 0:11:56.780,0:12:02.019
-And I am going to hang on to 10% of my data and I'm not going to let you see it at all
+私は私のデータの10％を保持して、あなたには全く見せないようにします。
 
 0:12:02.450,0:12:08.050
-And when you're all finished to come back and then I'll run your model on the tip as 10% of data. You've never seen
+あなたたちが作成したモデルをあなたたちが使えなかったテストデータで評価します。
 
 0:12:09.320,0:12:11.320
-now
+
 
 0:12:12.470,0:12:14.210
-Pulling out your
+さて、検証セットとテストセットを
 
 0:12:14.210,0:12:16.840
-Validation and test sets is a bit subtle, though
+引き出すのはちょっと微妙ですが、
 
 0:12:17.690,0:12:22.149
-here's an example of a simple little data set and this comes from a
+これは簡単な小さなデータセットの例で、
 
 0:12:23.000,0:12:28.419
-Fantastic blog post that Rachel wrote that we will link to about creating effective validation sets
+これはレイチェルが書いた、効果的な検証セットの作成についての素晴らしいブログもってきました。
 
 0:12:29.390,0:12:35.170
-And you can see basically you have some kind of seasonal data set here. Now if you just say
+基本的には、ある種の季節性をもつデータセットであることがわかります。
 
 0:12:35.750,0:12:38.529
-okay, first day I want to model that I want to create a
+さて、「Ok, FastAI, valid_percent of 0.2で
 
 0:12:39.230,0:12:43.570
-My data loader using a valid percent of 0.2
+data loaderを作りたい」と言うと、次のようになります。
 
 0:12:44.420,0:12:48.250
-It would do this. It would delete randomly some of the dots
+ランダムにいくつかのドットを間引いていますね？
 
 0:12:49.190,0:12:51.190
-right now
+
 
 0:12:51.380,0:12:53.210
-This isn't very helpful
+これは良くありません。
 
 0:12:53.210,0:12:58.449
-Because it's we can still cheat because these dots are right in the middle of other dots
+ドットが他のドットの真ん中にあるので、ズルをすることができます。
 
 0:12:58.940,0:13:00.670
-And this isn't what would happen in practice?
+こんなことは実世界では起きませんよね？
 
 0:13:00.670,0:13:05.110
-What would happen in practice is we would want to predict this is sales by date, right?
+実際に何が起こるかというと、これは日付ごとの売上高ですが、
 
 0:13:05.110,0:13:08.620
-We want to predict the sales for next week. Not the sales for
+来週の売上高を予測したいと思います。対象は
 
 0:13:09.200,0:13:12.539
-14 days ago 18 days ago and 29 days ago, okay
+14日前、18日前、29日前の売上ではありません。
 
 0:13:13.089,0:13:18.178
-So what you actually need to do to create an effective validation set here is not do it randomly. But instead
+ここで効果的な検証セットを作成するために実際に必要なのは、ランダムに行うのではなく、
 
 0:13:19.179,0:13:20.649
-chop off
+最後の部分を
 
 0:13:20.649,0:13:22.149
-the end
+切り落とすことです。
 
 0:13:22.149,0:13:29.368
-Right. And so this is what happens in all kaggle competitions pretty much that involve time for instance is the thing that you have to
+これは全てのKaggleコンテストで起こることで、例えば、時間が関係していて、
 
 0:13:29.369,0:13:34.979
-Predict is the next like two weeks or so after the last data point that they give you
+予測しなければならないのは、最後に与えられたデータポイントの２週間後くらいのことで、
 
 0:13:35.889,0:13:38.459
-And this is what you should do also for your test set
+あなた達のテストセットでもこうすべきです。
 
 0:13:38.920,0:13:42.569
-So again, if you've got vendors that you're looking at you should say to them
+繰り返しになりますが、ベンダーを抱えていて、
 
 0:13:42.569,0:13:48.269
-Okay, after you're all done modeling, we're going to check your model against a data
+あなた方のモデリングが完了したら、私たちが提供したデータセットの1週間後の
 
 0:13:48.269,0:13:50.789
-that is one week later than you've ever seen before and
+データセットでモデルを評価します。
 
 0:13:51.339,0:13:55.018
-You won't be able to retrain or anything because that's what happens in practice, right?
+あなた達は再学習などはできません。なぜならこれが実世界で起きることだからです。
 
 0:13:56.619,0:14:00.119
-Oops, there's a question. I've heard people describe
+質問があります。過学習は訓練誤差が
 
 0:14:00.639,0:14:07.048
-Overfitting as training error being below validation error. Does this rule of thumb end up being roughly the same as yours?
+バリデーション誤差より小さくなることだと聞いたことがあります。この経験則はあなたの説明と同等ですか？
 
 0:14:07.569,0:14:09.420
-Okay, so that's a great question
+良い質問ですね。
 
 0:14:09.420,0:14:14.429
-So I think what they mean, there is training loss versus validation loss
+おそらく、質問は、訓練誤差と検証誤差の比較に関してですね。
 
 0:14:15.189,0:14:17.519
-Because we don't print training error
+fastaiでは訓練誤差をプリントせず、
 
 0:14:18.040,0:14:24.449
-so we do print at the end of each epoch the value of your loss function for the training set and the value of the
+エポックの終わりに、トレーニングセットとバリデーションセットに対する損失関数の値を
 
 0:14:24.449,0:14:26.789
-loss function for the validation set and
+プリントします。
 
 0:14:28.329,0:14:32.428
-If you train for long enough that's so so if it's training mostly
+十分長く訓練を続けた場合、
 
 0:14:33.160,0:14:36.449
-Your training loss will go down and your validation loss will go down
+訓練誤差も検証誤差も小さくなるでしょう。
 
 0:14:37.480,0:14:39.480
-because by definition
+なぜなら、定義上、
 
 0:14:40.989,0:14:45.449
-Loss function is to find such as a lower loss function is a better model
+損失関数は、損失関数が低いほど良いモデルであるように定義されているからです。
 
 0:14:46.329,0:14:48.329
-if you start overfitting
+過学習し始めたら
 
 0:14:48.369,0:14:55.949
-Your training loss will keep going down. Right because like why wouldn't it, you know, you're getting better and better parameters
+パラメータは改善されているので訓練誤差は減少し続けますが、
 
 0:14:57.790,0:15:00.360
-But your validation loss will start to go up
+検証誤差が増加し始めます。
 
 0:15:01.149,0:15:06.928
-Because actually you started fitting to the specific data points in the training set. And so it's not going to actually get better
+なぜなら、モデルがトレーニングセットの特定のデータに適合し始めているからです。そうすれば訓練誤差は小さくなりますから。
 
 0:15:06.929,0:15:10.319
-It's going to get it's not going to get better for the validation set. It'll start to get worse
+しかし検証誤差に関しては当てはまりません。ですので検証誤差は悪くなります。
 
 0:15:11.470,0:15:13.329
-however
+とはいえ、
 
 0:15:13.329,0:15:14.769
-That does not
+このことは必ずしも
 
 0:15:14.769,0:15:20.128
-Necessarily mean that you're overfitting or at least not overfitting in a bad way as we'll see
+過学習、もしくは悪い意味での過学習しているとは言い切れません。
 
 0:15:20.379,0:15:23.639
-It's actually possible to be at a point where the validation
+実際に、検証誤差は増え始めているが、
 
 0:15:24.279,0:15:30.118
-Loss is getting worse but the validation accuracy or error or metric is still improving
+検証正確度あるいは誤差率などのメトリクスは良くなっていることもありうるのですから。
 
 0:15:31.269,0:15:33.220
-So I'm not going to describe
+過学習を数式的に
 
 0:15:33.220,0:15:37.290
-How that would happen mathematically yet because we need to learn more about loss functions
+表せすには損失関数について学ぶ必要があるのでここでは行いません。
 
 0:15:37.290,0:15:43.379
-But we will but for now just realize that the important thing to look at is your metric
+検証誤差ではなく、メトリクスの値が悪化していないか見るのが
 
 0:15:44.110,0:15:48.389
-Getting worse not your loss function getting worse
+大事と認識しておいてください。
 
 0:15:49.749,0:15:51.749
-Thank you for that. Fantastic question
+大変素晴らしい質問でした。
 
 0:15:55.689,0:16:03.178
-The next important thing we need to learn about is called transfer learning. So the next line of code said learned fine tuned
+次に学ぶべき重要なことは、転移学習と呼ばれるものです。
 
 0:16:03.699,0:16:05.699
-Why does it say learn dot fine to?
+なぜlearn.fitなんでしょう？
 
 0:16:06.220,0:16:08.459
-Fine tune is what we do when we are
+fine tuningは転移学習で行うものです。
 
 0:16:08.980,0:16:16.559
-Transfer learning so transfer learning is using a pre trained model for a task that is different to what it was originally trained for
+転移学習では、異なるタスクで訓練された学習済みモデルを活用します。
 
 0:16:16.809,0:16:23.969
-So more. Jargon to understand our jargon, let's look at that. What's a pre trained model? So what happens is remember?
+専門用語の説明にさらに専門用語が必要ですね。学習済みモデルとは何でしょう？
 
 0:16:23.970,0:16:26.850
-I told you the architecture we're using is called resonate 34
+先ほど、今使っているアーキテクチャはresnet34とお伝えしました。
 
 0:16:27.819,0:16:32.279
-So when we take that resonate 34, that's just a just a mathematical function
+resnet34を持ってくる時、それはただの数式で、
 
 0:16:32.619,0:16:37.169
-Okay with lots of parameters that we're going to fit using machine learning
+大量のパラメータが使われていて、私たちが機械学習で調整しようとします。
 
 0:16:40.420,0:16:46.649
-There's a big data set called imagenet that contains 1.3 million pictures of a thousand different types of thing
+ImageNetという1000クラス合計130万枚の画像データセットがあります。
 
 0:16:47.949,0:16:52.618
-Mushrooms or animals or aeroplanes or hammers or whatever?
+キノコや動物、飛行機やハンマーなどが含まれます。
 
 0:16:54.730,0:16:59.189
-There's a competition or they used to be a competition that runs every year to see who could get the best
+かつて、ImageNetのコンペテイションが毎年開催されていて、研究者達はより
 
 0:16:59.529,0:17:03.448
-Accuracy on the imagenet competition and the models that did really well
+より良い分類器を作ろうと努力していました。
 
 0:17:04.240,0:17:05.889
-people would take
+そこで作られたモデル
 
 0:17:05.889,0:17:12.359
-Those specific values of those parameters and they would make them available on the internet for anybody to download
+のパラメータはインターネットで公開されていて、今では誰もが使えます。
 
 0:17:12.610,0:17:17.130
-So if you download that you don't just have an architecture now you have a trained model
+つまり、それらをダウンロードする時、アーキテクチャではなく学習済みモデルが手に入ります。
 
 0:17:17.230,0:17:20.730
-You have a model that can recognize a thousand
+そのモデルは写真に写っている1000種類の物体を
 
 0:17:21.880,0:17:24.510
-categories of thing in images
+識別できます。
 
 0:17:25.779,0:17:31.169
-Which probably isn't very useful unless you happen to want something that recognizes those exact thousand categories of thing
+これは、たまたまその1000クラスを正確に認識するものが必要な場合を除いては、あまり有用ではないでしょう。
 
 0:17:32.260,0:17:34.260
-But it turns out you can
+しかし、実際には、
 
 0:17:36.370,0:17:42.209
-Rather you can with those weights in your model and then train some more epochs
+その重みから始めて、新しいデータセットでさらに数エポック訓練すれば、
 
 0:17:43.000,0:17:46.949
-On your data and you'll end up with a far far more
+事前に訓練されたモデルから始めなかった場合よりも
 
 0:17:47.230,0:17:53.610
-Accurate model than you would if you didn't start with that pre train model and we'll see why in just a moment, right?
+はるかに正確なモデルができあがります。なぜかはすぐに確認します。
 
 0:17:54.610,0:17:58.829
-But this idea of transfer learning it's kind of it makes intuitive sense, right?
+この移動学習のアイデアは、直感的に理解できますよね？
 
 0:18:00.429,0:18:04.649
-Imagenet already has some cats and some dogs and it's you know
+ImageNetにはすでに猫と犬が登録されていて、
 
 0:18:04.650,0:18:06.779
-It can say this is a cat and this is a dog
+これは猫でこれは犬だと言うことができますが、
 
 0:18:06.779,0:18:10.889
-But you want to maybe do something that recognizes lots of breeds that aren't an image net
+ImageNetには登録されていない多くの犬種を認識するようなことをしたいと思います。
 
 0:18:11.529,0:18:18.719
-Well for it to be able to recognize cats versus dogs versus airplanes versus hammers. It has to understand things like
+猫と犬、飛行機とハンマーを認識するためには、
 
 0:18:19.720,0:18:26.339
-What does metal look like what is fur look like what it is look like you know so it can say like oh this breed
+金属はどんな形をしているのか、毛皮はどんな形をしているのか、などを理解する必要があります。ですから、
 
 0:18:26.340,0:18:31.770
-Of animal this breed of dog has pointy ears and oh this thing is metal. So it can't be a dog
+この犬種は耳が尖っている、これは金属だから犬のはずがないといったことがわかります。
 
 0:18:32.529,0:18:37.709
-So all these kinds of concepts get implicitly learned by a pre trained model
+これらの概念はすべて、事前に訓練されたモデルによって暗黙的に学習されます。
 
 0:18:38.470,0:18:42.839
-So if you start with a pre trained model, then you don't it. You don't have to learn all these features
+ですから、事前に訓練されたモデルから始めれば、これらすべての特徴をゼロから
 
 0:18:43.630,0:18:47.849
-from scratch and so transfer learning is the
+学習する必要はありません。
 
 0:18:48.370,0:18:55.679
-Single most important thing for being able to use less data and less compute and get better accuracy
+少ないデータと計算力でより良いモデルを獲得できるということは非常に重要ですから
 
 0:18:56.080,0:19:01.500
-So that's a key focus for the FASTA eye library and a key focus for this course
+FastAIライブラリとこのコースは転移学習にフォーカスしています。
 
 0:19:03.820,0:19:10.590
-There's a question and I am a bit confused on the differences between loss error and metric
+質問です。誤差率とメトリクスの違いを説明してください。
 
 0:19:14.559,0:19:16.559
-Sure, so
+わかりました。
 
 0:19:19.029,0:19:21.029
-Era is just one
+誤差率は
 
 0:19:21.460,0:19:27.840
-Kind of metric. So there's lots of different possible labels. You could have let's say you are trying to create a model
+メトリクスの1つです。ラベルの候補はたくさんあります。例えば、犬と猫の年齢などです。
 
 0:19:28.360,0:19:30.599
-which could predict how old a
+
 
 0:19:31.240,0:19:33.220
-cat or dog is
+
 
 0:19:33.220,0:19:34.510
-so
+この場合、
 
 0:19:34.510,0:19:39.569
-The metric you might use is on average how many years were you off by?
+メトリクスは、予測と実際の年齢のズレでしょう。
 
 0:19:41.590,0:19:48.209
-So that would be a metric on the other hand if you're trying to predict whether this is a cat or a dog
+これがメトリクスになるでしょうが、一方で犬と猫の識別を行う場合、
 
 0:19:48.700,0:19:50.669
-Your metric would be
+メトリクスは
 
 0:19:50.669,0:19:52.669
-What percentage of the time am I wrong?
+誤分類の割合になるでしょう。
 
 0:19:53.230,0:20:00.809
-So that latter metric is called the error rate. Okay, so error is one particular metric. It's a thing that measures
+今説明したものが誤差率です。誤りは1つのメトリクスです。それは、
 
 0:20:01.359,0:20:05.879
-How well you're doing and it's like it should be the thing that you most care about
+モデルがどの程度できるかを測り、私たちが一番気にするものです。
 
 0:20:06.039,0:20:09.959
-So you you write a function or use one of fast a i's predefined ones
+ですから、メトリクスとはfastaiが提供しているものを使うか自分で定義してください。
 
 0:20:11.019,0:20:13.019
-Which measures how well you're doing?
+
 
 0:20:15.820,0:20:17.769
-Loss
+損失は
 
 0:20:17.769,0:20:22.049
-Is the thing that we talked about in Lesson one, so I'll give a quick summary
+前回のレッスンで説明しましたが、簡単におさらいしましょう。
 
 0:20:22.059,0:20:24.059
-But go back to lesson one if you don't remember
+もし覚えてなかったら前回のレッスンを確認してください。
 
 0:20:24.970,0:20:29.939
-Arthur Samuel talked about how a machine learning model needs some measure of performance
+アーサー・サミュエルは、機械学習モデルにはパフォーマンスの指標が必要で、
 
 0:20:31.269,0:20:38.638
-Which we can look at when we adjust our parameters our pour down. Does that measure of performance get better or worse and
+それは私たちがパラメータを調整した時にパフォーマンスがどう変化したか確認できるものとしています。
 
 0:20:39.609,0:20:41.609
-as I mentioned earlier
+先ほど申し上げましたが、
 
 0:20:42.519,0:20:44.519
-Some metrics
+中には
 
 0:20:44.710,0:20:50.999
-Possibly won't change at all if you move the parameters up and down just a little bit so they can't be used
+パラメータが変わっても全く変わらないメトリクスもありますが、 それはメトリクスとしては不適切です。
 
 0:20:51.609,0:20:56.789
-For this purpose of adjusting the parameters to find a better measure of performance. So quite often
+なぜなら、パラメータを調整してより良いパフォーマンスのものを見つけるのが目的ですから。
 
 0:20:56.789,0:20:59.309
-We need to use a different function
+よく異なる関数を使います。
 
 0:20:59.309,0:21:01.309
-we call this the loss function and
+それは損失関数というもので、
 
 0:21:01.389,0:21:07.139
-the loss function is the measure of performance that the algorithm uses to try to make the parameters better and
+パフォーマンスの指標で、アルゴリズムがより良いパラメータを見つけるのに使う関数です。
 
 0:21:07.509,0:21:13.229
-It's something which should kind of track pretty closely to the the metric you care about
+損失関数はメトリクスに似たもので、
 
 0:21:13.869,0:21:20.159
-But it's something which as you change the parameters a bit the loss should always change a bit
+どんな微小なパラメータの変化をも検知する必要があります。
 
 0:21:20.159,0:21:21.159
-and so
+ですので、
 
 0:21:21.159,0:21:22.779
-There's a lot of hand waving there
+損失関数がどうなっているかを
 
 0:21:22.779,0:21:27.659
-Because we need to look at some of the math of how that works and we'll be doing that in the next couple of lessons
+知るためには数学を勉強しなければならないので、次回以降のレッスンで教えます。
 
 0:21:31.450,0:21:33.450
-Thanks to their great questions
+素晴らしい質問をありがとう。
 
 0:21:35.499,0:21:41.579
-Okay, so fine tuning is a particular transfer learning technique where the
+fine tuningは転移学習のテクニックで、
 
 0:21:42.519,0:21:45.508
-When you're still showing your picture and not the slides
+スライドじゃなく、写真を見せている時に、
 
 0:21:51.350,0:21:56.600
-So fine-tuning is a transfer learning technique where the weights this is not quite the right word
+fine tuningは転移学習のテクニックで、これは、重み、これは厳密には不正確で
 
 0:21:56.600,0:22:02.809
-We should say the parameters where the parameters of a pre-trained model are updated by training for additional epochs
+パラメータと言うべきですが、事前学習済みモデルのパラメータが追加の数エポックの学習で更新します。
 
 0:22:03.030,0:22:05.689
-Using a different task to that used for pre training
+この時は事前学習とは違うタスクのデータセットを使います。
 
 0:22:05.690,0:22:13.400
-So pre training the tasks that have been imaged met classification and then our different tasks might be recognizing cats versus dogs
+今回は事前学習はImageNetで私たちのタスクは犬か猫を認識するものです。
 
 0:22:15.990,0:22:17.990
-So the way
+
 
 0:22:18.690,0:22:24.650
-By default fast AI does fine tuning is that we use one epoch, which remember is one
+標準では、fastaiはこの微調整を1エポックのみ行います。
 
 0:22:25.799,0:22:32.779
-looking at every image in the data set once one epoch to fit just those parts of the model necessary to
+つまり、データセットの画像を全て見て、事前学習済みモデルを部分的に調整して
 
 0:22:33.390,0:22:36.349
-Get the particular part of the model. That's
+パフォーマンスを改善します。このモデルは
 
 0:22:36.870,0:22:39.409
-Especially for your data set working
+新たなデータセットで機能するものです。
 
 0:22:40.020,0:22:41.730
-And then we use
+その後、
 
 0:22:41.730,0:22:44.900
-as many epochs as you asked for to fit the whole model and
+好きなだけモデル全体を更新しますが、
 
 0:22:45.000,0:22:48.319
-So this is more if you for those people who might be a bit more advanced
+これは少し発展的なものです。
 
 0:22:48.320,0:22:52.460
-We'll see exactly how this works later on in the lessons
+これがどう機能するかは今後のレッスンで説明します。
 
 0:22:53.789,0:22:57.139
-So why does transfer learning work and why does it work? So well?
+さて、転移学習はなぜうまくいくのでしょうか？
 
 0:22:58.049,0:23:04.099
-the best way in my opinion to look at this is to see this paper by Zeiler and furgus who were actually
+2012年のImageNetコンペティションの優勝者であるZeilerとFurgusの論文を
 
 0:23:05.700,0:23:07.700
-2012 imagenet winners and
+チェックしましょう。
 
 0:23:08.340,0:23:09.809
-interestingly
+興味深いことに、
 
 0:23:09.809,0:23:16.309
-Their key insights came from their ability to visualize what's going on inside a model and so our visualization
+彼らの考えは、モデル内部の可視化に基づいています。可視化はしばしば
 
 0:23:16.470,0:23:19.459
-Very often turns out to be super important to getting great results
+素晴らしい結果を得る上で非常に重要です。
 
 0:23:20.520,0:23:25.489
-What they were able to do was they looked remember I told you like a resinate 34 has 34 layers
+彼らができたことは、resnet34は34層ありますが、
 
 0:23:26.400,0:23:28.320
-They looked at
+彼らは
 
 0:23:28.320,0:23:34.909
-Something called Alec's net which was the previous winner of the competition, which only had seven layers at the time that was considered huge
+7層からなり、当時はそれだけで巨大とされていましたが、ImageNetのチャンピオンモデルであるAlexNetを見ました。
 
 0:23:35.580,0:23:40.580
-And so they took the seven layer model and they said what is the first layer of?
+著者らは、最初の層のパラメータは
 
 0:23:40.950,0:23:46.340
-Parameters look like and they figured it out how to draw a picture of them, right?
+どのようなものかを疑問に思い、可視化する方法を編み出しました。
 
 0:23:46.340,0:23:49.340
-and so the first layer had
+最初の層に対応する図は
 
 0:23:50.970,0:23:56.900
-Lots and lots of features but here are nine of them. One, two, three, four, five six, seven eight nine and
+沢山あるのですが、ここには9つ載せてあり、
 
 0:23:57.960,0:24:00.620
-Here's what nine of those pictures look like
+それぞれどんな見た目かがわかります。
 
 0:24:00.620,0:24:04.219
-One of them was something that could recognize diagonal lines from top left to bottom
+1つは左上から右下にかけての斜め線を認識しています。
 
 0:24:04.470,0:24:04.960
-right
+
 
 0:24:04.960,0:24:08.039
-One of them could find diagonal lines from bottom left to top right?
+また別のものは左下から右上への線を見つけます。
 
 0:24:08.320,0:24:12.179
-one of them could find gradients that went from the top of orange to the bottom of
+また別のものは、上のオレンジから下の青に向かう勾配を見つけます。
 
 0:24:12.909,0:24:18.389
-Blue some of them were able, you know, one of them was specifically for finding things that were green
+そして、また別のものは緑色のものに反応します。
 
 0:24:19.030,0:24:22.530
-And so forth right so for each of these nine
+それぞれは、
 
 0:24:24.549,0:24:26.939
-They're called filters there are features
+フィルターと呼ばれますが、特徴を抽出します。
 
 0:24:28.659,0:24:32.009
-So then something really interesting they did was they looked at for each one of these
+彼らが行ったことでもっとも興味深いことは、彼らが9つそれぞれを良く見たことです。
 
 0:24:32.799,0:24:38.999
-Each one of these filters each one of these features and we'll learn kind of mathematically about what these actually mean
+私たちはこれらの実態を数学的に学ぶ予定です。
 
 0:24:39.730,0:24:41.650
-In the coming lessons, but for now
+ここでは、
 
 0:24:41.650,0:24:46.169
-Let's just recognize them and saying oh there's something that looks at diagonal lines and something that looks at gradients
+このことを認識して、これは斜め線が見ている、や、これは勾配を見ているということを確認し、
 
 0:24:46.690,0:24:50.280
-And they found in the actual images in imagenet
+ImageNetの画像でもこれらがあることを知っておいてください。
 
 0:24:52.390,0:24:59.339
-Specific examples of parts of photos that match that filter so for this top left filter here are nine
+左上のフィルターにはそのフィルターにマッチする実際の写真の９つのパッチがあります。
 
 0:25:00.130,0:25:04.559
-actual patches of real photos that match that filter and as you can see
+
 
 0:25:04.559,0:25:11.399
-They're all diagonal lines. And so here's the four the green one. Here's parts of actual photos that match the green one
+そして、ここには4つの緑のフィルターがあり、緑のフィルターにマッチした写真の一部があります。
 
 0:25:11.950,0:25:18.210
-So layer one is super super simple. And one of the interesting things to note here. Is that something that can recognize?
+第一層は単純です。ここで注目すべきは、
 
 0:25:18.730,0:25:24.030
-Gradients and patches of color and lines is likely to be useful for lots of other tasks as well
+グラデーションや色や線のパッチを認識できるものは、imagenetだけでなく
 
 0:25:24.030,0:25:28.169
-Not just imagenet so you can kind of see how something that can do this
+他の多くのタスクにも使える可能性があるということです。
 
 0:25:29.020,0:25:31.020
-might also be good at
+こういうことができると
 
 0:25:31.419,0:25:34.079
-Many many other computer vision tasks as well
+ImageNet以外のタスクもこなせる可能性があるのです。
 
 0:25:35.380,0:25:37.380
-This is layer 2 layer
+これが第二層で、
 
 0:25:37.390,0:25:41.579
-2 takes the features of layer 1 and combines them
+第一層で得た特徴を受け取り、組み合わせて
 
 0:25:42.429,0:25:48.029
-so it can not just find edges that can find corners or
+エッジだけでなく、角や
 
 0:25:49.299,0:25:57.089
-Repeating curving patterns or semi circles or full circles. And so you can see for example, here's a
+カーブの繰り返す、半円や円を見つけます。例えば、ここには
 
 0:25:58.990,0:26:02.760
-It's kind of hard to exactly visualize these
+第二層以降を正確に可視化するのは
 
 0:26:04.419,0:26:09.359
-Layers after layer 1 you kind of have to show examples of what the filters look like
+難しいと思います。
 
 0:26:10.150,0:26:17.009
-but here you can see examples of parts of photos that these this layer 2 circular filter has
+しかし、第二層のフィルターが写真のどんな部分に発火しているかの例があります。
 
 0:26:17.840,0:26:19.840
-activated on
+
 
 0:26:20.030,0:26:22.869
-And as you can see, it's found things with circles
+そして、ご覧の通り、円のようなものを見つけていて、
 
 0:26:23.390,0:26:30.490
-so interestingly this one which is this kind of blotchy gradient seems to be very good at finding sunsets and
+興味深いことにこのぼやけたようなグラデーションは夕日を見つけるのに非常に適しているようです。
 
 0:26:30.950,0:26:35.649
-this repeating vertical pattern is very good at finding like curtains and wheat
+そして、この繰り返しの縦のパターンは、カーテンや小麦畑などを見つけるのに非常に適しています。
 
 0:26:36.380,0:26:38.330
-fields and stuff
+
 
 0:26:38.330,0:26:44.139
-So the further we get layer three then gets to combine all the kinds of features in layer
+このようにして、レイヤー3をさらに進めると、レイヤー2にあるすべての種類の特徴を組み合わせることができるようになります。
 
 0:26:44.540,0:26:50.920
-Two and remember, we're only seeing Zoar anything here are twelve of the features, but actually there's probably hundreds of them
+ここでは12種類の特徴しか見ていませんが、実際には数百個の特徴があるでしょう。
 
 0:26:50.920,0:26:53.320
-I don't remember exactly an alux net, but there's lots
+AlexNetが実際にいくつの特徴があるか覚えていませんが、AlexNetにはたくさんの特徴があります。
 
 0:26:53.750,0:27:00.700
-But by the time we get to layer three by combining features from layer two, it already has something which is finding
+しかし、第二層の要素を組み合わせて第三層に到達することには、
 
 0:27:01.700,0:27:06.189
-Text so this is a feature which can find bits of image that contain text
+テキストを見つけることができて、この特徴は画像のテキストを見つけられます。
 
 0:27:07.130,0:27:09.130
-It's already got something which can find
+これはすでに
 
 0:27:10.130,0:27:13.780
-repeating geometric patterns and you see this is not just like a
+幾何学的な繰り返しを見つけることができます。お分かりのとおり、
 
 0:27:15.710,0:27:18.340
-Matching specific pixel patterns. This is like a
+特定のピクセルパターンとのマッチングではありません。
 
 0:27:19.190,0:27:24.249
-Semantic concept it can find repeating circles or repeating squares or repeating hexagons
+これは意味的な概念のようなもので，円、四角形、六角形の繰り返しを見つけられます。
 
 0:27:24.920,0:27:28.450
-Great, so it's it's really like computing. It's not just
+素晴らしいですね。これが計算で、ただのテンプレートマッチング
 
 0:27:29.240,0:27:36.700
-Matching a template and remember we know that neural networks can solve any possible computable function so it can certainly do that
+ではりません。ニューラルネットワークは計算可能な任意の関数を解けることを覚えておいてください。確かにこういった計算ができます。
 
 0:27:38.960,0:27:41.710
-So layer four gets to combine
+第4層は第3層のフィルタを
 
 0:27:42.290,0:27:48.489
-All the filters from layer three anyway at once and so by layer four, we have something that can find dog faces
+一度にすべて組み合わせることができます。そして第4層では、例えば犬の顔を見つけることができるものができます。
 
 0:27:49.220,0:27:51.220
-for instance
+
 
 0:27:51.470,0:27:53.470
-so you can kind of see how
+そして、このように、
 
 0:27:54.410,0:27:59.499
-Each layer, we get like more applicative lis more sophisticated features
+各レイヤーでは、より応用的に洗練された機能が得られるようになっています。
 
 0:27:59.630,0:28:04.360
-And so that's why these deep neural networks can be so incredibly powerful
+これがニューラルネットワークを強力たらしめている要因です。
 
 0:28:05.150,0:28:11.200
-It's also why transfer learning can work so well because like if we wanted something that can find
+それはまた、転移学習が非常にうまく機能する理由でもあります。なぜなら、
 
 0:28:11.990,0:28:15.550
-Books, and I don't think there's a book category in imagenet
+もし本を見つけたいとしても、本はImageNetにはないと思いますが、
 
 0:28:15.680,0:28:21.549
-Well, it's actually already got something that can find text as an earlier filter, which I guess it must be using to find
+学習済みモデルはすでに本を見つけるのに必要なフィルターを獲得しているからです。
 
 0:28:21.560,0:28:24.700
-Maybe there's a category for library or something or a bookshelf
+もしかしたら図書館や本棚のカテゴリーはあるかもしれません。
 
 0:28:26.390,0:28:32.660
-So when you use transfer learning you can take advantage of all of these pre I learnt
+ですから、転移学習では事前に学習した
 
 0:28:33.150,0:28:38.089
-Features to find things that are as combinations of these or existing features
+特徴や既存の特徴の組み合わせを使うことができるのです。
 
 0:28:38.310,0:28:45.440
-That's why transfer learning can be done so much more quickly and so much less data than traditional approaches
+これが、従来のアプローチに比べて、転移学習が高速かつ少データで機能する理由です。
 
 0:28:47.250,0:28:53.119
-One important thing to realize then is that these techniques for computer vision are not just good at
+ここで重要なことは、コンピュータビジョンのためのこれらの技術は写真を認識するのが得意なだけではないということです。
 
 0:28:53.700,0:28:55.170
-recognizing photos
+
 
 0:28:55.170,0:29:01.430
-There's all kinds of things you can turn into pictures. For example, these are example these are
+画像で表現できるものは多くあります。例えば、これらは
 
 0:29:01.980,0:29:08.329
-sounds that have been tuned into pictures by representing their frequencies over time and
+時間の経過とともに周波数を表現して画像化した音です。
 
 0:29:09.120,0:29:13.880
-It turns out that if you convert a sound into these kinds of pictures
+そして、音をこのような画像に変換すれば、
 
 0:29:14.580,0:29:18.380
-You can get basically state-of-the-art results at sound detection
+音検知の最高精度を達成できるのです。
 
 0:29:19.260,0:29:22.489
-Just by using the exact same resonate
+単に既に見てきたのと同様ResNetと
 
 0:29:23.160,0:29:25.160
-learner that we've already seen
+learnerを使うことでできるのです。
 
 0:29:25.860,0:29:29.449
-We need to highlight that it's 945. So if you want to take a break soon
+9:45ですが、休憩しますか？
 
 0:29:30.720,0:29:32.720
-a really cool example
+転移学習の非常に良い例は
 
 0:29:33.000,0:29:37.640
-From I think this is our very first year of running fast AI one of our students
+、これは1年目のFastAIの生徒がやったことだと思いますが、
 
 0:29:38.880,0:29:45.499
-Created pictures they worked at Splunk in anti-fraud and they created pictures of users moving their mouths
+Splunkでの仕事ですが、ユーザのマウスの動きを写真にして、詐欺対策を行いました。
 
 0:29:45.500,0:29:48.530
-And if I remember correctly as they moved their mouths
+私の記憶が正しければ、彼らはマウスの動くを画像にして、
 
 0:29:48.740,0:29:55.310
-He basically drew a picture of where the mouse moved and the color depended on how fast they moved and these
+その動きの速さに応じて色分けしました。
 
 0:29:55.830,0:29:59.630
-circular blobs is where they clicked the left or the right mouse button and
+丸は左もしくは右クリックを表します。
 
 0:30:00.570,0:30:05.389
-It's blank. They then well, he what he did actually for the through the course as a
+それから、彼が実際にコースのプロジェクトとして行ったことは、
 
 0:30:06.210,0:30:12.560
-Project for the course is he tried to see whether he could use this these pictures with exactly the same approach?
+作成した画像に対して転移学習が使えるかどうかを確認しました。
 
 0:30:12.560,0:30:17.839
-We saw in lesson 1 to create an anti fraud model and it worked
+レッスン1で詐欺行為防止モデルを作り、それが動くことを見ましたが、
 
 0:30:17.840,0:30:24.620
-So well that Splunk ended up patenting a new product based on this technique and you can actually check it out
+Splunkは転移学習を活用したプロダクトで特許を取得しています。
 
 0:30:24.620,0:30:30.859
-there's a blog post about it on the internet where they describe this breakthrough anti-fraud approach which literally came from
+そして、このことについてのブログが公開されており、このアプローチが
 
 0:30:32.190,0:30:37.219
-One of our really amazing and brilliant and creative students after lesson one of the course
+私たちの優秀で創造的な受講生がレッスン1の後に思いついたものに基づいていることも書いてあります。
 
 0:30:39.180,0:30:43.580
-Another cool example of this is looking at different
+もう一つの素晴らしい例は、様々な
 
 0:30:44.880,0:30:46.380
-viruses and
+ウイルスを調べて、
 
 0:30:46.380,0:30:51.109
-Again, turning them into pictures and you can kind of see how they've got here. This is from a paper
+同様に画像に変換したものです。これは論文からの引用ですが、
 
 0:30:51.630,0:30:53.630
-Check out the book for the citation
+本を参照してください。
 
 0:30:54.240,0:30:58.729
-they've got three examples of a particular virus called VB 80 and another
+彼らは、VB80と呼ばれるウイルスのサンプルを3つと、
 
 0:30:59.070,0:31:05.179
-example of a particular virus called fake rien and you can see each case the pictures all look kind of similar and
+fake rienと呼ばれるウイルスの例をもってきて、画像に変換しました。
 
 0:31:05.850,0:31:06.800
-That's why again
+これによって
 
 0:31:06.800,0:31:11.900
-they can get state-of-the-art results in in virus detection by turning the
+彼らは、プログラムシグナルのようなものを画像に変換し、画像認識を行うことで、
 
 0:31:12.300,0:31:16.610
-Kind of program signatures into pictures and putting it through image recognition
+ウイルス検知の最高精度を達成しました。
 
 0:31:20.040,0:31:25.820
-So in the book you'll find a list of all of the terms all of the most important terms
+本には、これまでに紹介してきた最も重要な単語のリスト
 
 0:31:25.820,0:31:29.270
-We've seen both so far and what they mean. I'm not going to read through them
+がその意味と一緒に掲載されています。ここでは読み上げませんが、
 
 0:31:29.270,0:31:35.270
-but I want you to please because these are the these are the terms that we're going to be using from now on and
+みなさんはチェックしてください、というのもここに載っている単語は今後使いますし、
 
 0:31:35.520,0:31:37.520
-You've got to know what they mean
+意味も含めて把握してください。
 
 0:31:37.710,0:31:43.789
-because if you don't you're going to be really confused because I'll be talking about labels and architectures and models and parameters and
+というのも、これから説明するラベル、アーキテクチャ、モデル、パラメータ
 
 0:31:44.130,0:31:50.359
-They have very specific exact meanings and they'll be using those exact meanings. So please review this
+には特定の意味があり、その意味で使われるからです。
 
 0:31:51.990,0:31:58.909
-So to remind you this is where we got to we we ended up with Arthur Samuels overall
+確認ですが、ここまでがアーサー・サミュエルのアプローチに関して、学んだことで、
 
 0:31:59.970,0:32:05.299
-Approach and we replaced his terms with our terms. So we have an architecture
+彼の用語を私たちの用語に置き換えると、アーキテクチャというものがあり、
 
 0:32:05.970,0:32:12.380
-Which contains parameters as inputs and we more parameters and the data as inputs?
+それは、パラメータとデータを入力として受け取ります。
 
 0:32:13.200,0:32:16.669
-So that the architecture press the parameters of the model
+つまり、アーキテクチャはモデルのパラメータと、
 
 0:32:17.850,0:32:20.480
-With the inputs they used to calculate predictions
+データを受け取って予測を計算します。
 
 0:32:20.820,0:32:26.990
-They are compared to the labels with a loss function and that loss function is used to update the parameters
+予測は損失関数によってラベルと比較され、損失関数はパラメータの更新に使われます。
 
 0:32:27.600,0:32:32.449
-Many many times to make them better and better until the loss gets nice and super low
+この処理は損失が小さくなまで何回も繰り返されます。
 
 0:32:34.890,0:32:37.279
-So this is the end of chapter 1 of the book
+ここまでがfast bookの第一章です。
 
 0:32:38.010,0:32:44.059
-it's really important to look at the questionnaire because the questionnaire is the thing where you can check whether you
+そして、クイズに答えてみることを強くお勧めします。なぜなら、クイズは、みなさんが
 
 0:32:45.640,0:32:52.020
-Have taken away from this book of this chapter the stuff that we hope you have so go through it and
+その章から私たちが理解してほしいことをちゃんと学んだかを確認するためにあり、
 
 0:32:53.380,0:32:57.599
-Anything that you're not sure about the tech that the answer is in the text
+不確かなものについてはその章に説明があるので、
 
 0:32:57.640,0:33:02.640
-So just go back to earlier in the book and you will in the chapter and you will find the answers
+少し戻って、答えを見つけてください。
 
 0:33:04.390,0:33:10.950
-There's also a further research section after each questionnaire for the first couple of chapters, they're actually pretty simple
+そして、はじめのいくつかの章に関しては発展的なリサーチの節もありますが、非常に単純です。
 
 0:33:11.050,0:33:16.380
-Hopefully they're pretty fun and interesting. They're things were to answer the question. It's not enough to just look in the chapter
+それらは、興味深く楽しめるものと思って書きました。ただ本を読むだけでは答えがわからず、
 
 0:33:16.900,0:33:22.410
-You actually have to go and do your own thinking and experimenting and googling and so forth
+自分で検索したり、実験しないと答えはでないと思います。
 
 0:33:23.260,0:33:30.600
-In later chapters, some of these further research things are pretty significant projects that might take a few days or even weeks
+さらに後の方の章ではこういったリサーチは重たくなってくるので、数日、場合によっては数週間かかるかもしれません。
 
 0:33:31.210,0:33:32.980
-and so
+
 
 0:33:32.980,0:33:35.939
-yeah, you know check them out because hopefully they'll be a great way to
+はい、それらは、きっと理解の助けになるので必ずトライしてみてください。
 
 0:33:36.820,0:33:38.820
-Expand your understanding of the material
+
 
 0:33:41.200,0:33:45.990
-So something that still found points out in the book is that if you really want to make the most of this
+もう一つ、この本を最大限活用する上でのポイントは章を読み終えるごとに、
 
 0:33:46.150,0:33:47.550
-then after each chapter
+
 
 0:33:47.550,0:33:54.419
-Please take the time to experiment with your own project and within the books you provide we provide and then see if you can
+少し時間をとって、その章の知識で自分のプロジェクトに取り組むことです。
 
 0:33:55.090,0:33:59.699
-Redo the the notebooks on a new data set and perhaps for chapter one
+つまり、ノートブックの内容を新しいデータで再実行するのです。
 
 0:33:59.700,0:34:04.169
-That might be a bit hard because we haven't really shown how to change things but for chapter four chapter two
+第一章でこれをするのは少々難しいかもしれませんが、
 
 0:34:04.540,0:34:07.440
-Which we're going to start next you'll absolutely be able to do that
+第二章以降ではできるようになると思います。
 
 0:34:08.920,0:34:15.089
-Okay, so let's take a break and we'll come back at 9:55
+それでは、9:55まで休憩をとりましょう。
 
 0:34:16.390,0:34:18.390
-San Francisco time
+
 
 0:34:18.970,0:34:25.770
-Okay, so welcome back everybody and I think we've got a couple of questions to start with. So Rachel, please take it away. Sure
+さて、再開しましょう。次に進む前に質問に答えましょう。Rachel、お願いします。
 
 0:34:26.530,0:34:29.130
-Our filters independent by that
+モデルは再学習した場合、
 
 0:34:29.130,0:34:35.430
-I mean if filters are pre-trained might they become less good and detecting features of previous images when fine-tuned. Oh
+事前学習でのデータセットに対するパフォーマンスが悪化するのでしょうか？
 
 0:34:36.340,0:34:38.340
-That is a great question
+素晴らしい質問ですね。
 
 0:34:39.460,0:34:47.310
-So assuming I understand the question correctly if if you start with say an image NIT model and then you you fine-tune it on
+質問の内容は、ImageNetで訓練したモデルを犬と猫のデータセットで
 
 0:34:47.890,0:34:54.299
-Dogs versus cats for a few epochs and you get something that's very good at recognizing dogs versus cats
+fine tuningすると、犬と猫を認識するのには優れているが、
 
 0:34:56.380,0:34:58.900
-It's got to be much less good as an image net model after that
+ImageNetのデータセットに対してはそれほど優れていないのではないか？ということです。
 
 0:34:58.910,0:35:03.879
-So it's not going to be very good at recognizing aeroplanes or or hammers or whatever
+確かに、飛行機やハンマーを認識するのはそれほど上手ではないでしょうし、これは
 
 0:35:05.810,0:35:07.810
-This is called catastrophic
+破滅的忘却と呼ばれるものです。
 
 0:35:07.850,0:35:12.190
-Forgetting in the literature the idea that as you like see more images
+考えは、事前に見たデータセットと異なるものを見れば見るほど
 
 0:35:12.260,0:35:16.960
-About different things to what you saw earlier that you start to forget what the things you saw earlier?
+事前に見たものを忘れていくというものです。
 
 0:35:18.860,0:35:22.150
-So if you want to fine-tune something which is
+もしこの破滅的忘却を防ぎたければ、つまり、
 
 0:35:22.850,0:35:27.009
-Good at a new task but also continues to be good at the previous task
+新たなタスクと以前のタスクの両方で優れているモデルを作りたければ、
 
 0:35:27.010,0:35:30.700
-You need to keep putting in examples of the previous task as well
+fine tuningを行う際に、事前のタスクで使ったサンプルも与える必要があります。
 
 0:35:33.800,0:35:38.890
-And what are the example what are the differences between parameters and hyper parameters
+パラメータとハイパーパラメータの違いはなんですか？
 
 0:35:40.070,0:35:46.150
-If I am feeding an image of a dog as an input and then changing the hyper parameters of batch size and the model
+入力として犬の画像を与え、ハイパーパラメータであるバッチサイズやモデルを変えた場合、
 
 0:35:46.280,0:35:48.370
-What would be an example of a parameter?
+何がパラメータですか？
 
 0:35:49.880,0:35:52.150
-So the parameters are the things that
+パラメータは、
 
 0:35:53.540,0:35:58.240
-are described in lesson one that Arthur Samuel described as being
+レッスン1で伝えたように、アーサー・サミュエルによれば、
 
 0:35:59.870,0:36:01.870
-The things which change
+それは、
 
 0:36:02.060,0:36:08.769
-What the model does what the architecture does so we start with this infinitely flexible function
+モデルがすることやアーキテクチャがすることを変えるものです。私たちは、無限に柔軟な関数から始め、
 
 0:36:08.770,0:36:11.860
-The thing called a neural network that can do anything at all
+それこそがニューラルネットワークですが、それはなんでもできるものですが、
 
 0:36:12.860,0:36:14.600
-and
+
 
 0:36:14.600,0:36:15.740
-the
+
 
 0:36:15.740,0:36:21.009
-The way you get it to do one thing versus another thing is by changing its parameters. They're there
+実際にニューラルネットワークができることを調整するのがパラメータです。
 
 0:36:21.010,0:36:27.070
-They are the numbers that you pass into that function. So there's two types of numbers you pass into the function
+パラメータは関数に渡す数値です。関数に渡す数字は2種類あります。
 
 0:36:27.070,0:36:34.059
-There's the numbers that represent your input like the pixels of your dog. And there's the numbers that represent
+1つは入力データ、例えば犬の写真のピクセルを表す数字でもう1つは学習で得られた
 
 0:36:35.720,0:36:37.720
-Their learnt parameters
+パラメータです。
 
 0:36:38.150,0:36:42.430
-So in the example of something that's not a neural net but like a checkers playing program
+ニューラルネットワーク以外の例としては、アーサー・サミュエルが60年代に
 
 0:36:43.070,0:36:49.330
-Like Arthur Samuel might have used back in the early 60s and late 50s. Those parameters may have been things like
+使ったかもしれないチェッカープログラムがあるでしょう。そのパラメータは
 
 0:36:50.600,0:36:52.600
-if there is a
+もしあれば、
 
 0:36:53.240,0:36:57.099
-Opportunity to take a piece versus an opportunity to get to the end of a board
+ピースをとるか、ボードの端まで進むかの確率を表していたでしょう。
 
 0:36:57.950,0:37:01.599
-How much more value should I consider one versus the other?
+どちらの選択肢をより多くとるようにするかというものです。
 
 0:37:01.870,0:37:07.120
-You know, it's twice as important or it's three times as important that two versus three, that would be an example of a parameter
+例えば、一方より他方が2倍、3倍重要であるというものです。
 
 0:37:09.060,0:37:10.410
-In a
+
 
 0:37:10.410,0:37:12.000
-neural network
+ニューラルネットワークにおいては
 
 0:37:12.000,0:37:19.069
-Parameters are a much more abstract concept and so a detailed understanding of what they are will come in the next lesson or two
+パラメータはより抽象的なもので、詳しく理解するのは次回か次次回のレッスンになるでしょう。
 
 0:37:19.590,0:37:23.990
-But it's the same basic idea there the numbers which change
+ですが、基本的なアイディアは同じで、それは、
 
 0:37:25.020,0:37:28.640
-What the model does to be something that recognizes?
+モデルが何か認識する動作を変更する数字であるということです。
 
 0:37:29.550,0:37:35.060
-malignant tumors versus cats versus dogs versus colorizer splack and white pictures
+悪性腫瘍であったり、犬か猫、カラー写真か白黒写真を認識するというようなものです。
 
 0:37:36.810,0:37:38.810
-Whereas the hyper parameter is
+一方で、ハイパーパラメータは
 
 0:37:39.420,0:37:41.420
-the choices about
+次のようなものに関する選択です。
 
 0:37:41.940,0:37:43.110
-What?
+
 
 0:37:43.110,0:37:49.670
-What numbers do you pass to the function when you act the actual fitting function to decide how that fitting process happens?
+例えば、関数を調整する際、どのようなプロセスを経るかといったものです。
 
 0:37:50.580,0:37:52.020
-it
+
 
 0:37:52.020,0:37:57.140
-There's a question. I'm curious about the pacing of this course. I'm concerned that all the material may not be covered
+このコースの進度が気になります。本の内容は全てカバーするのでしょうか？
 
 0:37:58.350,0:38:02.420
-It depends what you mean by all the material we certainly won't cover everything in the world
+答えは全ての内容として、何を意味するかに依りますが、本当に全てをカバーするのは無理でしょう。
 
 0:38:03.720,0:38:05.720
-So yeah
 
 0:38:07.110,0:38:10.370
-We'll cover what we can well cover what we can in seven lessons
+実際には7回のレッスンでカバーできるものをカバーします。
 
 0:38:11.790,0:38:18.440
-We're certainly not covering the whole book if that's what you're wondering. The whole book will be covered in either two or three courses
+つまり、本全体をカバーすることはできないでしょう。本全体をカバーするには、例年だと、
 
 0:38:19.320,0:38:23.600
-In the past. It's generally been two courses to cover about the amount of stuff in the book
+追加で2もしくは3つのコースが必要でした。通常はコース2つで本全体ですね。
 
 0:38:24.750,0:38:28.909
-But we'll see how it goes because the books pretty big 500 pages
+ですが、どうなるかはわかりません。というのもこの本は500ページもありますから。
 
 0:38:29.190,0:38:32.569
-So when you say two courses you mean fourteen lesson 14
+コース2つというのは、レッスン14回ということですか？
 
 0:38:32.570,0:38:35.870
-Yes, it would be like 14 or 21 lessons to get through the whole book
+はい、14か21回で本が終わると思います。
 
 0:38:37.530,0:38:39.740
-Well, though having said that by the end of the first lesson
+先週の授業でお伝えした通り、
 
 0:38:39.840,0:38:45.350
-Hopefully there'll be kind of like enough momentum and understanding that the reading the book independently will be more
+授業と独立して読み進めるのも理解の助けにはなると思います。
 
 0:38:45.780,0:38:47.930
-useful and you'll have also kind of
+そして、コミュニティ、
 
 0:38:49.200,0:38:54.049
-Gained a community of folks on the forums that you can hang out with and ask questions of and so forth
+つまり、フォーラムに参加して、質問を投稿したり回答することも有用です。
 
 0:38:56.580,0:39:03.620
-So in in the second part of the course, we're going to be talking about putting stuff in production and
+このコースの第二部では、作成したモデルをどうプロダクションに載せるかについても話します。
 
 0:39:05.280,0:39:09.830
-We're so to do that we need to understand like what are the capabilities and limitations of
+ですので、深層学習の限界や能力について理解することも
 
 0:39:11.100,0:39:13.100
-Deep learning what are the kinds of?
+必要になってきます。
 
 0:39:13.290,0:39:16.250
-projects that even makes sense to try to put in production
+例えば、どんなプロジェクトが本番環境に載せるのに適しているかといったことですね。
 
 0:39:17.100,0:39:20.809
-And you know one of the key things I should mention in the book and in this core
+そして、このコースと本の中で言及すべき大事なことは、
 
 0:39:20.940,0:39:23.669
-Is that the first two or three lessons and chapters?
+最初の2〜3回もしくは章では、
 
 0:39:24.310,0:39:27.600
-there's a lot of stuff which is designed not just for
+コーダだけでなく、全ての人が対象の
 
 0:39:28.150,0:39:33.359
-the coders but for for everybody there's lots of information about like
+内容、例えば深層学習を動かすのに必要なものも含まれています。
 
 0:39:34.270,0:39:37.409
-What are the practical things you need to know to make deep learning work?
+
 
 0:39:37.450,0:39:42.329
-And so one of them things you need to know is like well what's deep learning actually good at at the moment
+例えば、それらは、深層学習が現時点で得意とするものです。
 
 0:39:43.870,0:39:46.740
-So I'll summarize what the book says about this but
+ですから、本に書いてあることをまとめました。
 
 0:39:47.560,0:39:50.250
-there are the kind of four key areas that we
+4つの分野があります。
 
 0:39:51.100,0:39:54.539
-Have as applications in faster a computer vision text
+この分野はfastaiのapplicationモジュールにあるもので、
 
 0:39:54.850,0:40:02.309
-Tabular and what I've called here XE assistance for recommendation systems and specifically a technique called collaborative filtering which we briefly saw
+コンピュータビジョン、テキスト，テーブル、そして推薦システムのための協調フィルタリングです。
 
 0:40:02.890,0:40:10.589
-Sorry, another question and is are there any pre trained weights available other than the ones from imagenet that we can use if?
+質問です。ImageNet以外の事前学習済みモデルで利用可能なものはありますか？
 
 0:40:10.750,0:40:14.520
-Yes, when should we use others in one imagenet? Oh, that's a really great question
+いつImageNet以外のものを使うべきかというのは良い質問です。
 
 0:40:15.370,0:40:16.810
-so
+
 
 0:40:16.810,0:40:20.730
-yes, there are a lot of pre trained models and
+たくさんの事前学習済みモデルがあります。
 
 0:40:21.370,0:40:26.280
-One way to find them. But also you're currently just showing us what you can great
+いくつか探し方がありますが、良い探し方は、
 
 0:40:27.370,0:40:29.819
-Now one great way to find them is you can look up
+つまり、最初に見るべきは、
 
 0:40:31.540,0:40:33.540
-Models ooh
+model zooです。
 
 0:40:33.580,0:40:38.430
-Which is a common name for like places that have lots of different models
+これは多種多様なモデルがある場所で，
 
 0:40:39.760,0:40:43.289
-And so here's lots of models is or you can look for
+あなたが探しているもの、特に事前学習済みモデルなら
 
 0:40:44.920,0:40:46.920
-Pre-trained models
+見つけられます。
 
 0:40:49.030,0:40:53.609
-And so yeah, there's quite a few um, unfortunately
+たくさんありますが、ここには残念なことに、
 
 0:40:55.750,0:41:03.599
-Not as wide a variety as I would like that most is still on image net or similar kinds of general photos
+それほど多様ではなく、多くはImageNetやそれに類似したもので
 
 0:41:04.240,0:41:06.689
-for example medical imaging there's hardly any
+医用画像のものはほとんどありませんね。
 
 0:41:08.980,0:41:14.010
-There's a lot of opportunities for people to create domain-specific pre-trained models, it's it's still an area
+ドメイン固有の事前学習済みモデルを作る機会は多くあると思いますが、
 
 0:41:14.010,0:41:17.549
-That's really underdone because not enough people are working on transfer learning
+十分多くの人が転移学習に取り組んでいるようではないのですね。
 
 0:41:20.569,0:41:27.489
-Okay, so as I was mentioning we've kind of got these four applications that we've talked about a bit
+さて，4つのアプリケーションがあると話しました、そして、
 
 0:41:28.880,0:41:34.569
-And deep learning is pretty, you know, pretty good at all of those
+深層学習はこれら全てにおいて非常に優れていますが、
 
 0:41:36.529,0:41:43.268
-Tabular data like spreadsheets and database tables is an area where dick learning is not always the best choice
+スプレッドシートやデータベースのテーブルにおいては深層学習が最善とは限りません。
 
 0:41:43.549,0:41:47.528
-But it's particularly good for things involving high cardinality variables
+しかし、深層学習は高濃度変数が含まれる場合に有効です。
 
 0:41:47.599,0:41:52.509
-that means variables that have like lots and lots of discrete levels like zip code or
+高濃度とは、郵便番号やプロダクトIDのように非常に多くのカテゴリ
 
 0:41:53.059,0:41:55.239
-Product ID or something like that
+をもつ変数のことです。
 
 0:41:56.079,0:41:59.349
-deep loadings really pretty great for those in particular
+深層学習はそれを除けば大変素晴らしく、例えば
 
 0:42:02.779,0:42:07.599
-For text it's pretty great at things like classification and translation
+自然言語処理においては、分類や翻訳で良いパフォーマンスを発揮しています。
 
 0:42:08.059,0:42:14.169
-It's actually terrible for conversation. And so that's that's been something that's been a huge disappointment for a lot of companies
+しかし、会話は苦手ですし、このことは多くの企業をがっかりさせてきました。
 
 0:42:14.170,0:42:16.359
-I tried to create these like conversation BOTS
+以前、作ろうとしたこともありますが、
 
 0:42:17.299,0:42:19.509
-but actually deep learning isn't good at
+深層学習は会話において、
 
 0:42:20.329,0:42:22.309
-providing accurate information
+正確な情報を提供するのが苦手なのです。
 
 0:42:22.309,0:42:26.319
-it's good at providing things that sound accurate and sound compelling but
+でもそれっぽく聞こえるものを返すのは得意です。
 
 0:42:26.390,0:42:29.680
-That we don't really have great ways yet of actually making sure it's correct
+しかし、返答の正確性を正しいことを確認する方法がありません。
 
 0:42:33.559,0:42:37.959
-One big issue for recommendation systems collaborative filtering is that
+また、推薦システムにおける問題点の一つは
 
 0:42:38.960,0:42:41.019
-Deep learning is focused on making predictions
+真相学習は予測に注力していることで、
 
 0:42:42.259,0:42:48.459
-Which don't necessarily actually mean creating useful recommendations. We'll see what that means in a moment
+予測というのは必ずしも良い推薦をすることを意味しません。すぐにどういうことか確認します。
 
 0:42:49.789,0:42:52.569
-Deep learning is also good at multimodal
+深層学習はまた、マルチモーダルも得意です。
 
 0:42:53.269,0:42:55.269
-That means things where you've got
+マルチモーダルとは、
 
 0:42:55.970,0:43:02.139
-Multiple different types of data so you might have some tabular data including a text column and an image
+数種類のデータを入力とするものです。例えば、テキストとの列を含むテーブルデータと画像、
 
 0:43:03.650,0:43:05.710
-Then some collaborative filtering data
+そして、協調フィルタリングのデータ、
 
 0:43:06.349,0:43:09.699
-And combining that all together is something that deep learning is really good at
+の組み合わせからなるデータなどが深層学習が得意とするものです。
 
 0:43:10.519,0:43:12.519
-so for example
+例えば、
 
 0:43:13.309,0:43:19.569
-Putting captions on photos is something which deep learning is pretty good at although again
+写真のキャプション生成は深層学習が大変得意としているものですが、
 
 0:43:19.569,0:43:21.289
-It's not very good at being accurate
+正確であるというのは不得意です。
 
 0:43:21.289,0:43:26.289
-So what you know might say this is a picture of two birds when it's actually a picture of three birds
+ですから、実際には3羽の鳥が映っている写真に対して2羽の鳥であると言うといったものです。
 
 0:43:27.829,0:43:29.829
-And then this other category
+そして、
 
 0:43:30.880,0:43:31.930
-there's
+他にも、
 
 0:43:31.930,0:43:38.550
-Lots and lots of things that you can do with deep learning by being creative about the use of these kinds of other
+深層学習でできる想像的なことは沢山ありますし
 
 0:43:39.160,0:43:46.080
 Application based approaches for example an approach that we developed for natural language processing called you LM fit
 
 0:43:46.080,0:43:48.080
-They're all you're learning in the course
+これらはどれもコースで説明します。
 
 0:43:48.670,0:43:55.200
-It turns out that it's also fantastic you're doing protein analysis. If you think of the different proteins as being different words
+例えば、タンパク質分析も素晴らしいです。もし、様々なタンパク質を異なる単語ととらえれば、
 
 0:43:56.200,0:44:00.030
-And they're in a sequence which has some kind of state and meaning
+それらは列の中である種の状態や意味をもち、
 
 0:44:00.490,0:44:07.409
-It turns out that you will M fit works really well for protein analysis so often it's about kind of being being creative
+ULMFitがタンパク質分析に使えることが分かったのです。
 
 0:44:08.350,0:44:13.649
-So to decide like for the product that you're trying to build is deep learning gonna work
+ですので、あなたが作ろうと思ったものに深層学習が使えるかもしれませんし、
 
 0:44:14.290,0:44:17.969
-Well for it in the end you kind of just have to try it and see
+実際に試してみるのも良いでしょう。
 
 0:44:20.800,0:44:26.370
-But if you if you do a search, you know, hopefully you can find examples about the people that have tried something similar
+そして、検索してみれば、似たようなことに挑戦した人々を見つけられるかもしれません。
 
 0:44:27.040,0:44:30.060
-Even if you can't that doesn't mean it's not going to work
+また、見つからないからうまく行かないと言うことではありません。
 
 0:44:31.780,0:44:38.790
-So, for example, I mentioned the collaborative filtering issue where a recommendation and a prediction are not necessarily the same thing
+協調フィルタリングの弱点に言及しましたが、それは、推薦と予測は同じではないと言うことです。
 
 0:44:39.310,0:44:41.310
-You can see this on
+この例はアマゾンで
 
 0:44:41.440,0:44:45.870
-Amazon for example quite often so I bought a terry pratchet book and
+よく起きています。私がTerry Pratchettの本を買った後、
 
 0:44:46.210,0:44:50.610
-Then Amazon tried for months to get me to buy more terry pratchet books
+アマゾンは数ヶ月に渡ってTerry Pratchettの本を推薦していましたが、
 
 0:44:50.830,0:44:58.620
-now that must be because their predictive model said that people who bought one particular terry patcher book are likely to also by
+それはアマゾンの予測モデルがTerry Patcherの本を買った人はまた買うと言っているからでしょう。
 
 0:44:58.620,0:45:00.520
-other terry pratchet books
+
 
 0:45:00.520,0:45:04.530
-But from the point of view of like well is this going to change my buying behavior?
+しかし，推薦というのは購買行動を多少左右するべきでしょう？
 
 0:45:05.200,0:45:07.800
-Probably not right like if I liked that book
+おそらく、ある本が好きだったら、
 
 0:45:07.800,0:45:11.999
-I already know I like that author and I already know that like they probably wrote other things
+私がその著者が好きで、その著者の別の本が好きであることも分かっているでしょう。
 
 0:45:12.000,0:45:15.510
-So I'll go and buy it anyway, so this would be an example of like Amazon
+ですから、そういった本は買うでしょう。
 
 0:45:16.450,0:45:19.980
-Probably not being very smart up here. They're actually showing me
+これはアマゾンの例ですがあまり賢くないですね。単に私に
 
 0:45:20.680,0:45:25.919
-Collaborative filtering predictions rather than actually figuring out how to optimize a recommendation
+推薦システムの最適化を行うのではなく協調フィルタリングの予測結果をただ見せているだけなのです。
 
 0:45:26.500,0:45:30.510
-So an optimized recommendation would be something more like your local
+最適化された推薦システムというのは、どちらかというと最寄りの書店の
 
 0:45:31.120,0:45:35.399
-Human bookseller might do where they might say. Oh you like Terry Pratchett
+店員のように振舞うものでしょう。あなたはTerry Pratchettが好きなんですね、
 
 0:45:35.770,0:45:42.840
-Well, let me tell you about other kind of comedy fantasy sci-fi writers on the similar vein who you might not have heard about before
+なら、コメディ、ファンタジー、SFなどから同じようなテイストで聞いたことがないかもしれない本を教えましょう。
 
 0:45:44.200,0:45:49.139
-So the difference between recommendations and predictions is super important
+この推薦と予測の違いは大変重要です。
 
 0:45:50.619,0:45:55.079
-so I wanted to talk about a really important issue around interpreting models and
+ですので、モデル解釈とこのような重要な問題について話したいのです。
 
 0:45:56.170,0:46:01.200
-For a case study for this I thought we let's pick something that's actually super important right now
+ケーススタディとして、今非常に重要なことを取りあげましょう。
 
 0:46:01.530,0:46:03.689
-Which is a model in this paper?
+この論文におけるモデルはどちらでしょう？
 
 0:46:03.690,0:46:06.960
-One of the things we're going to try and do in this course is learn how to read papers
+このコースで挑戦することの1つは論文の読み方を学ぶことです。
 
 0:46:07.720,0:46:11.730
 裕美　ー　ここから
