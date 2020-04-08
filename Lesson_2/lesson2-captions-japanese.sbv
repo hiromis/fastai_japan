@@ -34,9 +34,7 @@
 0:00:34.180,0:00:35.860
 私たちは
 
-0:00:35.860,0:00:37.420
-
-0:00:37.420,0:00:43.260
+0:00:35.860,0:00:43.260
 機械学習がどう動くかに基づいて考えると、そもそも機械学習にはできることの制限があることを認識しました。
 
 0:00:43.719,0:00:46.259
@@ -378,11 +376,8 @@ FastAIは常に検証セットを使用してメトリクスを出力します�
 0:09:45.520,0:09:47.520
 不正行為が
 
-0:09:47.890,0:09:51.059
+0:09:47.890,0:09:51.670
 している結果とも言えます。
-
-0:09:51.060,0:09:51.670
-
 
 0:09:51.670,0:09:56.969
 モデルは、「これと同じ写真を見たことがある、それは猫の写真だ」と言うことでごまかすことができます。
@@ -453,21 +448,15 @@ Kaggleでは、コンペテイション後、
 0:11:24.200,0:11:26.560
 見たことのないデータセットに対して
 
-0:11:27.260,0:11:29.500
+0:11:27.260,0:11:32.410
 パフォーマンスが測定されます。
-
-0:11:30.410,0:11:32.410
-
-
+　
 0:11:32.990,0:11:34.990
 これは本当に有益なアプローチで、
 
-0:11:35.390,0:11:40.030
+0:11:35.390,0:11:42.230
 自分でモデリングをしていなくても、実際にそうするのは素晴らしいアイデアです。
-
-0:11:40.700,0:11:42.230
-
-
+　
 0:11:42.230,0:11:44.529
 もしあなたがベンダーを見ていて、
 
@@ -480,11 +469,8 @@ Kaggleでは、コンペテイション後、
 0:11:56.780,0:12:02.019
 私は私のデータの10％を保持して、あなたには全く見せないようにします。
 
-0:12:02.450,0:12:08.050
+0:12:02.450,0:12:11.320
 あなたたちが作成したモデルをあなたたちが使えなかったテストデータで評価します。
-
-0:12:09.320,0:12:11.320
-
 
 0:12:12.470,0:12:14.210
 さて、検証セットとテストセットを
@@ -507,11 +493,8 @@ Kaggleでは、コンペテイション後、
 0:12:39.230,0:12:43.570
 data loaderを作りたい」と言うと、次のようになります。
 
-0:12:44.420,0:12:48.250
+0:12:44.420,0:12:51.190
 ランダムにいくつかのドットを間引いていますね？
-
-0:12:49.190,0:12:51.190
-
 
 0:12:51.380,0:12:53.210
 これは良くありません。
@@ -750,14 +733,8 @@ FastAIライブラリとこのコースは転移学習にフォーカスして�
 0:19:19.029,0:19:21.029
 誤差率は
 
-0:19:21.460,0:19:27.840
+0:19:21.460,0:19:33.220
 メトリクスの1つです。ラベルの候補はたくさんあります。例えば、犬と猫の年齢などです。
-
-0:19:28.360,0:19:30.599
-
-
-0:19:31.240,0:19:33.220
-
 
 0:19:33.220,0:19:34.510
 この場合、
@@ -780,11 +757,8 @@ FastAIライブラリとこのコースは転移学習にフォーカスして�
 0:20:01.359,0:20:05.879
 モデルがどの程度できるかを測り、私たちが一番気にするものです。
 
-0:20:06.039,0:20:09.959
+0:20:06.039,0:20:13.019
 ですから、メトリクスとはfastaiが提供しているものを使うか自分で定義してください。
-
-0:20:11.019,0:20:13.019
-
 
 0:20:15.820,0:20:17.769
 損失は
@@ -855,11 +829,8 @@ fine tuningは転移学習のテクニックで、これは、重み、これは
 0:22:03.030,0:22:05.689
 この時は事前学習とは違うタスクのデータセットを使います。
 
-0:22:05.690,0:22:13.400
+0:22:05.690,0:22:17.990
 今回は事前学習はImageNetで私たちのタスクは犬か猫を認識するものです。
-
-0:22:15.990,0:22:17.990
-
 
 0:22:18.690,0:22:24.650
 標準では、fastaiはこの微調整を1エポックのみ行います。
@@ -927,11 +898,8 @@ fine tuningは転移学習のテクニックで、これは、重み、これは
 0:23:57.960,0:24:00.620
 それぞれどんな見た目かがわかります。
 
-0:24:00.620,0:24:04.219
+0:24:00.620,0:24:04.960
 1つは左上から右下にかけての斜め線を認識しています。
-
-0:24:04.470,0:24:04.960
-
 
 0:24:04.960,0:24:08.039
 また別のものは左下から右上への線を見つけます。
@@ -963,11 +931,8 @@ fine tuningは転移学習のテクニックで、これは、重み、これは
 0:24:46.690,0:24:50.280
 ImageNetの画像でもこれらがあることを知っておいてください。
 
-0:24:52.390,0:24:59.339
+0:24:52.390,0:25:04.559
 左上のフィルターにはそのフィルターにマッチする実際の写真の９つのパッチがあります。
-
-0:25:00.130,0:25:04.559
-
 
 0:25:04.559,0:25:11.399
 そして、ここには4つの緑のフィルターがあり、緑のフィルターにマッチした写真の一部があります。
@@ -1005,11 +970,8 @@ ImageNet以外のタスクもこなせる可能性があるのです。
 0:26:04.419,0:26:09.359
 難しいと思います。
 
-0:26:10.150,0:26:17.009
+0:26:10.150,0:26:19.840
 しかし、第二層のフィルターが写真のどんな部分に発火しているかの例があります。
-
-0:26:17.840,0:26:19.840
-
 
 0:26:20.030,0:26:22.869
 そして、ご覧の通り、円のようなものを見つけていて、
@@ -1017,11 +979,8 @@ ImageNet以外のタスクもこなせる可能性があるのです。
 0:26:23.390,0:26:30.490
 興味深いことにこのぼやけたようなグラデーションは夕日を見つけるのに非常に適しているようです。
 
-0:26:30.950,0:26:35.649
+0:26:30.950,0:26:38.330
 そして、この繰り返しの縦のパターンは、カーテンや小麦畑などを見つけるのに非常に適しています。
-
-0:26:36.380,0:26:38.330
-
 
 0:26:38.330,0:26:44.139
 このようにして、レイヤー3をさらに進めると、レイヤー2にあるすべての種類の特徴を組み合わせることができるようになります。
@@ -1059,11 +1018,8 @@ AlexNetが実際にいくつの特徴があるか覚えていませんが、Alex
 0:27:38.960,0:27:41.710
 第4層は第3層のフィルタを
 
-0:27:42.290,0:27:48.489
+0:27:42.290,0:27:51.220
 一度にすべて組み合わせることができます。そして第4層では、例えば犬の顔を見つけることができるものができます。
-
-0:27:49.220,0:27:51.220
-
 
 0:27:51.470,0:27:53.470
 そして、このように、
@@ -1097,9 +1053,6 @@ AlexNetが実際にいくつの特徴があるか覚えていませんが、Alex
 
 0:28:47.250,0:28:53.119
 ここで重要なことは、コンピュータビジョンのためのこれらの技術は写真を認識するのが得意なだけではないということです。
-
-0:28:53.700,0:28:55.170
-
 
 0:28:55.170,0:29:01.430
 画像で表現できるものは多くあります。例えば、これらは
@@ -1248,23 +1201,14 @@ fake rienと呼ばれるウイルスの例をもってきて、画像に変換�
 0:33:16.900,0:33:22.410
 自分で検索したり、実験しないと答えはでないと思います。
 
-0:33:23.260,0:33:30.600
+0:33:23.260,0:33:32.980
 さらに後の方の章ではこういったリサーチは重たくなってくるので、数日、場合によっては数週間かかるかもしれません。
 
-0:33:31.210,0:33:32.980
-
-
-0:33:32.980,0:33:35.939
+0:33:32.980,0:33:38.820
 はい、それらは、きっと理解の助けになるので必ずトライしてみてください。
 
-0:33:36.820,0:33:38.820
-
-
-0:33:41.200,0:33:45.990
+0:33:41.200,0:33:47.550
 もう一つ、この本を最大限活用する上でのポイントは章を読み終えるごとに、
-
-0:33:46.150,0:33:47.550
-
 
 0:33:47.550,0:33:54.419
 少し時間をとって、その章の知識で自分のプロジェクトに取り組むことです。
@@ -1278,11 +1222,8 @@ fake rienと呼ばれるウイルスの例をもってきて、画像に変換�
 0:34:04.540,0:34:07.440
 第二章以降ではできるようになると思います。
 
-0:34:08.920,0:34:15.089
+0:34:08.920,0:34:18.390
 それでは、9:55まで休憩をとりましょう。
-
-0:34:16.390,0:34:18.390
-
 
 0:34:18.970,0:34:25.770
 さて、再開しましょう。次に進む前に質問に答えましょう。Rachel、お願いします。
@@ -1347,14 +1288,8 @@ fine tuningを行う際に、事前のタスクで使ったサンプルも与え
 0:36:02.060,0:36:08.769
 モデルがすることやアーキテクチャがすることを変えるものです。私たちは、無限に柔軟な関数から始め、
 
-0:36:08.770,0:36:11.860
+0:36:08.770,0:36:15.740
 それこそがニューラルネットワークですが、それはなんでもできるものですが、
-
-0:36:12.860,0:36:14.600
-
-
-0:36:14.600,0:36:15.740
-
 
 0:36:15.740,0:36:21.009
 実際にニューラルネットワークができることを調整するのがパラメータです。
@@ -1383,11 +1318,8 @@ fine tuningを行う際に、事前のタスクで使ったサンプルも与え
 0:36:57.950,0:37:01.599
 どちらの選択肢をより多くとるようにするかというものです。
 
-0:37:01.870,0:37:07.120
+0:37:01.870,0:37:10.410
 例えば、一方より他方が2倍、3倍重要であるというものです。
-
-0:37:09.060,0:37:10.410
-
 
 0:37:10.410,0:37:12.000
 ニューラルネットワークにおいては
@@ -1407,25 +1339,17 @@ fine tuningを行う際に、事前のタスクで使ったサンプルも与え
 0:37:36.810,0:37:38.810
 一方で、ハイパーパラメータは
 
-0:37:39.420,0:37:41.420
+0:37:39.420,0:37:43.110
 次のようなものに関する選択です。
-
-0:37:41.940,0:37:43.110
-
 
 0:37:43.110,0:37:49.670
 例えば、関数を調整する際、どのようなプロセスを経るかといったものです。
-
-0:37:50.580,0:37:52.020
-
 
 0:37:52.020,0:37:57.140
 このコースの進度が気になります。本の内容は全てカバーするのでしょうか？
 
 0:37:58.350,0:38:02.420
 答えは全ての内容として、何を意味するかに依りますが、本当に全てをカバーするのは無理でしょう。
-
-0:38:03.720,0:38:05.720
 
 0:38:07.110,0:38:10.370
 実際には7回のレッスンでカバーできるものをカバーします。
@@ -1478,11 +1402,8 @@ fine tuningを行う際に、事前のタスクで使ったサンプルも与え
 0:39:24.310,0:39:27.600
 コーダだけでなく、全ての人が対象の
 
-0:39:28.150,0:39:33.359
+0:39:28.150,0:39:37.409
 内容、例えば深層学習を動かすのに必要なものも含まれています。
-
-0:39:34.270,0:39:37.409
-
 
 0:39:37.450,0:39:42.329
 例えば、それらは、深層学習が現時点で得意とするものです。
@@ -1504,9 +1425,6 @@ fine tuningを行う際に、事前のタスクで使ったサンプルも与え
 
 0:40:10.750,0:40:14.520
 いつImageNet以外のものを使うべきかというのは良い質問です。
-
-0:40:15.370,0:40:16.810
-
 
 0:40:16.810,0:40:20.730
 たくさんの事前学習済みモデルがあります。
@@ -1670,11 +1588,8 @@ ULMFitがタンパク質分析に使えることが分かったのです。
 0:44:46.210,0:44:50.610
 アマゾンは数ヶ月に渡ってTerry Pratchettの本を推薦していましたが、
 
-0:44:50.830,0:44:58.620
+0:44:50.830,0:45:00.520
 それはアマゾンの予測モデルがTerry Patcherの本を買った人はまた買うと言っているからでしょう。
-
-0:44:58.620,0:45:00.520
-
 
 0:45:00.520,0:45:04.530
 しかし，推薦というのは購買行動を多少左右するべきでしょう？
@@ -2044,7 +1959,7 @@ which is what percent of the time would we see that relationship by chance?
 これがp値です。数学は気にしていませんが、この数値、つまりp値を
 
 0:55:25.960,0:55:27.960
-データから直接計算するのに使える 
+データから直接計算するのに使える
 
 0:55:28.780,0:55:32.460
 簡単な小さな方程式があります。
@@ -2290,7 +2205,7 @@ P値は結果の重要性を
 温度が10℃で湿度が40％の場所があったとします。
 
 1:01:58.680,1:02:00.960
-この式が正しいとすると Rは約2.7になります。 
+この式が正しいとすると Rは約2.7になります。
 
 1:02:01.840,1:02:05.340
 温度が35℃で湿度が80％の場所では
@@ -2419,7 +2334,7 @@ Spent their time trying to figure out
 私たちが1999年にオプティマル・ディシジョンズの仕事を始めたときには、保険業界では誰もこのようなことをしていませんでした。
 
 1:05:18.020,1:05:23.709
-保険業界では誰もが予測モデルを使って 車を衝突させる可能性を推測していました。 
+保険業界では誰もが予測モデルを使って 車を衝突させる可能性を推測していました。
 
 1:05:24.500,1:05:31.250
 そして価格設定は20％とか何かを追加して設定するなど、非常にナイーブな方法で行われていました。
@@ -2524,7 +2439,7 @@ Spent their time trying to figure out
 実際にはどのように見えるのか、という質問を深く掘り下げる必要があります。
 
 1:08:22.510,1:08:27.369
-論文の中で、彼らが示しているものの一つは、実際の地図です。 
+論文の中で、彼らが示しているものの一つは、実際の地図です。
 
 1:08:28.040,1:08:29.840
 温度と
@@ -2563,7 +2478,7 @@ Spent their time trying to figure out
 考えるべきかもしれません。大地域のような。
 
 1:09:16.370,1:09:21.700
-このように実際にモデルを検討する際には、何が限界なのかを考える必要があります。 
+このように実際にモデルを検討する際には、何が限界なのかを考える必要があります。
 
 1:09:22.310,1:09:27.700
 そして、それが何を意味するのか？それについてどうすればいいのか？
@@ -2596,7 +2511,7 @@ Spent their time trying to figure out
 だから、４つの可能性をそれぞれ見て、
 
 1:10:19.250,1:10:21.250
-経済的、社会的な結果はどうなるのかと考える必要があります。　
+経済的、社会的な結果はどうなるのかと考える必要があります。
 
 1:10:22.070,1:10:25.329
 それぞれ大きな違いがあります。
@@ -2614,7 +2529,7 @@ Spent their time trying to figure out
 3月の世界の全ての都市のR値はどうなるかを示しています。そして、世界の全ての都市の7月のR値はどうなるか。
 
 1:10:48.950,1:10:53.800
-例えば、ニューイングランドやニューヨークを見てみましょう。 
+例えば、ニューイングランドやニューヨークを見てみましょう。
 
 1:10:54.530,1:11:00.009
 この予測では、西海岸の海岸線も含めて、7月には
@@ -2647,7 +2562,7 @@ Spent their time trying to figure out
 なりました。これが真か偽かによって、
 
 1:11:42.320,1:11:48.489
-政策に大きな影響を与える可能性があります。考えてみましょう。 
+政策に大きな影響を与える可能性があります。考えてみましょう。
 
 1:11:49.280,1:11:55.179
 はい？私が言いたかったのは、「夏になれば解決する」と考えるのは非常に無責任だということです。
@@ -2674,12 +2589,12 @@ Spent their time trying to figure out
 国民がさらに無関心になることになるかもしれない
 
 1:12:30.449,1:12:34.559
-どの方向に間違っても問題になります。 
+どの方向に間違っても問題になります。
 
 1:12:35.350,1:12:40.409
 ですから、この種のモデリングを行う際の対処法の1つは、prior(事前)について考えてみることです。
 
-1:12:41.230,1:12:45.750￥
+1:12:41.230,1:12:45.750
 prior(事前)とは、基本的には、帰無仮説を持つのではなく、
 
 1:12:46.150,1:12:52.230
@@ -2701,7 +2616,7 @@ prior(事前)とは、基本的には、帰無仮説を持つのではなく、
 これまでに研究された全ての国や都市で
 
 1:13:17.909,1:13:21.059
-今のところほとんどは常に気候との関係を発見しています。 
+今のところほとんどは常に気候との関係を発見しています。
 
 1:13:21.159,1:13:25.469
 だから私たちの事前の推測は多分これは季節的なもので、
@@ -2744,7 +2659,7 @@ so maybe we'd say well prior belief is that this thing is probably
 稼働させることができたらいいなと思います。ただ予測モデルであっても、
 
 1:14:17.170,1:14:22.589
-それ自体が有用な場合もありますし、何かをプロトタイプ化することが役立つこともあります。 
+それ自体が有用な場合もありますし、何かをプロトタイプ化することが役立つこともあります。
 
 1:14:23.230,1:14:28.919
 時には、何か大きなものの一部になることもあります。だから、ここでは巨大なエンドツーエンドのモデルを作ろうとするのではなく、
@@ -2792,7 +2707,7 @@ FastAIのモデルを
 しかし、最も簡単な方法は、インターネットから画像をダウンロードすることです。 インターネットからダウンロードできるサービスはたくさんあります。
 
 1:15:21.640,1:15:26.459
-ここではBing Image Searchを使います。とても使いやすいからです。　
+ここではBing Image Searchを使います。とても使いやすいからです。
 
 1:15:27.010,1:15:33.119
 他の多くのサービスはサイトの利用規約違反を犯す必要があります。
@@ -2842,572 +2757,560 @@ Bing Image Search APIで検索
 1:16:38.140,1:16:41.010
 無料で利用できます。その後も
 
-1:16:42.430,1:16:44.430
-利用できますが、
-
-1:16:44.650,1:16:46.650
-as long as you like
+1:16:42.430,1:16:46.650
+無料で利用できますが、
 
 1:16:46.750,1:16:53.709
-But they kind of limit it to like three transactions per second or something, which is plenty you can still do thousands for free
+1秒間に処理3回などの制限が加されています。それでも十分な量です。
 
 1:16:53.710,1:16:56.530
-So it's at the moment. It's pretty great. Even for free
+無料でも数千件の検索ができるので、今のところとてもいいオプションです。
 
 1:16:58.460,1:16:59.480
-So
+さて、
 
 1:16:59.480,1:17:01.250
-What will happen is?
+Bing画像検索などのサービスに登録すると、
 
 1:17:01.250,1:17:06.220
-When you sign up for being image search or any of these kind of services, they'll give you an API key
+APIキーが発行されます。
 
 1:17:06.290,1:17:11.649
-So just replace the xxx here with the API key that they give you
+ここにある「XXX」を発行されたAPIキーに置き換えてください。
 
 1:17:11.750,1:17:14.740
-Okay, so that's now going to be called key
+これを「キー」と呼びます。
 
 1:17:16.070,1:17:18.070
-In fact, let's do it over here
+ここでやってみましょう。
 
 1:17:20.060,1:17:24.399
-Okay, so you'll put in your key and then there's a
+キーを入力して、
 
 1:17:25.400,1:17:29.530
-function we've created called search images Bing, which is just a super tiny little
+search_images_bingという関数を作成しました。ご覧のように、
 
 1:17:31.520,1:17:35.200
-Function as you can see, it's just two lines of code. Just trying to save a little bit of time
+たった2行のコードですが、少しでも時間を節約しようと思って。
 
 1:17:37.340,1:17:39.340
-Which will take some
+そして、
 
 1:17:39.470,1:17:44.919
-Take your API key and some search term and return a list of URLs that match that search term
+APIキーと検索語を入力して、その検索語にマッチするURLのリストを返します。
 
 1:17:46.160,1:17:48.160
-as you can see for
+ご覧のように
 
-1:17:48.830,1:17:50.510
-using
-
-1:17:50.510,1:17:54.609
-This particular service. You have to install a particular
+1:17:48.830,1:17:54.609
+この特定のサービスを利用するには特定のパッケージをインストールする必要があります。
 
 1:17:55.730,1:17:59.530
-Package, so we show you how to do that on the site as well
+このやり方もウェブサイトで紹介しておきます。
 
 1:18:00.380,1:18:02.620
-so once you've done so you'll be able to run this and
+そうすれば、これを実行することができるようになり、
 
 1:18:03.740,1:18:06.909
-That will return by default. I think 150
-
-1:18:07.610,1:18:09.050
-URLs
+デフォルトで150のURLが返ってくると思います。
 
 1:18:09.050,1:18:12.969
-Okay, so faster Y comes with a download URL function
+さて、fast.aiにはdownload_url関数がついていますので、
 
 1:18:12.970,1:18:17.439
-So he let's just download one of those images just to check and open it up
+画像をダウンロードして確認してみましょう。
 
 1:18:17.440,1:18:22.240
-And so what I did was I searched for grizzly bear and here I have a grizzly bear
+それで何をしたかというと、「グリズリーベア」で検索し、グリズリーベアの写真をダウンロードしました。
 
 1:18:24.110,1:18:26.230
-So then what I did was I said, okay
+そこで私が言ったのは、
 
 1:18:26.230,1:18:32.589
-Let's try and create a create a model that can recognize grizzly bears versus black bears versus teddy bears
+グリズリーベアと黒クマとテディベアを 認識できるモデルを作ってみようということです。
 
 1:18:33.590,1:18:36.520
-So that way I can find out I could set up some video
+それを使ってキャンプ場の近くに
 
 1:18:38.270,1:18:41.919
-Recognition system near our campsite when we're out camping that
+ビデオ認識システムを設置して
 
 1:18:42.530,1:18:43.960
-Gives me bear warnings
+クマの警告をするようにしますが、
 
 1:18:43.960,1:18:48.520
-But if it's a teddy bear coming then it doesn't warn me and wake me up because that would not be scary at all
+もしテディベアが来たら警告したり、私を起こしたりはしません。怖くないからです。
 
 1:18:49.460,1:18:52.450
-So then I just go through each of those three bear types
+そこで、この３種類のクマをそれぞれ、
 
 1:18:53.030,1:18:54.890
-Create a directory
+グリズリー、クロクマ、
 
 1:18:54.890,1:19:00.669
-With the name of grizzly or black or teddy bear searched being for that particular search term
+テディベアという名前のフォルダを作り、Bingで
 
 1:19:03.110,1:19:05.000
-Along with bear
+クマと一緒にそれらの検索語を検索して
 
 1:19:05.000,1:19:09.370
-And download and so download images is a first day I function as well
+ダウンロードします。download_imagesもfast.ai関数です。
 
 1:19:10.430,1:19:13.360
-So after that I can call get image files
+この後にget_image_filesを呼び出すことができます。
 
 1:19:13.460,1:19:18.610
-Which is a faster a function that will just return recursively all of the image files
+これはfast.ai関数で、このパスの中にあるすべての画像ファイルを再帰的に返してくれます。
 
 1:19:19.040,1:19:24.640
-Inside this path and you can see it's given me bears black and then lots of numbers
+そして見ての通り、 bears/black/　そしてたくさんの数字。
 
 1:19:27.260,1:19:28.790
-So
+さて、
 
 1:19:28.790,1:19:33.490
-one of the things you have to be careful of is that a lot of the stuff you download will turn out to be like
+注意しなければならないことの一つは、ダウンロードしたものの多くが画像ではなく、
 
 1:19:33.490,1:19:37.990
-not images at all and will break so you can call verify images to
+エラーを起こしてしまうということです。そこで verify_images を呼び出して、
 
 1:19:38.450,1:19:41.559
-Check that all of these file names are actual images
+これらのファイル名がすべて実際の画像であるかどうかを確認します。
 
 1:19:42.800,1:19:50.559
-And in this case, I didn't have any failed. So there's it's empty. But if you did have some then you would call
+で、今回の場合は失敗したものがなかったので、空になっています。 しかし、もしあったのであれば、
 
 1:19:51.920,1:19:58.149
-path unlink unlink path to unlink is part of the Python standard library and it deletes a file and
+Path.unlinkを呼び出してリンクを解除します。Path.unlinkはPython標準ライブラリの一部で、ファイルを削除してくれます。
 
 1:19:59.240,1:20:02.169
-Map is something that will call this function
+そしてmapは、このコレクションの各要素に対して
 
 1:20:02.990,1:20:06.189
-for every element of this collection
+この関数を呼び出すものです。
 
 1:20:06.830,1:20:08.830
-this is part of a
+これは "L "と呼ばれる
 
 1:20:08.870,1:20:10.730
-special
+特別な
 
 1:20:10.730,1:20:13.450
-FASTA a class called L. It's basically
+fast.aiクラスの一部です。基本的には
 
 1:20:14.180,1:20:16.570
-It's kind of a mix between the Python standard library
+Python標準ライブラリのリストクラスと
 
 1:20:17.330,1:20:23.169
-List class and a numpy array class then we'll be learning more about it later in this course
+numpy配列クラスをミックスしたようなものです。
+このコースでは後ほど詳しく説明しますが、
 
 1:20:23.600,1:20:29.769
-But it basically tries to make it super easy to do kind of more functional style programming in Python
+基本的にはPythonでより関数型のプログラミングが簡単にできるようにするものす。
 
 1:20:30.830,1:20:34.809
-So in this case, it's going to unlink every thing that's in the failed
+この場合、失敗したリストにある
 
 1:20:35.420,1:20:37.420
-List, which is probably what we want
+すべての画像のリンクを解除します。
 
 1:20:37.880,1:20:42.550
-Now because there are all the images that fail to verify. Alright, so we've now got
+検証に失敗した画像だからです。これで、
 
 1:20:43.550,1:20:49.570
-a path that contains a whole bunch of images and they're classified according to
+たくさんの画像が含まれたパスができました。ブラック、グリズリー、テディと、
 
 1:20:50.510,1:20:54.070
-black grizzly or Teddy based on what folder they're in and
+どのフォルダに入っているかによって分類されています。
 
 1:20:54.680,1:21:01.840
-So to create so we're going to create a model and so to create a model. The first thing we need to do is to
+ということで、モデルを作成します。 モデルを作成するにはまず、
 
 1:21:02.360,1:21:04.280
-Tell fast AI
+fast.aiに
 
 1:21:04.280,1:21:07.419
-What kind of data we have and how its structured?
+どのようなデータがあり、どのように構造化されているかを伝える必要があります。
 
 1:21:08.690,1:21:15.550
-Now in part in lesson 1 of the course, we did that by using what we call a factory method
+レッスン1では、ファクトリーメソッドと呼ばれるものを使用して、
 
 1:21:15.620,1:21:22.359
-Which is we just said image data loader start from name and it did it all for us
+ImageDataLoaders.from_nameと言っただけで、それがすべての処理をしてくれました。
 
 1:21:23.869,1:21:26.289
-Those factory methods are fine for
+これらのファクトリメソッドは初心者には良いのですが、
 
 1:21:27.020,1:21:30.159
-Beginners, but now we're into lesson two. We're not quite beginners anymore
+でも今はレッスン２に入っています 私たちはもう初心者ではありません
 
 1:21:30.170,1:21:35.799
-So we're going to show you the super super flexible way to use data in whatever format you like
+そこで、あなたの好きなフォーマットでデータを使用する超柔軟な方法をお見せしましょう。
 
 1:21:35.960,1:21:40.119
-And it's called the data block API. And so the data block API
+これはDataBlock APIと呼ばれるものです。
 
 1:21:45.050,1:21:47.800
-Looks like this here's the data block API
+これがDataBlock APIです。
 
 1:21:49.340,1:21:55.600
-You tell first AI what your independent variable is and what your dependent variable is
+fast.aiに独立変数と従属変数を指定します。
 
 1:21:55.600,1:22:02.019
-So what your labels are and what your input data is. So in this case our input data are images
+つまり、ラベルと入力データを指定します。 この場合の入力データは画像で、
 
 1:22:03.170,1:22:08.619
-And our labels are categories. So category is going to be either grizzly or black
+ラベルはカテゴリです。カテゴリーはグリズリーかブラックか
 
 1:22:09.260,1:22:11.179
-or teddy
+テディになります。
 
 1:22:11.179,1:22:13.239
-So that's the first thing you tell it now
+これが最初に伝えることです。
 
 1:22:13.239,1:22:19.178
-That's the block's parameter and then you tell it how do you get a list of all of the in this case file names?
+これがブロックのパラメータです。そして、すべてのファイル名のリストを取得する方法を伝えます。
 
 1:22:19.520,1:22:24.759
-Right, and we just saw how to do that because Peters called the function ourselves if the function is called get image files
+その方法は見たばかりです。なぜなら、さっきその関数を呼んだからです。関数は get_image_files と呼ばれています。
 
 1:22:24.889,1:22:28.149
-so we tell it what function to use to get that list of items and
+なのでこのリストを取得するためにどのような関数を使うかを指定します。
 
 1:22:29.090,1:22:34.989
-Then you tell it how do you split the data into a validation set and a training set?
+それからデータを検証セットとトレーニングセットにどうやって分けるかを指定します。
 
 1:22:34.989,1:22:39.968
-And so we're going to use something called a random spitter which just spits it randomly and we're going to point
+そこで、RandomSplitterと呼ばれるものを使って、データをランダムに分割します。
 
 1:22:40.130,1:22:42.130
-30% of it into the validation set
+そして、そのうちの30%を検証セットに振り分けます。
 
 1:22:42.469,1:22:48.669
-we're also going to set the random seed which ensures that every time we run this the validation set will be the same and
+また、ランダムシードを設定して、これを実行するたびに検証セットが同じになるようにします。
 
 1:22:49.760,1:22:55.389
-Then you say okay. How do you label the data? And this is the name of a function called parent label?
+そして、データにラベルを付けるにはどうすればいいかを設定。これがその関数の名前、parent_labelです。
 
 1:22:55.389,1:22:57.789
-And so that's going to look for each
+これは親フォルダの名前を見てラベルを判断します。
 
 1:22:59.300,1:23:05.560
-Item at the name of the parent so this this particular one would become a black bear now
+この画像のラベルは黒クマになります。
 
 1:23:05.560,1:23:07.560
-This is like the most common way for
+これは、画像データセットを表現する最も一般的な方法で、
 
 1:23:09.469,1:23:16.178
-Image datasets to be represented is that they get put the different images get the files get put into folder according to their label
+異なる画像をラベルにしたがってフォルダに入れていくのです。
 
 1:23:17.119,1:23:18.679
-and
+そして
 
 1:23:18.679,1:23:21.579
-Then finally here we've got something called item transforms
+最後にiアイテムトランスフォーム（item_tfms）と呼ばれるものがあります。
 
 1:23:21.920,1:23:25.359
-we're be learning a lot more about transforms in a moment that these are basically
+変換（トランスフォーム）についてはもう少し詳しく説明しますが、
 
 1:23:25.580,1:23:33.070
-functions that get applied to each image and so each image is going to be resized to 100 and twenty-eight by
+これらは基本的に各画像に適用される関数です。この場合、それぞれの画像が128×128の正方形に
 
 1:23:33.560,1:23:35.560
-128 square
+リサイズされます。
 
 1:23:35.960,1:23:38.950
-So we're going to be learning more about datablock api soon
+DataBlock APIについては近日中に詳しく説明する予定です。
 
 1:23:39.200,1:23:44.619
-but basically the process is going to be it's going to call whatever is get items which is a list of image files and
+しかし、基本的なプロセスはこのようになります。はじめに何らかのget_itemsを呼び出します（ここでは画像ファイルのリスト）。
 
 1:23:45.650,1:23:50.320
-Then I'm going to call get X get Y. So in this case, there's no get X but there is a get Y
+そして get_x, get_y を呼び出します。この場合は get_x はありませんが、親ラベルの　get_y　があります。
 
 1:23:50.320,1:23:55.659
-So it's just parent label and then it's going to call the create method for each of these two things
+そして、これらの2つのもののcreateメソッドを呼び出します。
 
 1:23:55.660,1:23:57.789
-It's going to create an image and it's going to create a category
+画像を作成し、カテゴリを作成します。
 
 1:23:58.520,1:24:01.990
-Instead. I'm going to call the item transforms, which is resize
+そして、item_tfmsを呼び出してサイズを変更します。
 
 1:24:02.930,1:24:06.249
-And then the next thing it does is it puts it into something called a data loader?
+次にそれをデータローダと呼ばれるものに入れます。
 
 1:24:06.250,1:24:10.030
-A data loader is something that grabs a few images at a time?
+データローダとは、一度に数枚の画像を取得して、
 
 1:24:10.400,1:24:14.890
-I think by default at 64 and puts them all into a single
+（デフォルトでは64枚だと思います）それらを一つにまとめるものです。
 
 1:24:14.890,1:24:19.090
-It's got a batch. It just grabs 64 images and sticks them all together
+これはバッチと呼ばれていて、64枚の画像を取得して、それらをすべて一つにまとめます。
 
 1:24:19.760,1:24:23.499
-And the reason it does that is it then puts them all onto the GPU at once
+なぜそうするかというと、すべての画像を一度にGPU上に配置して、
 
 1:24:24.380,1:24:26.920
-so it can pass them all to the
+GPUを介してモデルに
 
 1:24:27.230,1:24:33.640
-Model through the GPU in one go and that's going to let the GPU go much faster as we'll be learning about
+一度にすべての画像を渡すことができるようにするためです。
+これによりGPUの処理速度が格段に向上します。
 
 1:24:34.730,1:24:36.879
-And then finally, we don't use any here
+そして最後に（ここでは何も使いませんが）、
 
 1:24:37.190,1:24:43.960
-We can have something called batch transforms, which we will talk about later and then somewhere in the mineral about here
+これについては後ほど説明しますが、バッチ変換と呼ばれるものができます。そして、ここの真ん中辺りに
 
 1:24:44.480,1:24:51.250
-Conceptually is the splitter which is the thing that splits into the training set and the validation set
+概念的にはスプリッタと呼ばれるものがありますが、これは学習セットと検証セットに分割するものです。
 
 1:24:51.410,1:24:55.209
-So this is a super flexible way to tell fast AI
+これはfast.aiにデータをどのように扱うかを指示するための
 
 1:24:56.510,1:25:00.489
-how to work with your data and so at the end of that
+非常に柔軟な方法です。そして最後に
 
 1:25:01.280,1:25:08.199
-It returns an object of type data loaders. That's why we always call these things deals, right?
+タイプがDataLoadersのオブジェクトを返します。
+これをいつもDLと呼ぶのはそのためです。
 
 1:25:08.390,1:25:12.579
-So data loaders has a validation and a training
+DataLoadersには検証用とトレーニング用の
 
 1:25:12.860,1:25:14.150
-data loader and
+DataLoaderがあります。
 
 1:25:14.150,1:25:20.470
-a data loader as I just mentioned is something that grabs a batch of a few items at a time and puts it on the
+先ほど言ったデータローダとは、いくつかのもののバッチを一度に取得して
 
 1:25:20.470,1:25:22.250
-GPU for you
+GPU上に配置するものです。
 
 1:25:22.250,1:25:26.530
-So this is basically the entire code of data loaders
+これが基本的にデータローダのコード全体です。
 
 1:25:27.470,1:25:31.269
-So the details don't matter. I just wanted to point out that like a lot of these
+細かいことは重要ではありませんが、指摘しておきたかったのは、
 
 1:25:31.850,1:25:34.629
-Concepts in fast AI when you actually look at what they are
+fast.aiの多くの概念は、実際に見てみると、
 
 1:25:34.630,1:25:36.460
-They're they're incredibly simple
+信じられないほどシンプルで小さなものです。
 
 1:25:36.460,1:25:42.100
-but all things it's literally something that you just pass in a few data loaders to edit store some in an attribute and
+文字通り、いくつかのデータローダを渡すと、属性に保存されます。
 
 1:25:42.410,1:25:47.359
-Pass and gives you the first one backers train and second one backers valid
+すると、最初のものは.trainとして、2番目のものは.validとして返されます。
 
 1:25:49.199,1:25:51.090
-So
+つまり、
 
 1:25:51.090,1:25:53.210
-we can create our
+まずDataBlockを作成して
 
 1:25:55.230,1:26:02.359
-Data loaders by first of all creating the data block and then we call the data loaders passing in our path to create deals and
+DataLoadersを呼び出し、DLを作成するためのパスを渡すことでDataLoadersを作成することができます。
 
 1:26:02.940,1:26:05.029
-Then you can call show batch on that
+そして、show_batchを呼び出すことができます。
 
 1:26:05.030,1:26:10.280
-You can call show bachelor pretty much anything in fast AI to see your data and look we've got some Grizzlies
+fast.aiではほとんどのものでshow_batchを呼び出して、データを見ることができます。見てください、グリズリーがいます。
 
 1:26:10.280,1:26:12.280
-We've got a teddy we've got a grizzly
+テディがいて、グリズリーがいます。
 
 1:26:14.280,1:26:16.280
-So you get the idea right
+わかりましたか？
 
 1:26:17.880,1:26:22.699
-I'm going to look at these different. I'm going to look at data augmentation next week
+データ拡張をは来週見ることにします。
 
 1:26:22.699,1:26:27.469
-So I'm going to skip over data-orientation and let's just jump straight into trading your model
+なのでこれらは飛ばして、モデルのトレーニングをします。
 
 1:26:31.710,1:26:35.089
-So once we've got two yells we can just like in
+さて、DLができたら、
 
 1:26:35.760,1:26:39.199
-Lesson one call CNN learner to create a
+レッスン１と同じように cnn_learner を呼び出して
 
 1:26:39.719,1:26:43.038
-Resonate we're going to create a smaller resonant this time or isn't it 18?
+ResNet を作成します。今回は小さめの ResNet18 を作成します。
 
 1:26:43.590,1:26:49.519
-Again asking for error rate we can then call dot fine-tune again. So you see it's all the same lines of code
+ここでもエラー率を求めて、.fine_tune を呼びます。これまでに見てきたコードと
 
 1:26:49.519,1:26:50.999
-we've already seen and
+同じものを使っています。
 
 1:26:50.999,1:26:55.819
-You can see our error rate goes down from nine to one. So we've got one percent error
+誤差率が９から１に下がっているのがわかります。誤差は1%です。
 
 1:26:56.519,1:27:02.719
-And after training for about 25 seconds, so you can see you know, we've only got 450 images
+約２５秒のトレーニングの後です。 見ての通り、たった450枚の画像で
 
 1:27:03.690,1:27:10.789
-we've trained for well less than a minute and we only have let's look at the confusion matrix so we can say I
+1分にも満たないトレーニングで、混乱マトリックスを見てみましょう。
 
 1:27:11.400,1:27:18.559
-Want to create a classification interpretation class. I want to look at the confusion matrix and the confusion matrix as you can see
+「分類解釈クラスを作りたい、混乱マトリックスを見たい」というと、ご覧のように、
 
 1:27:18.659,1:27:21.768
-It's something that says for things that are actually black bears
+「実際に黒クマであるものについて、
 
 1:27:22.650,1:27:24.769
-How many are predicted to be black bears?
+黒クマと予想じたのはいくつで
 
 1:27:25.559,1:27:26.610
-versus
+それに対して、
 
 1:27:26.610,1:27:28.610
-grizzly bears versus
+グリズリーベアやテディベアと予測したのはどれくらいでしょうか？」というような表です。
 
 1:27:28.679,1:27:33.859
-Teddy bears. So the diagonal are the ones that are all correct. And so it looks like we've got two errors
+で、対角線上にあるのが全部正解で、2つの誤差があったようです。
 
 1:27:33.860,1:27:38.150
-We've got one grizzly that was predicted be black one black that was predictable grizzly
+黒クマだと予測されていたグリズリーが１匹とグリズリーだと予測されていた黒クマが１匹です。
 
 1:27:40.889,1:27:42.889
-Super super useful
+超、超便利なメッソッドが
 
 1:27:43.469,1:27:47.239
-Method is plot top losses, and that'll actually show me
+「トップの損失をプロットする」で、これは実際に私の誤差がどのように見えるかを教えてくれます。
 
 1:27:48.809,1:27:56.119
-What my errors actually look like so this one here was predicted to be a grizzly bear but the label was black bear
+これはグリズリーだと予測されていましたがラベルは「黒クマ」でした。
 
 1:27:56.770,1:28:00.450
-This one was the one that's predictably a black bear and the label was grizzly bear
+これは黒クマと予測されていましたがラベルは「グリズリーベア」でした。
 
 1:28:02.500,1:28:04.800
-These ones here are not actually wrong there
+こちらのものは実は間違っていません。
 
 1:28:04.830,1:28:11.160
-this is predicted to be black and it's actually black but the reason they appear in this is because these are the ones that the
+これは「黒」と予測されていて、実際には黒なのです。 しかし、この中に出てくるのは、これらがモデルが
 
 1:28:12.730,1:28:15.540
-Model was the least confident about
+最も自信を持っていなかったものだからです。
 
-1:28:16.780,1:28:19.829
-Okay, so we're going to look at the image classifier cleaner next week
+1:28:16.780,1:28:25.930
+さて、画像分類器のクリーナーは来週見ることにします。
 
 1:28:20.800,1:28:23.789
-Let's focus on how we then get this into production
-
-1:28:24.700,1:28:25.930
-so
+これをどうやって本番環境にに移すかに焦点を当ててみましょう。
 
 1:28:25.930,1:28:27.930
-To get it into production
+本番環境に導入するためには、
 
 1:28:28.150,1:28:30.150
-We need to
+モデルを
 
 1:28:30.580,1:28:38.519
-Export the model. So what exporting the model does is it creates a new file which by default is called export pickle?
+エクスポートする必要があります。モデルをエクスポートすると、新しいファイルが作成されます。デフォルトでは 「export.pkl」という名前で、
 
 1:28:39.280,1:28:41.170
-Which contains?
+モデルのアーキテクチャと
 
 1:28:41.170,1:28:43.920
-The architecture and all of the parameters of the model
+すべてのパラメータが含まれています。
 
 1:28:44.170,1:28:50.160
-so that is now something that you can copy over to a server somewhere and
+これで、どこかのサーバーにコピーして、
 
 1:28:50.710,1:28:52.710
-treat it as a
+定義済みのプログラムとして
 
 1:28:52.900,1:29:00.030
-Predefined program right? So then so the the process of using your trained model
+扱うことができます。そこで、学習したモデルを本番環境で
 
 1:29:01.150,1:29:04.920
-On new data kind of in production is called inference
+新しいデータに使用するプロセスを「推論」と呼びます。
 
 1:29:05.410,1:29:10.019
-So here I've created an inference learner by loading that learner back again
+ここでは、ラーナーを再びロードして推論ラーナーを作成しています。
 
 1:29:10.390,1:29:17.640
-All right, and so obviously it doesn't make sense to do it right next to after I've saved it in a notebook
+明らかにノートに保存した後にすぐ隣で行うのは意味がありません。
 
 1:29:17.640,1:29:23.459
-But I'm just showing you how it work. Right? So this is something that you would do on your server in inference and
+しかし、これはどのように機能するかをお見せしているだけです。これはサーバー上で行う推論です。
 
 1:29:24.730,1:29:31.470
-Remember that once you have trained a model, you can just treat it as a program you can pass inputs to it
+一度モデルを学習したら、プログラムとして扱うことができることを覚えておいてください。
 
 1:29:31.470,1:29:33.990
-So this is now our our program
+これが私たちのプログラムです。
 
 1:29:33.990,1:29:40.590
-this is our Bayer predictor so I can now call predict on it and I can pass it an image and
+これが私たちのクマの予測器です。これで 「predict」を呼び出して画像を渡すと、
 
 1:29:41.200,1:29:43.200
-It will tell me
+ご覧の通り
 
 1:29:43.210,1:29:45.210
-Here is it is?
+99.999%の確率で
 
 1:29:45.490,1:29:47.999
-99.999% sure that this is a grizzly
+「グリズリー」であることを教えてくれます。
 
 1:29:49.240,1:29:53.280
-So I think what we're going to do here is we're going to wrap it up here
+今日の授業はここまで。
 
 1:29:54.160,1:29:57.180
-And next week we'll finish off by
+来週は
 
 1:29:58.750,1:30:00.750
-Creating an actual GUI
+クマ分類器の
 
 1:30:01.180,1:30:02.680
-for our
+実際のGUIを作成して
 
 1:30:02.680,1:30:04.510
-bear classifier
+終わりにしましょう。
 
-1:30:04.510,1:30:06.370
-We will
-
-1:30:06.370,1:30:08.140
-show how to
+1:30:04.510,1:30:08.140
+「Binder」というサービスを使って
 
 1:30:08.140,1:30:10.140
-Run it for free on a service call
+無料で実行する方法を
 
 1:30:10.920,1:30:12.570
-binder
+紹介します。
 
 1:30:12.570,1:30:14.570
-and
+それから、
 
 1:30:16.530,1:30:23.150
-Yeah, and then I think we'll be ready to dive into some of the some of the details of what's going on behind the scenes
+そうすれば、裏で何が起こっているのかの詳細に飛び込む準備ができると思います。
 
 1:30:23.849,1:30:27.379
-Um any questions or anything else before we wrap up Rachel?
+レイチェル、質問や他に何かありますか？
 
 1:30:28.860,1:30:34.339
-Now, okay, great. All right. Thanks everybody. So we
+ないです。オーケー。 All right. 皆さん、ありがとうございます。
 
 1:30:37.409,1:30:39.679
-Hopefully, yeah, I think from here on
+ここまでで、
 
 1:30:40.830,1:30:42.179
-We've covered
+機械学習の観点からの
 
 1:30:42.179,1:30:49.279
-You know, most of the key kind of underlying foundational stuff from a machine-learning point of view that we're going to need to cover
+基礎となる重要な部分はほとんどカバーできたと思います。
 
 1:30:51.000,1:30:53.060
-So we'll be able to ready to dive into
+ディープラーニングがどのように裏で機能しているのか、
 
 1:30:54.840,1:30:58.310
-Lower-level details of how deep learning works behind the scenes
+低レベルの詳細に飛び込んでいく準備ができました。
 
 1:31:00.540,1:31:03.889
-And I think that'll be starting from next week, so see you then
+それは来週から始まると思います。それでは、その時にお会いしましょう。

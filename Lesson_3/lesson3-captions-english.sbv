@@ -1,0 +1,4901 @@
+0:00:00.030,0:00:05.819
+Oh hello, and welcome to lesson three of practical deep learning for coders
+
+0:00:07.510,0:00:09.510
+We
+
+0:00:09.880,0:00:11.590
+Were looking at
+
+0:00:11.590,0:00:14.609
+getting our model into production last week and
+
+0:00:15.160,0:00:21.059
+So we're going to finish off that today and then we're going to start to look behind the scenes at what actually goes on when?
+
+0:00:21.060,0:00:23.060
+We train a neural network. We're going to look at
+
+0:00:23.740,0:00:25.830
+Kind of the math of what's going on
+
+0:00:26.740,0:00:31.859
+And we're going to learn about SGD and it's important stuff like that
+
+0:00:33.219,0:00:36.719
+The the order is slightly different to the book in the book
+
+0:00:36.719,0:00:39.509
+there's a part in the book which says like hey, you can either go to
+
+0:00:40.300,0:00:46.469
+Lesson 4 or lesson 3 now and then go back to the other one afterwards. So we're doing lesson 4 and then lesson 3
+
+0:00:47.320,0:00:49.320
+Chapter 4 and then chapter 3 I should say
+
+0:00:49.960,0:00:51.370
+You can choose it
+
+0:00:51.370,0:00:53.370
+Whichever way you're interested in
+
+0:00:53.590,0:01:01.229
+Chapter 4 is the more technical chapter about the foundations of how deep learning really works whereas chapter 3 is all about
+
+0:01:01.629,0:01:03.160
+ethics
+
+0:01:03.160,0:01:06.330
+And so with the lessons we'll do that next week
+
+0:01:08.760,0:01:10.819
+So we're looking at
+
+0:01:11.790,0:01:14.119
+0-2 production notebook and
+
+0:01:15.150,0:01:19.039
+We've got to look at the fast book version to run with her and in fact everything
+
+0:01:19.040,0:01:22.009
+I'm looking at today will be in the fast book version and
+
+0:01:23.670,0:01:25.670
+Remember last week. We had a look at
+
+0:01:26.490,0:01:31.549
+Our our bears and we created this data loaders object
+
+0:01:32.220,0:01:34.220
+by using
+
+0:01:34.610,0:01:41.780
+The datablock api which I hope everybody's had a chance to experiment with this week if you haven't now's a good time to do it
+
+0:01:43.650,0:01:45.889
+We kind of skipped over one of the lines a little bit
+
+0:01:47.590,0:01:51.880
+Item transforms so what this is doing here when we said resize
+
+0:01:53.359,0:01:57.969
+The the images we downloaded from the internet had lots of different sizes and lots of different aspect ratios
+
+0:01:58.039,0:02:01.959
+Some at all and some are wide. I'm a square and some are big some are small
+
+0:02:02.479,0:02:08.949
+When you say resize for an item transform, it means each item to an item in this case is one image
+
+0:02:10.009,0:02:12.398
+Is going to be resized to 128 by 128
+
+0:02:13.099,0:02:20.319
+By squishing it or stretching it. And so we had a look at you can always say show batch to see a few examples and
+
+0:02:20.959,0:02:22.959
+This is what they look like
+
+0:02:25.379,0:02:31.279
+Squishing and stretching isn't the only way that we can resize remember we have everything we have to make everything into a square
+
+0:02:32.280,0:02:35.780
+Before we kind of get it into our model by the time it gets to our model
+
+0:02:35.780,0:02:40.639
+Everything has to be the same size in each mini wedge. So that's why and they're making it a square
+
+0:02:40.639,0:02:44.329
+It's not the only way to do that, but it's the easiest way and it's the by far the most common way
+
+0:02:45.590,0:02:47.590
+um, so
+
+0:02:49.740,0:02:52.219
+Another way to do this
+
+0:02:54.210,0:02:56.779
+Is we can create a another
+
+0:02:57.990,0:03:02.029
+Data block object and we can make a data block object
+
+0:03:02.030,0:03:07.970
+That's an identical copy of an existing data block object where we can then change just some pieces
+
+0:03:08.310,0:03:13.880
+And we can do that by calling the new method which is super handy. And so let's create another data block
+
+0:03:14.970,0:03:19.130
+object in this time with different item transform where we resize
+
+0:03:19.800,0:03:21.800
+using the
+
+0:03:22.260,0:03:29.839
+Squish method we have a question. What are the advantages of having Square images versus rectangular ones?
+
+0:03:32.739,0:03:35.529
+That's a great question so
+
+0:03:38.840,0:03:40.780
+Really its simplicity
+
+0:03:40.780,0:03:42.580
+Yeah, if if you know
+
+0:03:42.580,0:03:47.619
+All of your images are rectangular of a particular aspect ratio to start with you may as well
+
+0:03:47.620,0:03:51.850
+Just keep them that way but if you've got some which at all and some which are wide
+
+0:03:53.480,0:03:55.570
+Making them all square is kind of the easiest
+
+0:03:56.120,0:04:02.110
+Otherwise, you would have to kind of organize them such as all of the tall ones kind of ended up in a mini batch nor
+
+0:04:02.110,0:04:03.580
+The wide ones ended up in a mini batch
+
+0:04:03.580,0:04:05.889
+And then you'd have to kind of then figure out
+
+0:04:06.290,0:04:13.150
+What the best aspect ratio for each mini batch is and we actually have some research that does that in fast AI too
+
+0:04:14.150,0:04:16.150
+But it's still a bit clunky
+
+0:04:17.540,0:04:22.749
+I should mention. Okay, I just lied to you. The default is not actually to squish your stretch the default
+
+0:04:22.750,0:04:27.519
+I should have said sorry the default when we say resize is actually just to
+
+0:04:28.190,0:04:30.190
+grab
+
+0:04:31.190,0:04:32.660
+Grab the center
+
+0:04:32.660,0:04:34.809
+Actually, all we're doing is regretting the center of each image
+
+0:04:34.850,0:04:36.580
+so if we want to squish your stretch
+
+0:04:36.580,0:04:44.229
+You can add the resize method squish argument to resize and you can now see that this black bear is now looking much thinner
+
+0:04:44.720,0:04:49.059
+But we have got the kind of leaves that are round on each side instance
+
+0:04:51.740,0:04:59.049
+Another question when you use the DL s dot new method what can cannot be changed is it just the
+
+0:04:59.270,0:05:04.719
+Transforms it so it's not dl s new it's bears dot new right? So we're not creating a new data Lotus object
+
+0:05:04.719,0:05:08.949
+We're creating a new data block object. I don't remember off the top of my head
+
+0:05:08.949,0:05:13.179
+so check the documentation and I'm sure somebody can pop the answer into the
+
+0:05:14.449,0:05:16.449
+into the form
+
+0:05:17.440,0:05:18.580
+So
+
+0:05:18.580,0:05:22.020
+you can see when we use dot squish that this grizzly bear is got
+
+0:05:22.810,0:05:24.280
+pretty kind of
+
+0:05:24.280,0:05:31.109
+Wide and weird-looking and this black bear has got pretty weird and thin looking and it's easiest kinda to see what's going on
+
+0:05:31.110,0:05:32.680
+if we use
+
+0:05:32.680,0:05:37.199
+Precise method pad and what dot pad does as you can see is it just add some?
+
+0:05:37.449,0:05:41.279
+Black bars around each side so you can see the grizzly bear was tall
+
+0:05:41.650,0:05:45.720
+So then when we we stretched squashing and stretching opposites of each other
+
+0:05:45.720,0:05:49.589
+So when we stretched it, it ended up wide and the black bear was
+
+0:05:50.889,0:05:54.239
+Originally a wide rectangle. So it ended up looking kind of thin
+
+0:05:58.090,0:06:02.590
+To use zero zeros means pad it with black you can also say like reflect to kind of have
+
+0:06:04.530,0:06:07.260
+The pixels will kind of look a bit better that way if you use reflect
+
+0:06:08.890,0:06:11.489
+All of these different methods have their own problems
+
+0:06:11.650,0:06:18.239
+The the pad method is kind of the cleanest you end up with the correct size you end up with all of the pixels
+
+0:06:18.520,0:06:22.859
+But you also end up with wasted pixels. So you kind of end up with wasted computation
+
+0:06:23.800,0:06:28.380
+This grish method is the most efficient because you get all of the information
+
+0:06:30.610,0:06:37.860
+You know and and nothing's kind of wasted but on the downside your neural nets gonna have to learn to kind of like
+
+0:06:38.230,0:06:42.450
+Recognize when something's being squished or stretched and in some cases, it might it wouldn't even know
+
+0:06:42.760,0:06:44.250
+So if there's two objects
+
+0:06:44.250,0:06:48.390
+You're trying to recognize one of which tends to be thin and one of it tends to be thick in other words
+
+0:06:48.390,0:06:51.509
+They're the same. They could actually be impossible to distinguish
+
+0:06:52.720,0:06:55.260
+And then the default cropping approach
+
+0:06:56.020,0:07:01.020
+Actually removes some information. So in this case
+
+0:07:01.930,0:07:04.890
+You know, this is grizzly bear here
+
+0:07:05.440,0:07:10.440
+We actually lost a lot of its legs. So if figuring it out what kind of bear it was
+
+0:07:11.500,0:07:14.070
+Required looking at its feet. Well, we don't have its feet anymore
+
+0:07:14.950,0:07:16.950
+So they all have downsides
+
+0:07:20.170,0:07:25.319
+So there's something else that you can do a different approach which is instead us to say resize you can say
+
+0:07:25.660,0:07:31.140
+Random resized crop and actually, this is the most common approach and what random resize crop does is each time
+
+0:07:32.770,0:07:34.919
+It actually grabs a
+
+0:07:35.980,0:07:40.980
+Different part of the image and kind of zooms into it. Alright, so
+
+0:07:41.530,0:07:45.059
+these this is all the same image and we're just grabbing a batch of
+
+0:07:45.910,0:07:48.930
+four different versions of it and you can see some are kind of
+
+0:07:49.930,0:07:56.219
+you know, they're all squished in different ways and we've kind of selected different subsets and so forth now this
+
+0:07:56.950,0:08:02.909
+Panna seems worse than any of the previous approaches because I'm losing information like this one here
+
+0:08:02.910,0:08:07.020
+I've actually lost a whole lot of its of its back, right?
+
+0:08:08.440,0:08:12.630
+but the cool thing about this is that remember we want to avoid overfitting and
+
+0:08:14.230,0:08:17.640
+When you see a different part of the animal each time
+
+0:08:18.520,0:08:22.829
+It's much less likely to over fit because you're not seeing the same image on each
+
+0:08:23.650,0:08:26.759
+Epoch that you go around that makes sense. So
+
+0:08:28.870,0:08:35.280
+So this random random resized crop approach is actually super popular and so min scale 0.3 means
+
+0:08:35.800,0:08:37.750
+We're going to pick at least
+
+0:08:37.750,0:08:41.309
+30% of the pixels of kind of the original size each time
+
+0:08:42.010,0:08:45.239
+And then what kind of like zoom into that that square?
+
+0:08:50.740,0:08:52.300
+So
+
+0:08:52.300,0:08:59.490
+This idea of doing something so that each time the model sees the image. It looks a bit different to last time
+
+0:08:59.529,0:09:04.259
+It's called data augmentation. And this is one type of data augmentation. It's
+
+0:09:04.990,0:09:06.990
+Probably the most common
+
+0:09:07.390,0:09:09.220
+But there are others
+
+0:09:09.220,0:09:10.959
+and
+
+0:09:10.959,0:09:14.009
+one of the best ways to do a data augmentation is to use
+
+0:09:15.100,0:09:16.600
+this
+
+0:09:16.600,0:09:21.209
+transforms function and what all transforms does is it actually returns a list of
+
+0:09:22.779,0:09:24.279
+Different
+
+0:09:24.279,0:09:27.029
+augmentations and so there are
+
+0:09:27.760,0:09:30.599
+augmentations which change contrast which change brightness
+
+0:09:31.209,0:09:34.139
+Which warps a perspective so you can see in this one here
+
+0:09:34.140,0:09:38.909
+it looks like this bits much closer to you and this moves much away from you because it's going to be in perspective what it
+
+0:09:38.910,0:09:43.860
+Rotates them see this one's actually being rotated. This one's been made really dark, right?
+
+0:09:45.220,0:09:50.760
+These are batch transforms not item transforms. The difference is that item transforms happen one image at a time?
+
+0:09:50.760,0:09:55.709
+And so the thing that resizes them all of the same size that has to be an item transform
+
+0:09:56.529,0:09:57.899
+Pop it all into a mini batch
+
+0:09:57.899,0:10:03.539
+put it on the GPU and then a batch transform happens to a whole mini batch at a time and
+
+0:10:03.880,0:10:09.570
+by putting these as batch transforms that the augmentation happens super fast because it happens on the GPU and
+
+0:10:09.940,0:10:11.940
+I don't know if there's any other
+
+0:10:12.190,0:10:19.799
+Libraries as we speak which allow you to write your own GPU accelerated transformations that run on the GPU in this way
+
+0:10:21.250,0:10:25.409
+so this is a super handy thing in first AI to
+
+0:10:29.059,0:10:32.048
+So you can check out the documentation or
+
+0:10:33.169,0:10:39.759
+Org transforms and when you do you'll find the documentation for all of the underlying transforms that it basically wraps, right?
+
+0:10:41.179,0:10:43.358
+So you can see if I shift tab
+
+0:10:43.359,0:10:49.149
+I don't remember for showing you this trick before if you go inside the parentheses of a function and hit shift tab a few times
+
+0:10:49.579,0:10:55.598
+it'll pop open a list of all of the arguments and so you can basically see you can say like oh
+
+0:10:57.079,0:11:03.339
+Can I sometimes flip it left? Right? Can I sometimes flip it up down? What's the maximum and I can rotate zoom?
+
+0:11:04.039,0:11:05.959
+range Allah lighting
+
+0:11:05.959,0:11:07.959
+What the perspective?
+
+0:11:08.179,0:11:10.179
+and so forth
+
+0:11:10.639,0:11:14.829
+How can we add different augmentations for train and validation sets?
+
+0:11:16.970,0:11:18.970
+So the cool thing is that
+
+0:11:21.499,0:11:28.209
+Automatically last a I will avoid doing data augmentation on the validation set
+
+0:11:28.939,0:11:32.469
+so all of these all transforms will only be applied to
+
+0:11:33.319,0:11:35.319
+the
+
+0:11:35.839,0:11:37.699
+Training set
+
+0:11:37.699,0:11:43.149
+with the exception of random resize crop random resize crop has a different behavior or each
+
+0:11:43.699,0:11:49.178
+The behavior for the training set is what we just saw which is to randomly pick a subset. I'm going to zoom into it and
+
+0:11:49.729,0:11:51.049
+the
+
+0:11:51.049,0:11:56.769
+Behavior for the validation set is just to grab the center the largest center square that it can
+
+0:12:00.500,0:12:02.450
+You can write your own
+
+0:12:02.450,0:12:06.160
+Transformations that they're just Python they just standard pi torch code
+
+0:12:06.830,0:12:10.629
+the way if you and and by default it will only be applied to
+
+0:12:10.700,0:12:12.939
+The training set if you want to do something fancy
+
+0:12:12.940,0:12:15.999
+Like random resize crop where you actually have different things being applied to H
+
+0:12:16.460,0:12:22.540
+You should come back to the next course to find out how to do that or read the documentation. It's not rocket science, but it's
+
+0:12:23.870,0:12:25.870
+That's something most people need to do
+
+0:12:27.900,0:12:29.900
+Um, okay, so
+
+0:12:31.750,0:12:33.750
+Last time we
+
+0:12:33.910,0:12:39.149
+Did bears dot new with a random resize crop mean scale of 0.5. We added some transforms
+
+0:12:40.240,0:12:43.889
+And he went ahead and trained actually since last week over rerun this notebook
+
+0:12:43.890,0:12:47.759
+I've got it's on a different computer and I've got different images. So it's not all exactly the same
+
+0:12:48.460,0:12:52.860
+but I still got a good confusion matrix of the
+
+0:12:55.470,0:12:58.850
+37 were classified correctly to a Grizzly's of one was a teddy
+
+0:13:00.810,0:13:02.810
+Now
+
+0:13:03.220,0:13:06.790
+Plot plot top losses and it's interesting you can see in this case
+
+0:13:07.399,0:13:10.958
+There's some clearly kind of odd things going on. This is not a bear at all
+
+0:13:11.540,0:13:15.610
+This looks like it's a drawing of a bear which it's decided is
+
+0:13:17.120,0:13:23.079
+Predicted as a Teddy, but this thinks it's meant to be a drawing of a black bear. I can certainly see the confusion
+
+0:13:23.629,0:13:25.040
+You can see
+
+0:13:25.040,0:13:29.199
+How some parts would have been cut off, but talk about how to deal with that later
+
+0:13:29.720,0:13:33.819
+Now one of the interesting things is that we didn't really do much
+
+0:13:34.910,0:13:37.990
+Data cleaning at all before we built this model
+
+0:13:37.990,0:13:44.379
+The only data cleaning we did was just to validate that each image can be opened there. Was that verify images call
+
+0:13:44.899,0:13:52.208
+and the reason for that is it's actually much easier normally to clean your data after you create a model and I'll show you how
+
+0:13:52.759,0:13:54.350
+We've got this thing called
+
+0:13:54.350,0:13:56.350
+image classifier cleaner
+
+0:13:56.810,0:14:00.339
+Where you can pick a category, right?
+
+0:14:01.160,0:14:02.360
+and
+
+0:14:02.360,0:14:04.360
+training set or validation set
+
+0:14:05.910,0:14:09.059
+And then what it will do is it will then
+
+0:14:09.490,0:14:14.339
+List all of the images in that set and it will pick the ones
+
+0:14:14.890,0:14:16.890
+which are
+
+0:14:18.790,0:14:22.019
+The which is the least confident about which is the most likely to be wrong
+
+0:14:23.290,0:14:27.149
+Where the weather loss is the worst to be more precise
+
+0:14:27.880,0:14:29.880
+and so this
+
+0:14:30.130,0:14:32.130
+this is a great way to
+
+0:14:32.590,0:14:37.199
+Look through your data and find problems. So in this case the first one
+
+0:14:37.990,0:14:41.789
+Is not a teddy or a brown bear or a black bear. It's a puppy dog
+
+0:14:42.280,0:14:47.610
+All right. So this is a great cleaner because what I can do is I can now click delete here
+
+0:14:47.950,0:14:53.160
+This one here looks a bit like an Ewok rather than a teddy. I'm not sure. What do you think Rachel isn't an Ewok?
+
+0:14:53.160,0:14:54.940
+I'm going to call it an Ewok
+
+0:14:54.940,0:14:56.940
+Ok, and so you can kind of go through
+
+0:14:58.240,0:15:05.399
+Okay, that's definitely not a teddy and so you can either say like oh that's wrong it's actually a grizzly bear or it's wrong
+
+0:15:05.400,0:15:10.019
+it's a black bear or I should delete it or by default is keep it right and you can kind of keep going through until
+
+0:15:10.020,0:15:12.569
+You think like okay, they're all seem to be fine
+
+0:15:15.040,0:15:17.040
+Maybe that one's not
+
+0:15:18.780,0:15:21.749
+Kind of once you get to the point where they also in to be fine, you can kind of say, okay
+
+0:15:22.690,0:15:28.200
+Probably all the rest to fine too because they all have lower losses. So they all fit the kind of the mold of a teddy
+
+0:15:28.750,0:15:31.440
+And so then I can run this code here
+
+0:15:32.820,0:15:40.549
+Where I just go through cleaner, dr. Leach so that's all the things which I've selected delete for and unlink them so unlink
+
+0:15:42.090,0:15:46.280
+Is just another way of saying delete a file that's the Python name
+
+0:15:46.800,0:15:52.130
+And then go through all the ones that we said change and we can actually move them to the correct
+
+0:15:52.680,0:15:54.680
+directory
+
+0:15:54.900,0:16:00.259
+If you haven't seen this before you might be surprised that we've kind of created our own little gooey inside
+
+0:16:02.850,0:16:04.850
+Jupiter notebook
+
+0:16:05.310,0:16:11.239
+Yeah, you can do this and we built this with less than a screen of code you can check out the source code in the
+
+0:16:11.940,0:16:16.369
+Past AI notebooks. So this is a great time to remind you that
+
+0:16:20.089,0:16:22.089
+This is a great time to remind you that
+
+0:16:23.920,0:16:24.740
+Ji
+
+0:16:24.740,0:16:31.959
+is built with notebooks and so if you go to the first AI repo and clone it and then go to NBS you'll find
+
+0:16:33.350,0:16:36.380
+all of the code of fast AI
+
+0:16:38.010,0:16:43.400
+Written as notebooks and they've got a lot of prose and examples and tests and so forth
+
+0:16:43.680,0:16:49.519
+So the best place to learn about how this is implemented is to look at the notebooks
+
+0:16:50.040,0:16:52.040
+rather than looking at the
+
+0:16:52.890,0:16:54.890
+module code
+
+0:16:56.310,0:16:58.290
+Okay
+
+0:16:58.290,0:17:02.600
+By the way, sometimes you'll see like weird little comments like this
+
+0:17:03.090,0:17:06.769
+These weird little comments are part of a development environment for Jupiter notebook
+
+0:17:06.770,0:17:09.440
+we use called env dev which we built so
+
+0:17:09.870,0:17:14.839
+Silva and I built this thing to make it much easier for us to kind of create books
+
+0:17:15.390,0:17:21.650
+And websites and libraries in Jupiter notebooks. So this particular one here hide
+
+0:17:22.530,0:17:24.270
+means
+
+0:17:24.270,0:17:29.030
+when this is turned into a book or into documentation don't show this cell and
+
+0:17:29.310,0:17:32.869
+The reason for that is because you can see I've actually got it in the text, right?
+
+0:17:32.870,0:17:38.780
+But I thought when you're actually running it, it would be nice to have it sitting here waiting for you to run directly
+
+0:17:38.780,0:17:44.030
+So that's why it's shown in the notebook. But not in the in the book has shown differently
+
+0:17:47.790,0:17:51.180
+Like s : with a quote in the book that would end up saying
+
+0:17:51.370,0:17:56.130
+Sylvia says and then what he says so there's kind of little bits and pieces in the
+
+0:17:56.410,0:17:58.619
+In the notebooks that just look a little bit odd
+
+0:17:58.620,0:18:04.620
+And that's because it's designed that way in order to show in order to create stuff in them
+
+0:18:06.660,0:18:13.849
+Right, so then last week we saw how you can export that to a pickle file that contains all the information from the model
+
+0:18:14.370,0:18:18.589
+And then on the server where you're going to actually do your inference
+
+0:18:18.590,0:18:25.100
+You can then load that save file and you'll get back a learner that you can call predict on so predict
+
+0:18:30.790,0:18:34.200
+Perhaps the most interesting part of predict is the third thing that it returns
+
+0:18:35.630,0:18:38.599
+Which is a tensor in this case containing three numbers
+
+0:18:39.420,0:18:47.420
+But the three numbers there's three of them because we have three classes teddy bear grizzly bear and black bear. All right, and so
+
+0:18:48.360,0:18:55.160
+This doesn't make any sense until you know what the order of the classes is kind of in in
+
+0:18:55.710,0:18:57.710
+in your data loaders
+
+0:18:57.710,0:19:02.240
+And you can ask the data loaders what the order is by asking for its vocab
+
+0:19:02.250,0:19:06.650
+So a vocab in fast AI is a really common concept
+
+0:19:06.650,0:19:12.109
+it's basically any time that you've got like a mapping from numbers to strings or
+
+0:19:13.170,0:19:19.579
+Discrete levels. The mapping is always taught in the vocab. So here this shows us that the
+
+0:19:22.200,0:19:24.200
+The activation or
+
+0:19:26.580,0:19:28.580
+Black bear is
+
+0:19:29.799,0:19:37.388
+Six the activation for grizzly is one and the activation for teddy is ten a neck six
+
+0:19:40.450,0:19:48.150
+So very very confident that this particular one it was a grizzly not surprisingly this was something called grizzly type JPEG
+
+0:19:50.650,0:19:52.650
+Um
+
+0:19:53.670,0:19:55.000
+This
+
+0:19:55.000,0:19:57.420
+This mapping in order to display the correct thing
+
+0:19:57.420,0:20:03.330
+But of course the data loaders object already knows that mapping and it's all the vocab and it's stored in with the loader
+
+0:20:03.880,0:20:06.660
+So that's how it knows to say grizzly automatically
+
+0:20:06.660,0:20:10.350
+So the first thing it gives you is the human readable string that you'd want to display
+
+0:20:11.110,0:20:18.420
+So this is kind of nice that with FASTA a to you you save this object which has everything you need for inference
+
+0:20:18.420,0:20:20.850
+It's got all the you know information about
+
+0:20:22.420,0:20:28.739
+Normalization about any kind of transformation steps about what the vocab is so it can display everything correctly
+
+0:20:30.040,0:20:33.359
+Right. So now we want to
+
+0:20:34.930,0:20:37.049
+Deploy this as an app
+
+0:20:38.290,0:20:43.590
+now if you've done some web programming before then all you need to know is that this
+
+0:20:44.020,0:20:46.530
+line of code and this line of code
+
+0:20:46.630,0:20:51.359
+so this is the line of codes you would call once when your application starts up and
+
+0:20:51.580,0:20:53.580
+Then this is the line of code you would call
+
+0:20:53.710,0:20:57.419
+Every time you want to do an inference, and there's also a batch version of it
+
+0:20:57.420,0:21:00.359
+Which you can look up if you're interested, this is just a Roo one at a time
+
+0:21:03.520,0:21:04.880
+So there's nothing special
+
+0:21:04.880,0:21:08.680
+If you're already a web programmer or have access to a web programmer
+
+0:21:08.930,0:21:13.570
+these that you don't you just have to stick these two lines of code somewhere and the three things you get back whether
+
+0:21:14.270,0:21:17.290
+The the human readable string if you're doing categorization
+
+0:21:18.110,0:21:23.469
+The index of that which in this case is one is grizzly and the probability of each plus
+
+0:21:24.920,0:21:30.729
+One of the things we really wanted to do in this course though is not assume that everybody is a web developer
+
+0:21:31.880,0:21:38.080
+most data scientists aren't but gee wouldn't it be great if all data scientists could at least like prototype an
+
+0:21:38.210,0:21:40.510
+application to show off the thing they're working on and
+
+0:21:41.930,0:21:43.930
+so we've
+
+0:21:43.980,0:21:48.719
+Trying to kind of curate an approach which none of its stuff. We've built. It's really as curated
+
+0:21:49.690,0:21:56.400
+Which shows how you can create a GUI and create a complete application in Jupiter notebook
+
+0:21:57.160,0:21:59.160
+so the
+
+0:21:59.470,0:22:00.490
+Key
+
+0:22:00.490,0:22:07.559
+Pieces of technology we use to do this our ipython widgets, which is always called a PI widgets and voila. I
+
+0:22:08.169,0:22:14.939
+pi widgets, which we import by default as widgets, and that's also what they use in their own documentation as
+
+0:22:15.970,0:22:19.199
+GUI widgets for example a file upload button
+
+0:22:20.290,0:22:21.820
+so if I create
+
+0:22:21.820,0:22:25.350
+this file upload button and then display it I
+
+0:22:25.900,0:22:30.540
+See and we saw this in the last lesson as well or maybe as lesson one an actual clickable button
+
+0:22:32.020,0:22:34.020
+so I can go ahead and
+
+0:22:35.650,0:22:37.650
+Click it
+
+0:22:37.720,0:22:43.689
+OK you've selected one thing. So how do I use that? Well these
+
+0:22:48.470,0:22:55.089
+While these widgets have all kinds of methods and properties and the upload button has a data property
+
+0:22:55.940,0:22:59.559
+Which is an array containing all of the images you uploaded
+
+0:23:00.470,0:23:07.270
+So you can pass that to Pio image create and so doc create is kind of the standard
+
+0:23:10.000,0:23:13.800
+Factory method we use in fast AI to create items
+
+0:23:14.710,0:23:19.229
+And Pol image create is smart enough to be able to create an item from all kinds of different things
+
+0:23:19.330,0:23:24.569
+And one of the things that can create it from is a binary blob which is what a file upload contains
+
+0:23:25.950,0:23:27.950
+so then we can display it and
+
+0:23:28.330,0:23:30.120
+There's our teddy, right?
+
+0:23:30.120,0:23:37.739
+So you can see how you know cells of Jupiter notebook can refer to other cells that were created that were kind of
+
+0:23:38.200,0:23:39.310
+have
+
+0:23:39.310,0:23:41.310
+GUI created data in them
+
+0:23:42.530,0:23:44.930
+Let's hide that teddy away for a moment and
+
+0:23:46.110,0:23:52.160
+the next thing to know about is that there's a kind of widget called output and an output widget is
+
+0:23:53.760,0:23:55.760
+It's basically something that
+
+0:23:56.580,0:24:01.099
+You can fill in later, right? So if I delete actually
+
+0:24:02.040,0:24:04.609
+This part here. So I've now got an output
+
+0:24:05.520,0:24:07.520
+widget
+
+0:24:07.930,0:24:09.930
+Access to this way around
+
+0:24:12.509,0:24:13.359
+And
+
+0:24:13.359,0:24:17.968
+You can't see the output widget, even though I said, please display it because nothing is output
+
+0:24:17.969,0:24:21.719
+So then in the next cell I can say with that output
+
+0:24:22.239,0:24:23.409
+householder
+
+0:24:23.409,0:24:28.799
+Display a thumbnail of the image and you'll see that the the display will not appear here
+
+0:24:30.050,0:24:35.389
+It appears back here, right? Because that's how that's where the placeholder was
+
+0:24:36.840,0:24:40.280
+So let's run that again to clear out that placeholder
+
+0:24:41.940,0:24:46.759
+So we can create another kind of placeholder which is a label their labels kind of a
+
+0:24:47.490,0:24:54.410
+Something where you can put text in it. They can give it a value like I don't know. Please choose an
+
+0:24:55.170,0:24:56.850
+image
+
+0:24:56.850,0:24:59.959
+Okay, so we've now got a label containing please choose an image
+
+0:25:00.630,0:25:03.140
+Let's create another button to do your classification
+
+0:25:04.870,0:25:09.069
+Now this is not a file upload button it's just a general button so this button doesn't do anything
+
+0:25:10.430,0:25:12.759
+all right, it doesn't do anything until we
+
+0:25:13.310,0:25:20.440
+Attach an event handler to it an event handler is a callback. We'll be learning all about callbacks in this course
+
+0:25:21.770,0:25:27.400
+if you've ever done any GUI programming before or even web programming you'll be familiar with the idea that you
+
+0:25:27.800,0:25:35.139
+Write a function, which is the thing you want to be called when the button is clicked on and then somehow you tell your framework
+
+0:25:35.960,0:25:37.960
+That this is the on click event
+
+0:25:38.150,0:25:40.719
+So here I go. Here's my button run. I
+
+0:25:41.240,0:25:43.160
+Say the on click event
+
+0:25:43.160,0:25:45.160
+the button run is
+
+0:25:45.230,0:25:51.610
+We call this code and this code is going to do all the stuff. We just saw and I create an image from the upload
+
+0:25:52.220,0:25:54.970
+It's going to clear the output. Let's play the image
+
+0:25:55.850,0:25:58.390
+call predict and then replace the
+
+0:25:59.060,0:26:01.060
+label with a prediction
+
+0:26:02.750,0:26:07.330
+There it all is now so that hasn't done anything but I can now go back to this classify button
+
+0:26:07.330,0:26:09.819
+Which now has an event handler attached to it. So watch this
+
+0:26:10.550,0:26:12.530
+quick
+
+0:26:12.530,0:26:14.629
+Pump and look that's been filled in
+
+0:26:16.010,0:26:22.999
+Filled in right in case you missed it. Let's run this again to clear everything out. Okay, everything's gone
+
+0:26:27.330,0:26:30.769
+This is please choose an image, there's nothing here I click classify
+
+0:26:32.340,0:26:33.780
+Well
+
+0:26:33.780,0:26:38.090
+Pop-up, right? So it's kind of amazing how our
+
+0:26:39.030,0:26:41.540
+Notebook has suddenly turned into this
+
+0:26:42.210,0:26:47.239
+interactive prototyping playground building applications and so once all this works
+
+0:26:48.300,0:26:51.019
+We can dump it all together. And so
+
+0:26:54.510,0:26:57.439
+The easiest way to dump things together is to create a V box
+
+0:26:57.440,0:26:59.130
+So V box is a vertical box
+
+0:26:59.130,0:27:01.849
+And it's just it's just something that you put widgets in
+
+0:27:01.850,0:27:02.870
+and so in this case
+
+0:27:02.870,0:27:06.409
+We're going to put the following widgets rhiness have a label that says select your beer
+
+0:27:06.570,0:27:10.789
+then an upload button a run button and output placeholder and a
+
+0:27:11.340,0:27:13.140
+label for predictions
+
+0:27:13.140,0:27:15.679
+But let's run these again just to clear everything out. So
+
+0:27:16.590,0:27:18.590
+That we're not cheating
+
+0:27:20.060,0:27:26.210
+And let's create our V box so as you can see it's just got all the
+
+0:27:27.789,0:27:29.789
+All the pieces
+
+0:27:29.950,0:27:31.950
+right
+
+0:27:33.800,0:27:35.800
+We've got whatever
+
+0:27:37.660,0:27:40.899
+I accidentally ran the thing that displayed the bear. Let's get rid of that
+
+0:27:45.600,0:27:52.060
+Okay, so there it is so now I can click upload my bear
+
+0:27:54.880,0:27:56.880
+Okay, and then I can click classify
+
+0:27:57.730,0:28:02.459
+right and notice I've this is exactly that this is this is like the same buttons as
+
+0:28:03.340,0:28:10.169
+These buttons they're like two places with we're viewing the same button, which is kind of a wild idea. So if I click classify
+
+0:28:10.780,0:28:12.780
+it's going to change this label and
+
+0:28:14.350,0:28:17.880
+This label because they're actually both references to the same label look
+
+0:28:20.280,0:28:22.080
+There we go
+
+0:28:22.080,0:28:23.700
+so
+
+0:28:23.700,0:28:28.640
+This is our app. Right? And so this is actually how I built that
+
+0:28:29.340,0:28:31.610
+that image planar GUI is
+
+0:28:32.519,0:28:37.759
+Just using these exact things and I built that image cleaner GUI
+
+0:28:38.669,0:28:44.028
+Cell-by-cell in a notebook just like this and so you get this kind of interactive
+
+0:28:44.610,0:28:46.200
+experimental framework
+
+0:28:46.200,0:28:47.309
+for building a GUI
+
+0:28:47.309,0:28:54.018
+so if you're a data scientist who's never done GUI stuff before this is a great time to get started because now you can
+
+0:28:54.210,0:28:56.210
+You can make actual
+
+0:28:56.370,0:28:57.419
+programs
+
+0:28:57.419,0:28:59.419
+now, of course an actual program
+
+0:28:59.760,0:29:07.609
+Running inside a notebook is kind of cool. But what we really want is this program to run in a place anybody can run it
+
+0:29:08.850,0:29:10.850
+That's where voila comes in Oh
+
+0:29:11.100,0:29:16.819
+Voila and needs to be installed so you can just run these lines
+
+0:29:17.460,0:29:19.460
+Or install it
+
+0:29:21.330,0:29:23.330
+It's listed in the prose
+
+0:29:23.340,0:29:28.429
+and one voila does is it takes a notebook and
+
+0:29:29.610,0:29:32.479
+Doesn't display anything except for the markdown
+
+0:29:33.750,0:29:37.489
+the ipython widgets and the outputs
+
+0:29:38.280,0:29:44.509
+Right, so well the code cells disappear and it doesn't give the person looking at that page the ability to run their own code
+
+0:29:44.510,0:29:46.320
+they can only
+
+0:29:46.320,0:29:48.320
+Interact with the widgets, right?
+
+0:29:48.600,0:29:50.600
+So what I did
+
+0:29:50.970,0:29:57.470
+was a copied and pasted that code from the notebook into a separate notebook, which only has
+
+0:29:59.690,0:30:02.419
+Those lines of code, right so
+
+0:30:07.049,0:30:09.409
+So this is just the same lines of code that we saw before
+
+0:30:12.650,0:30:15.050
+And so this is a notebook it's just a normal notebook
+
+0:30:17.400,0:30:21.469
+And then I installed voila and then when you do that if you
+
+0:30:22.440,0:30:25.999
+Navigate to this notebook but you replace
+
+0:30:30.430,0:30:34.319
+Notebooks up here with voila
+
+0:30:35.970,0:30:38.459
+It actually displays not the notebook but
+
+0:30:40.320,0:30:45.500
+Just as I said the markdown and the widgets so here I've got
+
+0:30:47.250,0:30:51.689
+Bear classifier and I can click upload. Let's do a grizzly bear this time
+
+0:30:56.460,0:31:00.199
+And this is a slightly different version I actually made this so there's no classify button
+
+0:31:00.200,0:31:02.179
+I thought it would be a bit more fancy to make it
+
+0:31:02.179,0:31:05.839
+So when you click upload it just runs everything but as you can see there it all is
+
+0:31:06.420,0:31:08.420
+Right. It's all working. So
+
+0:31:09.540,0:31:11.540
+This is the world's
+
+0:31:11.730,0:31:13.170
+simplest
+
+0:31:13.170,0:31:16.549
+Prototype, but it's it's a proof-of-concept right so you can add
+
+0:31:17.250,0:31:18.750
+widgets with
+
+0:31:18.750,0:31:24.799
+dropdowns and sliders and charts and you know everything that you can have in a
+
+0:31:25.049,0:31:30.289
+You know an angular app or a react app or whatever. And in fact, there's there's even
+
+0:31:31.260,0:31:36.770
+Stuff which lets you use, for example, the whole view j/s framework if you know that it's a very popular
+
+0:31:37.799,0:31:41.059
+JavaScript framework the whole view jes framework, you can actually use it in
+
+0:31:42.299,0:31:44.299
+widgets and voila
+
+0:31:45.000,0:31:47.000
+so now we want to get it so that this
+
+0:31:47.910,0:31:49.530
+this app
+
+0:31:49.530,0:31:51.330
+Can be run by
+
+0:31:51.330,0:31:53.220
+Someone out there in the world
+
+0:31:53.220,0:31:58.010
+So the voila documentation shows a few ways to do that, but perhaps the easiest one
+
+0:31:58.530,0:32:01.669
+Is to use a system called binder
+
+0:32:04.500,0:32:07.050
+So binder is at mine, but my binder org
+
+0:32:08.290,0:32:13.389
+And all you do is you paste in your github repository name here, right? And this is all in the book
+
+0:32:15.510,0:32:17.510
+So you
+
+0:32:18.050,0:32:21.739
+Could have repo name you change where it says
+
+0:32:23.190,0:32:25.460
+Pile we change that to URL
+
+0:32:28.060,0:32:33.509
+You can see and then you put in the path which we were just experimenting with
+
+0:32:34.870,0:32:36.870
+right
+
+0:32:37.860,0:32:43.229
+Pop that here and then you say launch and what that does is it then gives you a URL
+
+0:32:44.740,0:32:46.580
+So then this URL
+
+0:32:46.580,0:32:48.580
+You can pass on
+
+0:32:48.770,0:32:50.240
+to people
+
+0:32:50.240,0:32:52.240
+and this is actually your
+
+0:32:53.000,0:32:57.729
+interactive running application so binders free and so this is an you know,
+
+0:32:57.730,0:33:03.849
+Anybody can now use this to take their voila app and make it a publicly available web
+
+0:33:04.429,0:33:06.429
+application
+
+0:33:06.830,0:33:11.650
+So try it as it mentions here the first time you do this binder takes about five minutes
+
+0:33:12.320,0:33:14.030
+To build your site. Um
+
+0:33:14.030,0:33:20.469
+Because it actually uses something called docker to deploy the whole fast AI framework and Python and blah blah blah
+
+0:33:21.350,0:33:23.350
+But once you've done that
+
+0:33:23.450,0:33:27.790
+That virtual machine will keep running for you know, as long as people are using it. It'll keep running for a while
+
+0:33:32.150,0:33:37.940
+That virtual machine will keep running for a while as long as people are using it and you know, it's it's
+
+0:33:38.580,0:33:40.500
+reasonably fast
+
+0:33:40.500,0:33:42.500
+So a few things to note here
+
+0:33:43.050,0:33:48.169
+Being a free service. You won't be surprised to hear. This is not using a GPU is using a CPU
+
+0:33:49.140,0:33:51.770
+And so that might be surprising
+
+0:33:52.530,0:33:55.519
+But we're deploying to something which runs on a CPU
+
+0:33:59.830,0:34:05.699
+What do you think about it though, this makes much more sense to deploy to a CPU than a GPU
+
+0:34:07.570,0:34:09.570
+The
+
+0:34:10.220,0:34:12.220
+Just a moment
+
+0:34:13.800,0:34:16.979
+Um, the thing that's happening here is that I am
+
+0:34:17.950,0:34:23.909
+Passing along that let's go back to my app in my app. I'm passing along a single image at a time
+
+0:34:25.000,0:34:27.120
+So when I pass along that single image
+
+0:34:27.120,0:34:30.659
+I don't have a huge amount of parallel or work or a GPU to do
+
+0:34:30.850,0:34:34.649
+This is actually something that a CPU is going to be doing more efficiently
+
+0:34:36.130,0:34:39.899
+So we found that for folks coming through this course
+
+0:34:41.020,0:34:44.159
+The vast majority of the time they wanted to deploy
+
+0:34:45.100,0:34:49.019
+Inference on a CPU not a GPU because they're normally this doing one
+
+0:34:49.840,0:34:51.840
+item at a time
+
+0:34:52.240,0:34:55.800
+It's way cheaper and easier to deploy to a CPU
+
+0:34:56.560,0:34:59.610
+And the reason for that is that you can just use any
+
+0:34:59.980,0:35:06.300
+Hosting service you like because just remember this is just a this is just a program at this point, right?
+
+0:35:07.870,0:35:14.189
+And you can use all the usuals horizontal scaling vertical scaling, you know, you can use Heroku you can use AWS
+
+0:35:14.890,0:35:17.189
+You can use inexpensive instances
+
+0:35:19.060,0:35:21.060
+Super cheap and super easy
+
+0:35:21.700,0:35:25.230
+Having said that there are times you might need to deploy to a GPU
+
+0:35:26.590,0:35:33.840
+For example, maybe you're processing videos and so like a single video on on a CPU to process
+
+0:35:33.840,0:35:35.840
+It might take all day
+
+0:35:36.040,0:35:37.750
+or
+
+0:35:37.750,0:35:42.149
+You might be so successful that you have a thousand requests per second in
+
+0:35:42.610,0:35:44.320
+Which case you could like take?
+
+0:35:44.320,0:35:50.789
+128 at a time batch them together and put the whole batch on the GPU and get the results back and pass them back around
+
+0:35:52.260,0:35:54.260
+you gotta be careful of that right because
+
+0:35:55.490,0:36:02.719
+If your requests aren't coming fast enough your user has to wait for a whole batch of people to be ready to to be processed
+
+0:36:04.410,0:36:10.399
+But you know conceptually as long as your site is popular enough that could work
+
+0:36:12.950,0:36:16.839
+The other thing to talk about is you might want to deploy to a mobile phone
+
+0:36:17.780,0:36:19.460
+and
+
+0:36:19.460,0:36:21.380
+the point in to a mobile phone
+
+0:36:21.380,0:36:23.380
+Our recommendation is wherever possible
+
+0:36:23.810,0:36:30.579
+do that by actually deploying to a server and then have a mobile phone talk to the server over a network and
+
+0:36:30.770,0:36:32.750
+Because if you do that
+
+0:36:32.750,0:36:39.579
+Again, you can just use a normal pie torch program on a normal server and normal Network calls. It makes life super easy
+
+0:36:40.790,0:36:44.229
+When you try to run a PI torch app on a phone
+
+0:36:44.780,0:36:49.780
+You are suddenly now not an environment. We're not in an environment where like pi torch will run natively
+
+0:36:49.780,0:36:54.550
+and so you'll have to like convert your program into some other form and
+
+0:36:55.069,0:36:56.599
+There are other forms
+
+0:36:56.599,0:37:02.169
+And the the main form that you convert it to is something called Oh N and X which is specifically designed for
+
+0:37:03.530,0:37:08.769
+Kind of super high speed the high performance, you know
+
+0:37:10.339,0:37:15.999
+Approach that can run on both servers or on mobile phones and it does not require the whole
+
+0:37:17.030,0:37:19.329
+Python and pi torch kind of
+
+0:37:20.119,0:37:22.119
+runtime in place
+
+0:37:22.550,0:37:25.899
+but it's it's much more complex and
+
+0:37:27.020,0:37:33.159
+Not using it's harder to debug it. It's harder to set it up, but it's harder to maintain it. So
+
+0:37:33.980,0:37:37.149
+if possible keep things simple and
+
+0:37:37.819,0:37:43.509
+If you're lucky enough that you're so successful that you need to scale it up to GPUs or and stuff like that
+
+0:37:44.270,0:37:51.759
+then great, you know, hopefully you've got the the finances at that point to justify, you know spending money on a I
+
+0:37:52.310,0:37:55.629
+Want an X expert or serving expert or whatever?
+
+0:37:56.450,0:37:58.040
+And there are various
+
+0:37:58.040,0:38:02.649
+Systems you can use to like go in an X runtime and a wsh maker where you can kind of say
+
+0:38:02.650,0:38:09.609
+Here's my o in an X and or when it all serve it for you or whatever pi torch also has a mobile framework
+
+0:38:10.010,0:38:12.010
+same idea
+
+0:38:13.660,0:38:14.980
+So
+
+0:38:14.980,0:38:20.850
+All right, so you've got I mean it's kind of funny. We're talking about two different kinds of deployment here one is deploying like a
+
+0:38:21.550,0:38:28.019
+Hobby application, you know that you're prototyping showing off to your friends explaining to your colleagues how something might work
+
+0:38:28.210,0:38:34.199
+you know a little interactive analysis, and that's one thing or but maybe you're actually prototyping something that you're
+
+0:38:35.020,0:38:37.020
+Want to turn into a real product?
+
+0:38:37.270,0:38:40.229
+or an actual real part of your company's
+
+0:38:41.110,0:38:42.370
+operations
+
+0:38:42.370,0:38:44.370
+When you're deploying
+
+0:38:45.520,0:38:50.280
+You know something in in real life there's all kinds of things you got to be careful of
+
+0:38:53.319,0:38:56.768
+Sampling to be careful of is let's say you did exactly what we just did
+
+0:38:57.319,0:39:01.149
+Which actually this is your homework is to create your own
+
+0:39:01.789,0:39:06.278
+application and I want you to create your own image search application you can use
+
+0:39:06.859,0:39:11.078
+My exact set of widgets and whatever if you want to but better still
+
+0:39:11.209,0:39:15.999
+Go to the I pi widgets website and see what other widgets they have and try and come up with something cool
+
+0:39:17.569,0:39:24.399
+Try and comment, you know try and show off as best as you can and show us on the forum now, let's say you decided
+
+0:39:25.039,0:39:27.019
+that
+
+0:39:27.019,0:39:29.049
+You want to create an app that would help
+
+0:39:29.509,0:39:34.419
+The users of your app decide if they have healthy skin or unhealthy skin
+
+0:39:34.459,0:39:41.019
+So if you did the exact thing we just did rather than searching for grizzly bear and teddy bear and so forth on bing
+
+0:39:41.599,0:39:46.659
+You would search for healthy skin and unhealthy skin and so here's what happens, right?
+
+0:39:46.969,0:39:49.629
+if I and remember in our version
+
+0:39:49.630,0:39:55.599
+We never actually looked at being we just used the Bing API the Image Search API, but behind the scenes
+
+0:39:55.599,0:40:01.869
+It's just using the website. And so if I click healthy if I type healthy skin and say search
+
+0:40:03.530,0:40:06.949
+I actually discover that the definition of healthy skin is
+
+0:40:08.700,0:40:10.700
+Young white women
+
+0:40:11.640,0:40:13.070
+touching their face leveling
+
+0:40:13.070,0:40:19.820
+Lee, so that's what your your healthy skin classifier would learn to detect
+
+0:40:20.580,0:40:22.580
+right, and so
+
+0:40:23.070,0:40:28.879
+This is so this is a great example from Deborah G. And you should check out her paper actionable auditing
+
+0:40:30.300,0:40:35.449
+for lots of cool insights about model bias, but I mean here's here's like a
+
+0:40:36.540,0:40:38.749
+fascinating example of how if you weren't looking
+
+0:40:39.390,0:40:41.390
+at your data carefully
+
+0:40:41.820,0:40:43.820
+You you end up
+
+0:40:43.830,0:40:47.809
+With something that doesn't at all actually solve the problem you want to solve?
+
+0:40:53.100,0:40:55.100
+This is tricky right because
+
+0:40:56.330,0:41:03.019
+The data that you train your algorithm on if you're building like a new product that didn't exist before by definition
+
+0:41:03.020,0:41:07.939
+You don't have examples of the kind of data that's going to be used in real life, right?
+
+0:41:07.940,0:41:14.780
+So you kind of try to find some from somewhere and if there and if you do that throw it through like a Google search
+
+0:41:15.450,0:41:17.540
+Pretty likely you're not going to end up with
+
+0:41:18.300,0:41:22.160
+A set of data that actually reflects the kind of mix you would see in real life
+
+0:41:25.599,0:41:27.599
+So
+
+0:41:29.450,0:41:33.919
+You know the main thing here is to say be careful right and and in particular for your test set
+
+0:41:33.920,0:41:35.990
+You know that final set that you check on
+
+0:41:36.839,0:41:39.289
+really try hard to gather data that
+
+0:41:39.810,0:41:45.019
+reflects the real world so that Gus, you know, for example for the healthy skin example
+
+0:41:45.150,0:41:51.500
+You might go and actually talk to a dermatologist and try and find like ten examples of healthy and unhealthy skin or something
+
+0:41:52.410,0:41:54.920
+And that would be your kind of gold standard test
+
+0:41:56.420,0:41:58.420
+Um
+
+0:41:58.790,0:42:03.849
+There's all kinds of issues you have to think about in deployment I can't cover all of them
+
+0:42:04.099,0:42:10.119
+I can tell you that this O'Reilly book called building machine learning powered applications
+
+0:42:10.820,0:42:13.570
+Is is a great resource?
+
+0:42:14.599,0:42:18.219
+And this is one of the reasons we don't go into detail about
+
+0:42:19.609,0:42:23.889
+AP to a B testing and when should we refresh our data and we
+
+0:42:24.320,0:42:28.539
+monitor things and so forth is because that books already been written so we don't want to
+
+0:42:29.180,0:42:31.180
+Rewrite it
+
+0:42:33.550,0:42:37.989
+I do want to mention a particular area that I care a lot about though
+
+0:42:40.140,0:42:42.060
+Which is
+
+0:42:42.060,0:42:43.860
+Let's take this example
+
+0:42:43.860,0:42:49.370
+Let's say you're rolling out this bear detection system and it's going to be attached to video cameras around a campsite
+
+0:42:49.680,0:42:57.200
+It's going to warn campers of incoming bears. So if we used to model that was trained with that data that we just looked at
+
+0:42:58.140,0:43:00.140
+You know, those are all
+
+0:43:00.330,0:43:04.580
+Very nicely taken pictures of pretty perfect bears, right?
+
+0:43:05.940,0:43:07.470
+There's really no relationship
+
+0:43:07.470,0:43:11.240
+To the kinds of pictures. You're actually going to have to be dealing with in your in your
+
+0:43:11.820,0:43:18.499
+Campsite bear detector, which has it's going to have video and not images. It's going to be nighttime. There's going to be probably low resolution
+
+0:43:19.110,0:43:21.110
+security cameras
+
+0:43:21.420,0:43:27.409
+You need to make sure that the performance of the system is fast enough to tell you about it before the bear kills you
+
+0:43:29.010,0:43:34.249
+You know, there will be bears that are partially obscured by bushes or in lots of shadow or whatever
+
+0:43:34.380,0:43:38.059
+None of which are the kinds of things you would see normally in like internet pictures
+
+0:43:39.420,0:43:45.620
+So what we call this we call this out of domain data out of domain data refers to a situation where?
+
+0:43:46.140,0:43:50.840
+The data that you are trying to do inference on is in some way different
+
+0:43:51.330,0:43:54.709
+To the kind of data that you trained with
+
+0:43:56.549,0:44:02.758
+This is actually um, there's no perfect way to answer this question and when we look at
+
+0:44:05.140,0:44:07.559
+Really helpful ways to to
+
+0:44:08.650,0:44:14.879
+minimize how much this happens for example, it turns out that having a diverse team is a great way to
+
+0:44:15.910,0:44:20.759
+Kind of avoid being surprised by the kinds of data that people end up coming up with
+
+0:44:22.359,0:44:26.338
+But really is just something you've got to be super thoughtful about
+
+0:44:28.690,0:44:30.810
+Very similar to that is something called
+
+0:44:31.030,0:44:38.249
+The main shift and the main shift is where maybe you start out with all of your data is in domain data, but over time
+
+0:44:38.770,0:44:40.770
+The kinds of data that you're seeing
+
+0:44:41.290,0:44:43.739
+changes and so over time maybe
+
+0:44:44.680,0:44:48.000
+raccoons start invading your campsite and you
+
+0:44:48.610,0:44:51.569
+Weren't training on recurrence before it was just a bear detector
+
+0:44:51.570,0:44:57.149
+And so that's court domain shift and that's another thing that you have to be very careful of great choice or question
+
+0:44:57.970,0:45:00.300
+No, I was just gonna add to that in saying that
+
+0:45:01.000,0:45:06.570
+All data is biased so there's not kind of a, you know, a form of de bias data
+
+0:45:07.600,0:45:12.059
+Perfectly representative in all cases data and that a lot of the proposals around
+
+0:45:12.250,0:45:17.790
+Addressing this have kind of been converging to this idea and that you see in papers like Tim net get bruised
+
+0:45:18.220,0:45:22.800
+data sheets for datasets of just writing down a lot of the
+
+0:45:23.710,0:45:30.000
+Details about your data set and how it was gathered and in which situations it's appropriate to use and how it was maintained
+
+0:45:30.000,0:45:34.500
+And so there that's not that you've totally eliminated bias
+
+0:45:34.500,0:45:40.050
+but that you're just very aware of the attributes of your data set so that you won't be blindsided by them later and
+
+0:45:40.450,0:45:47.790
+there have been kind of several proposals in that school of thought which I which I really like around this idea of just kind of
+
+0:45:48.850,0:45:51.959
+Understanding how your data was gathered and what its limitations are
+
+0:45:53.920,0:45:55.920
+Thanks, Rachel
+
+0:45:56.320,0:46:03.719
+So a key problem here is that you can't know the entire behavior of your neural network
+
+0:46:05.290,0:46:10.439
+With normal programming you typed in the if statements and the loops and whatever
+
+0:46:10.440,0:46:12.510
+So in theory, you know, what the hell it does
+
+0:46:12.580,0:46:17.429
+Although it still sometimes surprising in this case you you didn't tell it anything. You just gave it
+
+0:46:18.010,0:46:21.600
+Examples alone from and hope that it learned something useful
+
+0:46:21.760,0:46:25.979
+There are hundreds of millions of parameters in all of these neural networks
+
+0:46:25.980,0:46:31.320
+And so there's no way you can understand how they all combine with each other to create complex behavior
+
+0:46:31.630,0:46:35.820
+so really like there's a natural compromise here is that we're trying to
+
+0:46:38.099,0:46:41.479
+Sophisticated behavior so stuff like like recognizing
+
+0:46:42.450,0:46:43.799
+pictures
+
+0:46:43.799,0:46:45.799
+Sophisticated enough behavior. We can't describe it
+
+0:46:46.440,0:46:52.879
+And so the natural downside is you can't expect the process that the thing is using to do that to be describable
+
+0:46:53.280,0:46:55.280
+View for you to be able to understand it. So
+
+0:46:56.549,0:47:00.799
+Our recommendation for kind of dealing with these issues is a very careful
+
+0:47:01.650,0:47:05.839
+Deployment strategy which I've summarized in this little graph this little chart here
+
+0:47:07.200,0:47:08.880
+the idea would be
+
+0:47:08.880,0:47:10.319
+first of all
+
+0:47:10.319,0:47:16.609
+Whatever it is that you're going to use the model for start out by doing it manually. So have a park ranger
+
+0:47:17.339,0:47:19.339
+watching for bears
+
+0:47:19.740,0:47:24.349
+Have the model running next to them and each time the park ranger sees a bear
+
+0:47:24.480,0:47:29.839
+They can check the morale and see like did it see into a pick it up? So the models not doing anything
+
+0:47:30.210,0:47:35.089
+There's just a person who's like running it and seeing would it have made sensible choices?
+
+0:47:36.240,0:47:40.879
+And once you're confident that it makes sense that what it's doing seems reasonable in
+
+0:47:41.460,0:47:45.649
+You know as being as close to the real-life situation as possible
+
+0:47:47.599,0:47:52.159
+Then deploy it in a time and geography limited way
+
+0:47:52.160,0:47:57.379
+so pick like one campsite not the entirety of California and do it for
+
+0:47:57.900,0:48:00.019
+you know one day and
+
+0:48:00.720,0:48:08.299
+Have somebody watching its super carefully, right? So now the basic bear detection is being done by the Baudette bear detector
+
+0:48:08.299,0:48:13.399
+But there's still somebody watching it pretty closely and it's only happening in one campsite for one day
+
+0:48:13.400,0:48:15.440
+And so then as you say like, okay
+
+0:48:16.410,0:48:18.410
+we haven't
+
+0:48:18.720,0:48:20.720
+Right our company yet
+
+0:48:20.980,0:48:25.590
+Campsites for a week and then let's do you know the entirety of Marin for a month and
+
+0:48:26.200,0:48:29.189
+so forth, so this is actually what we did when I
+
+0:48:29.770,0:48:31.300
+used to
+
+0:48:31.300,0:48:33.359
+Be at this company called optimal decisions
+
+0:48:34.480,0:48:38.310
+optimal decisions was a company that I found it to do insurance pricing and
+
+0:48:38.619,0:48:46.409
+If you if you change insurance prices by, you know, a percent or two in the wrong direction in the wrong way
+
+0:48:47.140,0:48:53.340
+You can basically destroy the whole company. Um, this has happened many times, you know insurers are companies
+
+0:48:53.980,0:48:57.810
+That set prices that's basically the product that they provide
+
+0:48:58.359,0:49:04.979
+So when we deployed new prices for optimal decisions, we always did it by like saying like, okay
+
+0:49:04.980,0:49:08.070
+we're going to do it for like five minutes or
+
+0:49:08.590,0:49:12.779
+Everybody whose name ends with a D, you know, so we kind of try to find some
+
+0:49:13.900,0:49:17.010
+Group, which hopefully would be fairly, you know
+
+0:49:17.349,0:49:18.520
+It would all be different
+
+0:49:18.520,0:49:23.550
+but not too many of them and would gradually scale it up and you've got to make sure that when you're doing this that you
+
+0:49:23.550,0:49:25.550
+have a lot of
+
+0:49:25.670,0:49:28.749
+Really good reporting systems in place that you can recognize
+
+0:49:29.930,0:49:33.909
+Are your customers yelling at you? Are your computers burning up?
+
+0:49:35.210,0:49:37.210
+you know are your
+
+0:49:38.900,0:49:46.119
+Are your computers burning up are your costs spiraling out of control and so forth so it really requires
+
+0:49:47.030,0:49:49.030
+Great
+
+0:49:49.130,0:49:51.130
+Reporting systems
+
+0:49:52.130,0:50:00.130
+This fast AI have methods built-in that provide for incremental learning ie improving the model slowly over time with a single data point each time
+
+0:50:01.520,0:50:03.520
+Yeah, that's a great question. So
+
+0:50:04.190,0:50:07.029
+this is a little bit different which is this is really about
+
+0:50:08.000,0:50:14.890
+Dealing with domain shift and similar issues by continuing to train your model as you do inference. And so the good news is
+
+0:50:15.740,0:50:17.800
+You don't need anything special for that
+
+0:50:18.770,0:50:21.729
+It's basically just a transfer learning problem. So
+
+0:50:22.310,0:50:27.279
+You can do this in many different ways. Probably the easiest is just to say like okay each night
+
+0:50:28.640,0:50:32.019
+probably the easiest is just to say ok each night you
+
+0:50:33.110,0:50:34.670
+Know at midnight
+
+0:50:34.670,0:50:36.130
+We're going to set off a task
+
+0:50:36.130,0:50:43.029
+Which grabs all of the previous day's transactions as many batches and trains another epoch
+
+0:50:43.970,0:50:45.530
+and
+
+0:50:45.530,0:50:50.290
+So yeah, that that actually works fine. You can basically think of this as a
+
+0:50:51.140,0:50:58.119
+Fine tuning approach where you're pre trained model is yesterday's model and you're fine-tuning data is today's data
+
+0:50:59.840,0:51:03.159
+So as you roll out your model
+
+0:51:04.580,0:51:11.409
+One thing to be thinking about super carefully is that it might change the behavior of the system that it's a part of
+
+0:51:11.930,0:51:18.130
+And this can create something called a feedback loop and feedback. Loops are one of the most challenging things for
+
+0:51:19.430,0:51:22.840
+for real world model deployment particularly of machine learning models
+
+0:51:24.290,0:51:26.090
+because they can take a
+
+0:51:26.090,0:51:28.090
+very minor issue and
+
+0:51:28.460,0:51:30.460
+Explode it into a really
+
+0:51:31.130,0:51:32.630
+big issue
+
+0:51:32.630,0:51:35.140
+so for example, think about a
+
+0:51:36.050,0:51:38.050
+predictive policing algorithm
+
+0:51:38.480,0:51:41.140
+It's an algorithm that was trained to recognize
+
+0:51:43.400,0:51:48.010
+You know basically trained on data that says whereabouts or arrests being made
+
+0:51:48.860,0:51:54.249
+And then as you train that algorithm based on where arrests are being made
+
+0:51:55.940,0:52:02.890
+Then you put in place a system that sends police officers to places that the model says
+
+0:52:03.200,0:52:09.520
+Are likely to have crime which in this case? Where were were there? Where were arrests?
+
+0:52:10.800,0:52:12.800
+Well, then more police go to that place
+
+0:52:13.960,0:52:19.260
+Find more crime because the more police that are there the more they'll see they arrest more people
+
+0:52:20.020,0:52:23.880
+Causing you know, and then if you do this incremental learning like we're just talking about that
+
+0:52:23.880,0:52:28.589
+It's going to say oh there's actually even more crime here. And so tomorrow it sends even more police
+
+0:52:29.410,0:52:36.149
+And so in that situation you end up like the predictive policing algorithm ends up kind of sending all of your police
+
+0:52:36.730,0:52:38.560
+or one street block
+
+0:52:38.560,0:52:44.640
+Because at that point all of the arrests are happening there because that's the only place you have policemen and I should say police officers
+
+0:52:46.030,0:52:48.209
+so there's actually a paper about
+
+0:52:49.300,0:52:57.029
+This issue called to protect and serve and in to protect and serve the author's right this really nice phrase
+
+0:52:57.430,0:53:02.880
+Predictive policing is aptly named it is predicting policing not predicting
+
+0:53:03.490,0:53:05.490
+crime so
+
+0:53:05.770,0:53:07.770
+if the initial model was
+
+0:53:08.910,0:53:13.969
+Perfect, whatever the hell that even means but like it's somehow sent police to exactly
+
+0:53:14.729,0:53:20.989
+The best places to find crime based on the probability of crimes actually being in place
+
+0:53:23.150,0:53:25.150
+I guess there's no problem, right?
+
+0:53:26.670,0:53:29.059
+But as soon as there's any amount of
+
+0:53:29.760,0:53:32.719
+Bias, right. So for example in the US
+
+0:53:33.690,0:53:35.690
+There's a lot more arrests
+
+0:53:36.870,0:53:43.880
+Of black people than of white people even for crimes where black people and white people are known to do than the same amount
+
+0:53:45.100,0:53:47.100
+So in the presence of this bias
+
+0:53:47.270,0:53:49.270
+or any kind of bias
+
+0:53:49.880,0:53:57.190
+You're kind of like setting off this domino chain of feedback loops where that bias will be
+
+0:53:57.830,0:53:59.750
+exploded
+
+0:53:59.750,0:54:01.750
+over time
+
+0:54:02.360,0:54:03.590
+So
+
+0:54:03.590,0:54:08.350
+You know one thing I like to think about is to think like well what would happen if this?
+
+0:54:09.410,0:54:12.729
+If this model was just really really really good
+
+0:54:13.920,0:54:15.920
+They were like who would be impacted?
+
+0:54:16.020,0:54:23.430
+You know, what would this extreme result look like how would you know what was really happening this incredibly predictive algorithm. That was like
+
+0:54:24.010,0:54:30.119
+Changing the behavior of yours if you're police officers or whatever, you know, what would that look like? What would actually happen?
+
+0:54:32.230,0:54:36.000
+And then like think about like, okay what could go wrong
+
+0:54:36.000,0:54:40.289
+And then what kind of rollout plan what kind of monitoring systems what kind of oversight?
+
+0:54:41.050,0:54:48.840
+Could provide the circuit breaker because that's what we really need here right is we need like nothing's going to be perfect. You can't
+
+0:54:49.600,0:54:51.690
+Be sure that there's no feedback. Loops
+
+0:54:52.330,0:54:59.010
+but what you can do is try to be sure that you see when the behavior of your system is behaving in a way that's
+
+0:54:59.560,0:55:01.560
+Not what you want
+
+0:55:01.750,0:55:03.809
+Did you have anything to add to that Rachel I?
+
+0:55:06.010,0:55:10.229
+Would add to that is that you're at risk of potentially having a feedback loop
+
+0:55:10.600,0:55:17.279
+Anytime that your model is kind of controlling what your next round of data looks like and I think that's true for pretty much all
+
+0:55:17.410,0:55:19.410
+products and that can be a
+
+0:55:20.200,0:55:23.399
+hard jump from people people coming from kind of a science background
+
+0:55:23.470,0:55:28.139
+Where you may be thinking of data as I have just observed some sort of experiment
+
+0:55:28.480,0:55:30.480
+Where is kind of whenever you're you know?
+
+0:55:30.480,0:55:32.480
+Building something that interacts with the real world
+
+0:55:32.590,0:55:38.279
+You are now also controlling what your future data looks like based on kind of behavior of your algorithm
+
+0:55:38.410,0:55:40.410
+For the current current round of data
+
+0:55:41.380,0:55:43.380
+right, so
+
+0:55:43.720,0:55:45.670
+So given that
+
+0:55:45.670,0:55:47.819
+You probably can't avoid feedback. Loops
+
+0:55:48.850,0:55:52.589
+the you know, the the thing you need to then really invest in is
+
+0:55:53.110,0:55:56.700
+the human in the loop, and so a lot of people like to focus on
+
+0:55:57.340,0:56:03.329
+Automating things which I find weird, you know, if you can decrease the amount of human involvement by like 90 percent
+
+0:56:03.760,0:56:09.299
+you've got almost all of the economic upside of automating it completely but you still have the room to put
+
+0:56:09.460,0:56:12.389
+Human circuit breakers in place. You need these appeals processes
+
+0:56:12.400,0:56:19.440
+You need the monitoring you need, you know humans involved to kind of go. Hey, that's that's weird
+
+0:56:19.440,0:56:21.440
+I don't think that's what we want
+
+0:56:22.000,0:56:23.630
+Okay
+
+0:56:23.630,0:56:30.040
+Yes, Rachel and just one more note about that those humans though. Do need to be integrated well with
+
+0:56:30.680,0:56:36.909
+Kind of product and engineering and so one issue that comes up is that in many companies? I think that
+
+0:56:37.430,0:56:42.520
+Ends up kind of being underneath trust and safety handles a lot of sort of issues with how things can go wrong
+
+0:56:42.650,0:56:45.010
+Or how your platform can be abused?
+
+0:56:45.380,0:56:49.210
+and often trust and safety is pretty siloed away from
+
+0:56:49.400,0:56:55.240
+Product and edge which actually kind of has the the control over, you know these decisions that really end up influencing them
+
+0:56:55.240,0:56:56.900
+and so that they the
+
+0:56:56.900,0:57:02.170
+Engineers probably considered them to be pretty pretty annoying a lot of the time how they get in the way and get in the way
+
+0:57:02.170,0:57:07.300
+Of them getting software out the door. Yeah, but like the kind of the more integration you can have between those
+
+0:57:07.300,0:57:10.840
+I think it's helpful for the kind of the people building the product to see
+
+0:57:11.060,0:57:15.219
+What is going wrong and what can go wrong if the engineers are actually on top of that?
+
+0:57:15.220,0:57:20.470
+They're actually seeing these these things happening that it's not some kind of abstract problem anymore
+
+0:57:21.750,0:57:24.629
+So, you know at this point now that we've got to the end of chapter 2
+
+0:57:26.560,0:57:31.169
+You actually know a lot more than most people about
+
+0:57:32.020,0:57:39.749
+about deep learning and actually about some pretty important foundations of machine learning more generally and if data products more generally
+
+0:57:40.570,0:57:42.570
+So there's a great time to think about
+
+0:57:43.000,0:57:45.000
+writing
+
+0:57:45.640,0:57:47.640
+So
+
+0:57:48.540,0:57:50.460
+Sometimes we have
+
+0:57:50.460,0:57:56.869
+Formatted text that doesn't quite format correctly interpret a notebook by the way, it only formats correctly in in the book book
+
+0:57:56.869,0:58:00.108
+So that's what it means when you see this kind of pre formatted text
+
+0:58:03.450,0:58:05.450
+So
+
+0:58:05.760,0:58:08.399
+The the idea here is to think about
+
+0:58:10.090,0:58:16.619
+Starting writing at this point before you go too much further Rachel
+
+0:58:18.460,0:58:20.970
+There's a question, okay, let's hit the question
+
+0:58:21.910,0:58:28.800
+Question is I am I assume there are fast day. I type ways of keeping a nightly updated transfer learning setup
+
+0:58:29.080,0:58:35.340
+Well, could there be one of the fasting for notebooks have an example of the nightly transfer learning training?
+
+0:58:36.400,0:58:41.369
+Like the previous person asks, I would be interested in knowing how to do that. Most effectively with fast AI
+
+0:58:42.100,0:58:46.739
+Sure, so I guess my view is there's nothing faster you guys specific about that at all?
+
+0:58:47.290,0:58:53.159
+So I actually suggest you read a manuals book that book. I showed you to understand the kind of the ideas
+
+0:58:54.130,0:58:58.500
+And if people are interested in this I can also point you with some academic research about this as well
+
+0:58:58.500,0:59:00.869
+And there's not as much as that there should be
+
+0:59:01.450,0:59:03.750
+But there is some there is some good work in this area
+
+0:59:06.640,0:59:08.640
+Okay, so
+
+0:59:09.280,0:59:13.620
+the reason we mentioned writing at this point in our journey is because
+
+0:59:15.569,0:59:20.159
+You know things are going to start to get more and more heavy more and more complicated and
+
+0:59:20.619,0:59:25.439
+A really good way to make sure that you're on top of it is to try to write down what you've learned
+
+0:59:28.640,0:59:34.819
+Sharing the right part of the screen before but this is what I was describing in terms of the pre-formatted text, which doesn't look correct
+
+0:59:37.110,0:59:39.110
+So
+
+0:59:39.660,0:59:41.660
+When so
+
+0:59:42.780,0:59:48.470
+Rachel actually has this great article that you should check out which is why you should blog and
+
+0:59:49.170,0:59:50.550
+I
+
+0:59:50.550,0:59:54.140
+Will say it's sort of her saying cuz I have it in front of me and she doesn't
+
+0:59:54.840,0:59:56.960
+weird as it is so rachel says
+
+0:59:58.080,1:00:02.120
+That the top advice she would give her younger self is to start blogging sooner
+
+1:00:02.370,1:00:07.549
+So rachel has a math PhD in this kind of idea of like blogging was not exactly something
+
+1:00:07.550,1:00:10.850
+I think they had a lot of in the ph.d program
+
+1:00:11.790,1:00:15.170
+But actually it's like it's a really great way of
+
+1:00:16.320,1:00:22.400
+Finding jobs. In fact, most of my students who have got the best jobs our students that have
+
+1:00:23.280,1:00:25.280
+good blog posts
+
+1:00:25.530,1:00:27.590
+The thing I really love is that it helps you learn
+
+1:00:28.230,1:00:31.879
+By by writing down. It's kind of synthesizes your ideas
+
+1:00:32.820,1:00:34.820
+and
+
+1:00:36.030,1:00:39.620
+Yeah, you know, there's lots of reasons to blog so there's actually
+
+1:00:40.680,1:00:43.279
+Something really cool. I want to show you. Yeah
+
+1:00:44.250,1:00:49.220
+As also just gonna note I have a second post called advice for better blog post
+
+1:00:49.530,1:00:53.600
+That's a little bit more advanced which I'll post a link to as well
+
+1:00:53.970,1:00:54.840
+and that
+
+1:00:54.840,1:00:56.280
+talks about some common pitfalls
+
+1:00:56.280,1:01:02.150
+that I've seen in many in many blog posts and kind of the importance of putting putting the time in to do it well and
+
+1:01:02.250,1:01:05.960
+And some things to think about so I'll share that post as well. Thanks, Rachel
+
+1:01:06.210,1:01:12.889
+um, so one reason that sometimes people don't blog is because it's kind of annoying to figure out how to
+
+1:01:14.250,1:01:17.300
+particularly because I think the thing that a lot of you will want to blog about is
+
+1:01:18.180,1:01:20.569
+Cool stuff that you're building and Jupiter notebooks. So
+
+1:01:21.690,1:01:29.690
+We've actually teamed up with a guy called Hamel sane and and with github to create this
+
+1:01:30.330,1:01:32.070
+free product
+
+1:01:32.070,1:01:38.749
+As usual with faster ie no ads, no anything called fast pages where you can actually blog
+
+1:01:39.420,1:01:41.420
+with Jupiter notebooks
+
+1:01:42.210,1:01:43.270
+So
+
+1:01:43.270,1:01:46.199
+You can go to fuss pages and see for yourself how to do it
+
+1:01:46.200,1:01:50.639
+But the basic idea is that like you literally click one button
+
+1:01:52.500,1:01:55.649
+Sets up a plug for you and then you dump your
+
+1:01:56.590,1:01:57.790
+notebooks
+
+1:01:57.790,1:02:02.310
+Into a folder called underscore notebooks and they get turned into
+
+1:02:03.160,1:02:09.240
+blog posts it's it's basically like magic and Hamill's done this amazing job of this and so
+
+1:02:11.260,1:02:14.100
+This means that you can create blog posts where you've got
+
+1:02:14.680,1:02:21.840
+Charts and tables and images, you know where they're all actually the output of you put a notebook
+
+1:02:22.390,1:02:24.390
+along with all the the markdown
+
+1:02:24.970,1:02:27.720
+formatted text headings and so forth and
+
+1:02:28.330,1:02:36.029
+Hyperlinks and the whole thing. So this is a great way to start writing about what you're learning about here
+
+1:02:38.410,1:02:44.129
+Something that Rachel and I both feel strongly about when it comes to blogging is this which is
+
+1:02:47.150,1:02:54.319
+Don't try to think about the absolute most advanced thing, you know and try to write a blog post that would impress
+
+1:02:54.990,1:02:56.370
+geoff hinton
+
+1:02:56.370,1:02:58.789
+Right because most people are not geoff hinton
+
+1:02:58.980,1:03:02.959
+so like a you probably won't do a good job because you're trying to like
+
+1:03:03.420,1:03:06.680
+log for somebody who's more got more expertise than you and
+
+1:03:07.290,1:03:08.670
+be
+
+1:03:08.670,1:03:11.270
+You've got a small audience now, right?
+
+1:03:11.300,1:03:17.810
+Actually, there's far more people that are not very familiar with deep learning than people who are so try to think, you know
+
+1:03:17.810,1:03:19.810
+And and you really understand what it's like
+
+1:03:20.340,1:03:24.559
+What it was like six months ago to be you because you were there six months ago
+
+1:03:24.560,1:03:30.350
+So try and write something which the six months ago version of you would have been like super
+
+1:03:30.660,1:03:35.809
+Interesting full of little tidbits. You would have loved you know that you would that would have delighted you
+
+1:03:36.630,1:03:39.289
+that six months ago version of you
+
+1:03:40.680,1:03:48.349
+Okay. So once again don't move on until you've had a go at the questionnaire to make sure that you
+
+1:03:50.100,1:03:53.660
+You know understand the key things we think that you need to understand
+
+1:03:54.300,1:04:01.519
+And yeah have a think about these further research questions as well because they might help you to engage more closely with material
+
+1:04:02.460,1:04:05.000
+So let's have a break and we'll come back in
+
+1:04:05.910,1:04:07.910
+five minutes time
+
+1:04:10.530,1:04:12.530
+So welcome back everybody
+
+1:04:13.589,1:04:15.589
+This is a
+
+1:04:16.240,1:04:19.990
+Interesting moment in the course because we're kind of jumping from
+
+1:04:20.840,1:04:25.989
+a part of the course which is, you know, very heavily around kind of
+
+1:04:27.329,1:04:32.879
+The kind of 'this the the the structure of like what are we trying to do with machine learning?
+
+1:04:32.890,1:04:35.699
+And what are the kind of the pieces and what do we need to know?
+
+1:04:37.260,1:04:44.790
+To make everything kind of work together there was a bit of code but not masses there was basically no math
+
+1:04:47.130,1:04:50.849
+And we kind of want to put that at the start for everybody who's not
+
+1:04:51.790,1:04:56.009
+You know who's kind of wanting to an understanding of these issues?
+
+1:04:57.460,1:04:59.460
+without necessarily
+
+1:05:00.010,1:05:06.060
+Wanting to kind of dive deep into the code in the math themselves, and now we're getting into the diving deeper part
+
+1:05:07.330,1:05:09.330
+If if you're not
+
+1:05:09.610,1:05:11.520
+Interested in that diving deep yourself
+
+1:05:11.520,1:05:18.270
+you might want to skip to the next lesson about ethics where we you know is kind of rules that rounds out the kind of
+
+1:05:19.570,1:05:22.080
+You know slightly less technical material
+
+1:05:25.460,1:05:27.880
+So what we're going to look at here is we're going to look at
+
+1:05:29.500,1:05:31.500
+What we think of as kind of a toy problem
+
+1:05:32.530,1:05:34.060
+but
+
+1:05:34.060,1:05:37.289
+Just a few years ago is considered a pretty challenging problem
+
+1:05:38.050,1:05:41.039
+The problem is recognizing handwritten digits
+
+1:05:42.400,1:05:44.400
+And we're going to try and do it
+
+1:05:44.510,1:05:46.039
+from scratch
+
+1:05:46.039,1:05:48.879
+Right and we're gonna try and look at a number of different ways to do it
+
+1:05:50.059,1:05:52.749
+So we're going to have a look at a data set
+
+1:05:53.510,1:06:00.789
+Called M nest and so if you've done any machine learning before you may well have come across M nest it contains handwritten digits
+
+1:06:01.520,1:06:05.859
+And it was collided into a machine learning data set by a guy called John McCone
+
+1:06:06.589,1:06:10.899
+and some colleagues and they use that to demonstrate and one of the you know
+
+1:06:10.900,1:06:14.349
+Probably the first computer system to provide really practically useful
+
+1:06:14.779,1:06:20.679
+scalable recognition of handwritten digits Lynnette five with the system was actually used to
+
+1:06:21.380,1:06:25.809
+Automatically process like 10% of the checks in in the US
+
+1:06:29.900,1:06:36.279
+So one of the things that really helps I think when building a new model is to kind of start with something simple and
+
+1:06:36.559,1:06:38.559
+gradually scale it up, so
+
+1:06:39.589,1:06:45.038
+We've created an even simpler version of M nest which we call M nest sample, which only has threes and sevens
+
+1:06:45.739,1:06:50.139
+Okay. So this is a good starting point to make sure that we can kind of do something easy
+
+1:06:50.319,1:06:53.409
+I picked threes and sevens. So M this simple because they're very different
+
+1:06:53.569,1:06:57.399
+So I feel like if we can't do this we're going to have trouble recognizing every digit
+
+1:06:59.859,1:07:01.630
+There
+
+1:07:01.630,1:07:06.039
+so step one is to call aunt our data aunt our data is the faster a
+
+1:07:07.819,1:07:09.819
+Function which takes a URL
+
+1:07:11.480,1:07:17.379
+Checks whether you've already downloaded it if you haven't it downloads it checks whether you've already uncompressed it
+
+1:07:17.380,1:07:22.089
+If you haven't it uncompress is it and then it finally returns the path of where that ended up
+
+1:07:22.609,1:07:24.609
+So you can see here
+
+1:07:27.200,1:07:34.210
+URLs dot m nest sample, so you could just hit tab to get autocomplete
+
+1:07:37.140,1:07:42.930
+Is just some thumb location right doesn't really matter where it is and so then when we
+
+1:07:45.460,1:07:51.580
+All that I've already downloaded it and already uncompressed it because I've already round this once before so it happens straightaway and
+
+1:07:52.190,1:07:54.280
+So path shows me
+
+1:07:55.520,1:08:03.280
+Where it is now in this case path is dot and the reason path is dot is because I've used his special base path attribute
+
+1:08:03.530,1:08:04.910
+to path
+
+1:08:04.910,1:08:06.910
+to tell it kind of like where's my
+
+1:08:07.790,1:08:11.169
+Where's my starting point, you know and and that's used to print
+
+1:08:11.170,1:08:16.299
+so when I go here LS which prints a list of files, these are all relative to
+
+1:08:17.180,1:08:22.209
+Where I actually untied this to so it just makes it a lot easier not to have to see the whole
+
+1:08:22.880,1:08:24.910
+Set of parent path folders
+
+1:08:28.500,1:08:30.500
+Um
+
+1:08:30.759,1:08:34.589
+LS is actually so path is a
+
+1:08:35.979,1:08:41.639
+Let's see. What kind of type it is. So it's a path lib path object
+
+1:08:44.229,1:08:50.819
+Path lib is part of the Python standard library. It's a really very very very nice library, but it doesn't actually have LS
+
+1:08:52.059,1:08:56.458
+Where there are libraries that we find super helpful, but they don't have exactly the things we want
+
+1:08:56.459,1:08:59.429
+We liberally add for things we want to them so we add
+
+1:09:00.009,1:09:02.009
+LS
+
+1:09:05.639,1:09:08.059
+So if you want to find out what LS is
+
+1:09:08.759,1:09:11.209
+You know, there's as we've mentioned it's a few ways you can do it
+
+1:09:11.210,1:09:15.290
+You can pop a question mark there and that will show you where it comes from
+
+1:09:15.290,1:09:22.849
+so there's actually a library called fast core, which is a lot of the foundational stuff in fast AI that is not dependent on
+
+1:09:23.819,1:09:25.650
+high torch or
+
+1:09:25.650,1:09:28.009
+pandas or any of these big heavy libraries
+
+1:09:29.940,1:09:34.549
+So this is part of fast core and if you want to see exactly what it does you of course remember you can put in
+
+1:09:34.549,1:09:36.549
+a second question mark
+
+1:09:36.989,1:09:38.989
+to get
+
+1:09:39.000,1:09:45.990
+source code and as you can see, there's not much source code to it and you know, maybe most importantly
+
+1:09:47.720,1:09:49.720
+Please don't forget about doc
+
+1:09:51.179,1:09:57.929
+Really importantly that gives you this show in Doc's link which you can click on to get to the documentation to see examples
+
+1:09:59.199,1:10:03.029
+pictures if relevant tutorials tests and so forth
+
+1:10:06.750,1:10:07.980
+So
+
+1:10:07.980,1:10:14.180
+What's so when you're looking at a new data set you kind of just used I always start with just LS see what's in it
+
+1:10:14.990,1:10:20.240
+And I can see here. There's a train folder and there's a valid folder that's pretty normal
+
+1:10:20.580,1:10:24.799
+So let's look at LS on the train folder
+
+1:10:25.320,1:10:28.700
+and it's got a folder called 7 and a folder called 3 and
+
+1:10:29.040,1:10:33.560
+So this is looking quite a lot like our bare classifier data set
+
+1:10:33.560,1:10:38.629
+We downloaded each set of images into a folder based on what its label was
+
+1:10:39.450,1:10:41.450
+This is doing it another level though
+
+1:10:42.060,1:10:48.410
+Or the first level of the folder hierarchy is is it training or valid? And the second level is what's the label?
+
+1:10:49.170,1:10:53.960
+And this is the most common way for image data sets to be distributed
+
+1:10:57.290,1:10:59.290
+So, let's have a look
+
+1:10:59.700,1:11:03.859
+let's just create something called 3s that contains all of the
+
+1:11:04.410,1:11:09.349
+Contents of the three directory training and let's just sort them so that this is consistent
+
+1:11:09.960,1:11:13.730
+do the same for sevens and let's look at the 3s and you can see there's just
+
+1:11:14.340,1:11:19.130
+There just numbered. All right, so let's grab one of those
+
+1:11:20.790,1:11:28.009
+Open it and take a look. Okay, so there's the picture of a three and so what is that really?
+
+1:11:31.000,1:11:34.089
+But not three I am three
+
+1:11:35.570,1:11:42.399
+So Pio is the Python imaging library. It's the most popular library by far for working with images
+
+1:11:43.550,1:11:45.579
+On Python, and it's a PNG
+
+1:11:46.490,1:11:48.490
+Not surprisingly
+
+1:11:49.190,1:11:51.790
+So Jupiter notebook
+
+1:11:53.780,1:11:55.340
+Knows how to display
+
+1:11:55.340,1:11:59.980
+Many different types and you can actually tell if you create a new type you can tell it how to display your type
+
+1:12:00.010,1:12:04.959
+and so Pio comes with something that will automatically display the image like so
+
+1:12:05.990,1:12:11.019
+What I want to do here though is to look at like how we're going to treat this as numbers
+
+1:12:11.660,1:12:16.599
+Right and so one easy way to treat things as numbers is to turn it into an array
+
+1:12:16.880,1:12:20.950
+The array is part of numpy which is the most popular
+
+1:12:21.470,1:12:22.580
+array
+
+1:12:22.580,1:12:24.350
+programming library
+
+1:12:24.350,1:12:27.100
+for python and so if we pass our
+
+1:12:28.670,1:12:29.750
+Pio
+
+1:12:29.750,1:12:31.750
+image object to array
+
+1:12:32.000,1:12:35.589
+It just converts the image into a bunch of numbers
+
+1:12:35.590,1:12:40.810
+And the truth is it was a bunch of numbers the whole time. It was actually stored as a bunch of numbers on disk
+
+1:12:41.000,1:12:48.129
+It's just that there's this magic thing and Jupiter that knows how to display those numbers on the screen now, let me say array
+
+1:12:48.770,1:12:50.720
+Turning it back into a numpy array
+
+1:12:50.720,1:12:56.050
+We're kind of removing this ability for Jupiter notebook to know how to display it like a picture
+
+1:12:56.240,1:12:59.530
+so once I do this we can then index into that array and
+
+1:13:00.050,1:13:02.949
+create everything from the grab everything all the rows from
+
+1:13:03.080,1:13:10.390
+four up to but not including ten and all the columns from four up to and not including ten and here are some numbers and
+
+1:13:11.000,1:13:12.890
+They are
+
+1:13:12.890,1:13:14.090
+8-bit unsigned
+
+1:13:14.090,1:13:21.970
+Integers so they are between 0 and 255. So an image just like everything on a computer is just a bunch of numbers and
+
+1:13:22.520,1:13:24.350
+Therefore we can compute
+
+1:13:24.350,1:13:26.350
+with it
+
+1:13:26.880,1:13:31.909
+We could do the same thing, but instead of saying array we could say tensor now our tensor is
+
+1:13:32.699,1:13:37.158
+basically the PI torch version of an umpire ray and
+
+1:13:37.889,1:13:41.479
+So you can see it looks it's exactly the same code is above
+
+1:13:41.699,1:13:47.959
+But I've just replaced array with tensor and the output looks almost exactly the same except it replaces array with tensor
+
+1:13:47.960,1:13:53.899
+And so you'll see this that basically a PI torch tensor and an umpire array behave
+
+1:13:54.900,1:13:56.900
+nearly identically
+
+1:13:57.210,1:14:02.330
+Much if not most of the time but the key thing is that a PI torch tensor
+
+1:14:03.449,1:14:05.569
+Can also be computed on a GPU?
+
+1:14:05.940,1:14:07.320
+Not just a CPU
+
+1:14:07.320,1:14:12.049
+So in in our work and in the book and in the notebooks in our code
+
+1:14:12.449,1:14:17.299
+We tend to use tensors pi torch tensors much more often than umpire arrays
+
+1:14:17.520,1:14:23.209
+Because they kind of have nearly all the benefits of numpy arrays plus all the benefits of GPU computation
+
+1:14:23.639,1:14:26.539
+And they've got a whole lot of extra functionality as well
+
+1:14:27.990,1:14:29.990
+a lot of people who have used
+
+1:14:31.690,1:14:33.690
+Python for a long time always
+
+1:14:33.850,1:14:39.870
+jump into numpy because that's what they used to if that's you you might want to start considering jumping into
+
+1:14:40.570,1:14:46.860
+Tensor like wherever you used to write erase not writing tensor and just see what happens because you might be surprised at how many things
+
+1:14:46.860,1:14:48.860
+You can speed up or do it more easily
+
+1:14:50.280,1:14:52.280
+So let's grab
+
+1:14:52.449,1:14:58.379
+That that three image turn it into a tensor. And so that's going to be three image tensor
+
+1:14:58.380,1:15:02.699
+That's why I've got a m3t here and let's grab a bit of it
+
+1:15:03.280,1:15:09.210
+Okay, and turn it into a panda's data frame and the only reason I'm turning it into a panda's data frame is the pandas has
+
+1:15:09.210,1:15:15.779
+A very convenient thing called background gradient that turns a background into AK radiant as you can see
+
+1:15:16.000,1:15:21.329
+so here is the top bit of the three you can see that the zeros of the whites and the
+
+1:15:22.000,1:15:27.779
+Numbers near 255 are the blacks Venus and what's it bits in the middle? Which which are grey
+
+1:15:28.630,1:15:32.909
+so here we have we can see what's going on when our
+
+1:15:34.119,1:15:38.939
+Images which are numbers actually get displayed on the screen. It's just it's just doing this. Okay
+
+1:15:40.679,1:15:48.538
+And so I'm just showing a subset here the actual phone number and M nest is a 28 by 28 pixels square, so that's 768
+
+1:15:49.150,1:15:50.559
+pixels
+
+1:15:50.559,1:15:57.479
+So that's super tiny right? Well my mobile phone. I don't know how many megapixels it is, but it's millions of pixels
+
+1:15:57.480,1:15:59.909
+So it's nice to start with something simple and small
+
+1:16:01.499,1:16:02.650
+Okay
+
+1:16:02.650,1:16:10.529
+So here's our goal create a model, but by model it has been some kind of computer program learnt from data
+
+1:16:11.889,1:16:16.589
+That can recognize threes versus sevens. You can think of it as a three detector
+
+1:16:16.590,1:16:18.809
+Is it a three because if it's not a three it's a seven
+
+1:16:20.110,1:16:24.089
+So have it stop here pause the video and have a think
+
+1:16:25.179,1:16:26.440
+How would you do it?
+
+1:16:26.440,1:16:30.089
+How would you like you don't need to know anything about neural networks, or?
+
+1:16:30.519,1:16:34.679
+anything else how might you just with common sense build a
+
+1:16:35.289,1:16:37.059
+tree detector
+
+1:16:37.059,1:16:40.919
+Okay, so I hope you grabbed a piece of paper a pen. Shut it some notes down
+
+1:16:41.710,1:16:45.539
+I tell you the first idea that came into my head
+
+1:16:47.079,1:16:49.079
+Was what if we grab
+
+1:16:49.389,1:16:51.389
+every single three in the data set and
+
+1:16:51.880,1:16:53.880
+take the average of
+
+1:16:54.039,1:16:56.248
+the pixels so what's the average of
+
+1:16:57.800,1:17:02.120
+This pixel the average of this pixel the average of this pixel the average of this pixel, right?
+
+1:17:02.120,1:17:04.189
+And so there'll be a 28 by 28
+
+1:17:05.970,1:17:07.170
+Picture
+
+1:17:07.170,1:17:11.510
+Which is the average of all of the threes and that would be like the ideal
+
+1:17:11.790,1:17:14.839
+three and then we'll do the same for sevens and
+
+1:17:15.450,1:17:20.569
+then so when we then grab something from the validation set to classify will say like oh
+
+1:17:21.270,1:17:27.979
+Is this image closer to the ideal threes the ideal three the mean of the threes or the ideal 7?
+
+1:17:28.980,1:17:33.140
+This is my idea. And so I'm going to call this the pixel similarity approach
+
+1:17:33.600,1:17:39.109
+I'm describing this as a baseline a baseline is like a super simple model
+
+1:17:39.110,1:17:43.100
+That should be pretty easy to program from scratch with very little magic, you know
+
+1:17:43.100,1:17:46.729
+maybe it's just a bunch of kind of simple averages simple arithmetic which
+
+1:17:47.790,1:17:52.490
+you're super confident is going to be better than better than a random model, right and
+
+1:17:53.280,1:17:55.370
+One of the biggest mistakes I see in
+
+1:17:55.950,1:18:03.859
+even experienced practitioners is that they fail to create a baseline and so then they build some fancy Bayesian model or
+
+1:18:04.620,1:18:06.620
+or some fancy
+
+1:18:09.239,1:18:12.539
+Fancy Bayesian model or some fancy neural network and they go
+
+1:18:12.540,1:18:18.180
+wow, Jeremy, look at my amazingly great model and I'll say like how do you know it's amazingly great and I said,
+
+1:18:18.180,1:18:21.389
+Oh, look, the accuracy is 80% and then I'll say okay
+
+1:18:21.700,1:18:25.529
+Let's see what happens if we create a model where we always predict the mean. Oh
+
+1:18:26.110,1:18:28.110
+Look, that's 85%
+
+1:18:29.170,1:18:30.340
+and
+
+1:18:30.340,1:18:34.860
+people get pretty disheartened when they discover this right and so make sure you start with a
+
+1:18:35.380,1:18:37.830
+Reasonable baseline and then gradually build on top of it. So
+
+1:18:39.040,1:18:41.040
+we need to get
+
+1:18:41.050,1:18:43.050
+the average of the pixels
+
+1:18:43.870,1:18:45.100
+so
+
+1:18:45.100,1:18:48.359
+We're going to learn some nice Python programming tricks to do this
+
+1:18:49.150,1:18:52.140
+so the first thing we need to do is we need a list of
+
+1:18:52.750,1:18:56.430
+all of the sevens so remember
+
+1:18:56.950,1:18:58.950
+We've got the sevens
+
+1:19:00.650,1:19:03.230
+Maybe it is just a list of file names, right and
+
+1:19:05.040,1:19:07.729
+So for each of those file names in the 7s
+
+1:19:07.800,1:19:15.020
+Lets image open that file just like we did before to get a Pio object and let's convert that into a tensor
+
+1:19:15.270,1:19:18.199
+So this thing here is called a list comprehension
+
+1:19:18.360,1:19:23.179
+So if you haven't seen this before this is one of the most powerful and useful tools in
+
+1:19:23.640,1:19:29.299
+Python if you've done something with c-sharp, it's a little bit like link it's not as powerful as link, but it's a similar idea
+
+1:19:30.659,1:19:35.929
+If you've done some functional programming in in JavaScript, it's a bit like some of the things you can do with that, too
+
+1:19:36.270,1:19:39.890
+But basically we're just going to go through this collection
+
+1:19:40.409,1:19:44.989
+Each item will become called o and then it will be passed to this function
+
+1:19:45.480,1:19:50.480
+Which opens it up and turns it into a tensor and then it will be collated or back into a list
+
+1:19:50.480,1:19:52.480
+and so this will be all of the
+
+1:19:53.040,1:19:54.540
+sevens as
+
+1:19:54.540,1:19:56.540
+tensors
+
+1:19:58.630,1:20:02.889
+So silver and I use lists and dictionary comprehensions every day
+
+1:20:03.409,1:20:07.299
+And so you should definitely spend some time checking it out if you haven't already
+
+1:20:08.690,1:20:16.419
+So now that we've got a list of all of the threes as tensors, let's just grab one of them
+
+1:20:17.960,1:20:19.960
+And display it so
+
+1:20:20.040,1:20:23.779
+Remember, this is a tensor. Not a Pio image object
+
+1:20:24.719,1:20:26.719
+So Jupiter doesn't know how to display it
+
+1:20:28.230,1:20:30.230
+So we have to use
+
+1:20:30.330,1:20:37.640
+Something a command to display it and show image is a fast AI command that displays a tensor and so here is three
+
+1:20:39.770,1:20:44.299
+So we need to get the average of all of those threes
+
+1:20:45.060,1:20:47.060
+So to get the average
+
+1:20:47.130,1:20:51.230
+The first thing we need to do is to turn change this so it's not a list
+
+1:20:52.110,1:20:54.140
+But it's a tensor itself
+
+1:20:55.080,1:20:56.880
+currently
+
+1:20:56.880,1:20:59.120
+three tensors
+
+1:21:02.830,1:21:04.490
+One as a
+
+1:21:04.490,1:21:05.630
+shape
+
+1:21:05.630,1:21:13.600
+Which is 28 by 28. Oh, this is this is the rows by columns the size of this thing right about three tenses itself
+
+1:21:17.609,1:21:19.079
+It's just a list
+
+1:21:19.079,1:21:22.819
+But I can't really easily do mathematical computations on that
+
+1:21:22.919,1:21:28.819
+so what we could do is we could stack all of these 28 by 28 images on top of each other to create a
+
+1:21:29.820,1:21:35.149
+Like a 3d cube of images and that's still quite a tensor
+
+1:21:35.149,1:21:41.809
+So a tensor can have as many of these axes or dimensions as you like and to stack them up you use funnily enough
+
+1:21:42.570,1:21:45.649
+Stack and so this is going to turn the list
+
+1:21:46.379,1:21:48.559
+into a tensor and as you can see
+
+1:21:49.109,1:21:51.169
+The shape of it is now
+
+1:21:51.719,1:21:54.378
+6 1 31 by 28 by 28
+
+1:21:54.959,1:21:58.398
+So it's kind of like a cube of height 6 1 31
+
+1:21:59.010,1:22:00.840
+by
+
+1:22:00.840,1:22:02.840
+28 by 28
+
+1:22:06.510,1:22:09.590
+The other thing we want to do is if we're going to take the mean
+
+1:22:10.170,1:22:12.120
+We want to turn them into
+
+1:22:12.120,1:22:13.739
+floating-point values
+
+1:22:13.739,1:22:17.119
+Because we we don't want to kind of have integers rounding off
+
+1:22:18.000,1:22:22.100
+The other thing to know is that it's just as kind of a standard in
+
+1:22:22.920,1:22:29.239
+computer vision that when you are working with floats that you expect them to be between 0 & 1
+
+1:22:29.699,1:22:34.039
+So we just divide by 255 because if they were between 0 and 255
+
+1:22:34.560,1:22:37.759
+Before so, this is a pretty standard way to kind of
+
+1:22:38.610,1:22:41.960
+represent a bunch of images in pi torch
+
+1:22:44.849,1:22:51.779
+So these three things here are called the axes first axis second axis third axis and
+
+1:22:53.380,1:23:00.119
+Overall we would say that this is a rank 3 tensor as it has three axes. So the
+
+1:23:01.150,1:23:04.230
+This one here was a rank two tensor
+
+1:23:04.869,1:23:06.869
+Just has two axes
+
+1:23:08.090,1:23:15.279
+So you can get the rank from a tensor by just taking the length of its shape one two, three three
+
+1:23:18.940,1:23:20.940
+Get that from
+
+1:23:21.180,1:23:24.300
+So the word I've been using the word access
+
+1:23:25.090,1:23:27.150
+You can also use the word dimension
+
+1:23:27.930,1:23:34.499
+I think numpy tends to call it access pipe to watch tends to call it dimension. So the rank is also
+
+1:23:36.169,1:23:38.169
+The number of dimensions end him
+
+1:23:40.140,1:23:47.209
+So you need to make sure that you remember this word rank is the number of axes or dimensions in a tensor and the
+
+1:23:47.520,1:23:51.080
+Shape is a list containing the size of each axis
+
+1:23:52.820,1:23:54.820
+In a tensor
+
+1:23:57.380,1:24:04.210
+So we can now say step three s dot mean now if we just say step 3 s dot mean
+
+1:24:08.270,1:24:14.739
+That returns a single number that's the average pixel across that whole cube at hole rank three tensor
+
+1:24:15.110,1:24:17.110
+But if we say mean zero
+
+1:24:17.420,1:24:25.390
+That is take the mean over this axis. So that's the mean across the images, right? And so
+
+1:24:28.880,1:24:32.040
+That's now 20 forty-eight again because we kind of like
+
+1:24:32.890,1:24:36.390
+Reduced over this six one three one six one three one
+
+1:24:36.910,1:24:44.459
+Axis, we took the mean across that axis and so we can show that image and here is our ideal three
+
+1:24:46.600,1:24:48.959
+So here's the ideal seven using the same approach
+
+1:24:49.630,1:24:52.170
+alright, so now let's just grab a
+
+1:24:52.780,1:24:56.759
+Three. It's just any old three there it is and
+
+1:24:57.370,1:25:01.109
+What I'm going to do is I'm going to say well is this three more similar to the perfect three?
+
+1:25:01.360,1:25:07.860
+Or is it more similar to the perfect seven and whichever one it's more similar to I'm going to assume that's that's the answer
+
+1:25:10.900,1:25:15.299
+So we can't just say look at each pixel and say
+
+1:25:16.420,1:25:19.020
+What's the difference between this pixel?
+
+1:25:19.020,1:25:23.999
+You know zero zero here and zero zero here and then 0 1 here and then 0 1 here and take the average
+
+1:25:24.070,1:25:29.100
+And the reason we can't just take the averages that there's positives and negatives and they're going to average out
+
+1:25:29.950,1:25:34.049
+To nothing, right? So I actually need them all to be positive numbers
+
+1:25:35.170,1:25:40.649
+um, so there's two ways to make the more positive numbers I could take the absolute value which simply means
+
+1:25:41.380,1:25:43.380
+Remove the minus signs
+
+1:25:43.750,1:25:46.620
+Okay, and then I could take the average of those
+
+1:25:47.440,1:25:51.660
+That's called the mean absolute difference or l1 norm
+
+1:25:52.719,1:25:58.169
+or I could take the square of each difference and
+
+1:25:58.989,1:26:04.979
+then take the main of that and then at the end I could take the square root kind of undoes the squaring and
+
+1:26:05.410,1:26:08.819
+That's called the root mean squared error or l2
+
+1:26:10.930,1:26:14.610
+So, let's have a look let's take a three
+
+1:26:16.309,1:26:21.799
+Tract from it the mean of the threes and take the absolute value and take the mean
+
+1:26:22.800,1:26:24.659
+And call that the distance
+
+1:26:24.659,1:26:28.009
+using absolute value of the three two or three
+
+1:26:28.739,1:26:34.788
+And that there is the number quite one and so this is the mean absolute difference or l1 norm
+
+1:26:35.369,1:26:39.918
+So when you see a word like l1 norm if you haven't seen it before it may sound pretty fancy
+
+1:26:40.649,1:26:44.088
+but all these math terms that we see, you know, you can
+
+1:26:45.589,1:26:47.589
+Turn them into a tiny bit of code, right?
+
+1:26:48.770,1:26:51.560
+It's it's you know, don't let the Matthew bits
+
+1:26:52.080,1:26:54.890
+For you that they're often like in code
+
+1:26:54.890,1:27:00.079
+it's just very obvious what they mean where else with math you just you just have to learn it or
+
+1:27:00.870,1:27:02.870
+Learn how to google it
+
+1:27:03.060,1:27:09.289
+So here the same version for squaring take the difference where it take the mean and then take the square root
+
+1:27:11.100,1:27:16.160
+So then we'll do the same thing for our three this time we'll compare it to the mean of the servants
+
+1:27:16.710,1:27:23.029
+All right. So the distance from a3 to the main of the threes with in terms of absolute was point one
+
+1:27:24.030,1:27:28.580
+And the distance from a3 to the main of the sevens was 0.15
+
+1:27:29.670,1:27:33.770
+So it's closer to the main of the threes than it is to the main of the sevens
+
+1:27:33.770,1:27:36.020
+so we guess therefore that this is a
+
+1:27:36.720,1:27:40.549
+Three based on the mean absolute difference
+
+1:27:41.310,1:27:45.260
+Same thing with our MSE. It means great error would be to compare this value
+
+1:27:46.560,1:27:53.089
+This value and again, it means great error. It's closer to the main three then to the main seven
+
+1:27:53.490,1:27:55.490
+so this is like
+
+1:27:56.350,1:28:02.169
+A machine learning model kind of is a data-driven model which attempts to recognize threes versus sevens
+
+1:28:02.810,1:28:04.810
+And so this is a good baseline. I
+
+1:28:05.510,1:28:09.099
+Mean, it's it's a reasonable baseline. It's going to be better than random
+
+1:28:10.400,1:28:15.040
+Um, we don't actually have to write out - abs mean
+
+1:28:16.310,1:28:21.550
+We can just actually use l1 loss now one lost does exactly that
+
+1:28:23.780,1:28:25.989
+We don't have to write - squared
+
+1:28:26.630,1:28:31.690
+We can just write MSE loss and that doesn't do the square root by default. So we have to pop that in
+
+1:28:31.760,1:28:33.760
+Okay, and as you can see, they're exactly
+
+1:28:34.490,1:28:36.490
+the same numbers
+
+1:28:38.340,1:28:39.520
+Um
+
+1:28:39.520,1:28:44.729
+It's very important before we kind of go too much further to make sure we're very comfortable
+
+1:28:45.460,1:28:49.469
+Working with arrays and tensors and you know live they're so similar
+
+1:28:50.020,1:28:55.080
+So we could start with a list of lists, right which is kind of a matrix
+
+1:28:56.640,1:28:58.640
+Can convert it into an array
+
+1:28:59.300,1:29:01.300
+or into a tensor
+
+1:29:02.300,1:29:04.300
+We can display it
+
+1:29:04.870,1:29:06.870
+Almost the same
+
+1:29:07.090,1:29:09.090
+Index into a single row
+
+1:29:10.710,1:29:16.649
+Index into a single column and so it's important to know this is very important colon means
+
+1:29:18.820,1:29:24.239
+Every row because I put it in the first spot, right? So if I were in the second spot
+
+1:29:24.910,1:29:27.569
+It would mean every column and so therefore
+
+1:29:30.430,1:29:34.530
+Kkoma : is exactly the same as removing it
+
+1:29:36.970,1:29:38.970
+Turns out you can always remove
+
+1:29:39.380,1:29:43.210
+Colons that are at the end because they're kind of they're just implied, right?
+
+1:29:43.210,1:29:49.509
+You never have to and I often kind of put them in anyway, because just kind of makes it a bit more obvious
+
+1:29:50.030,1:29:52.030
+how these things kind of
+
+1:29:52.130,1:29:54.130
+Match up or how they differ
+
+1:29:55.300,1:30:02.500
+Um, you can combine them together so give me the first row and everything from the first up to but not including the third column
+
+1:30:03.800,1:30:05.800
+back to this at five six
+
+1:30:07.200,1:30:15.200
+You can add stuff to them you can check their type notice that this is different to the Python Rosie the Python
+
+1:30:16.470,1:30:18.740
+Right. So type is a function
+
+1:30:20.570,1:30:26.179
+It's a tensor if you want to know what kind of tensor you have to use type as a method so it's a long tensor
+
+1:30:28.650,1:30:31.969
+You can multiply them by a float turns it into a float
+
+1:30:31.980,1:30:35.750
+you know to have a fiddle around if you haven't done much stuff with numpy or
+
+1:30:36.930,1:30:40.730
+my torch before this is a good opportunity to just
+
+1:30:42.079,1:30:48.139
+Go crazy. Try things out try try things that you think might not work and see if you actually get an error message, you know
+
+1:30:50.900,1:30:52.550
+So
+
+1:30:52.550,1:30:54.550
+We now want to find out
+
+1:30:55.460,1:30:57.730
+How good is our model?
+
+1:30:58.400,1:31:02.619
+our model that involves just comparing something to to the
+
+1:31:03.350,1:31:05.350
+bromine
+
+1:31:07.840,1:31:09.409
+So
+
+1:31:09.409,1:31:11.409
+We should not compare
+
+1:31:12.230,1:31:17.080
+You should not check how good our model is on the training set as we've discussed
+
+1:31:17.080,1:31:20.859
+we should check it on a validation set and we already have a
+
+1:31:21.409,1:31:27.039
+Validation set. It's everything inside the valid directory. So let's go ahead and like combine all those tips before
+
+1:31:27.040,1:31:29.709
+Let's go through everything in the validation set
+
+1:31:30.590,1:31:31.969
+3ls
+
+1:31:31.969,1:31:37.149
+Open them turn them into a tensor stack them all up bend them into floats
+
+1:31:37.790,1:31:39.770
+provide by 255
+
+1:31:39.770,1:31:41.750
+Okay
+
+1:31:41.750,1:31:47.739
+Let's do the same for sevens. So we're just putting all the steps we did before into a couple of lines
+
+1:31:49.219,1:31:49.920
+I
+
+1:31:49.920,1:31:53.119
+Always try to print out shapes like all the time
+
+1:31:54.059,1:31:58.489
+Because if a shape is not what you expected then you can you know, get weird things going on
+
+1:32:01.110,1:32:07.400
+So the idea is we want some function is three that will return true if we think something is a three
+
+1:32:09.239,1:32:12.558
+So to do that we have to decide whether our
+
+1:32:13.860,1:32:21.589
+Digit that we're testing on is closer to the ideal three or the ideal seven. So let's create a little function that
+
+1:32:22.949,1:32:24.949
+returns
+
+1:32:27.000,1:32:31.410
+The difference between two things takes the absolute value and then takes the mean
+
+1:32:33.689,1:32:36.989
+So we're going to create this function M this distance that
+
+1:32:37.659,1:32:40.558
+Takes the difference between two fences
+
+1:32:41.769,1:32:46.259
+Takes their absolute value and then takes the mean and it takes the mean and look at this
+
+1:32:46.260,1:32:50.010
+We got - this time it takes the mean over the last
+
+1:32:50.590,1:32:52.590
+over the
+
+1:32:54.960,1:33:02.279
+Last and third last sorry third last and second last dimensions. So this is going to take
+
+1:33:03.850,1:33:10.799
+The mean across the kind of x and y axes and so here you can see it's returning a
+
+1:33:11.290,1:33:16.979
+Single number which is the distance of a three from the main three
+
+1:33:17.380,1:33:19.589
+so that's the same as the value that we
+
+1:33:20.320,1:33:22.320
+But earlier point one one one four
+
+1:33:24.500,1:33:30.580
+So we need to do this for every image in the validation set because we're trying to find the overall metric
+
+1:33:30.590,1:33:34.329
+Remember the metric is the thing. We look at to say how good is our model
+
+1:33:35.420,1:33:39.309
+So here's something crazy. We can call em nest distance
+
+1:33:40.130,1:33:45.159
+Not just on our three but our on the entire validation set
+
+1:33:47.200,1:33:49.200
+Against the main three
+
+1:33:49.910,1:33:55.910
+That's wild like there's no normal programming that we would do where we could somehow pass in
+
+1:33:56.670,1:34:03.710
+either a matrix or a rank 3 tensor and somehow it works both times and
+
+1:34:04.890,1:34:09.079
+What actually happened here is that instead of returning a single number?
+
+1:34:11.180,1:34:13.180
+It returned
+
+1:34:13.620,1:34:15.620
+1010 numbers
+
+1:34:15.660,1:34:17.970
+And it did this because it used something called
+
+1:34:19.030,1:34:20.680
+broadcasting and broadcasting
+
+1:34:20.680,1:34:25.680
+Is like the super special magic trick that lets you make?
+
+1:34:26.290,1:34:31.919
+Python into a very very high-performance language and in fact if you do this broadcasting on
+
+1:34:33.520,1:34:40.590
+GPU tensors and play torch, it actually does this operation on the GPU even though you wrote it in Python. Here's what happens
+
+1:34:42.490,1:34:44.490
+Look here this a - B
+
+1:34:45.850,1:34:47.850
+Doing a minus B on
+
+1:34:48.050,1:34:53.949
+Two things we've got first of all valid three tens of valid three answer
+
+1:34:56.220,1:35:01.229
+Is a thousand or so images right and remember that mean three
+
+1:35:04.200,1:35:08.099
+Single ideal three. So what is
+
+1:35:10.180,1:35:12.180
+Something of this shape -
+
+1:35:13.000,1:35:14.680
+something of this shape
+
+1:35:14.680,1:35:15.760
+well
+
+1:35:15.760,1:35:20.130
+Broadcasting means that if this shape doesn't match this shape
+
+1:35:20.440,1:35:26.609
+Like if they did match it would just subtract every corresponding item. But because they don't match
+
+1:35:27.160,1:35:31.800
+It's a it actually acts as if there's a thousand and ten versions
+
+1:35:32.410,1:35:34.410
+of this
+
+1:35:34.420,1:35:40.409
+So it's actually going to subtract this from every single one of these, okay?
+
+1:35:42.970,1:35:45.659
+So a broadcasting let's look at some examples so
+
+1:35:47.230,1:35:50.489
+Broadcasting requires us to first of all understand the idea of
+
+1:35:51.010,1:35:52.420
+element-wise operations
+
+1:35:52.420,1:35:58.049
+this is an element-wise operation here is a rank 1 tensor of size 3 and
+
+1:35:58.480,1:36:03.029
+Another rank 1 10 through of size 3 so we would say these sizes match
+
+1:36:03.040,1:36:03.840
+They're the same
+
+1:36:03.840,1:36:10.679
+and so when I add 1 2 3 2 1 1 1 I get back 2 3 4 it just takes the
+
+1:36:11.140,1:36:15.810
+Corresponding items and adds them together that's called element wise operations
+
+1:36:19.110,1:36:20.940
+So
+
+1:36:20.940,1:36:23.060
+when I have different
+
+1:36:25.440,1:36:27.440
+Shapes as we described before
+
+1:36:28.890,1:36:31.970
+What it ends up doing is it basically copies
+
+1:36:32.700,1:36:38.329
+This this number a thousand and ten times and it acts as if we had said
+
+1:36:38.700,1:36:42.649
+valid three tens minus a thousand and ten copies of
+
+1:36:43.560,1:36:45.560
+main three
+
+1:36:47.100,1:36:51.209
+As it says here it doesn't actually copy me in three a thousand and ten times
+
+1:36:51.210,1:36:52.300
+It just pretends
+
+1:36:52.300,1:36:57.749
+that it did right it just acts as if it did so basically kind of loops back around to the start again and again and
+
+1:36:57.750,1:37:01.050
+It does the whole thing in C or in cooter on the GPU
+
+1:37:03.610,1:37:07.989
+So then we see absolute value, all right, so let's go back up here
+
+1:37:09.950,1:37:14.950
+After we do the - we go absolute value, so what happens when we call absolute value on
+
+1:37:17.219,1:37:19.219
+Something of size
+
+1:37:21.260,1:37:26.110
+10 10 by 28 by 28 just cause absolute value on each underlying thing
+
+1:37:26.750,1:37:28.040
+right
+
+1:37:28.040,1:37:32.019
+and then finally we call mean
+
+1:37:33.140,1:37:37.479
+Minus 1 is the last element or ways in Python minus 2 is the second-last
+
+1:37:37.690,1:37:41.289
+So this is taking the mean over the last two axes
+
+1:37:41.290,1:37:47.560
+And so then it's going to return just the first axis. So we're going to end up with a thousand and ten
+
+1:37:48.410,1:37:50.650
+means both thousand and ten
+
+1:37:51.380,1:37:53.230
+Distances which is exactly what we want
+
+1:37:53.230,1:37:59.680
+we want to know how far away is our each of our validation items away from the
+
+1:38:00.530,1:38:02.530
+the ideal three
+
+1:38:03.820,1:38:09.690
+So then we can create out is three function which is hey is the distance
+
+1:38:10.510,1:38:14.400
+between the number in question and the perfect three
+
+1:38:14.830,1:38:19.350
+Less than the distance between the number in question and the perfect seven if it is
+
+1:38:20.050,1:38:26.759
+It's a three and so our three that was an actual three we had. Is it a three? Yes
+
+1:38:27.699,1:38:32.339
+Okay, and then we can turn that into a float and yes becomes one
+
+1:38:35.230,1:38:37.699
+We can do it for entire
+
+1:38:39.179,1:38:42.469
+Set right. So this is so cool. We basically get rid of loops
+
+1:38:43.260,1:38:49.670
+In in in in this kind of programming you should have very few very very few. Loops. Loops make things
+
+1:38:50.580,1:38:52.469
+much harder to read
+
+1:38:52.469,1:38:53.940
+and and
+
+1:38:53.940,1:38:58.580
+Hundreds of thousands of times slower on the GPU potentially tens of millions of times lower. So
+
+1:38:59.969,1:39:02.389
+We can just say is three on our whole
+
+1:39:03.390,1:39:07.129
+Valid three tens and then turn that into float and then take the mean
+
+1:39:07.320,1:39:14.179
+So that's going to be the accuracy of the threes on average and here's the accuracy of the sevens. It's just one minus that
+
+1:39:15.000,1:39:18.589
+And so the accuracy across trees is about 91 and a bit percent
+
+1:39:18.690,1:39:24.679
+The accuracy on sevens is about 98% and the average of those two is about 95%
+
+1:39:25.230,1:39:27.350
+so here we have a
+
+1:39:28.140,1:39:32.449
+Moral that's 95 percent accurate at recognizing threes from sevens
+
+1:39:33.510,1:39:35.510
+It but surprise you
+
+1:39:36.090,1:39:38.239
+that we can do that using nothing, but
+
+1:39:39.570,1:39:44.659
+Arithmetic right bottom so that's what I mean by getting a good baseline
+
+1:39:47.440,1:39:49.440
+Now the thing is
+
+1:39:51.150,1:39:57.889
+It's not obvious how we kind of improve this right? I mean the thing is it doesn't match
+
+1:39:59.130,1:40:01.190
+Arthur Samuels description of
+
+1:40:01.860,1:40:07.130
+Machine learning. This is not something where there's a function which has some parameters
+
+1:40:07.950,1:40:09.870
+Which we're testing
+
+1:40:09.870,1:40:14.750
+Against some kind of measure of fitness and then using that to like improve the parameters iteratively
+
+1:40:15.000,1:40:17.029
+we kind of we just did one step and
+
+1:40:18.030,1:40:20.030
+That's that okay
+
+1:40:21.360,1:40:27.380
+So we will try and do it in this way where we arrange for some automatic means of testing the effectiveness of
+
+1:40:27.510,1:40:33.500
+Naqada weight assignment we'd call it a parameter assignment in terms of performance and a mechanism for ultra rating
+
+1:40:33.690,1:40:36.199
+Altering the weight assignment to maximize the performance
+
+1:40:36.870,1:40:42.140
+But we want to do it that way right because we know from from Chapter one from lesson one
+
+1:40:42.170,1:40:45.049
+but if we do it that way we have this like
+
+1:40:45.930,1:40:47.640
+magic box
+
+1:40:47.640,1:40:53.690
+Called machine learning that can do you know particularly combiners neural nets should be able to solve any
+
+1:40:54.510,1:40:56.510
+problem in theory
+
+1:40:57.630,1:40:59.940
+If you can at least find the right set of weights
+
+1:41:00.940,1:41:04.830
+So we need something that we can get better and better. Um
+
+1:41:05.650,1:41:07.650
+ballon
+
+1:41:08.110,1:41:10.110
+So let's think about
+
+1:41:11.250,1:41:13.250
+Function which has parameters
+
+1:41:13.840,1:41:21.090
+So instead of finding an ideal image and seeing how far away something is from the ideal image
+
+1:41:26.920,1:41:33.839
+So instead of like having something where we test how far away we are from an ideal image what we could instead do is
+
+1:41:34.210,1:41:36.210
+Come up with a set of weights
+
+1:41:36.910,1:41:38.080
+for each pixel
+
+1:41:38.080,1:41:41.760
+so we're trying to find out if something is the number three and
+
+1:41:42.100,1:41:47.850
+So we know that like in the places that you would expect to find three pixels
+
+1:41:47.860,1:41:52.650
+You could give those like high weights so you can say hey if there's a dot in those places
+
+1:41:53.170,1:41:57.390
+We give it like a high score and if there's dots in other places
+
+1:41:57.880,1:42:05.069
+We'll give it like a low score so we can actually come up with a function where the probability of something being in
+
+1:42:05.920,1:42:07.920
+Moments case. Let's say an eight
+
+1:42:07.990,1:42:12.359
+Is equal to the pixels in the image?
+
+1:42:13.330,1:42:19.919
+Multiplied by some sort of weights and then we sum them up. All right, so then anywhere where?
+
+1:42:21.160,1:42:22.750
+our
+
+1:42:22.750,1:42:24.750
+The image we're looking at, you know
+
+1:42:26.540,1:42:28.540
+As pixels where there are high weights
+
+1:42:29.130,1:42:35.960
+It's going to end up with a high probability. So here X is the image that we're interested in
+
+1:42:36.900,1:42:39.770
+And we're just going to represent it as a vector
+
+1:42:39.770,1:42:44.450
+So let's just have all the rows stacked up end to end into a single long line
+
+1:42:45.750,1:42:46.830
+so
+
+1:42:46.830,1:42:52.910
+We're going to use an approach where we're going to start with a vector W
+
+1:42:52.910,1:42:59.329
+So a vector is a Rank 1 tensor. Okay better start with a vector W that's going to contain
+
+1:43:00.420,1:43:01.770
+random
+
+1:43:01.770,1:43:08.629
+weights random parameters depending on whether you use the Arthur Samuel version of the terminology or not and
+
+1:43:10.050,1:43:11.670
+so
+
+1:43:11.670,1:43:15.830
+We'll then predict whether a number appears to be a three or a seven
+
+1:43:16.890,1:43:18.720
+by using this
+
+1:43:18.720,1:43:20.100
+tiny little
+
+1:43:20.100,1:43:21.570
+function
+
+1:43:21.570,1:43:26.060
+And then we will figure out how good the model is
+
+1:43:26.670,1:43:30.260
+Where we will calculate like how accurate it is or something like that
+
+1:43:31.350,1:43:33.350
+Yeah, this is the loss
+
+1:43:34.559,1:43:37.829
+And then the key step is we're then going to calculate the gradient now
+
+1:43:37.829,1:43:42.478
+The gradient is something that measures for each weight if I made it a little bit bigger
+
+1:43:43.449,1:43:49.438
+With the last get better or worse if I made it a little bit smaller with the loss get better or worse
+
+1:43:49.439,1:43:51.479
+and so if we do that for every weight
+
+1:43:51.669,1:43:56.309
+We can decide for every weight whether we should make that weight a bit bigger or a bit smaller
+
+1:43:57.800,1:44:05.270
+Let's call it the gradient. Right? So once we have the gradient we then step is the word wheezes step we change
+
+1:44:05.790,1:44:07.790
+all the weights
+
+1:44:09.070,1:44:11.349
+A little bit for the ones where the gradient we should said
+
+1:44:11.349,1:44:15.219
+We should make them a bit higher and down a little bit for all the ones where the gradient said
+
+1:44:15.219,1:44:17.219
+They should be a bit lower. So
+
+1:44:17.750,1:44:22.239
+now it should be a tiny bit better and then we go back to step two and
+
+1:44:23.119,1:44:25.869
+Calculate a new set of predictions using this formula
+
+1:44:27.770,1:44:29.550
+Like the gradient again
+
+1:44:29.550,1:44:31.230
+Step the weights
+
+1:44:31.230,1:44:32.060
+Keep doing that
+
+1:44:32.060,1:44:37.700
+So this is basically the flow chart and then at some point when we're sick of waiting or when the loss gets good enough
+
+1:44:37.860,1:44:39.860
+We'll stop
+
+1:44:40.800,1:44:48.260
+So these seven steps 1 2 3 4 5 6 7
+
+1:44:49.920,1:44:50.800
+Steps
+
+1:44:50.800,1:44:51.899
+the
+
+1:44:51.899,1:44:56.239
+Training all deep learning models. This technique is called stochastic gradient descent
+
+1:44:56.689,1:45:00.499
+well, it's called gradient descent will see the stochastic bit very soon and
+
+1:45:01.829,1:45:03.749
+for each of these
+
+1:45:03.749,1:45:08.749
+Seven steps there's lots of choices around exactly how to do it, right?
+
+1:45:08.749,1:45:11.179
+we're just kind of hand waved a lot like
+
+1:45:11.550,1:45:17.209
+What kind of random initialization and how do you calculate the gradient and exactly? What step do you take based on the gradient?
+
+1:45:17.209,1:45:19.459
+And how do you decide when to stop bah bah, bah, right
+
+1:45:20.129,1:45:24.889
+So in this in this course, we're going to be like learning
+
+1:45:25.679,1:45:28.038
+About you know these steps
+
+1:45:29.550,1:45:35.449
+You know, that's kind of part one, you know, I mean the other big part is like well, what's the actual function neural network?
+
+1:45:35.449,1:45:37.998
+So, how do we train the thing and what is the thing that we train?
+
+1:45:39.179,1:45:41.929
+So we initialize parameters with random values
+
+1:45:42.419,1:45:45.259
+We need some function that's going to be the loss function
+
+1:45:45.539,1:45:50.088
+That will return a number that's small if the performance of the model is good
+
+1:45:51.719,1:45:56.058
+It's some way to figure out whether the weight should be increased a bit or decreased a bit
+
+1:45:58.780,1:46:03.309
+And then we need to decide like when to stop which will just say, let's just do a certain number of epochs
+
+1:46:06.780,1:46:08.550
+So, let's like
+
+1:46:08.550,1:46:14.179
+Go even simpler, right? We're not even though 2m nest. We're going to start with this function x squared
+
+1:46:14.730,1:46:20.839
+Okay, and in faster y I we've created a tiny little thing called plot function that plots a function
+
+1:46:25.610,1:46:27.610
+Function f
+
+1:46:27.809,1:46:34.619
+And what we're going to do is we're going to try to find this is our loss function. So we're going to try and find
+
+1:46:35.139,1:46:36.489
+the bottom point
+
+1:46:36.489,1:46:37.139
+All right
+
+1:46:37.139,1:46:41.279
+So we're going to try and figure out what is the x value which is at the bottom
+
+1:46:41.469,1:46:46.259
+So our seven step procedure requires us to start out by initializing
+
+1:46:47.859,1:46:49.719
+So we need to pick
+
+1:46:49.719,1:46:55.469
+Some value, right? So the value we pick was this say ah, let's just randomly pick minus one and a half
+
+1:46:56.769,1:47:04.349
+Great. So now we need to know if I increase X a bit does my but remember this is my loss does my loss get
+
+1:47:04.349,1:47:07.049
+A bit better remember better is smaller or a bit worse
+
+1:47:09.270,1:47:15.450
+We can do that easily enough we can just try a slightly higher X and a slightly lower X and see what happens, right?
+
+1:47:15.450,1:47:19.109
+And you can see it's just the slope right the slope at this point
+
+1:47:19.960,1:47:23.760
+Tells you that if I increase X by a bit?
+
+1:47:24.250,1:47:28.529
+Then my loss will decrease because that is the slope at this point
+
+1:47:30.489,1:47:38.158
+So if we change our our weight our parameter just a little bit in the direction of the slope
+
+1:47:38.650,1:47:43.739
+All right. So here is the direction of the slope and so here's the new value at that point
+
+1:47:44.349,1:47:46.949
+And then do it again and then do it again
+
+1:47:47.860,1:47:49.860
+Eventually, we'll get to the bottom of this curve
+
+1:47:52.989,1:48:00.718
+So this idea goes all the way back to Isaac Newton at the very least and this basic idea is called Newton's method
+
+1:48:02.560,1:48:04.709
+So a key thing we need to be able to do is to calculate
+
+1:48:06.100,1:48:08.100
+this slope and
+
+1:48:09.250,1:48:12.959
+The bad news is do that we need calculus
+
+1:48:14.320,1:48:19.230
+At least as bad news of me cuz I've never been a fan of calculus. We have to calculate the derivative
+
+1:48:20.170,1:48:22.170
+Here's the good news, though
+
+1:48:23.380,1:48:27.060
+Maybe you spent ages in school learning how to calculate derivatives
+
+1:48:27.940,1:48:34.859
+You don't have to anymore the computer does it for you and the computer does it fast? It uses all of those?
+
+1:48:35.710,1:48:39.149
+Methods that you learned at school and it had a whole lot more
+
+1:48:39.550,1:48:43.170
+Like clever tricks for speeding them up and it just does it all
+
+1:48:43.750,1:48:51.299
+Automatically so for example it knows I don't know if you remember this from high school that the derivative of x squared is 2x
+
+1:48:53.320,1:48:57.000
+It's just something it knows it's part of its kind of bag of tricks right so
+
+1:48:58.150,1:49:01.109
+so PI Torche knows that pi torch has an
+
+1:49:01.900,1:49:06.509
+Engine built in that can take derivatives and find the gradient of functions
+
+1:49:07.360,1:49:09.360
+So to do that
+
+1:49:10.050,1:49:12.050
+we start with a
+
+1:49:12.250,1:49:14.250
+tensor, let's say and
+
+1:49:14.440,1:49:17.489
+In this case, we're going to modify this tensor with this special
+
+1:49:18.520,1:49:25.469
+Method cord requires gret and what this does is it tells PI torch that any time I do a calculation with this
+
+1:49:25.780,1:49:27.610
+X T it
+
+1:49:27.610,1:49:31.889
+Should remember what calculation it does so that I can take the derivative later
+
+1:49:33.740,1:49:35.740
+You see the underscore at the end and
+
+1:49:36.890,1:49:43.539
+Underscore at the end of a method in pi torch means that this is called an in-place operation it actually modifies
+
+1:49:44.180,1:49:47.200
+this so requires grad underscore
+
+1:49:47.870,1:49:52.870
+Modifies this tensor to tell pi torch that we want to be calculating gradients on it
+
+1:49:52.940,1:49:56.800
+So that means it's just going to have to keep track of all of the computations we do
+
+1:49:57.050,1:49:59.169
+So that it can calculate the derivative later
+
+1:50:02.969,1:50:06.198
+Okay, so we've got the number three and
+
+1:50:07.230,1:50:13.459
+Let's say we then call F on it. Remember F is just squaring it though three squared is nine
+
+1:50:14.429,1:50:16.040
+But the value is not just nine
+
+1:50:16.040,1:50:22.759
+It's nine accompanied with a grad function, which is that it's it knows that a power operation has been taken
+
+1:50:23.280,1:50:25.400
+So we can now call a special method
+
+1:50:26.849,1:50:28.730
+backward
+
+1:50:28.730,1:50:30.730
+and backward
+
+1:50:32.150,1:50:36.109
+Occasion which we'll learn about which basically means take the derivative
+
+1:50:37.350,1:50:42.870
+and so once it does that we can now look inside XT because we said requires grad and
+
+1:50:43.510,1:50:45.510
+find out its gradient and
+
+1:50:46.240,1:50:48.840
+Remember the derivative of x squared is 2x
+
+1:50:50.719,1:50:52.719
+In this case that was three
+
+1:50:53.540,1:50:55.110
+Who turns three is six?
+
+1:50:55.110,1:50:57.110
+all right, so
+
+1:50:57.420,1:51:04.940
+We didn't have to figure out the derivative. We just call backward and then get the grad attribute to get the derivative
+
+1:51:05.670,1:51:10.129
+So that's how easy it is to do calculus in PI touch. So
+
+1:51:11.910,1:51:17.030
+What you need to know about calculus is not how to take a derivative
+
+1:51:17.670,1:51:20.960
+about what it means and what it means is
+
+1:51:21.720,1:51:23.670
+It's a slope
+
+1:51:23.670,1:51:25.670
+at some point
+
+1:51:27.479,1:51:29.249
+Now here's something interesting
+
+1:51:29.249,1:51:32.699
+Let's not three. Let's take a Rank 1 tensor
+
+1:51:33.460,1:51:35.410
+Also known as a vector
+
+1:51:35.410,1:51:37.410
+34:10 and
+
+1:51:37.780,1:51:39.760
+Let's add some
+
+1:51:39.760,1:51:42.959
+To our F function, so it's going to go x squared some
+
+1:51:43.630,1:51:46.200
+and now we can take F of
+
+1:51:48.199,1:51:50.598
+Specter get back 125
+
+1:51:51.860,1:51:59.150
+And then we can say backward and grad and look 2 X 2 X 2 X
+
+1:52:00.500,1:52:02.500
+So we can calculate
+
+1:52:03.660,1:52:08.569
+This is this is vector calculus, right we're getting the
+
+1:52:09.390,1:52:10.920
+gradient for
+
+1:52:10.920,1:52:15.649
+Every element of a vector with the same two lines of code
+
+1:52:18.750,1:52:23.279
+That's kind of all you need to know about calculus right and if this is
+
+1:52:24.940,1:52:29.279
+If this idea that that a derivative or gradient is a slope is
+
+1:52:29.800,1:52:32.190
+Unfamiliar, I'm check out Khan Academy
+
+1:52:32.230,1:52:37.919
+they had some great introductory calculus and don't forget you can skip all the bits where they teach you how to calculate the
+
+1:52:38.770,1:52:40.770
+gradients yourself
+
+1:52:41.830,1:52:48.220
+So now that we know how to calculate the gradient that is the slope of the function that tells us if we change
+
+1:52:48.800,1:52:50.800
+our input a little bit
+
+1:52:51.350,1:52:53.350
+How will our output change?
+
+1:52:53.870,1:52:55.990
+Correspondingly, that's what a slope is
+
+1:52:56.510,1:53:04.389
+Right, and so that tells us that every one of our parameters if we know their gradients then we know if we change
+
+1:53:04.390,1:53:10.839
+That parameter up a bit or down a bit. How will it change our loss? So therefore we then know how to change our parameters?
+
+1:53:12.080,1:53:17.289
+So what we do is let's say all of our weights called W
+
+1:53:18.140,1:53:21.579
+We just subtract off them the gradients
+
+1:53:22.610,1:53:24.320
+multiplied by some
+
+1:53:24.320,1:53:29.169
+small number and that small number is often a number between about
+
+1:53:29.630,1:53:32.740
+0.001 and point 1 and it's called the learning rate
+
+1:53:33.500,1:53:37.570
+and this year is the essence of
+
+1:53:38.540,1:53:40.540
+gradient descent
+
+1:53:40.820,1:53:43.719
+So if you pick a learning rate, that's very small
+
+1:53:44.269,1:53:47.739
+Then you take the slope and you take a really small step in that direction
+
+1:53:47.899,1:53:52.239
+And another small step another small step another small steps. No, it's going to take forever
+
+1:53:52.849,1:53:54.439
+To get to the end
+
+1:53:54.439,1:53:56.439
+If you pick a learning rate, that's too big
+
+1:53:57.409,1:53:59.409
+You jump way too far
+
+1:54:00.289,1:54:02.889
+Each time and again, it's going to take forever
+
+1:54:05.429,1:54:11.129
+And in fact in this case, sorry this case we're assuming we're starting here and it's actually is so big it got worse and worse
+
+1:54:13.780,1:54:16.659
+Or here's one where we start here and it's like it's not
+
+1:54:17.300,1:54:20.920
+So big it gets worse and worse, but it just takes a long time to bounce in and out
+
+1:54:21.739,1:54:23.690
+right, so
+
+1:54:23.690,1:54:30.250
+Picking a good learning rate is really important both to making sure that it's even possible to solve the problem
+
+1:54:30.590,1:54:33.279
+And that it's possible to solve it in a reasonable amount of time
+
+1:54:33.469,1:54:37.808
+So we'll be learning about picking how to pick learning rates in this course
+
+1:54:41.780,1:54:43.070
+So
+
+1:54:43.070,1:54:47.139
+Let's try this. Let's try using gradient descent
+
+1:54:48.010,1:54:53.380
+I said SGD that's not quite accurate. It's just going to be gradient descent to solve an actual problem
+
+1:54:54.650,1:55:00.039
+So the problem we're going to solve is let's imagine you were watching a roller coaster
+
+1:55:00.650,1:55:05.949
+Go over the top of a hump, right so as it comes out of the previous
+
+1:55:06.499,1:55:10.629
+hill it's going super fast and it's going up the hill and
+
+1:55:11.059,1:55:14.859
+it's going slower and slower and slower until I get to the top of the hump and
+
+1:55:15.260,1:55:17.590
+Then it goes down the other side or gets faster and faster and faster
+
+1:55:17.599,1:55:22.808
+So if you like how to stop what sure whatever or a sudden or some kind of speedometer
+
+1:55:23.059,1:55:25.599
+And you are measuring it just by hand
+
+1:55:26.329,1:55:32.109
+At kind of equal time points you might end up with something that looks a bit like this, right?
+
+1:55:32.110,1:55:36.099
+And so the way I did this was I just grabbed a range just grabs
+
+1:55:36.679,1:55:43.748
+The numbers from naught up to but not including 20, right? So these are the time periods at which I'm taking my speed measurement and
+
+1:55:44.599,1:55:46.599
+Then I've just got some
+
+1:55:47.479,1:55:52.929
+Quadratic function here and multiplied by 3 and then square root and then at 1 whatever, right?
+
+1:55:52.929,1:55:56.438
+And then I also actually sorry I take my time
+
+1:55:57.530,1:55:59.300
+- 9.5
+
+1:55:59.300,1:56:06.759
+Square root times 0.75 add 1 and then I add a random number to that or add a random number to every observation
+
+1:56:07.070,1:56:10.449
+So I end up with a quadratic function, which is a bit bumpy
+
+1:56:10.639,1:56:14.768
+So this is kind of like what it might look like in real life because most my speedometer
+
+1:56:15.289,1:56:17.469
+And of testing is not perfect
+
+1:56:20.659,1:56:22.659
+All right, so
+
+1:56:22.789,1:56:27.728
+We want to create a function that estimates at any time. What is the speed of the roller-coaster?
+
+1:56:28.519,1:56:30.519
+So we start by
+
+1:56:30.769,1:56:33.849
+Guessing what function it might be there
+
+1:56:33.849,1:56:40.899
+We guess that it's a function a times x squared plus B times time plus C
+
+1:56:40.969,1:56:43.419
+You might remember from school is quite a quadratic
+
+1:56:44.090,1:56:47.799
+So let's create a function, right? And so
+
+1:56:49.010,1:56:54.070
+Let's create it using kind of the Alpha Samuels technique the machine learning technique. This function is going to take two things
+
+1:56:54.409,1:56:56.409
+It's going to take an input
+
+1:56:56.599,1:56:58.599
+Which in this case is a time
+
+1:56:58.760,1:57:00.760
+And it's going to take some parameters
+
+1:57:01.850,1:57:05.149
+and the parameters are a b and c so in in
+
+1:57:05.670,1:57:12.410
+Python you can split out a list or a collection into its components like so and then here's that function
+
+1:57:16.100,1:57:18.890
+Any function in the world, we're just trying to find some function
+
+1:57:19.920,1:57:22.790
+Which is a quadratic by finding an A in a Vienna C
+
+1:57:23.880,1:57:27.680
+so the the Arthur Samuel technique for doing this is to
+
+1:57:27.990,1:57:35.030
+next up come up with a loss function come up with a measurement of how good we are so if we've got some predictions
+
+1:57:36.000,1:57:38.000
+that come out of our function and
+
+1:57:38.460,1:57:41.960
+The targets which are these you know actual values
+
+1:57:42.750,1:57:44.750
+then we could just do the
+
+1:57:46.320,1:57:52.939
+Mean squared error. Okay. So here's that means grid error. We saw before the difference squared then take the mean
+
+1:57:54.530,1:57:57.310
+So now we need to go through our seven step process
+
+1:57:57.679,1:58:03.549
+We want to come up with a set of three parameters a B and C which were as good as possible
+
+1:58:03.800,1:58:07.509
+So step one is to initialize a B and C two random values
+
+1:58:07.880,1:58:13.599
+So this is how you get random values three of them in pi torch. And remember we're going to be adjusting them
+
+1:58:13.599,1:58:15.969
+So we have to tell pi torch that we want the gradients
+
+1:58:19.950,1:58:26.490
+I'm just going to save those away so I can check them over and then I calculate the predictions using that function f
+
+1:58:27.370,1:58:29.370
+Which was this?
+
+1:58:31.650,1:58:35.000
+And then let's create a little function which just plots out
+
+1:58:35.520,1:58:37.760
+Good at this point our our predictions
+
+1:58:38.010,1:58:44.539
+So here is a function that prints in red our predictions and in blue our targets
+
+1:58:44.700,1:58:46.700
+So that looks pretty terrible
+
+1:58:48.520,1:58:50.520
+Calculate the loss
+
+1:58:51.670,1:58:53.670
+a functionary wrote
+
+1:58:54.050,1:59:01.160
+Okay, so now we want to improve this so calculate the gradients using the two steps we saw call backward and then get grad and
+
+1:59:01.710,1:59:03.710
+this says that each of our
+
+1:59:04.620,1:59:06.859
+Parameters has a gradient that's negative
+
+1:59:09.660,1:59:15.829
+Let's pick a learning rate of ten to the minus five or we multiply that by ten to the minus five
+
+1:59:18.139,1:59:19.019
+And
+
+1:59:19.019,1:59:25.699
+step the weights and remember step the weights means - equals learning rate times the
+
+1:59:26.519,1:59:28.519
+gradient as
+
+1:59:28.980,1:59:31.020
+Here which have called data
+
+1:59:32.020,1:59:36.330
+The reason I've called data is that data is a special attribute in pi torch
+
+1:59:36.640,1:59:38.640
+Which if you use it?
+
+1:59:38.980,1:59:44.399
+Then the radiant is not calculated and we certainly wouldn't want
+
+1:59:44.860,1:59:51.810
+the gradient to be calculated of the actual step we're doing we only want the gradient to be calculated of our
+
+1:59:52.989,1:59:57.479
+Function f all right. So when we step the weights we have to use this special
+
+1:59:58.300,2:00:00.300
+dot data attribute
+
+2:00:00.610,2:00:02.350
+After we do that
+
+2:00:02.350,2:00:04.350
+Delete the gradients that we already had
+
+2:00:04.989,2:00:08.309
+And let's see if loss improved. So the loss before was
+
+2:00:10.840,2:00:12.760
+25800
+
+2:00:12.760,2:00:19.679
+Now it's 5,400 and the plot has gone from something that goes down to minus 300
+
+2:00:22.030,2:00:24.030
+Well to something that looks much better
+
+2:00:25.129,2:00:30.769
+So let's do that a few times so I just grabbed those previous lines of code and pasted them all into a single cell
+
+2:00:31.409,2:00:35.118
+Okay, so Preds lost backward data gratis none
+
+2:00:35.969,2:00:38.388
+and then from time to time print the loss out and
+
+2:00:39.329,2:00:42.889
+Repeat that ten times and look getting better and better
+
+2:00:46.030,2:00:50.640
+And so we can actually look at it getting better and better
+
+2:00:52.230,2:00:59.000
+So, this is pretty cool, right we have a technique this is the Arthur Samuel technique for
+
+2:01:00.840,2:01:03.560
+Finding a set of parameters that
+
+2:01:04.170,2:01:10.520
+Continuously improves by getting feedback from the result of measuring some loss function
+
+2:01:11.999,2:01:14.339
+So that was kind of the key step, right?
+
+2:01:15.579,2:01:23.429
+This this is the gradient descent method so you should make sure that you kind of go back and feel super comfortable with
+
+2:01:24.070,2:01:28.289
+What's happened? And you know, if you're not feeling comfortable that that's fine
+
+2:01:28.289,2:01:32.998
+right if it's been a while or if you've never done this kind of gradient descent before
+
+2:01:34.840,2:01:39.779
+This might feel super unfamiliar so kind of trying to find the first cell in this notebook
+
+2:01:40.389,2:01:45.748
+Where you don't fully understand what it's doing and then like stop and figure it out
+
+2:01:45.749,2:01:50.339
+I can look at everything that's going on do some experiments do some reading
+
+2:01:51.340,2:01:53.320
+until you understand
+
+2:01:53.320,2:01:56.039
+That cell where you're stuck before you move forwards
+
+2:01:58.380,2:02:00.920
+So let's now apply this to em mist
+
+2:02:02.770,2:02:04.770
+Um
+
+2:02:06.050,2:02:08.050
+So for EM Nest
+
+2:02:09.310,2:02:13.620
+We want to use this exact technique and there's basically nothing extra we have to do
+
+2:02:14.590,2:02:16.150
+except one thing
+
+2:02:16.150,2:02:18.150
+we need a loss function and
+
+2:02:21.190,2:02:27.280
+The metric that we've been using is the error rate or the accuracy, it's like how often are we correct?
+
+2:02:27.320,2:02:31.689
+Right, and and that's the thing that we're actually trying to make good
+
+2:02:32.780,2:02:35.709
+Our metric but we've got a very serious problem
+
+2:02:36.470,2:02:39.130
+Which is remember we need to calculate the gradient
+
+2:02:40.400,2:02:46.239
+To figure out how we should change our parameters and the gradient is the slope or the steepness
+
+2:02:47.030,2:02:50.169
+Which you might remember from school is defined as rise over run
+
+2:02:51.050,2:02:57.519
+it's why new - why old divided by X near minus X old so
+
+2:02:58.490,2:03:06.369
+The gradients actually defined when X new is is very very close to X old meaning their difference is very small
+
+2:03:07.650,2:03:09.650
+That think about it
+
+2:03:09.940,2:03:17.129
+Accuracy if I change a parameter by a tiny tiny tiny amount the accuracy might not change at all
+
+2:03:17.800,2:03:19.800
+Because there might not be any
+
+2:03:19.929,2:03:25.439
+Three that we now predict as a seven or any seven that we now predict as a three
+
+2:03:25.659,2:03:28.049
+Because we change the parameter by such a small amount
+
+2:03:29.320,2:03:34.949
+So it's it's it's possible. In fact, it's certain that the gradient is zero
+
+2:03:35.679,2:03:39.149
+At many places and that means that our parameters
+
+2:03:39.790,2:03:46.709
+Aren't going to change at all because learning rate times gradient is still zero when the gradient zero for any learning rate
+
+2:03:48.429,2:03:50.429
+So this is why
+
+2:03:51.250,2:03:53.020
+the loss
+
+2:03:53.020,2:03:57.149
+Function and the metric are not always the same thing
+
+2:03:58.150,2:04:00.540
+we can't use a metric as
+
+2:04:01.300,2:04:05.009
+Our loss if that metric has a gradient of zero
+
+2:04:07.680,2:04:09.680
+So we need something different
+
+2:04:10.920,2:04:12.920
+We want to find something that kind of
+
+2:04:14.530,2:04:19.620
+Is pretty similar to the accuracy in that like as the accuracy gets better
+
+2:04:20.140,2:04:22.950
+This ideal function we want gets better as well
+
+2:04:23.770,2:04:25.770
+But it should not have a gradient of zero
+
+2:04:27.670,2:04:29.670
+So let's think about that function
+
+2:04:32.800,2:04:35.610
+Suppose we had three images
+
+2:04:37.779,2:04:39.779
+Um, actually, you know what
+
+2:04:41.110,2:04:45.060
+This is actually probably a good time to stop because actually, you know
+
+2:04:45.060,2:04:49.680
+We've we've kind of we've got to the point here where we understand gradient descent
+
+2:04:51.780,2:04:55.219
+We kind of know how to do it with a simple loss function and
+
+2:04:55.680,2:04:59.720
+I actually think before we start looking at the amnesty loss function
+
+2:05:00.690,2:05:02.400
+We shouldn't move on
+
+2:05:02.400,2:05:06.560
+Because we've got so much so much assignments to do for this week already
+
+2:05:06.560,2:05:09.410
+so we've got build your web application and
+
+2:05:09.810,2:05:15.080
+We've got both step through step through this notebook to make sure you fully understand it
+
+2:05:15.660,2:05:17.660
+So I actually think we should probably
+
+2:05:18.930,2:05:26.510
+Stop right here before we make things too crazy. So before I do Rachel are there any questions?
+
+2:05:28.170,2:05:35.390
+Okay, good, all right well thanks everybody sorry for that last-minute change of tack there but I think this is going to make sense
+
+2:05:36.240,2:05:43.309
+So I hope you have a lot of fun with your web applications try and think of something that's really fun. Really interesting
+
+2:05:44.250,2:05:48.439
+It doesn't have to be like important. It could just be some, you know cute thing
+
+2:05:49.350,2:05:53.870
+We've had students before a student that I think he said he had 16 different
+
+2:05:54.270,2:05:57.530
+Cousins and he created something that would classify
+
+2:05:57.960,2:06:03.200
+A photo based on which of his cousins it was feel like his fiancee meeting his family
+
+2:06:04.590,2:06:11.120
+you know, you can come up with anything you like but you know, yeah show off your application and
+
+2:06:12.780,2:06:18.259
+Maybe have a look around at what I pi widgets can do and try and come up with something that you think is pretty cool
+
+2:06:19.200,2:06:21.530
+All right. Thanks everybody. I will see you next week
