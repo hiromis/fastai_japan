@@ -2495,7 +2495,7 @@ So let's have a break and we'll come back in
 five minutes time
 
 1:04:10.530,1:04:12.530
-So welcome back everybody
+So welcome back everybody <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 
 1:04:13.589,1:04:15.589
 This is a
@@ -3736,7 +3736,7 @@ Shapes as we described before
 1:36:28.890,1:36:31.970
 What it ends up doing is it basically copies
 
-1:36:32.700,1:36:38.329
+1:36:32.700,1:36:38.329r
 This this number a thousand and ten times and it acts as if we had said
 
 1:36:38.700,1:36:42.649
