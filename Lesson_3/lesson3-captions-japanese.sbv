@@ -2495,2407 +2495,2430 @@ So let's have a break and we'll come back in
 five minutes time
 
 1:04:10.530,1:04:12.530
-So welcome back everybody <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
+では、再開しましょう。
 
 1:04:13.589,1:04:15.589
-This is a
+ここからが、
 
 1:04:16.240,1:04:19.990
-Interesting moment in the course because we're kind of jumping from
+このコースの中で面白いパートです。というのも、
 
 1:04:20.840,1:04:25.989
-a part of the course which is, you know, very heavily around kind of
+今まではずっと
 
 1:04:27.329,1:04:32.879
-The kind of 'this the the the structure of like what are we trying to do with machine learning?
+私たちが機械学習でやろうとしていること、
 
 1:04:32.890,1:04:35.699
-And what are the kind of the pieces and what do we need to know?
+機械学習を機能させる上で必要なピースや知識
 
 1:04:37.260,1:04:44.790
-To make everything kind of work together there was a bit of code but not masses there was basically no math
+について、ほぼ数学は使わずごくわずかのコードで説明してきました。
 
 1:04:47.130,1:04:50.849
-And we kind of want to put that at the start for everybody who's not
+初めにこういった説明を行なったのは、
 
 1:04:51.790,1:04:56.009
-You know who's kind of wanting to an understanding of these issues?
+機械学習やそれに関する問題を理解したい人たちもターゲットにしているからです。
 
 1:04:57.460,1:04:59.460
-without necessarily
+中には機械学習にでてくる
 
 1:05:00.010,1:05:06.060
-Wanting to kind of dive deep into the code in the math themselves, and now we're getting into the diving deeper part
+数式やコードに深入りすることなく理解したい人もいるでしょう。
 
 1:05:07.330,1:05:09.330
-If if you're not
+もし今から話すことに
 
 1:05:09.610,1:05:11.520
-Interested in that diving deep yourself
+興味がなければ
 
 1:05:11.520,1:05:18.270
-you might want to skip to the next lesson about ethics where we you know is kind of rules that rounds out the kind of
+倫理について話す次回のレッスンに進んだ方が良いかもしれません。次回は
 
 1:05:19.570,1:05:22.080
-You know slightly less technical material
+あまり技術的ではないものになります。
 
 1:05:25.460,1:05:27.880
-So what we're going to look at here is we're going to look at
+今から見ていくのは
 
 1:05:29.500,1:05:31.500
-What we think of as kind of a toy problem
+非常に単純な問題ですが
 
 1:05:32.530,1:05:34.060
-but
+
 
 1:05:34.060,1:05:37.289
-Just a few years ago is considered a pretty challenging problem
+ほんの数年前までは困難と思われていたものです。
 
 1:05:38.050,1:05:41.039
-The problem is recognizing handwritten digits
+それは手書き数字認識です。
 
 1:05:42.400,1:05:44.400
-And we're going to try and do it
+そして、私たちはこれから
 
 1:05:44.510,1:05:46.039
-from scratch
+スクラッチで解いていきます。
 
 1:05:46.039,1:05:48.879
-Right and we're gonna try and look at a number of different ways to do it
+そのために色々な解法を見ていきます。
 
 1:05:50.059,1:05:52.749
-So we're going to have a look at a data set
+では、今からデータセットを見ます。
 
 1:05:53.510,1:06:00.789
-Called M nest and so if you've done any machine learning before you may well have come across M nest it contains handwritten digits
+MNISTというデータセットですが、機械学習に触れたことがあれば使ったことがあるでしょう。
 
 1:06:01.520,1:06:05.859
-And it was collided into a machine learning data set by a guy called John McCone
+これは手書き数字の機械学習データセットでYann Lecunとその同僚が
 
 1:06:06.589,1:06:10.899
-and some colleagues and they use that to demonstrate and one of the you know
+作成し、彼らの提案手法を検証するのに使いました。
 
 1:06:10.900,1:06:14.349
-Probably the first computer system to provide really practically useful
+その方法はおそらく最初の非常に実用的で有用な計算機システムで、
 
 1:06:14.779,1:06:20.679
-scalable recognition of handwritten digits Lynnette five with the system was actually used to
+さらにスケールするものであり、LeNetと呼ばれました。そして実際に
 
 1:06:21.380,1:06:25.809
-Automatically process like 10% of the checks in in the US
+アメリカ合衆国で使われる小切手の1割を処理するのに使われました。
 
 1:06:29.900,1:06:36.279
-So one of the things that really helps I think when building a new model is to kind of start with something simple and
+さて、新しいモデルを作るときに大事なのは非常に単純なものから始め、
 
 1:06:36.559,1:06:38.559
-gradually scale it up, so
+徐々に複雑にしていくことです。
 
 1:06:39.589,1:06:45.038
-We've created an even simpler version of M nest which we call M nest sample, which only has threes and sevens
+MNIST sampleというMNISTより簡単なものを用意してあります。3と7のみが含まれるデータセットです。
 
 1:06:45.739,1:06:50.139
-Okay. So this is a good starting point to make sure that we can kind of do something easy
+今回はこのMNIST sampleから始めましょう。
 
 1:06:50.319,1:06:53.409
-I picked threes and sevens. So M this simple because they're very different
+3と7は見た目がかなり違うので単純な問題です。
 
 1:06:53.569,1:06:57.399
-So I feel like if we can't do this we're going to have trouble recognizing every digit
+もしこの問題ができなければ手書き数字認識はできないと思います。
 
 1:06:59.859,1:07:01.630
-There
+さて、
 
 1:07:01.630,1:07:06.039
-so step one is to call aunt our data aunt our data is the faster a
+第一ステップはuntar_dataです。untar_dataはfastaiの
 
 1:07:07.819,1:07:09.819
-Function which takes a URL
+関数でURLを引数にとり、
 
 1:07:11.480,1:07:17.379
-Checks whether you've already downloaded it if you haven't it downloads it checks whether you've already uncompressed it
+ダウンロード済みか確認し、そうでなければダウンロード、その次に解凍済みか確認し、
 
 1:07:17.380,1:07:22.089
-If you haven't it uncompress is it and then it finally returns the path of where that ended up
+もしまだなら解凍し、データセットのパスを返します。
 
 1:07:22.609,1:07:24.609
-So you can see here
+ここに
 
 1:07:27.200,1:07:34.210
-URLs dot m nest sample, so you could just hit tab to get autocomplete
+URLs.MNIST_SAMPLEとありますね、tabを押すと自動補完がききます。
 
 1:07:37.140,1:07:42.930
-Is just some thumb location right doesn't really matter where it is and so then when we
+これは場所を表していて、どこにあるかはさほど重要ではありません。そして
 
 1:07:45.460,1:07:51.580
-All that I've already downloaded it and already uncompressed it because I've already round this once before so it happens straightaway and
+私はすでにダウンロード・解凍済みなので非常にスムーズです。
 
 1:07:52.190,1:07:54.280
-So path shows me
+そしてこのpathは
 
 1:07:55.520,1:08:03.280
-Where it is now in this case path is dot and the reason path is dot is because I've used his special base path attribute
+データがどこにあるかを示していて、今は”.”ですがこれはPath.BASE_PATHを
 
 1:08:03.530,1:08:04.910
-to path
+pathに設定することで
 
 1:08:04.910,1:08:06.910
-to tell it kind of like where's my
+私が作業するパスの
 
 1:08:07.790,1:08:11.169
-Where's my starting point, you know and and that's used to print
+開始地点を変えているからです。そして、
 
 1:08:11.170,1:08:16.299
-so when I go here LS which prints a list of files, these are all relative to
+path.lsはそのパスにあるファイルを列挙します。そして、
 
 1:08:17.180,1:08:22.209
-Where I actually untied this to so it just makes it a lot easier not to have to see the whole
+列挙されたパスは解凍した場所からの相対パスなので非常に便利です。
 
 1:08:22.880,1:08:24.910
-Set of parent path folders
+
 
 1:08:28.500,1:08:30.500
-Um
+
 
 1:08:30.759,1:08:34.589
-LS is actually so path is a
+さて、pathは、、、
 
 1:08:35.979,1:08:41.639
-Let's see. What kind of type it is. So it's a path lib path object
+pathの型はなんでしょう。実はPathlibのPathオブジェクトです。
 
 1:08:44.229,1:08:50.819
-Path lib is part of the Python standard library. It's a really very very very nice library, but it doesn't actually have LS
+Pathlibは標準ライブラリで大変素晴らしいのですが、lsは実装されていません。
 
 1:08:52.059,1:08:56.458
-Where there are libraries that we find super helpful, but they don't have exactly the things we want
+非常に便利ですが、本当に使いたいものがなかったので、
 
 1:08:56.459,1:08:59.429
-We liberally add for things we want to them so we add
+実際にlsメソッドを追加しました。
 
 1:09:00.009,1:09:02.009
-LS
+
 
 1:09:05.639,1:09:08.059
-So if you want to find out what LS is
+もし、実装が気になったら、
 
 1:09:08.759,1:09:11.209
-You know, there's as we've mentioned it's a few ways you can do it
+すでに伝えてありますが、いくつか確認する方法があります。
 
 1:09:11.210,1:09:15.290
-You can pop a question mark there and that will show you where it comes from
+?を付け加えれば、どこで実装されているかわかります。
 
 1:09:15.290,1:09:22.849
-so there's actually a library called fast core, which is a lot of the foundational stuff in fast AI that is not dependent on
+fast coreにありますね。fast coreはfastaiの基本的なものが実装されていますが、
 
 1:09:23.819,1:09:25.650
-high torch or
+とくにPyTorchや
 
 1:09:25.650,1:09:28.009
-pandas or any of these big heavy libraries
+pandasなどの大規模なライブラリに依存していないものが含まれます。
 
 1:09:29.940,1:09:34.549
-So this is part of fast core and if you want to see exactly what it does you of course remember you can put in
+実際に何をしているか知りたければ
 
 1:09:34.549,1:09:36.549
-a second question mark
+?をもう1つ加えると
 
 1:09:36.989,1:09:38.989
-to get
+
 
 1:09:39.000,1:09:45.990
-source code and as you can see, there's not much source code to it and you know, maybe most importantly
+ソースコードが確認できますし、忘れないで欲しいのは、
 
 1:09:47.720,1:09:49.720
-Please don't forget about doc
+doc関数です。
 
 1:09:51.179,1:09:57.929
-Really importantly that gives you this show in Doc's link which you can click on to get to the documentation to see examples
+doc関数は実際のドキュメントへのリンクを表示し、そこにジャンプすれば
 
 1:09:59.199,1:10:03.029
-pictures if relevant tutorials tests and so forth
+例やチュートリアルなども確認できます。
 
 1:10:06.750,1:10:07.980
-So
+
 
 1:10:07.980,1:10:14.180
-What's so when you're looking at a new data set you kind of just used I always start with just LS see what's in it
+新しいデータセットを使う時はls関数で何が入っているか確認することをお勧めします。
 
 1:10:14.990,1:10:20.240
-And I can see here. There's a train folder and there's a valid folder that's pretty normal
+そして、trainとvalidフォルダーがあります。非常に一般的なつくりです。
 
 1:10:20.580,1:10:24.799
-So let's look at LS on the train folder
+trainフォルダーをを見てみましょう。
 
 1:10:25.320,1:10:28.700
-and it's got a folder called 7 and a folder called 3 and
+7と3という名前のフォルダがありますね。
 
 1:10:29.040,1:10:33.560
-So this is looking quite a lot like our bare classifier data set
+この構成は熊のデータセットとそっくりですね。
 
 1:10:33.560,1:10:38.629
-We downloaded each set of images into a folder based on what its label was
+画像をそのラベルに対応するフォルダにダウンロードしています。
 
 1:10:39.450,1:10:41.450
-This is doing it another level though
+また、このラベルによる分類の前に
 
 1:10:42.060,1:10:48.410
-Or the first level of the folder hierarchy is is it training or valid? And the second level is what's the label?
+まず学習データかバリデーションかという分類が行われています。
 
 1:10:49.170,1:10:53.960
-And this is the most common way for image data sets to be distributed
+画像のデータセットではこのフォルダ構成が一般的です。
 
 1:10:57.290,1:10:59.290
-So, let's have a look
+ではどんな画像があるか見るために
 
 1:10:59.700,1:11:03.859
-let's just create something called 3s that contains all of the
+threesというリストを用意して
 
 1:11:04.410,1:11:09.349
-Contents of the three directory training and let's just sort them so that this is consistent
+3の学習データファイルを列挙し、並び替えます。
 
 1:11:09.960,1:11:13.730
-do the same for sevens and let's look at the 3s and you can see there's just
+7についても同じことをし、3のデータを見てみましょう。
 
 1:11:14.340,1:11:19.130
-There just numbered. All right, so let's grab one of those
+さて、threesから1つ選び、
 
 1:11:20.790,1:11:28.009
-Open it and take a look. Okay, so there's the picture of a three and so what is that really?
+ファイルを開いて描画してみましょう。3の画像ですね、実際にはなんでしょう？
 
 1:11:31.000,1:11:34.089
-But not three I am three
+im3の型は
 
 1:11:35.570,1:11:42.399
-So Pio is the Python imaging library. It's the most popular library by far for working with images
+PILで、これはPythonの画像ライブラリで、最も一般的なものです。
 
 1:11:43.550,1:11:45.579
-On Python, and it's a PNG
+そしてPNGですね。
 
 1:11:46.490,1:11:48.490
-Not surprisingly
+一般的ですね。
 
 1:11:49.190,1:11:51.790
-So Jupiter notebook
+Jupyter Notebookは
 
 1:11:53.780,1:11:55.340
-Knows how to display
+様々なものを
 
 1:11:55.340,1:11:59.980
-Many different types and you can actually tell if you create a new type you can tell it how to display your type
+描画する方法を知っていて、自分で型を作った場合にはPILにその描画方法を教えられます。
 
 1:12:00.010,1:12:04.959
-and so Pio comes with something that will automatically display the image like so
+PILは一般的な型の描画方法を知っているので、このような画像を出力します。
 
 1:12:05.990,1:12:11.019
-What I want to do here though is to look at like how we're going to treat this as numbers
+しかし、今はこの画像が数字でどう表されるかを見ます。
 
 1:12:11.660,1:12:16.599
-Right and so one easy way to treat things as numbers is to turn it into an array
+画像を数字で扱う簡単な方法は、arrayに変換することです。
 
 1:12:16.880,1:12:20.950
 The array is part of numpy which is the most popular
+arrayはnumpyの要素で、numpyは広く使われている
 
 1:12:21.470,1:12:22.580
-array
+配列
 
 1:12:22.580,1:12:24.350
-programming library
+プログラミングライブラリです。
 
 1:12:24.350,1:12:27.100
-for python and so if we pass our
+もし、
 
 1:12:28.670,1:12:29.750
-Pio
+PILの
 
 1:12:29.750,1:12:31.750
 image object to array
+画像オブジェクトをarrayに渡すと
 
 1:12:32.000,1:12:35.589
-It just converts the image into a bunch of numbers
+画像が多数の数値に変換されます。
 
 1:12:35.590,1:12:40.810
-And the truth is it was a bunch of numbers the whole time. It was actually stored as a bunch of numbers on disk
+実は画像もともと数字なのです。ディスクに保存された大量の数値です。
 
 1:12:41.000,1:12:48.129
-It's just that there's this magic thing and Jupiter that knows how to display those numbers on the screen now, let me say array
+マジックのようなものがあり、Jupyterが描画できるだけなのですが、
 
 1:12:48.770,1:12:50.720
-Turning it back into a numpy array
+arrayがPILオブジェクトをnumpy.arrayに変えていると表現しました。
 
 1:12:50.720,1:12:56.050
-We're kind of removing this ability for Jupiter notebook to know how to display it like a picture
+numpy.arrayに変えると先ほどのように描画されなくなります。
 
 1:12:56.240,1:12:59.530
 so once I do this we can then index into that array and
+一度numpy.arrayにすれば、要素へのアクセスが可能になり、
 
 1:13:00.050,1:13:02.949
-create everything from the grab everything all the rows from
+4から9行目の全要素を取得したり、
 
 1:13:03.080,1:13:10.390
-four up to but not including ten and all the columns from four up to and not including ten and here are some numbers and
+また、4から9列目の全要素を取得することもできます。ここにいくつかの数値がありますが、
 
 1:13:11.000,1:13:12.890
-They are
+これらは
 
 1:13:12.890,1:13:14.090
-8-bit unsigned
+8ビットの整数値で、
 
 1:13:14.090,1:13:21.970
-Integers so they are between 0 and 255. So an image just like everything on a computer is just a bunch of numbers and
+0から255を取り得るものです。計算機上の全ての画像は大量の数字であり、
 
 1:13:22.520,1:13:24.350
-Therefore we can compute
+だからこそ、それを使って
 
 1:13:24.350,1:13:26.350
-with it
+計算することができるのです。
 
 1:13:26.880,1:13:31.909
-We could do the same thing, but instead of saying array we could say tensor now our tensor is
+要素のアクセス等は、arrayではなくtensorでもできます。tensorは
 
 1:13:32.699,1:13:37.158
-basically the PI torch version of an umpire ray and
+numpy.arrayのPyTorch版と言えるものです。
 
 1:13:37.889,1:13:41.479
-So you can see it looks it's exactly the same code is above
+ですから、コードは上とほぼ同じ見た目をしています。
 
 1:13:41.699,1:13:47.959
-But I've just replaced array with tensor and the output looks almost exactly the same except it replaces array with tensor
+arrayをtensorに書き換えただけで全く同じことをしています。
 
 1:13:47.960,1:13:53.899
-And so you'll see this that basically a PI torch tensor and an umpire array behave
+PyTorchのtensorとnumpyのarrayがほぼ同じように動作することが
 
 1:13:54.900,1:13:56.900
-nearly identically
+わかりますね。
 
 1:13:57.210,1:14:02.330
-Much if not most of the time but the key thing is that a PI torch tensor
+一部例外はありますが、大事なことはPyTorchのtensorは
 
 1:14:03.449,1:14:05.569
-Can also be computed on a GPU?
+GPU上でも動くことです。
 
 1:14:05.940,1:14:07.320
-Not just a CPU
+
 
 1:14:07.320,1:14:12.049
-So in in our work and in the book and in the notebooks in our code
+この講義と本では、
 
 1:14:12.449,1:14:17.299
-We tend to use tensors pi torch tensors much more often than umpire arrays
+numpy.arrayではなく、PyTorchのtensorを使うようにしています。
 
 1:14:17.520,1:14:23.209
-Because they kind of have nearly all the benefits of numpy arrays plus all the benefits of GPU computation
+というのも、numpy.arrayとGPU計算のメリットを使うことができる上に、
 
 1:14:23.639,1:14:26.539
-And they've got a whole lot of extra functionality as well
+numpyにはない機能も多く取り揃えているからです。
 
 1:14:27.990,1:14:29.990
-a lot of people who have used
+Pythonを書いた経験がある
 
 1:14:31.690,1:14:33.690
-Python for a long time always
+多くの人は常に
 
 1:14:33.850,1:14:39.870
-jump into numpy because that's what they used to if that's you you might want to start considering jumping into
+みなさんがPyTorchのTensorを使いたいと思うようにNumPyに飛びつきますが、
 
 1:14:40.570,1:14:46.860
-Tensor like wherever you used to write erase not writing tensor and just see what happens because you might be surprised at how many things
+それはtensorやarrayを使うようにすることで多くのことが
 
 1:14:46.860,1:14:48.860
-You can speed up or do it more easily
+簡単に、そして高速に行えるからです。
 
 1:14:50.280,1:14:52.280
-So let's grab
+さて
 
 1:14:52.449,1:14:58.379
-That that three image turn it into a tensor. And so that's going to be three image tensor
+先ほどの3の画像をtensorにしましょう。
 
 1:14:58.380,1:15:02.699
-That's why I've got a m3t here and let's grab a bit of it
+im3_tがim3のtensorです。im3_tの一部を取り出し
 
 1:15:03.280,1:15:09.210
-Okay, and turn it into a panda's data frame and the only reason I'm turning it into a panda's data frame is the pandas has
+pandas.DataFrameにしましょう。理由は
 
 1:15:09.210,1:15:15.779
-A very convenient thing called background gradient that turns a background into AK radiant as you can see
+background gradientが非常に便利だからです。
 
 1:15:16.000,1:15:21.329
-so here is the top bit of the three you can see that the zeros of the whites and the
+3の画像の上の方が描画されていて、0が白、
 
 1:15:22.000,1:15:27.779
-Numbers near 255 are the blacks Venus and what's it bits in the middle? Which which are grey
+255に近い数字が黒、中間の値が灰色です。
 
 1:15:28.630,1:15:32.909
-so here we have we can see what's going on when our
+この描画で、
 
 1:15:34.119,1:15:38.939
-Images which are numbers actually get displayed on the screen. It's just it's just doing this. Okay
+画像、数値の集合がスクリーンでどう描画されるかわかりますね。
 
 1:15:40.679,1:15:48.538
-And so I'm just showing a subset here the actual phone number and M nest is a 28 by 28 pixels square, so that's 768
+実際の画像のごく一部を見せていますが、MNISTの画像は28x28、つまり768ピクセルです。
 
 1:15:49.150,1:15:50.559
-pixels
+
 
 1:15:50.559,1:15:57.479
-So that's super tiny right? Well my mobile phone. I don't know how many megapixels it is, but it's millions of pixels
+非常に小さいですね。例えば私の携帯電話が何メガピクセルか知りませんが何百万ピクセルです。
 
 1:15:57.480,1:15:59.909
-So it's nice to start with something simple and small
+シンプルで小さいものから始めるのは大事です。
 
 1:16:01.499,1:16:02.650
-Okay
+
 
 1:16:02.650,1:16:10.529
-So here's our goal create a model, but by model it has been some kind of computer program learnt from data
+モデルを作るのが目標ですが、モデルはデータから学習した何かしらの計算プログラムで、
 
 1:16:11.889,1:16:16.589
-That can recognize threes versus sevens. You can think of it as a three detector
+3と7を認識できるものです。3検知器と捉えても良いでしょう、なぜなら
 
 1:16:16.590,1:16:18.809
-Is it a three because if it's not a three it's a seven
+3じゃなければ7と言えるのです。
 
 1:16:20.110,1:16:24.089
-So have it stop here pause the video and have a think
+ではここでビデオを一時停止して、
 
 1:16:25.179,1:16:26.440
-How would you do it?
+あなたならどうするかを考えてみてください。
 
 1:16:26.440,1:16:30.089
 How would you like you don't need to know anything about neural networks, or?
+ニューラルネットワークについて知る必要なくするにはどうするでしょうか？
 
 1:16:30.519,1:16:34.679
-anything else how might you just with common sense build a
+あるいは常識を使って3検出器を作るには
 
 1:16:35.289,1:16:37.059
-tree detector
+どうしますか？
 
 1:16:37.059,1:16:40.919
-Okay, so I hope you grabbed a piece of paper a pen. Shut it some notes down
+必要であれば紙とペンを用意してください。
 
 1:16:41.710,1:16:45.539
-I tell you the first idea that came into my head
+私の1つ目のアイデアは
 
 1:16:47.079,1:16:49.079
-Was what if we grab
+データセットの3の画像
 
 1:16:49.389,1:16:51.389
-every single three in the data set and
+を全て取り出し、
 
 1:16:51.880,1:16:53.880
-take the average of
+各ピクセルの
 
 1:16:54.039,1:16:56.248
-the pixels so what's the average of
+平均値を求める
 
 1:16:57.800,1:17:02.120
-This pixel the average of this pixel the average of this pixel the average of this pixel, right?
+というものです。
 
 1:17:02.120,1:17:04.189
-And so there'll be a 28 by 28
+つまり28x28の
 
 1:17:05.970,1:17:07.170
-Picture
+画像で
 
 1:17:07.170,1:17:11.510
-Which is the average of all of the threes and that would be like the ideal
+各ピクセルは全部の3画像の平均ですから、理想的な
 
 1:17:11.790,1:17:14.839
-three and then we'll do the same for sevens and
+3になっています。7についても同じことを行い、
 
 1:17:15.450,1:17:20.569
-then so when we then grab something from the validation set to classify will say like oh
+バリデーションセットに含まれる画像に対して、
 
 1:17:21.270,1:17:27.979
-Is this image closer to the ideal threes the ideal three the mean of the threes or the ideal 7?
+この画像は理想的な3と7のどちらに似ているかに基づいて分類するのです。
 
 1:17:28.980,1:17:33.140
-This is my idea. And so I'm going to call this the pixel similarity approach
+ここではピクセル類似度法とでも呼びましょう。
 
 1:17:33.600,1:17:39.109
-I'm describing this as a baseline a baseline is like a super simple model
+これがベースラインです。ベースラインは非常に簡潔なモデルで
 
 1:17:39.110,1:17:43.100
-That should be pretty easy to program from scratch with very little magic, you know
+プログラムも簡単に書けるものであるべきです。
 
 1:17:43.100,1:17:46.729
-maybe it's just a bunch of kind of simple averages simple arithmetic which
+この方法は平均算出を行うだけですから簡単ですし、
 
 1:17:47.790,1:17:52.490
-you're super confident is going to be better than better than a random model, right and
+ランダムよりは良くなるでしょう。
 
 1:17:53.280,1:17:55.370
-One of the biggest mistakes I see in
+経験豊富な人でもし得る
 
 1:17:55.950,1:18:03.859
-even experienced practitioners is that they fail to create a baseline and so then they build some fancy Bayesian model or
+大きな誤りの1つはベースラインを作らないというものです。
 
 1:18:04.620,1:18:06.620
-or some fancy
+彼らは
 
 1:18:09.239,1:18:12.539
-Fancy Bayesian model or some fancy neural network and they go
+ベイズ予測器やニューラルネットワークを作り
 
 1:18:12.540,1:18:18.180
-wow, Jeremy, look at my amazingly great model and I'll say like how do you know it's amazingly great and I said,
+「Jeremy、素晴らしいモデルができました。」と言うのですが、私が「どうして素晴らしいと
+わかるのですか？」と問うと、
 
 1:18:18.180,1:18:21.389
-Oh, look, the accuracy is 80% and then I'll say okay
+「正確度が80%です」と言いますが、私は
 
 1:18:21.700,1:18:25.529
-Let's see what happens if we create a model where we always predict the mean. Oh
+「常に平均を予測に用いるモデルでどうなるか確認しましょう。おや、
 
 1:18:26.110,1:18:28.110
-Look, that's 85%
+85%ですね」と言えば、
 
 1:18:29.170,1:18:30.340
-and
+当然、
 
 1:18:30.340,1:18:34.860
-people get pretty disheartened when they discover this right and so make sure you start with a
+彼らは大変落ち込むのです。なので、必ず、まともなベースラインから始め、
 
 1:18:35.380,1:18:37.830
-Reasonable baseline and then gradually build on top of it. So
+徐々に大きいものを作るようにしましょう。
 
 1:18:39.040,1:18:41.040
-we need to get
+私たちは、
 
 1:18:41.050,1:18:43.050
-the average of the pixels
+ピクセルの平均値を計算する必要があります。
 
 1:18:43.870,1:18:45.100
-so
 
 1:18:45.100,1:18:48.359
-We're going to learn some nice Python programming tricks to do this
+そのためにPythonのトリックをいくつか紹介します。
 
 1:18:49.150,1:18:52.140
-so the first thing we need to do is we need a list of
+まず必要なのは3と7の画像の
 
 1:18:52.750,1:18:56.430
-all of the sevens so remember
+リストです。
 
 1:18:56.950,1:18:58.950
-We've got the sevens
+すでにsevensはありますが
 
 1:19:00.650,1:19:03.230
-Maybe it is just a list of file names, right and
+要素はファイル名でした。
 
 1:19:05.040,1:19:07.729
-So for each of those file names in the 7s
+それぞれに対して、
 
 1:19:07.800,1:19:15.020
-Lets image open that file just like we did before to get a Pio object and let's convert that into a tensor
+Image.openでPILオブジェクトを取得し、tensorに変換しています。
 
 1:19:15.270,1:19:18.199
-So this thing here is called a list comprehension
+これはリスト内包と呼ばれるものです。
 
 1:19:18.360,1:19:23.179
-So if you haven't seen this before this is one of the most powerful and useful tools in
+これはPythonの中で最も強力かつ便利なものです。
 
 1:19:23.640,1:19:29.299
-Python if you've done something with c-sharp, it's a little bit like link it's not as powerful as link, but it's a similar idea
+C#のlinkの下位互換とも言えますし、
 
 1:19:30.659,1:19:35.929
-If you've done some functional programming in in JavaScript, it's a bit like some of the things you can do with that, too
+JavaScriptにおける関数型プログラミングのアイデアに似たものでもあります。
 
 1:19:36.270,1:19:39.890
-But basically we're just going to go through this collection
+基本的には、この集合の各要素、
 
 1:19:40.409,1:19:44.989
-Each item will become called o and then it will be passed to this function
+ここではoと呼ばれますが、それがこの関数に渡されます。
 
 1:19:45.480,1:19:50.480
-Which opens it up and turns it into a tensor and then it will be collated or back into a list
+この関数は画像を開いてtensorに変換します。各要素に対応する関数の返り値がリストに格納されます。
 
 1:19:50.480,1:19:52.480
-and so this will be all of the
+ですから、このリストには
 
 1:19:53.040,1:19:54.540
-sevens as
+tensorとしての7の全画像が含まれます。
 
 1:19:54.540,1:19:56.540
-tensors
+
 
 1:19:58.630,1:20:02.889
-So silver and I use lists and dictionary comprehensions every day
+Silvyanと私はリストと辞書の内包を毎日使っています。
 
 1:20:03.409,1:20:07.299
-And so you should definitely spend some time checking it out if you haven't already
+もしまだ慣れていなければ、少し時間をかけて使えるようにすべきです。
 
 1:20:08.690,1:20:16.419
-So now that we've got a list of all of the threes as tensors, let's just grab one of them
+3をあらわすtensorのリストがあるので1つ取り出して
 
 1:20:17.960,1:20:19.960
-And display it so
+表示してみましょう。
 
 1:20:20.040,1:20:23.779
-Remember, this is a tensor. Not a Pio image object
+tensorであって、PIL Imageオブジェクトではないので
 
 1:20:24.719,1:20:26.719
-So Jupiter doesn't know how to display it
+Jupyterは描画できません。
 
 1:20:28.230,1:20:30.230
-So we have to use
+ですからここでは
 
 1:20:30.330,1:20:37.640
-Something a command to display it and show image is a fast AI command that displays a tensor and so here is three
+show_imageコマンドを使います。これはfastaiが提供するtensor描画コマンドです。
 
 1:20:39.770,1:20:44.299
-So we need to get the average of all of those threes
+3の平均画像を求める必要があります。
 
 1:20:45.060,1:20:47.060
-So to get the average
+平均を計算するためにまず、
 
 1:20:47.130,1:20:51.230
-The first thing we need to do is to turn change this so it's not a list
+tensorのリストをtensorにします。これはリストではなく、
 
 1:20:52.110,1:20:54.140
-But it's a tensor itself
+tensorです。
 
 1:20:55.080,1:20:56.880
-currently
+今、
 
 1:20:56.880,1:20:59.120
-three tensors
+three_tensors[1]
 
 1:21:02.830,1:21:04.490
-One as a
+の形（shape）は
 
 1:21:04.490,1:21:05.630
-shape
+
 
 1:21:05.630,1:21:13.600
-Which is 28 by 28. Oh, this is this is the rows by columns the size of this thing right about three tenses itself
+(28, 28)です。行の数と列の数です。しかし、three_tensors自体は
 
 1:21:17.609,1:21:19.079
-It's just a list
+リストです。
 
 1:21:19.079,1:21:22.819
-But I can't really easily do mathematical computations on that
+このままだと平均の計算は簡単ではありません。
 
 1:21:22.919,1:21:28.819
-so what we could do is we could stack all of these 28 by 28 images on top of each other to create a
+そこで、私たちができることと言うと、28x28の画像を積み重ねて
 
 1:21:29.820,1:21:35.149
-Like a 3d cube of images and that's still quite a tensor
+画像からなる3次元の立方体にすることで、これもtensorです。
 
 1:21:35.149,1:21:41.809
-So a tensor can have as many of these axes or dimensions as you like and to stack them up you use funnily enough
+tensorは軸もしくは次元をいくらでも持てます。
 
 1:21:42.570,1:21:45.649
-Stack and so this is going to turn the list
+torch.stackはtensorのリストを
 
 1:21:46.379,1:21:48.559
-into a tensor and as you can see
+tensorにし、今ここにあるように
 
 1:21:49.109,1:21:51.169
-The shape of it is now
+stacked_threesのshapeは
 
 1:21:51.719,1:21:54.378
-6 1 31 by 28 by 28
+(6131, 28, 28)です。
 
 1:21:54.959,1:21:58.398
 So it's kind of like a cube of height 6 1 31
+これは直方体のようなもので、高さが6131、
 
 1:21:59.010,1:22:00.840
-by
+
 
 1:22:00.840,1:22:02.840
-28 by 28
+底面が28x28になっています。
 
 1:22:06.510,1:22:09.590
-The other thing we want to do is if we're going to take the mean
+もう1つやりたいことは、平均を計算するために
 
 1:22:10.170,1:22:12.120
-We want to turn them into
+このtensorを
 
 1:22:12.120,1:22:13.739
-floating-point values
+浮動小数点に変換することです。
 
 1:22:13.739,1:22:17.119
-Because we we don't want to kind of have integers rounding off
+なぜなら、整数の丸め込みを避けたいからです。
 
 1:22:18.000,1:22:22.100
-The other thing to know is that it's just as kind of a standard in
+もう1つ知っておくべき標準的なことは、
 
 1:22:22.920,1:22:29.239
-computer vision that when you are working with floats that you expect them to be between 0 & 1
+コンピュータビジョンで浮動小数点を扱う時は値が0から1であるということです。
 
 1:22:29.699,1:22:34.039
-So we just divide by 255 because if they were between 0 and 255
+なので、ピクセルの最大値である255で割っています。
 
 1:22:34.560,1:22:37.759
-Before so, this is a pretty standard way to kind of
+ここまでが多くの画像をPyTorchで
 
 1:22:38.610,1:22:41.960
-represent a bunch of images in pi torch
+表現するときの非常に標準的な作法です。
 
 1:22:44.849,1:22:51.779
-So these three things here are called the axes first axis second axis third axis and
+この3つはaxes（軸）と呼ばれ、左から第1軸、第2軸、第3軸です。
 
 1:22:53.380,1:23:00.119
-Overall we would say that this is a rank 3 tensor as it has three axes. So the
+また、軸が3つあるのでランクが3のtensorとも言います。
 
 1:23:01.150,1:23:04.230
-This one here was a rank two tensor
+これはランク2のtensorだったのです。
 
 1:23:04.869,1:23:06.869
-Just has two axes
+軸が2つなので。
 
 1:23:08.090,1:23:15.279
-So you can get the rank from a tensor by just taking the length of its shape one two, three three
+tensorのランクはshapeの長さでわかります。
 
 1:23:18.940,1:23:20.940
-Get that from
+また、
 
 1:23:21.180,1:23:24.300
-So the word I've been using the word access
+私は軸（axes）と表現していますが、
 
 1:23:25.090,1:23:27.150
-You can also use the word dimension
+次元と言うこともできます。
 
 1:23:27.930,1:23:34.499
-I think numpy tends to call it access pipe to watch tends to call it dimension. So the rank is also
+NumPyはaxes、PyTorchはdimを使っていると思います。ランクはまた、
 
 1:23:36.169,1:23:38.169
-The number of dimensions end him
+次元の数でもあるので、ndimで取得できます。
 
 1:23:40.140,1:23:47.209
-So you need to make sure that you remember this word rank is the number of axes or dimensions in a tensor and the
+ランクはtensorの軸あるいは次元の数であることと、
 
 1:23:47.520,1:23:51.080
-Shape is a list containing the size of each axis
+shapeはtensorの各軸のサイズであることを
 
 1:23:52.820,1:23:54.820
-In a tensor
+しっかり覚えてください。
 
 1:23:57.380,1:24:04.210
-So we can now say step three s dot mean now if we just say step 3 s dot mean
+もう、stack_threes.mean()が使えます。stack_threes.mean()は
 
 1:24:08.270,1:24:14.739
-That returns a single number that's the average pixel across that whole cube at hole rank three tensor
+全てのピクセルの平均値を返しますが、
 
 1:24:15.110,1:24:17.110
-But if we say mean zero
+mean(0)とすれば
 
 1:24:17.420,1:24:25.390
-That is take the mean over this axis. So that's the mean across the images, right? And so
+この軸に関する平均を計算します。つまり画像の平均です。
 
 1:24:28.880,1:24:32.040
-That's now 20 forty-eight again because we kind of like
+これは28x28です。なぜなら
 
 1:24:32.890,1:24:36.390
-Reduced over this six one three one six one three one
+6131の軸に関してreductionを行ったからです。
 
 1:24:36.910,1:24:44.459
-Axis, we took the mean across that axis and so we can show that image and here is our ideal three
+この軸に関してとった平均は描画することができるので、これが理想的な3、
 
 1:24:46.600,1:24:48.959
-So here's the ideal seven using the same approach
+こちらが同様にして得られた理想的な7です。
 
 1:24:49.630,1:24:52.170
-alright, so now let's just grab a
+では、3の画像を1枚持ってきましょう。
 
 1:24:52.780,1:24:56.759
-Three. It's just any old three there it is and
+1度描画したものと同じ画像です。
 
 1:24:57.370,1:25:01.109
-What I'm going to do is I'm going to say well is this three more similar to the perfect three?
+今から、この画像が理想的に3に近いのか、
 
 1:25:01.360,1:25:07.860
-Or is it more similar to the perfect seven and whichever one it's more similar to I'm going to assume that's that's the answer
+もしくは7に近いのかを計算し、より似ている方をこの画像のラベルと予測します。
 
 1:25:10.900,1:25:15.299
-So we can't just say look at each pixel and say
+各ピクセルに関して
 
 1:25:16.420,1:25:19.020
-What's the difference between this pixel?
+画像と理想的なものの差を
 
 1:25:19.020,1:25:23.999
-You know zero zero here and zero zero here and then 0 1 here and then 0 1 here and take the average
+例えば、0、0、1、1、と言ったように、計算して平均をとることはできません。
 
 1:25:24.070,1:25:29.100
-And the reason we can't just take the averages that there's positives and negatives and they're going to average out
+その理由は、正の値も負の値もあるのでキャンセルされ、
 
 1:25:29.950,1:25:34.049
-To nothing, right? So I actually need them all to be positive numbers
+0になり得るからです。各ピクセルの差は正の必要があります。
 
 1:25:35.170,1:25:40.649
-um, so there's two ways to make the more positive numbers I could take the absolute value which simply means
+2つの方法があります。絶対値をとる、つまり
 
 1:25:41.380,1:25:43.380
-Remove the minus signs
+負の符号を無視し、
 
 1:25:43.750,1:25:46.620
-Okay, and then I could take the average of those
+平均を計算する方法です。
 
 1:25:47.440,1:25:51.660
-That's called the mean absolute difference or l1 norm
+平均絶対誤差やL1ノルムと呼ばれる方法です。
 
 1:25:52.719,1:25:58.169
-or I could take the square of each difference and
+もう1つは二乗した誤差の
 
 1:25:58.989,1:26:04.979
-then take the main of that and then at the end I could take the square root kind of undoes the squaring and
+平均を求め、二乗根を計算する方法で
 
 1:26:05.410,1:26:08.819
-That's called the root mean squared error or l2
+二乗平均平方根誤差やL2ノルムと呼ばれます。
 
 1:26:10.930,1:26:14.610
 So, let's have a look let's take a three
+さて、3の画像を1つとり、
 
 1:26:16.309,1:26:21.799
-Tract from it the mean of the threes and take the absolute value and take the mean
+3の平均を引き、絶対値をとってから平均を計算したものを
 
 1:26:22.800,1:26:24.659
-And call that the distance
+dist_3_absとし、
 
 1:26:24.659,1:26:28.009
-using absolute value of the three two or three
+すると、
 
 1:26:28.739,1:26:34.788
-And that there is the number quite one and so this is the mean absolute difference or l1 norm
+その値は0.1です。これが平均絶対誤差、L1ノルムです。
 
 1:26:35.369,1:26:39.918
-So when you see a word like l1 norm if you haven't seen it before it may sound pretty fancy
+もしL1を知らなければ、不思議なものに感じるかもしれませんが
 
 1:26:40.649,1:26:44.088
-but all these math terms that we see, you know, you can
+必要な数学の用語や式というのはここにあるように
 
 1:26:45.589,1:26:47.589
-Turn them into a tiny bit of code, right?
+ごくわずかのコードで表せます。
 
 1:26:48.770,1:26:51.560
-It's it's you know, don't let the Matthew bits
+ほら、数学的な要素に
 
 1:26:52.080,1:26:54.890
-For you that they're often like in code
+うろたえているよりもコードを
 
 1:26:54.890,1:27:00.079
-it's just very obvious what they mean where else with math you just you just have to learn it or
+見る方がどんなことをしているかわかりやすく、これを見て勉強したり
 
 1:27:00.870,1:27:02.870
-Learn how to google it
+どう検索するか学べば良いのです。
 
 1:27:03.060,1:27:09.289
-So here the same version for squaring take the difference where it take the mean and then take the square root
+こっちは二乗平均平方根誤差です。二乗してから平均をとり、平方根を計算しています。
 
 1:27:11.100,1:27:16.160
-So then we'll do the same thing for our three this time we'll compare it to the mean of the servants
+これと同じことを理想的な7に対しても行います。
 
 1:27:16.710,1:27:23.029
-All right. So the distance from a3 to the main of the threes with in terms of absolute was point one
+a3からmean3までの距離は絶対値だと0.1で
 
 1:27:24.030,1:27:28.580
-And the distance from a3 to the main of the sevens was 0.15
+mean7までの距離は0.15です。
 
 1:27:29.670,1:27:33.770
-So it's closer to the main of the threes than it is to the main of the sevens
+よって、a3はmean3の方が近いので
 
 1:27:33.770,1:27:36.020
-so we guess therefore that this is a
+私たちはこのa3は
 
 1:27:36.720,1:27:40.549
-Three based on the mean absolute difference
+平均絶対誤差に基づいて3と推測するのです。
 
 1:27:41.310,1:27:45.260
-Same thing with our MSE. It means great error would be to compare this value
+平均二乗誤差についても同様です。つまり、この値とこの値を比較して、
 
 1:27:46.560,1:27:53.089
-This value and again, it means great error. It's closer to the main three then to the main seven
+mean7との誤差が大きいので、3と推測します。
 
 1:27:53.490,1:27:55.490
-so this is like
+これは
 
 1:27:56.350,1:28:02.169
-A machine learning model kind of is a data-driven model which attempts to recognize threes versus sevens
+機械学習あるいはデータドリブンなモデルのようなもので、3と7を認識しようとしています。
 
 1:28:02.810,1:28:04.810
-And so this is a good baseline. I
+良いベースラインです。
 
 1:28:05.510,1:28:09.099
-Mean, it's it's a reasonable baseline. It's going to be better than random
+妥当なベースラインです。ランダムより良いでしょう。
 
 1:28:10.400,1:28:15.040
-Um, we don't actually have to write out - abs mean
+実は平均絶対誤差をこうして書き出す必要はありません。
 
 1:28:16.310,1:28:21.550
-We can just actually use l1 loss now one lost does exactly that
+l1_lossを使えば良いのです。l1_lossは全く同じことをします。
 
 1:28:23.780,1:28:25.989
-We don't have to write - squared
+また、平均二乗誤差も書き出す必要はありません。
 
 1:28:26.630,1:28:31.690
-We can just write MSE loss and that doesn't do the square root by default. So we have to pop that in
+単にmse_lossを使えば良いのですが、デフォルトでは平方根を求めないので、追加しないといけません。
 
 1:28:31.760,1:28:33.760
-Okay, and as you can see, they're exactly
+そして、このように
 
 1:28:34.490,1:28:36.490
-the same numbers
+同じ数字です。
 
 1:28:38.340,1:28:39.520
-Um
+
 
 1:28:39.520,1:28:44.729
-It's very important before we kind of go too much further to make sure we're very comfortable
+あまり先に進む前に、arrayやtensorの操作に慣れておくのは
 
 1:28:45.460,1:28:49.469
-Working with arrays and tensors and you know live they're so similar
+非常に重要です。tensorとarrayはよく似ています。
 
 1:28:50.020,1:28:55.080
-So we could start with a list of lists, right which is kind of a matrix
+リストのリストから始めましょう。行列のようなものです。
 
 1:28:56.640,1:28:58.640
-Can convert it into an array
+arrayにも
 
 1:28:59.300,1:29:01.300
-or into a tensor
+tensorにも変換できます。
 
 1:29:02.300,1:29:04.300
-We can display it
+表示もできます。
 
 1:29:04.870,1:29:06.870
-Almost the same
+ほとんど同じですね。
 
 1:29:07.090,1:29:09.090
-Index into a single row
+1行だけアクセスしたり、
 
 1:29:10.710,1:29:16.649
-Index into a single column and so it's important to know this is very important colon means
+1列だけアクセスもできます。コロン（:）は
 
 1:29:18.820,1:29:24.239
-Every row because I put it in the first spot, right? So if I were in the second spot
+全ての行を意味します。なぜなら始めに書いたからです。もし2番目がコロンなら
 
 1:29:24.910,1:29:27.569
-It would mean every column and so therefore
+全ての列を意味します。
 
 1:29:30.430,1:29:34.530
-Kkoma : is exactly the same as removing it
+この場合は取り除いても同じです。
 
 1:29:36.970,1:29:38.970
-Turns out you can always remove
+最後のコロンは取り除くことが
 
 1:29:39.380,1:29:43.210
-Colons that are at the end because they're kind of they're just implied, right?
+できます。というのもそれが示唆されていますから。
 
 1:29:43.210,1:29:49.509
-You never have to and I often kind of put them in anyway, because just kind of makes it a bit more obvious
+こうする必要はありませんが、私自身はあえて書くこともあります。そうした方が、
 
 1:29:50.030,1:29:52.030
-how these things kind of
+どう対応していて
 
 1:29:52.130,1:29:54.130
-Match up or how they differ
+どうずれているかわかりやすいからです。
 
 1:29:55.300,1:30:02.500
-Um, you can combine them together so give me the first row and everything from the first up to but not including the third column
+組み合わせることもできます。1行目の1列目から3列目までと行った感じで使えます。
 
 1:30:03.800,1:30:05.800
-back to this at five six
+
 
 1:30:07.200,1:30:15.200
-You can add stuff to them you can check their type notice that this is different to the Python Rosie the Python
+足し算や型の確認もできます。この型はPythonの型とは異なります。
 
 1:30:16.470,1:30:18.740
 Right. So type is a function
+Pythonのtypeは関数で
 
 1:30:20.570,1:30:26.179
-It's a tensor if you want to know what kind of tensor you have to use type as a method so it's a long tensor
+この場合の型はtensorですが、もしtensorの型が知りたい時はメソッドで、これはlongです。
 
 1:30:28.650,1:30:31.969
-You can multiply them by a float turns it into a float
+floatを掛け合わせれば、float型になります。
 
 1:30:31.980,1:30:35.750
-you know to have a fiddle around if you haven't done much stuff with numpy or
+もしこれまでにNumPyやPyTorchを使ったことがあまりなければ、
 
 1:30:36.930,1:30:40.730
-my torch before this is a good opportunity to just
+今が良い機会です。
 
 1:30:42.079,1:30:48.139
-Go crazy. Try things out try try things that you think might not work and see if you actually get an error message, you know
+いろんなことを試し、動かないと思うものも試してエラーメッセージをよく読んでください。
 
 1:30:50.900,1:30:52.550
-So
+
 
 1:30:52.550,1:30:54.550
-We now want to find out
+さて、今度はどれぐらい
 
 1:30:55.460,1:30:57.730
-How good is our model?
+このモデルが機能するかチェックしましょう。
 
 1:30:58.400,1:31:02.619
-our model that involves just comparing something to to the
+私たちのモデルは受け取った画像を平均と
 
 1:31:03.350,1:31:05.350
-bromine
+比べるものです。
 
 1:31:07.840,1:31:09.409
-So
+
 
 1:31:09.409,1:31:11.409
-We should not compare
+
 
 1:31:12.230,1:31:17.080
-You should not check how good our model is on the training set as we've discussed
+すでに議論しましたが、学習データでだけでなく、
 
 1:31:17.080,1:31:20.859
-we should check it on a validation set and we already have a
+バリデーションセットでの性能を見るべきです。
 
 1:31:21.409,1:31:27.039
-Validation set. It's everything inside the valid directory. So let's go ahead and like combine all those tips before
+validディレクトリにデータが入っています。さて、先に進む前に
 
 1:31:27.040,1:31:29.709
-Let's go through everything in the validation set
+バリデーションデータを用意しましょう。
 
 1:31:30.590,1:31:31.969
-3ls
+3lsで取得できる
 
 1:31:31.969,1:31:37.149
-Open them turn them into a tensor stack them all up bend them into floats
+ファイルを開いて、tensorにして、stackして、浮動小数点にして、
 
 1:31:37.790,1:31:39.770
-provide by 255
+255で割ります。
 
 1:31:39.770,1:31:41.750
 Okay
 
 1:31:41.750,1:31:47.739
-Let's do the same for sevens. So we're just putting all the steps we did before into a couple of lines
+7についても同じです。必要な手順を数行にまとめました。
 
 1:31:49.219,1:31:49.920
-I
+私は
 
 1:31:49.920,1:31:53.119
-Always try to print out shapes like all the time
+ほぼいつもshapeをプリントするようにしています。
 
 1:31:54.059,1:31:58.489
-Because if a shape is not what you expected then you can you know, get weird things going on
+というのももしshapeが期待されたものでなければ変なことが起きているとわかるからです。
 
 1:32:01.110,1:32:07.400
-So the idea is we want some function is three that will return true if we think something is a three
+アイデアはis_threeという画像が3だと思ったらTrueを返す関数を定義することです。
 
 1:32:09.239,1:32:12.558
-So to do that we have to decide whether our
+実装するためには、
 
 1:32:13.860,1:32:21.589
-Digit that we're testing on is closer to the ideal three or the ideal seven. So let's create a little function that
+今見ている数字が理想的な3と7のどちらに近いかテストすることです。まずは
 
 1:32:22.949,1:32:24.949
-returns
+
 
 1:32:27.000,1:32:31.410
-The difference between two things takes the absolute value and then takes the mean
+2つの画像の差の絶対値の平均を返すものを定義しましょう。
 
 1:32:33.689,1:32:36.989
-So we're going to create this function M this distance that
+この関数はmnist_distanceとし、
 
 1:32:37.659,1:32:40.558
-Takes the difference between two fences
+2つの画像の差を計算し、
 
 1:32:41.769,1:32:46.259
-Takes their absolute value and then takes the mean and it takes the mean and look at this
+その絶対値をとり、平均を計算します。そしてこの関数にはすでに計算した平均画像をわたします。
 
 1:32:46.260,1:32:50.010
-We got - this time it takes the mean over the last
+今回は、平均を
 
 1:32:50.590,1:32:52.590
-over the
+
 
 1:32:54.960,1:33:02.279
-Last and third last sorry third last and second last dimensions. So this is going to take
+後ろから2番目と3番目の軸で計算します。
 
 1:33:03.850,1:33:10.799
-The mean across the kind of x and y axes and so here you can see it's returning a
+つまり、x軸とy軸に関しての平均です。そして、これは、
 
 1:33:11.290,1:33:16.979
-Single number which is the distance of a three from the main three
+a3とmean3の距離を返します。
 
 1:33:17.380,1:33:19.589
-so that's the same as the value that we
+そしてこの値は先ほど計算した値と
 
 1:33:20.320,1:33:22.320
-But earlier point one one one four
+同じ0.114です。
 
 1:33:24.500,1:33:30.580
-So we need to do this for every image in the validation set because we're trying to find the overall metric
+さて、この計算をバリデーションセットの全画像に対して行います。メトリクスを計算するためです。
 
 1:33:30.590,1:33:34.329
-Remember the metric is the thing. We look at to say how good is our model
+メトリクスとは、私たちのモデルがどれぐらい良いあるいは
 
 1:33:35.420,1:33:39.309
-So here's something crazy. We can call em nest distance
+ズレているかの指標です。mnist_distanceを
 
 1:33:40.130,1:33:45.159
-Not just on our three but our on the entire validation set
+a3だけでなく、バリデーションセットの全データと
 
 1:33:47.200,1:33:49.200
-Against the main three
+mean3に対して適用します。
 
 1:33:49.910,1:33:55.910
-That's wild like there's no normal programming that we would do where we could somehow pass in
+これはすごいですね。普通のプログラミングで
 
 1:33:56.670,1:34:03.710
-either a matrix or a rank 3 tensor and somehow it works both times and
+行列あるいはランク3のtensorが入力でどちらでも動くものはありません。
 
 1:34:04.890,1:34:09.079
-What actually happened here is that instead of returning a single number?
+ここでは1つの数字を返すのではなく、何が起きているのでしょう？
 
 1:34:11.180,1:34:13.180
-It returned
+
 
 1:34:13.620,1:34:15.620
-1010 numbers
+返り値は1010個の数字ですね。
 
 1:34:15.660,1:34:17.970
-And it did this because it used something called
+これはブロードキャスティングのおかげです。
 
 1:34:19.030,1:34:20.680
-broadcasting and broadcasting
+ブロードキャスティングは
 
 1:34:20.680,1:34:25.680
-Is like the super special magic trick that lets you make?
+とても特別な魔法のようなトリックで、
 
 1:34:26.290,1:34:31.919
-Python into a very very high-performance language and in fact if you do this broadcasting on
+Pythonをとてもとても高速な言語にするものです。もしブロードキャスティングを
 
 1:34:33.520,1:34:40.590
-GPU tensors and play torch, it actually does this operation on the GPU even though you wrote it in Python. Here's what happens
+GPUのtensorに行うと、Pythonで書かれているのにGPUを使って計算されます。
 
 1:34:42.490,1:34:44.490
-Look here this a - B
+このa - bを見てください。
 
 1:34:45.850,1:34:47.850
-Doing a minus B on
+- bを
 
 1:34:48.050,1:34:53.949
-Two things we've got first of all valid three tens of valid three answer
+valid_3_tensに行います。valid_3_tensは
 
 1:34:56.220,1:35:01.229
-Is a thousand or so images right and remember that mean three
+約1000枚の画像で、mean3は
 
 1:35:04.200,1:35:08.099
-Single ideal three. So what is
+1枚の理想的な画像です。
 
 1:35:10.180,1:35:12.180
-Something of this shape -
+このshapeのtensor - 
 
 1:35:13.000,1:35:14.680
-something of this shape
+このshapeのtensorは
 
 1:35:14.680,1:35:15.760
-well
+
 
 1:35:15.760,1:35:20.130
-Broadcasting means that if this shape doesn't match this shape
+ブロードキャスティングはこのshapeとこのshapeが一致しない時に
 
 1:35:20.440,1:35:26.609
-Like if they did match it would just subtract every corresponding item. But because they don't match
+一致しているかのように対応する要素から引き算を行います。しかし、実際にshapeが
 
 1:35:27.160,1:35:31.800
-It's a it actually acts as if there's a thousand and ten versions
+一致しているわけではないのに1010個のmean3があるかのように
 
 1:35:32.410,1:35:34.410
-of this
+振舞います。
 
 1:35:34.420,1:35:40.409
-So it's actually going to subtract this from every single one of these, okay?
+つまり、各画像データからmean3を引きます。
 
 1:35:42.970,1:35:45.659
-So a broadcasting let's look at some examples so
+ブロードキャスティングの例を見ていきましょう。
 
 1:35:47.230,1:35:50.489
-Broadcasting requires us to first of all understand the idea of
+理解するには要素毎の演算を知る必要が
 
 1:35:51.010,1:35:52.420
-element-wise operations
+あります。
 
 1:35:52.420,1:35:58.049
-this is an element-wise operation here is a rank 1 tensor of size 3 and
+要素毎の演算とは、このようなものです。ここにランク1で要素数3のtensorが
 
 1:35:58.480,1:36:03.029
-Another rank 1 10 through of size 3 so we would say these sizes match
+2つあります。shapeが全く同じです。
 
 1:36:03.040,1:36:03.840
-They're the same
+
 
 1:36:03.840,1:36:10.679
-and so when I add 1 2 3 2 1 1 1 I get back 2 3 4 it just takes the
+1, 2, 3と2, 1, 1の要素和は2, 3, 4となります。単純に
 
 1:36:11.140,1:36:15.810
-Corresponding items and adds them together that's called element wise operations
+対応する要素を足し合わせるだけです。
 
 1:36:19.110,1:36:20.940
-So
+では
 
 1:36:20.940,1:36:23.060
-when I have different
+shapeが異なる
 
 1:36:25.440,1:36:27.440
-Shapes as we described before
+場合はというと、
 
 1:36:28.890,1:36:31.970
-What it ends up doing is it basically copies
+基本的にこの数字を
 
 1:36:32.700,1:36:38.329r
-This this number a thousand and ten times and it acts as if we had said
+1010書いコピーし、valid_3_tensから1010個のmean3のコピーの
 
 1:36:38.700,1:36:42.649
-valid three tens minus a thousand and ten copies of
+引き算を行います。
 
 1:36:43.560,1:36:45.560
-main three
+
 
 1:36:47.100,1:36:51.209
-As it says here it doesn't actually copy me in three a thousand and ten times
+実際にはmean3を1010回もコピーすることなく、
 
 1:36:51.210,1:36:52.300
-It just pretends
+そのように振舞うだけです。
 
 1:36:52.300,1:36:57.749
-that it did right it just acts as if it did so basically kind of loops back around to the start again and again and
+実際には何回も何回もループしているかのように振舞い、
 
 1:36:57.750,1:37:01.050
-It does the whole thing in C or in cooter on the GPU
+こういった演算はCやCUDAで実装されます。
 
 1:37:03.610,1:37:07.989
-So then we see absolute value, all right, so let's go back up here
+さて、少し戻って絶対値を見ましょう。
 
 1:37:09.950,1:37:14.950
-After we do the - we go absolute value, so what happens when we call absolute value on
+さて、absolute valueの関数をshapeが(1010, 28, 28)のtensorに適用すると
 
 1:37:17.219,1:37:19.219
-Something of size
+何が起きるのでしょうか？
 
 1:37:21.260,1:37:26.110
-10 10 by 28 by 28 just cause absolute value on each underlying thing
+各要素にabsが適用されますね。
 
 1:37:26.750,1:37:28.040
-right
+
 
 1:37:28.040,1:37:32.019
-and then finally we call mean
+最後にmean呼びますが、
 
 1:37:33.140,1:37:37.479
-Minus 1 is the last element or ways in Python minus 2 is the second-last
+-1は最後の軸、-2は最後から2番目の軸に対して作用します。
 
 1:37:37.690,1:37:41.289
-So this is taking the mean over the last two axes
+ですのでmean((-1, -2))は最後の2つの軸の平均をとります。
 
 1:37:41.290,1:37:47.560
-And so then it's going to return just the first axis. So we're going to end up with a thousand and ten
+ですので最初の軸に関して返します。なので最終結果は1010個は
 
 1:37:48.410,1:37:50.650
-means both thousand and ten
+1010個の画像と理想画像の
 
 1:37:51.380,1:37:53.230
-Distances which is exactly what we want
+差を表していて、今欲しいものです。
 
 1:37:53.230,1:37:59.680
-we want to know how far away is our each of our validation items away from the
+
 
 1:38:00.530,1:38:02.530
-the ideal three
+
 
 1:38:03.820,1:38:09.690
-So then we can create out is three function which is hey is the distance
+さて、この関数を使えばis_three関数も作れます。まず、
 
 1:38:10.510,1:38:14.400
-between the number in question and the perfect three
+問題の数字画像を受け取り、それと理想的な3画像との距離を求め、
 
 1:38:14.830,1:38:19.350
-Less than the distance between the number in question and the perfect seven if it is
+理想的な7の画像との距離より小さければ、
 
 1:38:20.050,1:38:26.759
-It's a three and so our three that was an actual three we had. Is it a three? Yes
+3、yesと予測するのです。
 
 1:38:27.699,1:38:32.339
-Okay, and then we can turn that into a float and yes becomes one
+そして、それをfloatに変換、つまりyesなら1を返します。
 
 1:38:35.230,1:38:37.699
-We can do it for entire
+これをバリデーションセット全体に行います。
 
 1:38:39.179,1:38:42.469
 Set right. So this is so cool. We basically get rid of loops
+イケてますね。私たちは基本的にloopなしで、
 
 1:38:43.260,1:38:49.670
 In in in in this kind of programming you should have very few very very few. Loops. Loops make things
+プログラムしました。loopはプログラムの
 
 1:38:50.580,1:38:52.469
 much harder to read
+可読性を損ねますし、
 
 1:38:52.469,1:38:53.940
-and and
+さらに
 
 1:38:53.940,1:38:58.580
-Hundreds of thousands of times slower on the GPU potentially tens of millions of times lower. So
+GPUの有効活用を妨げプログラムを何十万倍も遅くします。
 
 1:38:59.969,1:39:02.389
-We can just say is three on our whole
+is_threeをvalid_three_tensに
 
 1:39:03.390,1:39:07.129
-Valid three tens and then turn that into float and then take the mean
+適用し、floatに変換し、平均を取れば、
 
 1:39:07.320,1:39:14.179
-So that's going to be the accuracy of the threes on average and here's the accuracy of the sevens. It's just one minus that
+3の正確度になりますし、7の正確度は1 - 3の正確度です。
 
 1:39:15.000,1:39:18.589
-And so the accuracy across trees is about 91 and a bit percent
+そして3の正確度は91%強で、
 
 1:39:18.690,1:39:24.679
-The accuracy on sevens is about 98% and the average of those two is about 95%
+7に関しては98%、それらの平均は95%です。
 
 1:39:25.230,1:39:27.350
-so here we have a
+ここで私たちは
 
 1:39:28.140,1:39:32.449
-Moral that's 95 percent accurate at recognizing threes from sevens
+95%の精度を誇る3と7を認識するモデルを作りました。
 
 1:39:33.510,1:39:35.510
-It but surprise you
+このように
 
 1:39:36.090,1:39:38.239
-that we can do that using nothing, but
+簡単な計算だけでこのモデルができるというのは
 
 1:39:39.570,1:39:44.659
-Arithmetic right bottom so that's what I mean by getting a good baseline
+驚きでしょうが、これが良いベースラインというものです。
 
 1:39:47.440,1:39:49.440
-Now the thing is
+さて、問題は
 
 1:39:51.150,1:39:57.889
-It's not obvious how we kind of improve this right? I mean the thing is it doesn't match
+これを改善する方法が自明ではないことです。問題はこの方法がアーサー・サミュエルの言う
 
 1:39:59.130,1:40:01.190
-Arthur Samuels description of
+機械学習とは
 
 1:40:01.860,1:40:07.130
 Machine learning. This is not something where there's a function which has some parameters
+異なることです。彼の表現ではパラメータを受け取る関数があり、
 
 1:40:07.950,1:40:09.870
-Which we're testing
+私たちが、
 
 1:40:09.870,1:40:14.750
-Against some kind of measure of fitness and then using that to like improve the parameters iteratively
+適合性の指標に基づいて評価し、その値に基づき繰り返しパラメータを改善するのです。
 
 1:40:15.000,1:40:17.029
-we kind of we just did one step and
+ですが、今作った方法は1ステップで、
 
 1:40:18.030,1:40:20.030
-That's that okay
+十分でした。
 
 1:40:21.360,1:40:27.380
-So we will try and do it in this way where we arrange for some automatic means of testing the effectiveness of
+今から取り組む方法では、重みの割り当てを評価する方法を用意し、
 
 1:40:27.510,1:40:33.500
-Naqada weight assignment we'd call it a parameter assignment in terms of performance and a mechanism for ultra rating
+私はパラメータの割り当てと言いますが、
 
 1:40:33.690,1:40:36.199
-Altering the weight assignment to maximize the performance
+パフォーマンスを最大化するような重み割り当てを自動で行います。
 
 1:40:36.870,1:40:42.140
-But we want to do it that way right because we know from from Chapter one from lesson one
+この方法に取り組みたいのですが、何せ、第一章、初回レッスンからこの方法を知っているのですから、
 
 1:40:42.170,1:40:45.049
-but if we do it that way we have this like
+しかし、そうするには、
 
 1:40:45.930,1:40:47.640
-magic box
+マジックボックスのようなもの、
 
 1:40:47.640,1:40:53.690
-Called machine learning that can do you know particularly combiners neural nets should be able to solve any
+機械学習があり、ニューラルネットを使います。
 
 1:40:54.510,1:40:56.510
-problem in theory
+理論的にはニューラルネットは
 
 1:40:57.630,1:40:59.940
-If you can at least find the right set of weights
+良い重みの組み合わせが見つかればどんな問題も解けます。
 
 1:41:00.940,1:41:04.830
-So we need something that we can get better and better. Um
+そして、重みを改善する方法が必要です。
 
 1:41:05.650,1:41:07.650
-ballon
+
 
 1:41:08.110,1:41:10.110
-So let's think about
+では、
 
 1:41:11.250,1:41:13.250
-Function which has parameters
+パラメータをとる関数を考えましょう。
 
 1:41:13.840,1:41:21.090
-So instead of finding an ideal image and seeing how far away something is from the ideal image
+理想的な画像を見つけたりある画像がその理想的なものからどれぐら離れているかを見たり、
 
 1:41:26.920,1:41:33.839
-So instead of like having something where we test how far away we are from an ideal image what we could instead do is
+ある画像が理想的なものとどれくらい違うかを計算する代わりに
 
 1:41:34.210,1:41:36.210
-Come up with a set of weights
+できることは、各ピクセルに
 
 1:41:36.910,1:41:38.080
-for each pixel
+対応する重みを用意し、
 
 1:41:38.080,1:41:41.760
-so we're trying to find out if something is the number three and
+3の画像のピクセルが値を持つような
 
 1:41:42.100,1:41:47.850
-So we know that like in the places that you would expect to find three pixels
+場所により重みを割り当てると言ったものです。
 
 1:41:47.860,1:41:52.650
-You could give those like high weights so you can say hey if there's a dot in those places
+そうすれば、もしそのようなピクセルに値があったときに
 
 1:41:53.170,1:41:57.390
-We give it like a high score and if there's dots in other places
+よりスコアを与えることができ、それ以外の場所には
 
 1:41:57.880,1:42:05.069
-We'll give it like a low score so we can actually come up with a function where the probability of something being in
+低いスコアを与えることで、最終的に何らかの確率が計算できる関数になりますね。
 
 1:42:05.920,1:42:07.920
-Moments case. Let's say an eight
+ここでは画像が8ピクセルとして、
 
 1:42:07.990,1:42:12.359
-Is equal to the pixels in the image?
+そのピクセルと
 
 1:42:13.330,1:42:19.919
-Multiplied by some sort of weights and then we sum them up. All right, so then anywhere where?
+何かしらの重みと掛けてから足し合わせますを計算します。
 
 1:42:21.160,1:42:22.750
-our
+
 
 1:42:22.750,1:42:24.750
-The image we're looking at, you know
+今見ている画像の
 
 1:42:26.540,1:42:28.540
-As pixels where there are high weights
+大きい重みが多ければ多いほど
 
 1:42:29.130,1:42:35.960
-It's going to end up with a high probability. So here X is the image that we're interested in
+確率は高くなります。今予測したい画像をXとします。
 
 1:42:36.900,1:42:39.770
-And we're just going to represent it as a vector
+Xをベクトルで表します。
 
 1:42:39.770,1:42:44.450
-So let's just have all the rows stacked up end to end into a single long line
+ただ全ての行をつなぎ合わせ、1つの長い行にするだけです。
 
 1:42:45.750,1:42:46.830
-so
+
 
 1:42:46.830,1:42:52.910
-We're going to use an approach where we're going to start with a vector W
+今から取り組む方法では重みWから始めます。Wはベクトルで
 
 1:42:52.910,1:42:59.329
-So a vector is a Rank 1 tensor. Okay better start with a vector W that's going to contain
+ランク1のtensorです。ベクトルWの初期値は、
 
 1:43:00.420,1:43:01.770
-random
+乱数に
 
 1:43:01.770,1:43:08.629
-weights random parameters depending on whether you use the Arthur Samuel version of the terminology or not and
+すると良いでしょう。
 
 1:43:10.050,1:43:11.670
-so
+
 
 1:43:11.670,1:43:15.830
-We'll then predict whether a number appears to be a three or a seven
+そして、数字が3に見えるか7に見えるかを
 
 1:43:16.890,1:43:18.720
-by using this
+この簡単な
 
 1:43:18.720,1:43:20.100
-tiny little
+関数で
 
 1:43:20.100,1:43:21.570
-function
+予測します。
 
 1:43:21.570,1:43:26.060
-And then we will figure out how good the model is
+それから、このモデルがどれくらい正確かを
 
 1:43:26.670,1:43:30.260
-Where we will calculate like how accurate it is or something like that
+どの程度正しく予測できているかという感じで計算します。
 
 1:43:31.350,1:43:33.350
-Yeah, this is the loss
+これが損失です。
 
 1:43:34.559,1:43:37.829
-And then the key step is we're then going to calculate the gradient now
+そして大事なステップは、勾配の計算です。
 
 1:43:37.829,1:43:42.478
-The gradient is something that measures for each weight if I made it a little bit bigger
+勾配は各重みをほんの少し動かした時に
 
 1:43:43.449,1:43:49.438
-With the last get better or worse if I made it a little bit smaller with the loss get better or worse
+損失が大きくなるか小さくなるかを尺測るもので、
 
 1:43:49.439,1:43:51.479
-and so if we do that for every weight
+全ての重みに対して計算します。
 
 1:43:51.669,1:43:56.309
-We can decide for every weight whether we should make that weight a bit bigger or a bit smaller
+そうすると、全ての重みに対して、それを大きくするか小さくするかを決められます。
 
 1:43:57.800,1:44:05.270
-Let's call it the gradient. Right? So once we have the gradient we then step is the word wheezes step we change
+これを勾配と言います。勾配が得られたら、stepです。これは全ての重みを
 
 1:44:05.790,1:44:07.790
-all the weights
+更新することで、
 
 1:44:09.070,1:44:11.349
-A little bit for the ones where the gradient we should said
+勾配に基づいて小さくしたり大きくしたりします。
 
 1:44:11.349,1:44:15.219
-We should make them a bit higher and down a little bit for all the ones where the gradient said
+
 
 1:44:15.219,1:44:17.219
-They should be a bit lower. So
+
 
 1:44:17.750,1:44:22.239
-now it should be a tiny bit better and then we go back to step two and
+更新されるとほんの少し改善されて、ステップ2に戻ります。
 
 1:44:23.119,1:44:25.869
-Calculate a new set of predictions using this formula
+再び式に基づいて予測を計算し、
 
 1:44:27.770,1:44:29.550
-Like the gradient again
+勾配を計算し
 
 1:44:29.550,1:44:31.230
-Step the weights
+重みを更新します。
 
 1:44:31.230,1:44:32.060
-Keep doing that
+この繰り返しです。
 
 1:44:32.060,1:44:37.700
-So this is basically the flow chart and then at some point when we're sick of waiting or when the loss gets good enough
+これが基本的なフローチャートで、待ちくたびれるか、損失が十分改善されたら
 
 1:44:37.860,1:44:39.860
-We'll stop
+訓練を止めます。
 
 1:44:40.800,1:44:48.260
 So these seven steps 1 2 3 4 5 6 7
+7つのステップですね。
 
 1:44:49.920,1:44:50.800
-Steps
+
 
 1:44:50.800,1:44:51.899
-the
+
 
 1:44:51.899,1:44:56.239
-Training all deep learning models. This technique is called stochastic gradient descent
+この7つのステップ、深層学習モデルの訓練の鍵となるのは確率的勾配降下法です。
 
 1:44:56.689,1:45:00.499
-well, it's called gradient descent will see the stochastic bit very soon and
+いまのは、勾配降下法で、確率的勾配降下法はあとで見ます。
 
 1:45:01.829,1:45:03.749
-for each of these
+これらの7つのステップはそれぞれ
 
 1:45:03.749,1:45:08.749
-Seven steps there's lots of choices around exactly how to do it, right?
+どう実行するかの選択肢が多々ありますね？
 
 1:45:08.749,1:45:11.179
-we're just kind of hand waved a lot like
+これらのうち、多くのものはここでは置いておきます。
 
 1:45:11.550,1:45:17.209
-What kind of random initialization and how do you calculate the gradient and exactly? What step do you take based on the gradient?
+例えばランダム初期化や実際に勾配を計算する方法や勾配に基づいてどう更新するか、そして
 
 1:45:17.209,1:45:19.459
-And how do you decide when to stop bah bah, bah, right
+どうやって訓練を止めるかを決める方法などです。
 
 1:45:20.129,1:45:24.889
-So in this in this course, we're going to be like learning
+このコースではこれらのステップについて勉強しますが、
 
 1:45:25.679,1:45:28.038
-About you know these steps
+これあはパート1みたいなもので、
 
 1:45:29.550,1:45:35.449
-You know, that's kind of part one, you know, I mean the other big part is like well, what's the actual function neural network?
+もう1つの大きなパートはニューラルネットワークがどういった関数であるかというものです。
 
 1:45:35.449,1:45:37.998
-So, how do we train the thing and what is the thing that we train?
+どうやって訓練して、訓練しているものは何かといった感じです。
 
 1:45:39.179,1:45:41.929
-So we initialize parameters with random values
+さて、パラメータを乱数で初期化し
 
 1:45:42.419,1:45:45.259
-We need some function that's going to be the loss function
+損失関数となる関数が必要です。
 
 1:45:45.539,1:45:50.088
-That will return a number that's small if the performance of the model is good
+損失関数はモデルが良ければ小さい値を返します。
 
 1:45:51.719,1:45:56.058
-It's some way to figure out whether the weight should be increased a bit or decreased a bit
+何らかの方法で重みを増やすか減らすか決めます。
 
 1:45:58.780,1:46:03.309
-And then we need to decide like when to stop which will just say, let's just do a certain number of epochs
+そして、いつ訓練を止めるか、つまり、いつ十分なエポック数学習したと言うかを決める必要があります。
 
 1:46:06.780,1:46:08.550
 So, let's like
+さて、
 
 1:46:08.550,1:46:14.179
-Go even simpler, right? We're not even though 2m nest. We're going to start with this function x squared
+もっとシンプルに行きましょう。MNISTも使いません。まずはxの二乗を計算する関数で始めます。
 
 1:46:14.730,1:46:20.839
-Okay, and in faster y I we've created a tiny little thing called plot function that plots a function
+fastaiはplot_functionという関数があり、これは与えられた関数
 
 1:46:25.610,1:46:27.610
-Function f
+fを描画します。
 
 1:46:27.809,1:46:34.619
-And what we're going to do is we're going to try to find this is our loss function. So we're going to try and find
+この図が損失関数ですが、今から
 
 1:46:35.139,1:46:36.489
-the bottom point
+この底を見つけようとします。
 
 1:46:36.489,1:46:37.139
-All right
+さて、
 
 1:46:37.139,1:46:41.279
-So we're going to try and figure out what is the x value which is at the bottom
+今からするのは損失関数を最小にするxの値を見つけることで、
 
 1:46:41.469,1:46:46.259
-So our seven step procedure requires us to start out by initializing
+7つのステップは初期化するところから始まりますので、
 
 1:46:47.859,1:46:49.719
-So we need to pick
+1つ値を決める必要があります。
 
 1:46:49.719,1:46:55.469
-Some value, right? So the value we pick was this say ah, let's just randomly pick minus one and a half
+ここでは-1.5から始めます。
 
 1:46:56.769,1:47:04.349
-Great. So now we need to know if I increase X a bit does my but remember this is my loss does my loss get
+次に調べるべきはxを少し大きくしたら、損失関数の値は
 
 1:47:04.349,1:47:07.049
-A bit better remember better is smaller or a bit worse
+良くなる、つまり小さくなるか、悪くなるかです。
 
 1:47:09.270,1:47:15.450
-We can do that easily enough we can just try a slightly higher X and a slightly lower X and see what happens, right?
+これは非常に簡単でxを少しずらしてどうなるか確認すれば十分です。
 
 1:47:15.450,1:47:19.109
-And you can see it's just the slope right the slope at this point
+そして、この情報はその地点における傾きがわかれば
 
 1:47:19.960,1:47:23.760
-Tells you that if I increase X by a bit?
+得られます。
 
 1:47:24.250,1:47:28.529
-Then my loss will decrease because that is the slope at this point
+
 
 1:47:30.489,1:47:38.158
-So if we change our our weight our parameter just a little bit in the direction of the slope
+傾きの方向に重みを変更すれば損失は良くなります。
 
 1:47:38.650,1:47:43.739
-All right. So here is the direction of the slope and so here's the new value at that point
+これがこの地点における傾きでこれが新しいxの値です。
 
 1:47:44.349,1:47:46.949
-And then do it again and then do it again
+これを何度も繰り返せば
 
 1:47:47.860,1:47:49.860
-Eventually, we'll get to the bottom of this curve
+この曲線の底にたどり着きます。
 
 1:47:52.989,1:48:00.718
-So this idea goes all the way back to Isaac Newton at the very least and this basic idea is called Newton's method
+これはニュートンが考えたものでニュートン法といいます。
 
 1:48:02.560,1:48:04.709
-So a key thing we need to be able to do is to calculate
+ですので私たちが行う必要があるのは
 
 1:48:06.100,1:48:08.100
-this slope and
+傾きの計算です。
 
 1:48:09.250,1:48:12.959
-The bad news is do that we need calculus
+微積分が必要という悪い知らせですが、
 
 1:48:14.320,1:48:19.230
-At least as bad news of me cuz I've never been a fan of calculus. We have to calculate the derivative
+というのも私は微積分が嫌いですから。
 
 1:48:20.170,1:48:22.170
-Here's the good news, though
+良い知らせは
 
 1:48:23.380,1:48:27.060
-Maybe you spent ages in school learning how to calculate derivatives
+すでに導関数の求め方の勉強に時間を費やしているかもしれませんが、
 
 1:48:27.940,1:48:34.859
-You don't have to anymore the computer does it for you and the computer does it fast? It uses all of those?
+計算機が高速で計算してくれるということです。
 
 1:48:35.710,1:48:39.149
-Methods that you learned at school and it had a whole lot more
+計算機はあなたが勉強した方法とそれ以外にも賢いトリックを
 
 1:48:39.550,1:48:43.170
-Like clever tricks for speeding them up and it just does it all
+使って勾配計算を高速化しています。
 
 1:48:43.750,1:48:51.299
-Automatically so for example it knows I don't know if you remember this from high school that the derivative of x squared is 2x
+高校数学を覚えているか知りませんが、x二乗の導関数は2xです。
 
 1:48:53.320,1:48:57.000
-It's just something it knows it's part of its kind of bag of tricks right so
+これは先ほど言及したトリックの1つで
 
 1:48:58.150,1:49:01.109
-so PI Torche knows that pi torch has an
+PyTorchは
 
 1:49:01.900,1:49:06.509
-Engine built in that can take derivatives and find the gradient of functions
+導関数から勾配を計算するエンジンを積んでいます。
 
 1:49:07.360,1:49:09.360
-So to do that
+さて、これを使うために
 
 1:49:10.050,1:49:12.050
-we start with a
+tensorを使います。
 
 1:49:12.250,1:49:14.250
-tensor, let's say and
+
 
 1:49:14.440,1:49:17.489
-In this case, we're going to modify this tensor with this special
+そして、今回はこのtensorを更新するために
 
 1:49:18.520,1:49:25.469
-Method cord requires gret and what this does is it tells PI torch that any time I do a calculation with this
+requires_grad_メソッドを呼びます。このメソッドはPyTorchに、tensor xtを使って
 
 1:49:25.780,1:49:27.610
-X T it
+計算するときは
 
 1:49:27.610,1:49:31.889
-Should remember what calculation it does so that I can take the derivative later
+どんな計算をしたか覚えておき、あとで導関数を使えるようにしろと伝えます。
 
 1:49:33.740,1:49:35.740
 You see the underscore at the end and
+末尾のアンダースコア（_）は
 
 1:49:36.890,1:49:43.539
-Underscore at the end of a method in pi torch means that this is called an in-place operation it actually modifies
+PyTorchではin-placeであることを示します。
 
 1:49:44.180,1:49:47.200
-this so requires grad underscore
+このrequires_grad_は
 
 1:49:47.870,1:49:52.870
-Modifies this tensor to tell pi torch that we want to be calculating gradients on it
+私たちがxtの勾配を必要としていることをPyTorchに伝えます。
 
 1:49:52.940,1:49:56.800
-So that means it's just going to have to keep track of all of the computations we do
+それはつまり、xtに対して行う計算全ての履歴を保存することになります。
 
 1:49:57.050,1:49:59.169
-So that it can calculate the derivative later
+こうすると導関数をあとで計算できます。
 
 1:50:02.969,1:50:06.198
-Okay, so we've got the number three and
+さて、要素が3のtensorを作りました。
 
 1:50:07.230,1:50:13.459
-Let's say we then call F on it. Remember F is just squaring it though three squared is nine
+関数fを適用します。fはただ二乗するもので、3の二乗は9ですね。
 
 1:50:14.429,1:50:16.040
-But the value is not just nine
+しかし結果はただの9ではなく
 
 1:50:16.040,1:50:22.759
-It's nine accompanied with a grad function, which is that it's it knows that a power operation has been taken
+9と勾配を計算する関数で、二乗が適用されたことを示します。
 
 1:50:23.280,1:50:25.400
-So we can now call a special method
+ここまでくると
 
 1:50:26.849,1:50:28.730
-backward
+backwardを呼べて、
 
 1:50:28.730,1:50:30.730
-and backward
+backwardは
 
 1:50:32.150,1:50:36.109
-Occasion which we'll learn about which basically means take the derivative
+あとで勉強しますが基本的には導関数と
 
 1:50:37.350,1:50:42.870
-and so once it does that we can now look inside XT because we said requires grad and
+requires_grad_を呼んだ、xtの値に基づいて
 
 1:50:43.510,1:50:45.510
-find out its gradient and
+その勾配を求めます。
 
 1:50:46.240,1:50:48.840
-Remember the derivative of x squared is 2x
+xの二乗の導関数は2xですね、
 
 1:50:50.719,1:50:52.719
-In this case that was three
+今回xは3だったので、
 
 1:50:53.540,1:50:55.110
-Who turns three is six?
+勾配は6ですね。
 
 1:50:55.110,1:50:57.110
-all right, so
+
 
 1:50:57.420,1:51:04.940
-We didn't have to figure out the derivative. We just call backward and then get the grad attribute to get the derivative
+導関数を求める必要はありません。ただbackwardと.gradを呼べば勾配が得られます。
 
 1:51:05.670,1:51:10.129
-So that's how easy it is to do calculus in PI touch. So
+PyTorchで微分するのはこんなに簡単なのです。
 
 1:51:11.910,1:51:17.030
-What you need to know about calculus is not how to take a derivative
+ですから微積分について知っておくべきはどのように導関数を求めるかではなく
 
 1:51:17.670,1:51:20.960
-about what it means and what it means is
+何を意味するかで、それは
 
 1:51:21.720,1:51:23.670
-It's a slope
+ある点における
 
 1:51:23.670,1:51:25.670
-at some point
+傾きです。
 
 1:51:27.479,1:51:29.249
-Now here's something interesting
+少し面白いことをしてみましょう。
 
 1:51:29.249,1:51:32.699
-Let's not three. Let's take a Rank 1 tensor
+3だけではなく、ランク1のtensor、
 
 1:51:33.460,1:51:35.410
-Also known as a vector
+ベクトルを用意し
 
 1:51:35.410,1:51:37.410
-34:10 and
+(3, 4, 10)で初期化し
 
 1:51:37.780,1:51:39.760
-Let's add some
+sum()を
 
 1:51:39.760,1:51:42.959
-To our F function, so it's going to go x squared some
+関数fに加えましょう。
 
 1:51:43.630,1:51:46.200
-and now we can take F of
+そして、f(xt)を計算すると
 
 1:51:48.199,1:51:50.598
-Specter get back 125
+125になります。
 
 1:51:51.860,1:51:59.150
-And then we can say backward and grad and look 2 X 2 X 2 X
+backward()を呼ぶと、勾配は(2x, 2x, 2x)です。
 
 1:52:00.500,1:52:02.500
-So we can calculate
+つまり私たちは
 
 1:52:03.660,1:52:08.569
-This is this is vector calculus, right we're getting the
+ベクトル微積分ができるのです。私たちはここで
 
 1:52:09.390,1:52:10.920
-gradient for
+ベクトルの
 
 1:52:10.920,1:52:15.649
-Every element of a vector with the same two lines of code
+各要素の勾配を全く同じコードで求めました。
 
 1:52:18.750,1:52:23.279
-That's kind of all you need to know about calculus right and if this is
+これが微積分について知っておくべき全てです。
 
 1:52:24.940,1:52:29.279
-If this idea that that a derivative or gradient is a slope is
+もしこの傾きという考えに馴染みがなければ、
 
 1:52:29.800,1:52:32.190
-Unfamiliar, I'm check out Khan Academy
+Khan Academyをお勧めします。
 
 1:52:32.230,1:52:37.919
-they had some great introductory calculus and don't forget you can skip all the bits where they teach you how to calculate the
+入門的なコースがありますし、あなたたちは実際に微分を手で求める部分は
 
 1:52:38.770,1:52:40.770
-gradients yourself
+飛ばして良いのです。
 
 1:52:41.830,1:52:48.220
-So now that we know how to calculate the gradient that is the slope of the function that tells us if we change
+さて、もう勾配、つまり関数の傾きが計算できる、つまり、関数への入力を
 
 1:52:48.800,1:52:50.800
-our input a little bit
+少し変えたら
 
 1:52:51.350,1:52:53.350
-How will our output change?
+その関数の出力がどう変わるかわかります。
 
 1:52:53.870,1:52:55.990
 Correspondingly, that's what a slope is
+これが傾きの意味です。
 
 1:52:56.510,1:53:04.389
-Right, and so that tells us that every one of our parameters if we know their gradients then we know if we change
+もし勾配が得られたら、そこにある全てのパラメータを
 
 1:53:04.390,1:53:10.839
-That parameter up a bit or down a bit. How will it change our loss? So therefore we then know how to change our parameters?
+どう更新したら損失がどれくらい変わるかわかります。よってパラメータをどう変えるべきかわかります。
 
 1:53:12.080,1:53:17.289
-So what we do is let's say all of our weights called W
+私たちがすべきは、重みwの各要素から
 
 1:53:18.140,1:53:21.579
-We just subtract off them the gradients
+何か小さい係数を掛け合わせた
 
 1:53:22.610,1:53:24.320
-multiplied by some
+勾配を
 
 1:53:24.320,1:53:29.169
-small number and that small number is often a number between about
+引くことです。この小さい係数はだいたい
 
 1:53:29.630,1:53:32.740
-0.001 and point 1 and it's called the learning rate
+0.001から1ぐらいで学習率と呼ばれます。
 
 1:53:33.500,1:53:37.570
-and this year is the essence of
+そしてこれこそが勾配降下法の
 
 1:53:38.540,1:53:40.540
-gradient descent
+肝です。
 
 1:53:40.820,1:53:43.719
-So if you pick a learning rate, that's very small
+もし学習率が小さすぎると
 
 1:53:44.269,1:53:47.739
-Then you take the slope and you take a really small step in that direction
+傾きの方向にほんの少しだけ移動し、
 
 1:53:47.899,1:53:52.239
-And another small step another small step another small steps. No, it's going to take forever
+それを繰り返します。この調子だといつまで経っても、ゴール、つまり損失関数の
 
 1:53:52.849,1:53:54.439
-To get to the end
+底に着きません。
 
 1:53:54.439,1:53:56.439
-If you pick a learning rate, that's too big
+逆に学習率が大きすぎると、
 
 1:53:57.409,1:53:59.409
-You jump way too far
+遠くに行きすぎるので
 
 1:54:00.289,1:54:02.889
-Each time and again, it's going to take forever
+それを繰り返してたとしても、先ほど同様に終わらないでしょうし、
 
 1:54:05.429,1:54:11.129
-And in fact in this case, sorry this case we're assuming we're starting here and it's actually is so big it got worse and worse
+この場合では、ここから始まるので、むしろ悪化します。
 
 1:54:13.780,1:54:16.659
-Or here's one where we start here and it's like it's not
+また、ここからこれぐらいの学習率で始めると
 
 1:54:17.300,1:54:20.920
-So big it gets worse and worse, but it just takes a long time to bounce in and out
+毎回悪化します。ただ長い時間をかけて行ったり来たりします。
 
 1:54:21.739,1:54:23.690
-right, so
+ですから、
 
 1:54:23.690,1:54:30.250
-Picking a good learning rate is really important both to making sure that it's even possible to solve the problem
+妥当な学習率を選択するというのは問題を解く上でも、現実的な時間で問題を解く
 
 1:54:30.590,1:54:33.279
-And that it's possible to solve it in a reasonable amount of time
+上でも非常に重要です。
 
 1:54:33.469,1:54:37.808
-So we'll be learning about picking how to pick learning rates in this course
+ですからこのコースで学習率の選び方も教えます。
+
 
 1:54:41.780,1:54:43.070
-So
+では
 
 1:54:43.070,1:54:47.139
-Let's try this. Let's try using gradient descent
+この方法を試しましょう。勾配降下法も試しましょう。
 
 1:54:48.010,1:54:53.380
-I said SGD that's not quite accurate. It's just going to be gradient descent to solve an actual problem
+確率的勾配降下法と言いましたが厳密には間違いです。この問題を解くには勾配降下法を使います。
 
 1:54:54.650,1:55:00.039
-So the problem we're going to solve is let's imagine you were watching a roller coaster
+今から扱う問題のイメージは、こんな感じです。あなたはジェットコースターを見ているとします。
 
 1:55:00.650,1:55:05.949
-Go over the top of a hump, right so as it comes out of the previous
+てっぺんから反対側のてっぺんに向かって進むとき
 
 1:55:06.499,1:55:10.629
-hill it's going super fast and it's going up the hill and
+始めは徐々にスピードを上げていきますが、
 
 1:55:11.059,1:55:14.859
-it's going slower and slower and slower until I get to the top of the hump and
+上りでは徐々にスピードを失っていきます。
 
 1:55:15.260,1:55:17.590
-Then it goes down the other side or gets faster and faster and faster
+頂上についたらまた下りはじめ、スピードを付けていきます。
 
 1:55:17.599,1:55:22.808
-So if you like how to stop what sure whatever or a sudden or some kind of speedometer
+もしスピードメーターやストップウォッチのようなもので
 
 1:55:23.059,1:55:25.599
-And you are measuring it just by hand
+等間隔で
 
 1:55:26.329,1:55:32.109
-At kind of equal time points you might end up with something that looks a bit like this, right?
+測定したらこのようなものが得られますね。
 
 1:55:32.110,1:55:36.099
 And so the way I did this was I just grabbed a range just grabs
+この関数の作り方は、まずarange関数で
 
 1:55:36.679,1:55:43.748
 The numbers from naught up to but not including 20, right? So these are the time periods at which I'm taking my speed measurement and
+0から20までの整数を取得し、これが時間ですね、
 
 1:55:44.599,1:55:46.599
 Then I've just got some
+それから、
 
 1:55:47.479,1:55:52.929
-Quadratic function here and multiplied by 3 and then square root and then at 1 whatever, right?
+時刻から9.5を引いた後に二乗し0.75倍したものに定数項1と
 
 1:55:52.929,1:55:56.438
-And then I also actually sorry I take my time
+乱数の三倍を足しています。
 
 1:55:57.530,1:55:59.300
-- 9.5
+
 
 1:55:59.300,1:56:06.759
-Square root times 0.75 add 1 and then I add a random number to that or add a random number to every observation
 
 1:56:07.070,1:56:10.449
-So I end up with a quadratic function, which is a bit bumpy
+その結果、少し凸凹の二次関数が得られました。
 
 1:56:10.639,1:56:14.768
-So this is kind of like what it might look like in real life because most my speedometer
+でこぼこのおかげで少し現実的になっています。なぜならスピードメータによる
 
 1:56:15.289,1:56:17.469
-And of testing is not perfect
+計測は不完全ですから。
 
 1:56:20.659,1:56:22.659
-All right, so
+では、次は
 
 1:56:22.789,1:56:27.728
-We want to create a function that estimates at any time. What is the speed of the roller-coaster?
+どんな時間でも何かしら推測する関数を用意します。ジェットコースターの速度はなんでしょう。
 
 1:56:28.519,1:56:30.519
-So we start by
+いつも、
 
 1:56:30.769,1:56:33.849
-Guessing what function it might be there
+どんな関数が存在するか予測することから始まります。
 
 1:56:33.849,1:56:40.899
 We guess that it's a function a times x squared plus B times time plus C
+私たちは、その関数はtの二乗＋B t + Cのようなものと考えました。
 
 1:56:40.969,1:56:43.419
 You might remember from school is quite a quadratic
+これは二次関数の一般的な形ですね。
 
 1:56:44.090,1:56:47.799
 So let's create a function, right? And so
+では、関数を作りましょう。
 
 1:56:49.010,1:56:54.070
 Let's create it using kind of the Alpha Samuels technique the machine learning technique. This function is going to take two things
+アーサー・サミュエルの機械学習のテクニックを使って関数を作りましょう。この関数は
 
 1:56:54.409,1:56:56.409
 It's going to take an input
+入力、ここでは時間
 
 1:56:56.599,1:56:58.599
-Which in this case is a time
+そして、
 
 1:56:58.760,1:57:00.760
-And it's going to take some parameters
+いくつかのパラメータ、
 
 1:57:01.850,1:57:05.149
-and the parameters are a b and c so in in
+a, b, cを受け取ります。
 
 1:57:05.670,1:57:12.410
-Python you can split out a list or a collection into its components like so and then here's that function
+Pythonではリストなどからこのように要素を取り出せます。
 
 1:57:16.100,1:57:18.890
-Any function in the world, we're just trying to find some function
+ここでは、どんな関数に対しても、私たちは
 
 1:57:19.920,1:57:22.790
-Which is a quadratic by finding an A in a Vienna C
+a, b, cを見つけることで二次関数を適合させようとしています。
 
 1:57:23.880,1:57:27.680
-so the the Arthur Samuel technique for doing this is to
+アーサー・サミュエルにならえば、
 
 1:57:27.990,1:57:35.030
-next up come up with a loss function come up with a measurement of how good we are so if we've got some predictions
+次にするべきは、関数の予測がどの程度優れているかを測る損失関数を
 
 1:57:36.000,1:57:38.000
-that come out of our function and
+決めることです。
 
 1:57:38.460,1:57:41.960
-The targets which are these you know actual values
+このとき、目標は実際の値で、
 
 1:57:42.750,1:57:44.750
-then we could just do the
+ここでは、
 
 1:57:46.320,1:57:52.939
-Mean squared error. Okay. So here's that means grid error. We saw before the difference squared then take the mean
+平均二乗誤差を使います。
 
 1:57:54.530,1:57:57.310
-So now we need to go through our seven step process
+準備ができたので7つのステップを実行します。
 
 1:57:57.679,1:58:03.549
-We want to come up with a set of three parameters a B and C which were as good as possible
+できる限り良いa, b, cのを見つけるたいのですが、
 
 1:58:03.800,1:58:07.509
-So step one is to initialize a B and C two random values
+まずa, b, cを初期化する必要があります。
 
 1:58:07.880,1:58:13.599
-So this is how you get random values three of them in pi torch. And remember we're going to be adjusting them
+これがPyTorchで乱数を取得する方法です。ここからパラメータを調整していきます。
 
 1:58:13.599,1:58:15.969
-So we have to tell pi torch that we want the gradients
+ですのでPyTorchに勾配を計算するよう伝えなければなりません。
 
 1:58:19.950,1:58:26.490
-I'm just going to save those away so I can check them over and then I calculate the predictions using that function f
+そして、この初期値をあとで確認するために保存しておきます。そして、関数fを使って予測値を計算します。
 
 1:58:27.370,1:58:29.370
-Which was this?
+fはこれです。
 
 1:58:31.650,1:58:35.000
-And then let's create a little function which just plots out
+それから、その時点での予測値がどの程度かを可視化する
 
 1:58:35.520,1:58:37.760
-Good at this point our our predictions
+関数も作ります。
 
 1:58:38.010,1:58:44.539
-So here is a function that prints in red our predictions and in blue our targets
+この関数は予測を赤、正解を青でプロットします。
 
 1:58:44.700,1:58:46.700
-So that looks pretty terrible
+ボロボロですね。
 
 1:58:48.520,1:58:50.520
-Calculate the loss
+そして損失を
 
 1:58:51.670,1:58:53.670
-a functionary wrote
+この関数で求めます。
 
 1:58:54.050,1:59:01.160
-Okay, so now we want to improve this so calculate the gradients using the two steps we saw call backward and then get grad and
+パラメータを更新するために、backwardメソッドを呼び、gradを取得する2ステップで勾配を計算します。
 
 1:59:01.710,1:59:03.710
-this says that each of our
+この結果はパラメータが
 
 1:59:04.620,1:59:06.859
-Parameters has a gradient that's negative
+負の勾配を持っているということです。
 
 1:59:09.660,1:59:15.829
-Let's pick a learning rate of ten to the minus five or we multiply that by ten to the minus five
+学習率を10の-5乗とし、この勾配それぞれに学習率をかけて
 
 1:59:18.139,1:59:19.019
-And
 
 1:59:19.019,1:59:25.699
-step the weights and remember step the weights means - equals learning rate times the
+重みを更新、つまり、現時点での重み - 学習率 x 勾配
 
 1:59:26.519,1:59:28.519
-gradient as
+を実行します。
 
 1:59:28.980,1:59:31.020
-Here which have called data
+ここではdata attributeを使っていますが
 
 1:59:32.020,1:59:36.330
-The reason I've called data is that data is a special attribute in pi torch
+これは、PyTorchにおいて、dataに対する計算は
 
 1:59:36.640,1:59:38.640
-Which if you use it?
+
 
 1:59:38.980,1:59:44.399
-Then the radiant is not calculated and we certainly wouldn't want
+勾配を計算しなくなるからです。重み更新に関する勾配は不要です。
 
 1:59:44.860,1:59:51.810
-the gradient to be calculated of the actual step we're doing we only want the gradient to be calculated of our
+勾配が必要なのは
 
 1:59:52.989,1:59:57.479
-Function f all right. So when we step the weights we have to use this special
+関数fだけです。ですから、重みの更新においては、data attributeを
 
 1:59:58.300,2:00:00.300
-dot data attribute
+使います。
 
 2:00:00.610,2:00:02.350
-After we do that
+重み更新後は
 
 2:00:02.350,2:00:04.350
-Delete the gradients that we already had
+使用済みの勾配を削除し、
 
 2:00:04.989,2:00:08.309
-And let's see if loss improved. So the loss before was
+損失が良くなったか見てみましょう。最初は
 
 2:00:10.840,2:00:12.760
-25800
+25800でしたが、
 
 2:00:12.760,2:00:19.679
-Now it's 5,400 and the plot has gone from something that goes down to minus 300
+今は5400です。プロットも-300に向かって加工する曲線から
 
 2:00:22.030,2:00:24.030
-Well to something that looks much better
+だいぶまともになりました。
 
 2:00:25.129,2:00:30.769
-So let's do that a few times so I just grabbed those previous lines of code and pasted them all into a single cell
+このプロセスをもう少し繰り返すので、関連する数行のコードを1つのセルにまとめました。
 
 2:00:31.409,2:00:35.118
-Okay, so Preds lost backward data gratis none
+予測、損失を計算して、backward、重み更新、勾配削除という感じです。
 
 2:00:35.969,2:00:38.388
-and then from time to time print the loss out and
+そして、毎回損失の値を出力するようにして、
 
 2:00:39.329,2:00:42.889
-Repeat that ten times and look getting better and better
+10回繰り返すと毎回改善されていますね。
 
 2:00:46.030,2:00:50.640
-And so we can actually look at it getting better and better
+そして、改善の様子が可視化されています。
 
 2:00:52.230,2:00:59.000
-So, this is pretty cool, right we have a technique this is the Arthur Samuel technique for
+イケてますね。アーサー・サミュエルの技術を使って、それは
 
 2:01:00.840,2:01:03.560
-Finding a set of parameters that
+良いパラメータを見つけるためのものですが、
 
 2:01:04.170,2:01:10.520
-Continuously improves by getting feedback from the result of measuring some loss function
+損失関数による結果のフィードバックを使って継続的に改善していくのです。
 
 2:01:11.999,2:01:14.339
-So that was kind of the key step, right?
+非常に重要なステップです。
 
 2:01:15.579,2:01:23.429
-This this is the gradient descent method so you should make sure that you kind of go back and feel super comfortable with
+これが勾配降下法というもので、みなさんはぜひ、何回も復習して、
 
 2:01:24.070,2:01:28.289
-What's happened? And you know, if you're not feeling comfortable that that's fine
+何が起きているかをしっかり理解してください。もし馴染めなくても
 
 2:01:28.289,2:01:32.998
-right if it's been a while or if you've never done this kind of gradient descent before
+もしこれが初めてなら仕方ありません。
 
 2:01:34.840,2:01:39.779
-This might feel super unfamiliar so kind of trying to find the first cell in this notebook
+このnotebookのどのセルからあやふやになってしまったかを洗い出し、
 
 2:01:40.389,2:01:45.748
-Where you don't fully understand what it's doing and then like stop and figure it out
+しっかり考えてみてください。
 
 2:01:45.749,2:01:50.339
-I can look at everything that's going on do some experiments do some reading
+1行1行何が起きているか良くみて、何回か実験したり、本を読んで
 
 2:01:51.340,2:01:53.320
-until you understand
+あなたが詰まった
 
 2:01:53.320,2:01:56.039
-That cell where you're stuck before you move forwards
+セルを理解してから次に進みましょう。
 
 2:01:58.380,2:02:00.920
 So let's now apply this to em mist
+ではこれをMNISTに使いましょう。
 
 2:02:02.770,2:02:04.770
-Um
+
 
 2:02:06.050,2:02:08.050
-So for EM Nest
+MNISTでは
 
 2:02:09.310,2:02:13.620
-We want to use this exact technique and there's basically nothing extra we have to do
+ほとんど同じで、追加ですべきことはほとんどありません。
 
 2:02:14.590,2:02:16.150
-except one thing
+必要なのは
 
 2:02:16.150,2:02:18.150
-we need a loss function and
+損失関数と
 
 2:02:21.190,2:02:27.280
-The metric that we've been using is the error rate or the accuracy, it's like how often are we correct?
+メトリクスでこれは誤差率です。
 
 2:02:27.320,2:02:31.689
-Right, and and that's the thing that we're actually trying to make good
+ここでも、メトリクスが良くなるように取り組むのですが、
 
 2:02:32.780,2:02:35.709
-Our metric but we've got a very serious problem
+深刻な問題は
 
 2:02:36.470,2:02:39.130
-Which is remember we need to calculate the gradient
+勾配を計算して、
 
 2:02:40.400,2:02:46.239
-To figure out how we should change our parameters and the gradient is the slope or the steepness
+パラメータをどう更新するかはっきりさせることです。勾配は傾きで
 
 2:02:47.030,2:02:50.169
-Which you might remember from school is defined as rise over run
+関数の出力の変化 / 入力の変化で定義されます。つまり、
 
 2:02:51.050,2:02:57.519
-it's why new - why old divided by X near minus X old so
+(y_new - y_old) / (x_new - x_old)です
 
 2:02:58.490,2:03:06.369
-The gradients actually defined when X new is is very very close to X old meaning their difference is very small
+実際に勾配が定義されるのはx_newがx_oldに非常に近いときです。
 
 2:03:07.650,2:03:09.650
-That think about it
+では、
 
 2:03:09.940,2:03:17.129
-Accuracy if I change a parameter by a tiny tiny tiny amount the accuracy might not change at all
+もし、パラメータをごくわずか変化させたとしても、正確度は全く変わらないでしょう。
 
 2:03:17.800,2:03:19.800
-Because there might not be any
+というのも
 
 2:03:19.929,2:03:25.439
-Three that we now predict as a seven or any seven that we now predict as a three
+3と予測されていたものが7に変わったりその逆は起きないからです。
 
 2:03:25.659,2:03:28.049
-Because we change the parameter by such a small amount
+そもそもパラメータの変化は微小なのですから。
 
 2:03:29.320,2:03:34.949
-So it's it's it's possible. In fact, it's certain that the gradient is zero
+ですから、実際に多くの場所で勾配は0になり得るのです。
 
 2:03:35.679,2:03:39.149
-At many places and that means that our parameters
+そして、このことは
 
 2:03:39.790,2:03:46.709
-Aren't going to change at all because learning rate times gradient is still zero when the gradient zero for any learning rate
+学習率x勾配=0となり、パラメータを全く変化させないことを意味します。
 
 2:03:48.429,2:03:50.429
-So this is why
+これが
 
 2:03:51.250,2:03:53.020
-the loss
+損失関数と
 
 2:03:53.020,2:03:57.149
-Function and the metric are not always the same thing
+メトリクスが必ずしも一致しない理由です。
 
 2:03:58.150,2:04:00.540
-we can't use a metric as
+もしメトリクスの勾配が0なら
 
 2:04:01.300,2:04:05.009
-Our loss if that metric has a gradient of zero
+損失としては使えません。
 
 2:04:07.680,2:04:09.680
-So we need something different
+ですからメトリクス以外で、
 
 2:04:10.920,2:04:12.920
-We want to find something that kind of
+とはいっても正確度のようなものが必要で
 
 2:04:14.530,2:04:19.620
-Is pretty similar to the accuracy in that like as the accuracy gets better
+それは正確度が良くなればその損失関数も
 
 2:04:20.140,2:04:22.950
-This ideal function we want gets better as well
+改善されると同時に、
 
 2:04:23.770,2:04:25.770
-But it should not have a gradient of zero
+勾配が0にならないようなものです。
 
 2:04:27.670,2:04:29.670
-So let's think about that function
+ではこんな関数を考えましょう。
 
 2:04:32.800,2:04:35.610
-Suppose we had three images
+3枚の画像があるとします。
 
 2:04:37.779,2:04:39.779
-Um, actually, you know what
+えー、
 
 2:04:41.110,2:04:45.060
-This is actually probably a good time to stop because actually, you know
+おそらくこのタイミングで今日のレッスンは止めた方が良さそうです。
 
 2:04:45.060,2:04:49.680
-We've we've kind of we've got to the point here where we understand gradient descent
+勾配降下法の説明をしました。
 
 2:04:51.780,2:04:55.219
-We kind of know how to do it with a simple loss function and
+単純な損失関数でどう実行するか学びました。
 
 2:04:55.680,2:04:59.720
-I actually think before we start looking at the amnesty loss function
+ですので、今日はもうMNISTの損失関数について考えたり、
 
 2:05:00.690,2:05:02.400
-We shouldn't move on
+説明しない方が良さそうです。
 
 2:05:02.400,2:05:06.560
-Because we've got so much so much assignments to do for this week already
+来週までの宿題も沢山あります。
 
 2:05:06.560,2:05:09.410
-so we've got build your web application and
+1つはwebアプリを作成すること、そして
 
 2:05:09.810,2:05:15.080
-We've got both step through step through this notebook to make sure you fully understand it
+勾配降下法を復習することです。
 
 2:05:15.660,2:05:17.660
-So I actually think we should probably
+ですから今日のところは
 
 2:05:18.930,2:05:26.510
-Stop right here before we make things too crazy. So before I do Rachel are there any questions?
+ここまでとしておきましょう。Rachel、何か質問は出ていますか？
 
 2:05:28.170,2:05:35.390
-Okay, good, all right well thanks everybody sorry for that last-minute change of tack there but I think this is going to make sense
+わかりました。ではみなさん、今日もありがとうございました。最後の数分間についてはごめんなさい。
 
 2:05:36.240,2:05:43.309
-So I hope you have a lot of fun with your web applications try and think of something that's really fun. Really interesting
+webアプリケーション作成を楽しんでください。
 
 2:05:44.250,2:05:48.439
-It doesn't have to be like important. It could just be some, you know cute thing
+何か素晴らしいものを作ってくれることを期待しています。
 
 2:05:49.350,2:05:53.870
-We've had students before a student that I think he said he had 16 different
+過去には、16人のいとこを見分けるモデルを作った
 
 2:05:54.270,2:05:57.530
-Cousins and he created something that would classify
+生徒もいました。
 
 2:05:57.960,2:06:03.200
-A photo based on which of his cousins it was feel like his fiancee meeting his family
+婚約者のために作ったそうです。
 
 2:06:04.590,2:06:11.120
-you know, you can come up with anything you like but you know, yeah show off your application and
+どんなものでも作ることができますが、ぜひ誰かに見せて、そして
 
 2:06:12.780,2:06:18.259
-Maybe have a look around at what I pi widgets can do and try and come up with something that you think is pretty cool
+ipywidgetのドキュメントを確認したりしながら何か作ってみてください。
 
 2:06:19.200,2:06:21.530
-All right. Thanks everybody. I will see you next week
+ではさようなら、また来週。
