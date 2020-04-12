@@ -1,0 +1,4835 @@
+0:00:00.130,0:00:07.469
+Welcome to lesson five and we'll be talking about ethics for data science and this corresponds to chapter 3 of the book. I've also
+
+0:00:09.820,0:00:14.790
+Just taught a six-week version of this course, I'm currently teaching an eight-week version of this course and will release
+
+0:00:15.490,0:00:18.180
+some some combination or subset of that as a
+
+0:00:19.000,0:00:22.949
+Fast AI and USF ethics for data science class if you want more detail
+
+0:00:23.619,0:00:26.339
+Coming in July. I am Rachel Thomas
+
+0:00:26.340,0:00:33.569
+I am the founding director of the center for applied data ethics at the University of San Francisco and also co-founder a fast day
+
+0:00:33.570,0:00:35.410
+I together with Jeremy Howard
+
+0:00:35.410,0:00:36.329
+my background
+
+0:00:36.329,0:00:38.329
+I have a PhD in math and
+
+0:00:38.469,0:00:46.379
+worked as a data scientist and software engineer in the tech industry and then have been working at USF and on fast AI for
+
+0:00:46.539,0:00:48.539
+The past four years now
+
+0:00:51.010,0:00:54.090
+So ethics issues are in the news
+
+0:00:55.300,0:00:57.869
+These these articles I think are all from this fall
+
+0:00:58.480,0:01:01.230
+kind of showing up at this this intersection of how
+
+0:01:01.840,0:01:06.869
+How technology is impacting our world in many kind of increasingly powerful ways
+
+0:01:07.869,0:01:10.169
+many of which really raised raised concerns
+
+0:01:10.450,0:01:16.530
+and I want to start by talking about three cases that I hope everyone working in technology knows about and is on the lookout for
+
+0:01:16.869,0:01:21.569
+So even if you only watch five minutes of this video, these are kind of the the three three cases
+
+0:01:21.570,0:01:27.839
+I want you to see and one is feedback loops and so feedback loops can occur whenever your model is
+
+0:01:27.970,0:01:29.970
+controlling the next round of data you get
+
+0:01:30.189,0:01:36.989
+So the data that's returned quickly becomes flawed by the software itself. And this this can show up in many places
+
+0:01:37.990,0:01:45.329
+One examples with recommendation systems and so recommendation systems are ostensibly about predicting what content the user will like
+
+0:01:45.520,0:01:52.799
+But they're also determining what content the user is even exposed to and helping determine what what has a chance of becoming popular
+
+0:01:53.470,0:01:55.390
+and so
+
+0:01:55.390,0:01:58.529
+YouTube has gotten a lot of a lot of attention about this
+
+0:01:59.680,0:02:01.680
+for kind of
+
+0:02:02.380,0:02:07.979
+Highly recommending many conspiracy theories many kind of very damaging conspiracy theories. There is also
+
+0:02:08.560,0:02:14.430
+They've kind of put together recommendations of paedophilia picked out of what we're kind of in a home movies
+
+0:02:14.430,0:02:17.849
+but when are kind of strung together ones that happen to have
+
+0:02:18.490,0:02:21.240
+young girls and bathing suits or
+
+0:02:22.060,0:02:24.060
+in their pajamas
+
+0:02:24.430,0:02:26.880
+So there's some really really concerning
+
+0:02:27.850,0:02:31.679
+Results and this is not something that any anybody intended and we'll talk about this more later
+
+0:02:31.860,0:02:34.770
+Um, I think particularly for many of us coming from a science background
+
+0:02:35.400,0:02:36.780
+we're often used to thinking of like oh
+
+0:02:36.780,0:02:42.449
+you know like we observe the data but really whenever you're building products that interact with the real world you're also
+
+0:02:43.360,0:02:45.360
+Kind of controlling what the data looks like
+
+0:02:47.770,0:02:50.759
+Second a second case study. I want everyone to know about it
+
+0:02:51.610,0:02:53.260
+comes from
+
+0:02:53.260,0:02:56.550
+Software that's used to determine poor people's health benefits
+
+0:02:56.550,0:03:02.309
+It's used in over half of the 50 states and the verge did an investigation on what happened when it was rolled out in
+
+0:03:02.320,0:03:05.519
+Arkansas and what happened is there was a bug and the software
+
+0:03:05.739,0:03:10.859
+implementation that incorrectly cut coverage for people with cerebral palsy or diabetes
+
+0:03:12.070,0:03:15.899
+Including Tammy Dobbs who's pictured here and was interviewed in the article
+
+0:03:16.390,0:03:21.149
+and so these are people that really needed this health care and it was a
+
+0:03:21.549,0:03:22.049
+roni
+
+0:03:22.049,0:03:25.649
+roni ously cut due to this bug and so they were really
+
+0:03:25.989,0:03:31.169
+and they couldn't get any sort of explanation and there was no appeals or recourse process in place and
+
+0:03:31.450,0:03:34.080
+Eventually, this all came out through a lengthy court case
+
+0:03:34.780,0:03:38.669
+But it's something where it caused a lot of a lot of suffering in the meantime
+
+0:03:38.709,0:03:43.589
+And so it's really important to implement systems with a way to identify and address
+
+0:03:43.900,0:03:51.179
+mistakes and to do that quickly in a way that hopefully minimizes damage because we all know software can have bugs our
+
+0:03:51.370,0:03:56.010
+Code can behave in unexpected ways and we need to be prepared for that. I
+
+0:03:56.980,0:04:03.330
+Wrote more about this idea in a post two years ago what HBR gets wrong about algorithms and bias
+
+0:04:04.060,0:04:05.410
+and
+
+0:04:05.410,0:04:09.359
+then third case study that everyone should know about so this is
+
+0:04:09.790,0:04:15.449
+Latanya Sweeney who's director of the data privacy lab at Harvard has a PhD in computer science and
+
+0:04:15.669,0:04:21.629
+She noticed several years ago that when you google her name you would get these ads saying Latanya, Sweeney
+
+0:04:22.180,0:04:27.570
+Arrested implying that she has a criminal record. She's the only Latanya Sweeney and has never been arrested
+
+0:04:27.700,0:04:32.189
+She paid $50 to the background check company and confirmed that she's never been arrested
+
+0:04:33.010,0:04:37.860
+She tried googling some other names and she noticed rigs an example Kristen Lindquist
+
+0:04:38.200,0:04:42.149
+Got much more neutral ads that just say we found Kristen Lindquist
+
+0:04:42.390,0:04:48.209
+Even though Kristen Lindquist has been arrested three times and so being a computer scientist. Dr
+
+0:04:48.210,0:04:55.830
+Sweeney to study this very systematically she looked at over 2,000 names and found that this pattern held in which
+
+0:04:56.500,0:05:03.690
+disproportionately African American names were getting these ads suggesting that the person had a criminal record regardless of whether they did and
+
+0:05:04.600,0:05:09.719
+traditionally a European American or white names were getting more neutral ads and
+
+0:05:10.240,0:05:14.730
+This problem of kind of bias in advertising shows up a ton
+
+0:05:15.400,0:05:17.400
+advertising is kind of the
+
+0:05:18.340,0:05:25.350
+Profit model for most of the major tech platforms and it kind of continues to pop up in high-impact ways
+
+0:05:25.870,0:05:30.810
+Just last year there was research showing how Facebook's ad system discriminates
+
+0:05:30.810,0:05:33.780
+Even when the person placing the ad is not trying to do so
+
+0:05:34.090,0:05:39.270
+so for instance the same housing ad exact same text if you change the
+
+0:05:39.670,0:05:43.739
+Photo between a white family and a black family. It's served two very different audiences
+
+0:05:44.260,0:05:48.480
+And so this is something that can really impact people when they're looking for housing when they're applying for jobs
+
+0:05:49.120,0:05:51.270
+And is a definite area of concern
+
+0:05:55.300,0:05:58.859
+So now I want to kind of step back and ask why why does this matter
+
+0:05:59.620,0:06:07.440
+And so a very kind of extreme extreme example, it's just that data collection has played a pivotal role in several genocides
+
+0:06:08.620,0:06:11.790
+including including the Holocaust and so this is a photo of
+
+0:06:12.310,0:06:18.540
+Adolf Hitler meeting with the CEO of IBM at the time. I think this photo was taken in 1937
+
+0:06:19.630,0:06:21.630
+an IBM
+
+0:06:21.730,0:06:26.129
+Continued to partner with the Nazis kind of long past when many other companies broke their ties
+
+0:06:27.100,0:06:31.409
+They produced computers that were used in concentration camps to code
+
+0:06:32.020,0:06:36.960
+other people were Jewish how they were executed and this is also
+
+0:06:37.750,0:06:41.880
+Different from now where you might sell somebody a computer and they never hear from them again
+
+0:06:42.310,0:06:46.709
+these machines require a lot of maintenance some kind of ongoing relationship with vendors to
+
+0:06:47.200,0:06:51.330
+Kind of upkeep and repair them and it's something that a Swiss judge ruled
+
+0:06:51.940,0:06:56.249
+It does not seem unreasonable to deduce that IBM's technical assistance
+
+0:06:56.500,0:07:02.850
+facilitated the task of the Nazis in the commission of their crimes against humanity acts also involving accountancy and
+
+0:07:03.160,0:07:10.529
+Classification by IBM machines and utilized and the concentration camps themselves. I'm told that they haven't gotten around to apologizing yet. Oh
+
+0:07:11.290,0:07:13.709
+I guess they've been busy. Terrible - yeah
+
+0:07:14.620,0:07:15.820
+Okay
+
+0:07:15.820,0:07:20.279
+Yeah, and so this is a very kind of a very sobering example
+
+0:07:20.290,0:07:27.869
+But I think it's important to keep in mind kind of what can go wrong and how technology can be used for for harm
+
+0:07:28.240,0:07:30.240
+For very very terrible harm
+
+0:07:31.900,0:07:33.190
+And so this just kind of
+
+0:07:33.190,0:07:34.090
+raises a question
+
+0:07:34.090,0:07:38.880
+questions that we all need to grapple with of how would you feel if you discovered that you had been part of a system that
+
+0:07:38.880,0:07:43.799
+Ended up hurting society. Would you would you even know would you be open to finding out?
+
+0:07:44.530,0:07:48.000
+Kind of how how things you had built may have been harmful
+
+0:07:49.030,0:07:54.510
+And how can you help make sure this doesn't happen. And so I think these are questions that we all all need to grapple with
+
+0:07:58.419,0:08:02.519
+It's also important to think about unintended consequences on how your tech could be
+
+0:08:03.220,0:08:11.160
+used or misused whether that's by harass sirs by authoritarian governments for propaganda or disinformation and
+
+0:08:12.940,0:08:16.739
+Then on a kind of a more concrete level you could even end up in jail
+
+0:08:16.740,0:08:19.890
+And so there was a Volkswagen engineer who got prison time
+
+0:08:20.470,0:08:23.160
+For his role in the diesel cheating case
+
+0:08:23.470,0:08:29.040
+so you remember this is where Volkswagen was cheating on emissions test and one of the kind of
+
+0:08:29.830,0:08:31.539
+Programmers that was a part of that
+
+0:08:31.539,0:08:35.729
+and that person was just following orders from what their boss told them to do, but that is not
+
+0:08:36.490,0:08:38.849
+Not a good excuse for for doing something that's unethical
+
+0:08:39.729,0:08:41.729
+And so something to be aware of
+
+0:08:45.430,0:08:50.460
+So ethics is the the discipline in dealing with what's good and bad it's a set of moral principles
+
+0:08:52.130,0:08:53.880
+It's not a set of answers
+
+0:08:53.880,0:08:59.929
+But it's kind of learning what sort of what sort of questions to ask and even how to weigh these decisions
+
+0:09:00.600,0:09:02.600
+And I'll say some more about
+
+0:09:02.610,0:09:08.060
+Kind of ethical foundations and different ethical philosophies later later on in this lesson
+
+0:09:08.060,0:09:11.119
+But first I'm going to kind of start with some some use cases
+
+0:09:12.180,0:09:18.770
+Ethics is not the same as religion laws social norms or feelings. Although it does have overlap with all these things
+
+0:09:19.530,0:09:21.530
+It's not a fixed set of rules
+
+0:09:22.710,0:09:26.329
+It's well founded standards are right and wrong and this is something we're
+
+0:09:27.150,0:09:31.369
+Clearly not everybody agrees on the ethical action in in every case
+
+0:09:31.370,0:09:35.539
+But that doesn't mean that kind of anything goes or that all actions are considered
+
+0:09:35.790,0:09:39.440
+Equally ethical there are many things that are widely agreed upon
+
+0:09:40.020,0:09:42.020
+and there are kind of a
+
+0:09:42.330,0:09:43.470
+philosophically
+
+0:09:43.470,0:09:50.119
+Safa chol underpinnings for kind of making these decisions and I think this is also the ongoing study and development of our ethical standards
+
+0:09:50.120,0:09:53.210
+It's a kind of never-ending process of learning to
+
+0:09:53.790,0:09:55.170
+kind of
+
+0:09:55.170,0:09:57.170
+practice our ethical wisdom
+
+0:09:57.360,0:10:00.590
+And I'm gonna refer it several times to so here
+
+0:10:00.590,0:10:05.869
+I'm referring to a few articles from the Markkula Center for tech X at Santa Clara University
+
+0:10:06.870,0:10:13.039
+In particular the work of Shannon valour Brian Greene and arena Ray COO who is fantastic and they have a lot of resources
+
+0:10:13.230,0:10:15.230
+Some of which I'll circle back to later
+
+0:10:15.840,0:10:21.859
+Later in this talk. I spent years of my life studying ethics. It was my major at University and
+
+0:10:23.010,0:10:25.369
+How much time on the question of what is ethics?
+
+0:10:25.370,0:10:30.890
+I think I'll take away from that is studying the philosophy ethics was not particularly helpful in
+
+0:10:31.620,0:10:37.429
+Learning about ethics. Yes, and I will try to keep this kind of very very applied and very practical
+
+0:10:38.760,0:10:44.749
+Also, very kind of tech industry-specific of what what do you need in terms of applied ethics? Mykola said it's great
+
+0:10:44.750,0:10:48.650
+They somehow they take stuff that I thought was super dry and turn it into
+
+0:10:50.040,0:10:52.610
+useful checklists and things I
+
+0:10:55.560,0:10:57.950
+Did want to note this was really neat
+
+0:10:57.950,0:11:01.759
+so Casey fees lawyers a professor at University of Colorado that I really admire and
+
+0:11:02.130,0:11:06.069
+She created a crowd-sourced spreadsheet of tech ethics syllabi
+
+0:11:06.649,0:11:09.669
+This was maybe two years ago and got over 200
+
+0:11:10.220,0:11:14.319
+syllabi entered into this this crowd-sourced spreadsheet and then she did a
+
+0:11:15.170,0:11:21.519
+meta-analysis on them of kind of looking at all sorts of aspects of the syllabi and what's being taught and how it's being taught and
+
+0:11:22.999,0:11:29.048
+And published a paper on it. What do we teach when we teach technics and a few interesting things about it?
+
+0:11:29.049,0:11:31.049
+Is it raises there a lot of?
+
+0:11:31.910,0:11:36.850
+ongoing discussions and lack of agreement on how to how to best teach technics
+
+0:11:37.489,0:11:41.199
+Should it be a standalone course versus worked into every course in the curriculum?
+
+0:11:42.410,0:11:46.989
+who should teach it a computer scientist a philosopher a sociologist and
+
+0:11:47.989,0:11:49.989
+And she analyzed for the syllabi
+
+0:11:50.179,0:11:55.779
+What was the course home in the instructor home? And you can see that the the instructors came from a range of courses?
+
+0:11:56.540,0:12:00.849
+including computer a range of disciplines computer science information science philosophy
+
+0:12:01.669,0:12:05.379
+science and tech studies engineering law math business
+
+0:12:06.230,0:12:10.389
+What topics to cover a huge range of topics that can be covered?
+
+0:12:11.239,0:12:15.668
+Including a law and policy privacy and surveillance in equality justice and human rights
+
+0:12:17.360,0:12:22.899
+Environmental impact AI and robots and professional ethics work in labor cybersecurity
+
+0:12:23.209,0:12:28.599
+The list goes on and on and so this is clearly more than can be covered in any even a full semester
+
+0:12:28.999,0:12:31.779
+length course and certainly not in a
+
+0:12:32.329,0:12:34.329
+kind of a single single lecture
+
+0:12:36.230,0:12:39.279
+What learning outcomes this is an area where there's a little bit more
+
+0:12:39.889,0:12:43.539
+Agreement, we're kind of the number one skill that courses were trying to teach was critique
+
+0:12:44.179,0:12:50.679
+followed by spotting issues making arguments and so a lot of this is just even learning to spot what the issues are and how to
+
+0:12:51.199,0:12:52.789
+critically evaluate
+
+0:12:52.789,0:13:00.189
+Kind of a piece of technology or a design proposal to see you know, what could go wrong what the the risks could be
+
+0:13:01.759,0:13:03.079
+All right
+
+0:13:03.079,0:13:05.349
+So so we're gonna go through kind of a few different
+
+0:13:05.929,0:13:12.369
+Core topics and as I suggested this is gonna be a kind of extreme subset of what could be covered
+
+0:13:12.369,0:13:14.469
+I was trying to pick things that we think are
+
+0:13:15.110,0:13:17.110
+very important and high-impact
+
+0:13:17.480,0:13:20.029
+So one is read course and accountability
+
+0:13:21.240,0:13:23.779
+so I already shared this example earlier of
+
+0:13:25.560,0:13:29.599
+You know the system that just determining poor people's healthcare benefits having a bug
+
+0:13:30.180,0:13:36.199
+And something that was kind of terrible about this. Nobody took responsibility even once the bug was found
+
+0:13:36.570,0:13:41.359
+so the creator of the algorithm was interviewed and
+
+0:13:42.300,0:13:43.820
+Asked they asked him
+
+0:13:43.820,0:13:49.369
+you know should people be able to get an explanation for why their benefits have been cut and he gave this very callous answer of
+
+0:13:49.440,0:13:51.149
+You know
+
+0:13:51.149,0:13:54.679
+Yeah, they probably should but I should probably dust under my bed, you know
+
+0:13:54.680,0:13:59.539
+Like who's gonna do that which is very callous and then he ended up blaming the policymakers
+
+0:14:00.149,0:14:02.239
+For how they had rolled out the algorithm
+
+0:14:02.910,0:14:04.040
+the policymakers
+
+0:14:04.040,0:14:10.070
+You know could blame the software engineers that implemented it and so there was a lot of passing the buck here
+
+0:14:10.500,0:14:12.500
+Dana Boyd has said that
+
+0:14:13.889,0:14:16.009
+You know, it's always been a challenge for
+
+0:14:16.589,0:14:21.708
+Bureaucracy to assign responsibility or bureaucracy is used to evade responsibility
+
+0:14:22.019,0:14:25.909
+and today's algorithmic systems are often extending bureaucracy a
+
+0:14:27.540,0:14:30.320
+Couple of questions and comments about
+
+0:14:31.620,0:14:38.479
+Cultural context yeah of any notes that they didn't seem to be any mention of cultural contexts for ethics as part of those
+
+0:14:39.660,0:14:42.079
+Syllabi, and somebody else was asking
+
+0:14:42.810,0:14:48.289
+How do you deal you know is this culturally dependent? And how do you deal with that? And it is culturally dependent?
+
+0:14:48.290,0:14:51.589
+I will mention this briefly later on so I'm gonna share
+
+0:14:52.170,0:14:56.329
+three different ethical philosophies that are kind of from the west and we'll talk just
+
+0:14:56.640,0:14:59.299
+Briefly have one slide on for instance right now
+
+0:14:59.300,0:15:05.479
+There are a number of indigenous data sovereignty movements. And I know the Maori data sovereignty movement has been particularly active
+
+0:15:06.180,0:15:14.149
+But different, you know different cultures do have different views on ethics. And I think that the cultural context is incredibly important
+
+0:15:14.790,0:15:16.849
+And we will not get into it tonight
+
+0:15:16.850,0:15:24.170
+But there's also kind of a growing field of algorithmic colonialism and kind of studying. What are some of the issues when you have
+
+0:15:25.019,0:15:30.619
+Technologies built in one, you know particular country and culture being implemented, you know
+
+0:15:31.649,0:15:37.969
+Halfway across the world in very different cultural context often with little to no input from people
+
+0:15:38.460,0:15:40.460
+people living in that culture and
+
+0:15:42.870,0:15:44.870
+Although I do want to say that there are
+
+0:15:45.120,0:15:46.980
+things that are
+
+0:15:46.980,0:15:54.860
+Widely, although not universally agreed on and so for instance the Universal Declaration on human rights despite the name it is not
+
+0:15:54.960,0:16:01.970
+Universally accepted but many many different countries have accepted that as a human rights framework and as those being fundamental rights
+
+0:16:01.970,0:16:03.970
+and so there are kind of
+
+0:16:04.020,0:16:07.129
+principles that are often held cross culturally although
+
+0:16:08.400,0:16:11.420
+Yeah, it's rare for something probably to be truly truly universal
+
+0:16:14.880,0:16:18.230
+So returning to this topic of kind of accountability in recourse
+
+0:16:19.410,0:16:27.170
+Keep in mind is the data contains heirs. And so there was a dank database used in California
+
+0:16:28.890,0:16:34.759
+It's tracking supposedly gang members and an auditor found that there were 42
+
+0:16:35.640,0:16:39.470
+babies under the age of 1 who had been entered into this database and
+
+0:16:39.960,0:16:43.220
+Something concerning about the database is that it's basically never updated
+
+0:16:43.230,0:16:47.599
+I mean people are added but they're not removed and so once you're in there you're in there and
+
+0:16:48.150,0:16:52.610
+And 28 of those babies were marked as having admitted to being gang members
+
+0:16:52.830,0:16:59.239
+and so keep in mind that this is just a really obvious example of the air, but how many other kind of
+
+0:17:00.180,0:17:02.180
+Totally wrong entries are there
+
+0:17:03.330,0:17:07.249
+another example of data containing errors involves the
+
+0:17:07.890,0:17:10.849
+the three credit bureaus in the United States
+
+0:17:11.580,0:17:18.019
+the FTC's large-scale study of credit reports found that 26% had at least one mistake in their files and
+
+0:17:18.480,0:17:24.110
+5% had errors that could be devastating. I'm gonna this is the headline of an article that was written by a
+
+0:17:25.110,0:17:32.120
+public radio reporter who went to get a an apartment and the landlord called him back afterwards and said
+
+0:17:32.120,0:17:35.330
+You know your background check showed up that you had firearms
+
+0:17:35.910,0:17:37.530
+convictions and
+
+0:17:37.530,0:17:42.889
+This person did not have any firearms convictions and it's something where in most cases the landlord would probably not even tell
+
+0:17:42.960,0:17:46.190
+Tell you and let you know, that's why you weren't getting the apartment. And so
+
+0:17:46.700,0:17:47.400
+and
+
+0:17:47.400,0:17:49.200
+This guy looked into it
+
+0:17:49.200,0:17:53.419
+I should note that this guy was white, which I'm sure helped him in getting the benefit of the doubt and
+
+0:17:54.270,0:17:56.070
+found this ere and
+
+0:17:56.070,0:17:57.120
+He made
+
+0:17:57.120,0:17:59.569
+Dozens of calls and could not get it fixed
+
+0:17:59.640,0:18:03.050
+Until he told them that he was a reporter and that he was going to be writing about it
+
+0:18:03.050,0:18:05.180
+Which is something that most of us would not be able to do
+
+0:18:05.730,0:18:10.279
+But it was even once he had pinpointed the air and he had to you know, talk to
+
+0:18:10.830,0:18:14.779
+The you know like County Clerk and the place he used to live
+
+0:18:15.240,0:18:21.589
+It was still a very difficult process to get it updated and this can have a huge huge impact on people's lives
+
+0:18:25.410,0:18:30.980
+There's also the issue of when technology is used in ways that the creators may not have intended
+
+0:18:30.980,0:18:32.850
+so for instance with facial recognition
+
+0:18:32.850,0:18:37.819
+It is pretty much entirely being developed for adults yet
+
+0:18:38.130,0:18:44.359
+NYPD is putting the photos of children as young as age 11 into into databases
+
+0:18:44.430,0:18:48.049
+And we know the error rates are higher. This is not how it was developed
+
+0:18:49.020,0:18:52.250
+So this is this is a serious serious concern
+
+0:18:52.950,0:18:59.569
+And there are a number of kind of misuses the Georgetown Center for privacy and Technology, which is fantastic
+
+0:18:59.670,0:19:01.670
+You should definitely be following them
+
+0:19:02.010,0:19:09.860
+Did a report garbage in garbage out looking at how police we're using facial recognition and practice and they found some really concerning
+
+0:19:11.220,0:19:15.079
+examples for instance in one case NYPD
+
+0:19:15.900,0:19:18.410
+had a photo of a suspect and they
+
+0:19:19.020,0:19:23.240
+Wasn't returning any matches and they said well this person kind of looks like Woody Harrelson
+
+0:19:23.430,0:19:28.190
+so then they googled the actor Woody Harrelson and put his face into the
+
+0:19:28.740,0:19:31.159
+Facial recognition and use that to generate leads
+
+0:19:31.590,0:19:37.039
+And this is clearly not the correct you said all but it's it's a way that it's being it's being used
+
+0:19:37.110,0:19:40.459
+And so there's kind of total lack of accountability here
+
+0:19:42.180,0:19:47.090
+And then another kind of study of cases in all 50 states of
+
+0:19:47.730,0:19:53.389
+police officers kind of abusing confidential databases to look up X romantic partners or to look up
+
+0:19:54.120,0:19:56.120
+activists and so
+
+0:19:56.790,0:20:01.949
+You know here this is not necessarily an and the data, although that can be present as well
+
+0:20:02.140,0:20:06.719
+But kind of keeping in mind how it can be misused by the users
+
+0:20:08.080,0:20:08.700
+All right
+
+0:20:08.700,0:20:13.950
+the next topic is feedback loops and metrics and so I talked a bit about feedback loops in the beginning is kind of one of
+
+0:20:13.950,0:20:15.280
+one of the three
+
+0:20:15.280,0:20:17.280
+key use cases
+
+0:20:17.559,0:20:21.689
+And so this is a topic. I wrote a blog post about this fall
+
+0:20:21.690,0:20:27.720
+The problem with metrics is a big problem for AI and then together with David you Minsky who's director of the data Institute
+
+0:20:28.450,0:20:30.220
+Expanded this into a paper
+
+0:20:30.220,0:20:36.900
+Reliance on metrics is a fundamental challenge for AI and this was accepted to the ethics and data science conference
+
+0:20:37.960,0:20:41.939
+but over emphasizing metrics can lead to a number of problems including
+
+0:20:42.880,0:20:44.880
+manipulation gaming
+
+0:20:45.190,0:20:48.059
+myopic focus on short-term goals because it's easier to
+
+0:20:49.419,0:20:51.419
+track short-term quantities
+
+0:20:52.330,0:20:54.330
+unexpected negative consequences and
+
+0:20:55.929,0:20:59.489
+Much of AI and machine learning centers on optimizing a metric
+
+0:20:59.500,0:21:04.679
+This is kind of both, you know, the strength of machine learning is it's gotten really really good at optimizing metrics
+
+0:21:04.750,0:21:08.640
+But I think this is also kind of inherently a weakness or a limitation
+
+0:21:10.179,0:21:15.809
+I'm going to give a few examples and this can happen even not just in machine learning
+
+0:21:16.390,0:21:17.919
+kind of but in
+
+0:21:17.919,0:21:18.970
+analog
+
+0:21:18.970,0:21:20.530
+Examples as well
+
+0:21:20.530,0:21:26.129
+So this is from a study of when English is England's public health system
+
+0:21:26.679,0:21:28.679
+implemented a lot more targets
+
+0:21:28.960,0:21:34.710
+Around numbers in the early 2000s and the study was called. What's what's measured is what matters?
+
+0:21:35.110,0:21:41.099
+And so they found so one of the targets was around reducing ER wait times, which seems like a good goal
+
+0:21:41.679,0:21:43.679
+however, this led to
+
+0:21:43.900,0:21:47.939
+cancelling scheduled operations to draft extra staff into the ER
+
+0:21:47.940,0:21:52.140
+So if they felt like there were too many people that you are they were just start canceling operations so they could get more doctors
+
+0:21:53.470,0:22:00.839
+Requiring patients to wait in queues of ambulances because time waiting an ambulance didn't count towards your your er wait time
+
+0:22:02.350,0:22:05.100
+Turning stretchers into beds by putting them in hallways
+
+0:22:05.100,0:22:10.679
+I mean, there are also big discrepancies in the numbers reported by hospitals versus by patients
+
+0:22:10.679,0:22:13.499
+And so if you ask the hospital on average how long people waiting
+
+0:22:14.230,0:22:18.420
+You get a very different answer than when you're asking the patients. How long did you have to wait?
+
+0:22:23.080,0:22:25.259
+Another another example is
+
+0:22:25.960,0:22:27.960
+of SAE grading software
+
+0:22:28.630,0:22:34.109
+And so this essay grading software I believe is being used in 22 states now in the United States
+
+0:22:36.580,0:22:44.460
+Yes, 20 states and it tends to focus on metrics like sentence length vocabulary spelling subject verb agreement because these are the things
+
+0:22:44.460,0:22:49.979
+that we we know how to measure and how to measure with a computer but I can't evaluate things like creativity or
+
+0:22:50.590,0:22:52.590
+novelty
+
+0:22:52.960,0:22:58.439
+However, gibberish essays with lots of sophisticated words score well, and there are even examples of people
+
+0:23:00.190,0:23:05.700
+Creating computer programs to generate these kind of gibberish sophisticated essays and then there
+
+0:23:05.700,0:23:09.419
+you know graded by this other computer program and highly rated and
+
+0:23:10.780,0:23:13.229
+There's also bias in this essays by
+
+0:23:13.600,0:23:18.810
+african-american students received lower grades from the computer than from expert human graders and
+
+0:23:20.080,0:23:26.099
+essays by students from mainland China received higher scores from the computer than from expert human graders and
+
+0:23:27.370,0:23:35.070
+authors of the study thought that they this this results suggest they may be using chunks of pre memorized text that score well,
+
+0:23:37.630,0:23:40.560
+And this is these are just kind of two examples
+
+0:23:40.560,0:23:43.259
+I have a bunch more in the blog post and even more in the paper of
+
+0:23:44.470,0:23:51.420
+ways that metrics can invite manipulation and gaming whenever they're they're given a lot of emphasis and this is a
+
+0:23:52.780,0:23:54.780
+good hearts laws of
+
+0:23:54.970,0:23:58.170
+kind of a law that a lot of people talk about and it's this idea that the
+
+0:23:58.870,0:24:02.580
+More you rely on a metric the kind of the less reliable it becomes
+
+0:24:05.110,0:24:12.000
+So returning to this example of feedback loops and recommendation systems Guillaume has lot is a former
+
+0:24:13.420,0:24:17.009
+google, youtube engineer YouTube is owned by Google and
+
+0:24:17.590,0:24:23.549
+He wrote a really great plant post and he's done a ton to raise awareness about this issue and founded the nonprofit
+
+0:24:24.660,0:24:28.919
+I'll go transparency which kind of externally tries to monitor YouTube's recommendations
+
+0:24:29.290,0:24:33.030
+He's partnered with the Guardian and the Wall Street Journal to do investigations
+
+0:24:34.090,0:24:37.919
+But he wrote a post around how have been though in the earlier days
+
+0:24:38.740,0:24:42.089
+the recommendation system was designed to maximize watch time and
+
+0:24:42.670,0:24:46.740
+So and this is this is something else that's often going on with metrics. Is that
+
+0:24:47.260,0:24:51.629
+Any metric is just a proxy for what you truly care about. And so
+
+0:24:52.270,0:24:59.339
+Here, you know the team at Google was saying well, you know, if you're watching more YouTube it signals to to us that they're happier
+
+0:25:00.400,0:25:05.879
+however, this also ends up incentivizing content that tells you the rest of the media is lying because
+
+0:25:07.060,0:25:12.240
+Kind of believing that everybody else is lying. We'll encourage you to spend more time on a particular platform
+
+0:25:12.610,0:25:14.910
+So Gilmer at a great post about this
+
+0:25:16.360,0:25:23.669
+Kind of mechanism that's at play and you know, this is not just YouTube. This is any recommendation system. Could I think be
+
+0:25:24.310,0:25:31.320
+Susceptible to this and there have been a lot of talk about kind of issues with many recommendation systems across platforms
+
+0:25:33.190,0:25:38.400
+But it is it is something to be mindful of and something that the kind of creators of this did not anticipate
+
+0:25:40.810,0:25:42.130
+And
+
+0:25:42.130,0:25:43.960
+last year
+
+0:25:43.960,0:25:45.990
+um kind of gathered this data on
+
+0:25:47.020,0:25:50.189
+So here the x-axis is the number of channels
+
+0:25:50.890,0:25:57.809
+Number of YouTube channels recommending a video and the y-axis is the log of the views and we see this extreme outlier
+
+0:25:57.810,0:26:03.419
+Which was Russia's today take Russia. Today's take on the Mueller report, and this is something that
+
+0:26:04.510,0:26:12.510
+Guillaume observed and then was picked up by the the Washington Post. But this this strongly suggests that Russia today has perhaps gamed the the
+
+0:26:13.720,0:26:18.959
+Recommendation algorithm which is which is not surprising and it's something that I think many content creators are
+
+0:26:19.690,0:26:26.370
+conscious of and trying to you know experiment and see what what gets more heavily recommended and thus more views so
+
+0:26:27.640,0:26:32.009
+it's important to note that our online environments are designed to be addictive and so
+
+0:26:32.590,0:26:36.569
+when kind of what we click on is often used as a proxy of of
+
+0:26:36.910,0:26:43.329
+What we enjoy or what we like that's not necessarily though four of our kind of like our best selves or our higher selves
+
+0:26:43.330,0:26:46.750
+It's you know, it's what we're clicking on in this kind of highly
+
+0:26:47.630,0:26:49.130
+addictive
+
+0:26:49.130,0:26:51.130
+environment that's often appealing to
+
+0:26:51.650,0:26:59.589
+Some of our kind of lower instincts saying up to effect. She uses the analogy of a cafeteria. That's kind of shoving salty sugary
+
+0:27:00.230,0:27:05.140
+Fatty foods in our faces and then learning that hey people really like salty sugary fatty foods
+
+0:27:05.140,0:27:10.660
+Which I think most of us do in a kind of very primal way, but we often you know
+
+0:27:10.660,0:27:11.920
+kind of our higher self is like oh
+
+0:27:11.920,0:27:16.389
+I don't want to be eating junk food all the time and online we often kind of don't have a
+
+0:27:17.720,0:27:20.140
+great mechanisms to say, you know like oh I
+
+0:27:20.900,0:27:27.879
+Really want to read like more long-form articles that took months to research and are gonna take a long time to digest
+
+0:27:28.760,0:27:32.770
+While we may want to do that our online environments or not. I'm not always conducive to it
+
+0:27:34.190,0:27:39.850
+Yes ceramic their comment about the false sense of security argument, which is very relevant
+
+0:27:41.240,0:27:46.449
+Hoff's, did you have anything to say about its false sense of security?
+
+0:27:49.280,0:27:51.280
+Can you say more
+
+0:27:55.520,0:27:57.200
+There's a
+
+0:27:57.200,0:27:59.890
+Common feedback at the moment that people
+
+0:28:00.650,0:28:03.999
+Don't wear masks because they're my little sense of security
+
+0:28:05.870,0:28:08.229
+That kind of makes sense to you
+
+0:28:11.510,0:28:13.749
+I don't think that's a good argument at all
+
+0:28:15.410,0:28:17.410
+In general
+
+0:28:17.450,0:28:21.100
+There's so many other people including Jeremy have pointed this out. There's so many
+
+0:28:21.830,0:28:27.040
+actions we take to make our lives safer whether that's wearing seatbelts or wearing helmets when biking and
+
+0:28:27.890,0:28:31.030
+Practicing safe sex like all sorts of things where we really want to
+
+0:28:32.000,0:28:37.540
+Maximize our safety and so I think is a net effect. You had a great thread on this today of
+
+0:28:39.050,0:28:43.809
+It's not that there can never be any sort of impact in which people have a false sense of security
+
+0:28:44.240,0:28:50.319
+But it is something that you would really want to be gathering data on and build a strong case around and not just assume
+
+0:28:50.320,0:28:51.820
+It's gonna happen
+
+0:28:51.820,0:28:53.619
+and that in
+
+0:28:53.619,0:28:57.179
+Most cases people can think of even if that is a small second-order?
+
+0:28:57.339,0:29:04.469
+Effect the effect of doing something that increases safety tends to have a much larger impact on actually increasing safety
+
+0:29:06.789,0:29:08.789
+You have anything to add to that or
+
+0:29:13.980,0:29:15.320
+And yes
+
+0:29:15.320,0:29:22.370
+I mentioned before a lot of our incentives are focused on short term metrics long term things are much harder to measure
+
+0:29:22.950,0:29:25.970
+and often involve kind of complex relationships and
+
+0:29:27.060,0:29:32.929
+then the the fundamental business model of most of the tech companies is around manipulating people's behavior and
+
+0:29:33.240,0:29:36.919
+Monopolizing their time and these things I don't think an advertising is inherently bad
+
+0:29:37.530,0:29:41.149
+But they I think it can be negative when when taken to an extreme
+
+0:29:43.530,0:29:50.990
+There's a great essay by James grimmelman the platform is the message and he points out these platforms are structurally at war with themselves
+
+0:29:54.750,0:30:01.040
+The same characteristics that make outrageous and offensive content unacceptable are what make it go viral in the first place
+
+0:30:01.040,0:30:04.279
+and so there's this kind of real tension here in which
+
+0:30:05.670,0:30:08.480
+Often things. Yeah, that kind of can make content
+
+0:30:09.060,0:30:12.139
+really offensive or unacceptable to us are also
+
+0:30:12.690,0:30:15.440
+what are kind of fuelling their popularity and
+
+0:30:16.530,0:30:20.120
+Being promoted in many cases. I mean this is it
+
+0:30:20.120,0:30:24.919
+this is an interesting essay because he he just this like really in-depth dive on the
+
+0:30:25.530,0:30:30.560
+Tide pod challenge which was this meme around to eating Tide Pods, which are poisonous
+
+0:30:30.560,0:30:34.639
+Do not eat them and he really analyzes it though
+
+0:30:35.370,0:30:38.839
+it's a great look at meme culture, which is very common and how
+
+0:30:39.810,0:30:40.730
+kind of argues
+
+0:30:40.730,0:30:48.199
+there's probably no example of someone talking about the tide pot challenge that isn't partially ironic which is common in memes that even
+
+0:30:48.360,0:30:52.549
+Kind of whatever you're saying. They're kind of layers of irony and different groups are interpreting them
+
+0:30:53.220,0:30:57.319
+Differently and that even when you try to counteract them, you're still promoting them
+
+0:30:57.320,0:31:02.749
+So with the tide pot challenge a lot of like celebrities we're telling people don't eat Tide Pods
+
+0:31:03.000,0:31:09.200
+But that was also then kind of perpetuating the the popularity of this meme. So it's this is an essay
+
+0:31:09.200,0:31:11.200
+I would recommend I think it's pretty insightful
+
+0:31:13.680,0:31:17.840
+And so this is a we'll get to disinformation shortly
+
+0:31:17.970,0:31:19.890
+But the the major tech platforms
+
+0:31:19.890,0:31:26.120
+Often incentivize and promote disinformation and this is unintentional but it's it is somewhat built into their design and architecture
+
+0:31:26.640,0:31:30.150
+Their recommendation systems and ultimately their business models
+
+0:31:33.490,0:31:39.420
+And then on the on the topic of metrics I'm I just wonder bring up so there's this idea of
+
+0:31:40.270,0:31:46.020
+blitzscaling and the premise is that if a company grows big enough and fast enough profits will eventually follow
+
+0:31:47.290,0:31:54.810
+Um, it probably aura ties the speed over efficiency and risks potentially disastrous defeat and Tim O'Reilly wrote a really great article
+
+0:31:55.090,0:32:00.449
+Last year talking about many of the problems with this approach, which I would say is incredibly widespread
+
+0:32:00.700,0:32:05.220
+And is I would say the fund kind of fundamental model underlying a lot of venture capital
+
+0:32:06.520,0:32:11.459
+And in it though investors kind of end up anointing winners as opposed to market forces
+
+0:32:11.460,0:32:15.600
+It tends to lend itself towards creating monopolies and duopoly x'
+
+0:32:16.570,0:32:18.490
+it can
+
+0:32:18.490,0:32:24.510
+it's bad for founders and people end up kind of spreading themselves too thin so there are a number a number of
+
+0:32:24.880,0:32:26.860
+significant downsides to this
+
+0:32:26.860,0:32:30.180
+Why am I bringing this up in an ethics lesson?
+
+0:32:30.790,0:32:32.710
+When we were talking about metrics
+
+0:32:32.710,0:32:37.290
+But hockey hockey stick growth requires automation and a reliance on metrics
+
+0:32:37.900,0:32:42.540
+Also prioritizing speed above all else doesn't leave time to reflect on ethics
+
+0:32:42.540,0:32:47.129
+Um, and that is something that's hard that I think it you do often have to kind of pause to to think about ethics
+
+0:32:47.980,0:32:49.900
+and that
+
+0:32:49.900,0:32:52.170
+Following this model when you do have a problem
+
+0:32:52.270,0:32:57.599
+it's often going to show up on a huge scale if you've if you've scaled very quickly, so I think this isn't thing to
+
+0:32:58.300,0:33:00.300
+At least at least be aware of
+
+0:33:05.320,0:33:07.320
+So one person asks about
+
+0:33:09.760,0:33:15.510
+Is there a dichotomy between AI ethics which seems like a very first world problem and
+
+0:33:17.050,0:33:22.440
+Wars poverty environmental exploitation has been a problem I guess and
+
+0:33:23.320,0:33:29.129
+There's an answer here. Which something else. Maybe you can comment on whether you agree or I have anything to add which is that
+
+0:33:30.730,0:33:36.420
+AI X they're saying is very important also for other parts of the world particularly in areas with high cellphone usage
+
+0:33:37.030,0:33:38.890
+example many countries in Africa
+
+0:33:38.890,0:33:44.530
+Of high cell penetration people get their news from Facebook. And what's up in YouTube and though it's useful
+
+0:33:44.530,0:33:47.799
+It's been the source of many problems. Did you have any comments on?
+
+0:33:48.410,0:33:52.420
+Yes, I think the first question so AIX as I noted earlier
+
+0:33:53.870,0:33:58.479
+And I'm using the phrase data ethics here, but it's this very broad and it refers to a lot of things
+
+0:33:58.480,0:34:02.140
+I think if people are talking about the you know
+
+0:34:03.080,0:34:07.540
+In the future can computers achieve sentience and what are the ethics around that?
+
+0:34:08.389,0:34:10.599
+And that is not my focus at all
+
+0:34:11.119,0:34:16.539
+I'm very much focused on and this is our mission with the Center for Applied data ethics at the University of San Francisco
+
+0:34:16.609,0:34:20.679
+Is kind of how are people being harmed now? What are the most immediate harms?
+
+0:34:21.260,0:34:23.830
+and so in that sense, I don't think that
+
+0:34:24.800,0:34:26.800
+data, ethics has to be a
+
+0:34:27.200,0:34:30.340
+First-world or kind of futuristic issue. It's what's happening now
+
+0:34:30.950,0:34:36.220
+and yeah, and as the person said in a few examples, well one example, I'll get to later is definitely
+
+0:34:36.770,0:34:39.969
+the the genocide in Myanmar in which the
+
+0:34:40.700,0:34:43.929
+Muslim minority the ROC inga or
+
+0:34:44.840,0:34:46.730
+experiencing genocide
+
+0:34:46.730,0:34:48.590
+the UN has
+
+0:34:48.590,0:34:52.749
+ruled that Facebook played a determining role in that which is really
+
+0:34:53.929,0:34:57.459
+intense and terrible and so I think that's an example of
+
+0:34:58.010,0:35:03.310
+Technology. Yeah leading to very real harm now. They're also yeah whatsapp, which is owned by
+
+0:35:03.980,0:35:06.280
+owned by Facebook there have been issues with
+
+0:35:06.830,0:35:11.649
+People spreading disinformation and rumors, and it's led to several lynching
+
+0:35:12.260,0:35:16.570
+dozens of lynchings in India of people kind of spreading these false rumors of oh
+
+0:35:16.570,0:35:23.199
+There's a kidnapper coming around and in these kind of small remote villages and then a visitor or stranger shows up and gets killed
+
+0:35:24.890,0:35:30.850
+Whatsapp also played a very important role or bad role in the election of Wilson Aero and Brazil
+
+0:35:31.609,0:35:33.909
+election of to where today and the Philippines so
+
+0:35:34.550,0:35:35.960
+I think
+
+0:35:35.960,0:35:38.109
+technology is having a kind of very
+
+0:35:39.700,0:35:44.189
+Immediate impact on on people and that those are the types of ethical questions
+
+0:35:44.190,0:35:47.579
+I'm really interested in and that I hope I hope you are interested in as well
+
+0:35:49.000,0:35:51.150
+Do you have anything else to say about that or?
+
+0:35:53.080,0:35:56.610
+And I will I will talk about disinformation I realize those were kind of some disinformation
+
+0:35:57.340,0:36:01.710
+Focus and I'm gonna talk about bias first. I think it's biased than just information. Yes
+
+0:36:03.100,0:36:08.610
+Question when we talk about ethics how much of this is intentional unethical behavior?
+
+0:36:08.610,0:36:15.450
+I see a lot of the examples as ma graffiti competent behavior or bad modeling where the product her models rushed without sufficient
+
+0:36:16.210,0:36:22.859
+Nesting thought around bias so forth but not necessarily Maryland and yeah. No, I agree with that. I think that most of this is
+
+0:36:23.560,0:36:27.180
+unintentional I do think there's a Genoa well
+
+0:36:27.970,0:36:30.900
+We'll get into this some cases. I think that I
+
+0:36:31.870,0:36:38.489
+think in many cases the profit incentives are misaligned and I do think that when people are earning a lot of money it is very
+
+0:36:38.490,0:36:39.850
+hard to
+
+0:36:39.850,0:36:42.180
+consider actions that would reduce their profits
+
+0:36:42.790,0:36:46.560
+Even if they would prevent harm and increase kind of ethics
+
+0:36:47.200,0:36:50.369
+and so I think that you know, there's at some point where
+
+0:36:51.910,0:36:55.469
+Valuing profit over how people are being harmed is
+
+0:36:57.070,0:37:02.219
+You know, when does when does that become intentional is, you know a question to debate but I you know
+
+0:37:02.220,0:37:06.209
+I don't I don't think people are setting out to say like I want to cause a genocide or I want to help
+
+0:37:07.180,0:37:09.180
+authoritarian leader get elected and
+
+0:37:10.600,0:37:15.600
+Most people are not are not starting with that but I think sometimes it's a carelessness and a thoughtlessness
+
+0:37:15.910,0:37:18.420
+But that I I do think we are responsible for that
+
+0:37:19.000,0:37:23.100
+And we're responsible to kind of be more careful and more thoughtful and how we approach things
+
+0:37:26.200,0:37:29.849
+Alright so bias so biased I think is a an issue
+
+0:37:29.850,0:37:31.620
+That's probably gotten a lot of attention
+
+0:37:31.620,0:37:37.380
+Which is great and I want to get a little bit more in-depth because sometimes discussions on bias stay a bit superficial
+
+0:37:38.260,0:37:41.520
+There was a great paper by Hirini Suresh and John Guttag
+
+0:37:42.220,0:37:48.810
+Last year that looked at kind of came with this taxonomy of different types of bias and how they had
+
+0:37:49.000,0:37:50.820
+kind of different sources
+
+0:37:50.820,0:37:51.790
+the
+
+0:37:51.790,0:37:53.790
+machine learning kind of pipeline
+
+0:37:54.580,0:38:01.799
+And it was really helpful because you know different sources have different causes and they also require different different approaches for addressing then
+
+0:38:03.100,0:38:08.789
+The Hirini wrote a blog post version of the paper as well, which I love when researchers do that
+
+0:38:08.790,0:38:11.729
+I hope more of you if you're writing an academic paper also write the blogpost
+
+0:38:12.010,0:38:14.940
+Version and I'm just going to go through a few of these types
+
+0:38:16.600,0:38:19.110
+So one is representation bias
+
+0:38:19.450,0:38:24.120
+And so I would imagine many of you have heard of joy Balan wienies work
+
+0:38:24.490,0:38:29.790
+Which is rightly received a lot of publicity in gender shades. She internet gabru
+
+0:38:30.700,0:38:37.410
+investigated commercial computer vision products from Microsoft IBM and face plus plus and then joy Balan weenie and Deborah
+
+0:38:37.410,0:38:44.129
+She did a follow-up study that looked at Amazon and Karos and several other companies and the typical results
+
+0:38:44.130,0:38:51.599
+they kind of found basically everywhere was that these products performed significantly significantly worse on dark skinned women so they were kind of doing
+
+0:38:52.240,0:38:53.980
+worse on people with darker skin
+
+0:38:53.980,0:39:00.030
+Compared to lighter skinned worse on women than on men and then the kind of intersection of that dark skinned women had these very high
+
+0:39:00.030,0:39:03.719
+Error rates and so one example is IBM
+
+0:39:04.150,0:39:08.489
+their product was ninety-nine point seven percent accurate on light skinned men and
+
+0:39:08.920,0:39:15.719
+Only sixty-five percent accurate on dark skinned woman. And again, this is a commercial computer vision product that was released
+
+0:39:16.690,0:39:18.690
+question
+
+0:39:19.240,0:39:21.600
+It's a question from the Tremmel study group
+
+0:39:23.170,0:39:25.170
+Volkswagen example
+
+0:39:25.330,0:39:29.489
+In many cases its management that drives and rewards unethical behavior
+
+0:39:29.560,0:39:37.199
+What can an individual engineer do in a case like this especially in a place like Silicon Valley where people move companies so often?
+
+0:39:38.020,0:39:41.009
+Yeah, so I think I think that's a great point
+
+0:39:41.010,0:39:45.719
+Yeah, and that is an example where I would have I would have much rather seen people that were higher ranking
+
+0:39:46.330,0:39:52.140
+Doing jail time about this because I think that they were they were driving that and I think that yeah
+
+0:39:52.140,0:39:54.539
+it's great to remember that I
+
+0:39:55.090,0:39:57.090
+know many people in the world
+
+0:39:59.740,0:40:04.110
+Don't have this option, but I think for many of us working in tech particularly in Silicon Valley
+
+0:40:04.670,0:40:08.750
+To have a lot of options and often more options than we realize like I talked to people
+
+0:40:09.329,0:40:11.329
+frequently that feel trapped in their jobs
+
+0:40:11.670,0:40:13.670
+even though
+
+0:40:14.040,0:40:14.630
+You know
+
+0:40:14.630,0:40:17.960
+They're a software engineer in Silicon Valley and and so many companies are hiring
+
+0:40:18.059,0:40:20.899
+And so I think it is important to use that leverage
+
+0:40:21.000,0:40:28.609
+I think a lot of the kind of employee organizing movements are very promising and that can be useful but really trying to
+
+0:40:29.730,0:40:36.169
+kind of vet the the ethics of the company you're joining and also being willing to walk away if you if
+
+0:40:36.930,0:40:38.930
+If you're able to do so
+
+0:40:40.470,0:40:42.470
+That's a great great question
+
+0:40:43.859,0:40:47.298
+So what this example of representation bias here the
+
+0:40:47.849,0:40:50.959
+Kind of way to address this is to build a more representative data set
+
+0:40:51.569,0:40:56.479
+It's very important to keep consent in mind of the the people if you're using pictures of people
+
+0:40:56.819,0:41:01.129
+But joy Valentinian Tim net gabru did this as part of as part of gender shades?
+
+0:41:03.059,0:41:09.259
+However, this is a the fact that this was a problem not just for one company, but basically kind of every company they
+
+0:41:10.829,0:41:12.359
+Looked at
+
+0:41:12.359,0:41:19.399
+Was due to this underlying problem, which is that in machine learning bench benchmark data sets were on a lot of research
+
+0:41:20.490,0:41:24.229
+However, kind of several years ago all the kind of popular
+
+0:41:25.380,0:41:30.470
+Facial data sets were primarily of light skinned men. For instance. IG ba a
+
+0:41:31.380,0:41:35.930
+Kind of popular face dataset several years ago only 4% of the images were of dark-skinned women
+
+0:41:36.750,0:41:38.750
+Yes
+
+0:41:41.160,0:41:48.710
+Question I've been worried about covert 19 contact tracing and the erosion of privacy location tracking private surveillance
+
+0:41:48.809,0:41:51.169
+Companies, etc. What can we do to protect?
+
+0:41:51.690,0:41:56.179
+Digital rights post covert. Can we look to any examples in history of what to expect?
+
+0:41:57.270,0:42:03.589
+That is and that is a huge question and something I have been thinking about as well. I am I'm gonna
+
+0:42:05.099,0:42:10.548
+Put that off till later to talk about and that is something where in the course I teach I have an entire
+
+0:42:10.980,0:42:16.669
+Unit on privacy and surveillance, which I do not in tonight's lecture, but I can share some materials although I am already
+
+0:42:17.630,0:42:22.309
+Really even just like rethinking how I'm gonna teach privacy and surveillance in the age of covet 19
+
+0:42:23.130,0:42:25.970
+Compared to two months ago when I taught it the first time
+
+0:42:26.789,0:42:32.569
+but that is something I think about a lot and I will talk about later if we have time or
+
+0:42:32.970,0:42:37.849
+Or on the forums. If we if we don't that's a great question a very important question
+
+0:42:40.079,0:42:44.359
+On the topic and I will say and I have not had the time to look into them yet
+
+0:42:44.359,0:42:48.048
+I do know that there are groups that are working on what are kind of more privacy protecting
+
+0:42:49.589,0:42:55.159
+Approaches for for tracking and they're also groups putting out like if we are going to use some sort of
+
+0:42:55.829,0:42:58.969
+Tracking what are the safeguards that need to be in place to do it responsibly
+
+0:42:59.730,0:43:01.730
+Yes, I've been looking at that too
+
+0:43:02.220,0:43:07.399
+it does seem like this is a solvable problem with with technology not all of these problems are but
+
+0:43:07.829,0:43:11.839
+You can certainly store tracking history on somebody's cell phone
+
+0:43:12.930,0:43:16.609
+And then you could have something where you say
+
+0:43:18.180,0:43:20.690
+When you've been infected and at that point
+
+0:43:21.089,0:43:27.979
+You could tell people that they've been infected by sharing the location and obviously preserving away. I
+
+0:43:28.769,0:43:31.369
+Think some people are trying to work on that. I'm not sure. It's
+
+0:43:32.279,0:43:36.018
+Actually, technically a problem. So I think there's sometimes there are ways to
+
+0:43:36.990,0:43:38.670
+provide the minimum
+
+0:43:38.670,0:43:40.670
+and of level you
+
+0:43:41.700,0:43:45.409
+Know kind of application with it with whilst keeping privacy
+
+0:43:46.319,0:43:52.038
+yeah, and then II think it's very important to also have things of you know, clear like
+
+0:43:52.680,0:43:54.170
+Expiration date like we you know
+
+0:43:54.170,0:43:55.230
+like looking back at
+
+0:43:55.230,0:43:57.230
+911 in the United States that kind of a
+
+0:43:57.390,0:44:01.400
+assured in all these laws that were now kind of stuck with that have really eroded privacy of
+
+0:44:02.789,0:44:07.278
+Anything we do around Coppa 19 being very clear. We are just doing this for Coppa 19 and then
+
+0:44:08.069,0:44:11.149
+There's a time limit and expires and it's kind of for this clear purpose
+
+0:44:12.660,0:44:16.940
+And they're also issues though of you know, I mentioned earlier about data containing errors, you know
+
+0:44:16.940,0:44:20.089
+This has already been an issue and some of other countries that we're doing
+
+0:44:22.529,0:44:23.970
+Kind of more
+
+0:44:23.970,0:44:28.549
+surveillance focused approaches of you know, what about like when it's wrong and people are getting kind of
+
+0:44:29.190,0:44:33.649
+Quarantined and they don't even know why and for no reason and so to be mindful of those
+
+0:44:33.840,0:44:36.439
+But yeah, well, we'll talk more about this kind of later on
+
+0:44:37.440,0:44:38.610
+back to
+
+0:44:38.610,0:44:40.610
+back to bias
+
+0:44:41.880,0:44:43.969
+Yeah, we had kind of the the benchmarks
+
+0:44:44.310,0:44:49.939
+so in the benchmark that's you know widely used has bias then that is really kind of a
+
+0:44:51.000,0:44:55.010
+Replicated at scale and we're seeing this with image net as well, which is you know
+
+0:44:55.010,0:44:58.399
+Probably the most widely studied computer vision data set out there
+
+0:44:59.250,0:45:05.149
+Two-thirds of the image net images are from the West. So this pie chart shows that the
+
+0:45:06.540,0:45:09.560
+45% of the images in image net are from the United States
+
+0:45:10.500,0:45:15.530
+7% from Great Britain 6% from Italy 3% from Canada 3% from Australia
+
+0:45:16.200,0:45:19.460
+You know and we're covering a lot of a lot of this pie without having
+
+0:45:20.130,0:45:22.130
+having gotten to
+
+0:45:22.320,0:45:26.209
+outside the west and so then this has shown up in concrete ways of
+
+0:45:27.000,0:45:32.149
+Classifiers trained on image net. So one of the categories is bridegroom man getting married
+
+0:45:32.550,0:45:38.149
+There are a lot of you know cultural components to that and so they have you know much higher error rates on
+
+0:45:38.760,0:45:40.760
+on bridegroom's from
+
+0:45:41.160,0:45:43.550
+from the Middle East or from the global south
+
+0:45:44.760,0:45:49.159
+And there are there are people now kind of working to diversify these data sets
+
+0:45:49.410,0:45:51.710
+But it is quite dangerous that they can really be
+
+0:45:52.080,0:45:58.159
+Kind of widely built on its scale or have been widely built on its scale before these biases were recognized
+
+0:46:02.010,0:46:07.399
+Another key study is the compass recidivism algorithm, which is used in
+
+0:46:08.040,0:46:10.040
+Determining who?
+
+0:46:10.080,0:46:12.110
+Who has to pay bail? So in the u.s
+
+0:46:12.110,0:46:16.849
+A very large number of people are in president who have not even had a trial yet just because they're too poor to afford bail
+
+0:46:16.850,0:46:20.479
+As well as sentencing decisions and parole decisions
+
+0:46:21.390,0:46:27.229
+and ProPublica, I did a famous investigation in 2016 that I imagine many of you have heard of in which they
+
+0:46:28.080,0:46:34.880
+Found that the false positive rate for black defendants was nearly twice as high as for white defendants
+
+0:46:34.880,0:46:39.799
+so black defendants who were live from Dartmouth found that it was the
+
+0:46:40.200,0:46:45.889
+The software is no more accurate than Amazon Mechanical Turk workers. So random people on the internet
+
+0:46:45.890,0:46:51.440
+It's also the software is you know, this proprietary black box using over 130 inputs
+
+0:46:51.440,0:46:55.819
+And it's no more accurate than a linear classifier on three variables
+
+0:46:57.029,0:47:01.099
+Yet it's still in use and it's an use in many states
+
+0:47:01.589,0:47:05.659
+Wisconsin as one place where it was challenged yet. The Wisconsin Supreme Court upheld its use
+
+0:47:06.690,0:47:08.690
+if you're interested in the
+
+0:47:09.059,0:47:13.968
+kind of topic of how you define fairness because there is a lot of intricacy here and
+
+0:47:14.699,0:47:19.399
+I mean, I don't know anybody working on this who thinks that what compass is doing is his right?
+
+0:47:19.400,0:47:22.039
+But they're using this different different definition of fairness
+
+0:47:22.739,0:47:29.749
+Arvind Ron Yan has a fantastic tutorial 21 fairness definitions and their politics that I that I highly recommend
+
+0:47:32.219,0:47:33.930
+And
+
+0:47:33.930,0:47:37.909
+So, um going back to kind of this taxonomy if types of bias
+
+0:47:38.309,0:47:43.698
+This is an example of historical bias and historical bias is a fundamental structural issue
+
+0:47:43.920,0:47:49.430
+With the first step of the data generation process and it can exist even given perfect sampling and feature selection
+
+0:47:49.619,0:47:53.659
+So kind of with the the image classifier that was something where we could you know?
+
+0:47:53.660,0:47:58.759
+Go gather a more representative set of images and that would help address it that is not the case here. So
+
+0:47:59.459,0:48:01.849
+gathering kind of more data on
+
+0:48:03.059,0:48:05.389
+the US criminal justice system
+
+0:48:05.519,0:48:10.549
+It's all going to be biased because that's really kind of baked into baked into our history and our current state
+
+0:48:11.430,0:48:13.430
+And so this is I think good good to recognize
+
+0:48:16.440,0:48:18.440
+One thing that can be done to
+
+0:48:19.229,0:48:21.229
+try to at least mitigate this is
+
+0:48:21.539,0:48:28.698
+to to really talk to domain experts and by the people impacted and so a really positive example of this is a
+
+0:48:31.319,0:48:33.589
+Tutorial from the fairness accountability and transparency
+
+0:48:34.109,0:48:36.978
+Conference that Christian Lum who's the lead?
+
+0:48:37.259,0:48:44.359
+Statistician for the Human Rights data analysis group and now professor UPenn organized together with a former public defender
+
+0:48:44.849,0:48:45.989
+Elizabeth bender
+
+0:48:45.989,0:48:51.829
+Who's the staff attorney for New York's Legal Aid Society and Terence Wilkerson an innocent
+
+0:48:51.829,0:48:54.258
+man who was arrested and cannot afford bail and
+
+0:48:54.660,0:49:00.799
+Elizabeth and Terence were able to provide a lot of insight to how the criminal justice system works and practice which is often
+
+0:49:01.140,0:49:05.599
+Kind of very different from the you know more kind of clean logical
+
+0:49:06.180,0:49:09.470
+abstractions that computer scientists deal with but it's really
+
+0:49:09.930,0:49:14.659
+Important to understand those kind of intricacies of how this is going to be implemented and used in these
+
+0:49:14.660,0:49:16.849
+You know messy complicated real world systems
+
+0:49:18.269,0:49:20.269
+question
+
+0:49:21.660,0:49:26.899
+Out of the AI biases transferred from real life biases for instance
+
+0:49:26.900,0:49:31.639
+I like people being treated differently isn't everyday phenomenon and then -
+
+0:49:33.150,0:49:35.900
+That's correct, yes, and so this is often
+
+0:49:36.000,0:49:41.209
+yeah coming from from real-world biases and I'll come to this in a moment, but
+
+0:49:42.569,0:49:50.449
+Algorithmic systems can amplify those biases so they can make them even worse. But yeah, they are often being learned from from existing data. I
+
+0:49:51.510,0:49:53.510
+asked it because I guess I
+
+0:49:53.579,0:49:56.419
+often say this being raised as it's kind of a
+
+0:49:57.150,0:49:59.150
+reason not to worry about
+
+0:49:59.910,0:50:03.319
+Well, I'm gonna get to that in a moment actually
+
+0:50:04.529,0:50:07.729
+Think in two slides, so hold on to that question. I
+
+0:50:09.480,0:50:15.709
+Just wanna talk about one other type of bias first measurement bias. And so this was an interesting paper bias in deal
+
+0:50:15.710,0:50:16.039
+milena
+
+0:50:16.039,0:50:19.489
+'then and I had Obermeyer where they looked at historic
+
+0:50:19.859,0:50:25.489
+electronic health record data to try to determine what factors are most predictive of stroke and they said, you know
+
+0:50:25.490,0:50:28.789
+this could be useful like prioritizing patients at the ER and
+
+0:50:29.519,0:50:34.489
+So they found that the number one most predictive factor was prior stroke, which that makes sense
+
+0:50:35.819,0:50:37.170
+second was
+
+0:50:37.170,0:50:44.119
+Cardiovascular disease that's also that seems reasonable and then third most kind of still very predictive factor was accidental injury
+
+0:50:45.150,0:50:46.619
+followed by
+
+0:50:46.619,0:50:52.699
+Having a benign breast lump a colonoscopy or sinusitis. And so I'm not a medical doctor
+
+0:50:52.700,0:50:55.039
+But I can tell something weirds going on with
+
+0:50:56.009,0:50:58.909
+Factors three through six here. Like why would these things be?
+
+0:51:00.059,0:51:04.639
+Predictive of a stroke. Does anyone want to think about about why this might be?
+
+0:51:09.640,0:51:15.879
+I mean guesses you want to read Oh someone's yeah
+
+0:51:19.760,0:51:23.829
+Okay, the first answer was they test for it any time someone has stroke
+
+0:51:25.549,0:51:30.518
+Confirmation bias overfitting is because they happen to be in hospital already
+
+0:51:32.480,0:51:35.949
+Biased data eh I record these events
+
+0:51:38.180,0:51:41.500
+Because the data was taken before certain advances in medical science
+
+0:51:42.109,0:51:47.919
+These are these are all good guesses. Not not quite what I was looking for, but good good thinking
+
+0:51:47.920,0:51:49.920
+That's such a nice way of saying
+
+0:51:50.960,0:51:53.319
+So what that what the researchers say here is that
+
+0:51:54.109,0:51:56.109
+this was about
+
+0:51:56.269,0:52:02.319
+Their patients they're people that utilize health care a lot and people that don't and they call it kind of high utility versus low utility
+
+0:52:02.319,0:52:05.079
+Of health care and there are a lot of factors that go into this
+
+0:52:05.079,0:52:09.788
+I'm sure just who has health insurance and who can afford their co-pays there may be cultural factors
+
+0:52:10.039,0:52:14.349
+There may be racial and gender by there is racial and gender bias on how people are treated
+
+0:52:16.160,0:52:18.160
+So a lot of factors and basically
+
+0:52:18.680,0:52:20.259
+people that utilize health care a lot
+
+0:52:20.259,0:52:25.149
+they will go to a doctor when they have sinusitis and they will also go in when they're having a stroke and
+
+0:52:25.309,0:52:29.889
+people that do not utilize health care much are probably not going to go in possibly for either and
+
+0:52:30.740,0:52:31.910
+so
+
+0:52:31.910,0:52:36.970
+so what the authors write is that we haven't measured stroke which is you know region of the brain being denied a
+
+0:52:37.430,0:52:44.230
+Kind of new blood and you oxygen what we've measured is who had symptoms who went to the doctor received tests and then got this
+
+0:52:44.420,0:52:46.659
+diagnosis of stroke and you know
+
+0:52:46.660,0:52:52.119
+That seems like it might be a reasonable proxy for for who had a stroke but a proxy is you know
+
+0:52:52.119,0:52:55.869
+Never exactly what you wanted and in many cases that that gap ends up being
+
+0:52:56.390,0:53:01.029
+significant and so this is just one form that the measurement bias can take but I think it's something to really
+
+0:53:01.460,0:53:03.639
+Kind of be on the lookout for because it can be quite subtle
+
+0:53:04.069,0:53:08.258
+And so now starting to return to a point that was brought up earlier
+
+0:53:08.900,0:53:13.150
+Aren't aren't people biased. Yes. Yes, we are and so
+
+0:53:14.329,0:53:15.829
+there have been
+
+0:53:15.829,0:53:18.548
+Dozens and dozens if not hundreds of studies on this
+
+0:53:18.589,0:53:21.758
+But I'm just going to quote a few all of which are linked to in this
+
+0:53:22.020,0:53:28.290
+Sandy'll milena the New York Times article if you want to find find the studies, so this all comes from, you know, peer-reviewed research
+
+0:53:28.869,0:53:31.079
+but when doctors were shown identical files
+
+0:53:31.420,0:53:36.990
+They were much less likely to recommend a helpful cardiac procedure to black patients compared to white patients
+
+0:53:36.990,0:53:40.949
+And so that was you know, same file, but just changing the race of the patient
+
+0:53:41.650,0:53:48.360
+When bargaining for a used car black people were offered initial prices $700 higher and received fewer concessions
+
+0:53:49.390,0:53:55.290
+responding to apartment rental ads on Craigslist with a black name elicited fewer responses and with a white name an
+
+0:53:55.990,0:54:00.300
+All-white jury was 16 points more likely to convict a black defendant than a white one
+
+0:54:00.300,0:54:04.110
+But when a jury had just one black member it convicted both at the same rate
+
+0:54:04.690,0:54:10.050
+and so I share these to show that kind of no matter what type of data you're looking working on whether that is
+
+0:54:10.390,0:54:17.520
+Medical data or sales data or housing data or criminal justice data that it's very likely that there's there's bias in it
+
+0:54:17.740,0:54:18.760
+There's a question
+
+0:54:18.760,0:54:25.439
+No, it's gonna say I find that last one really interesting like this kind of idea that a single black member of the jury
+
+0:54:26.080,0:54:28.529
+Yes, it has some kind of like anchoring impact
+
+0:54:28.530,0:54:32.189
+I kind of suggests that oh, I'm sure you're going to talk about diversity later
+
+0:54:32.190,0:54:34.619
+but it's gonna keep this in mind that maybe like even
+
+0:54:34.960,0:54:41.159
+A tiny bit of diversity here just reminds people that there's a, you know, a range of different types of people and perspectives
+
+0:54:42.400,0:54:44.400
+No, that's it. That's a great point. Yeah
+
+0:54:47.890,0:54:53.190
+And so the the question that was kind of asked earlier is so why does algorithmic bias matter
+
+0:54:53.190,0:54:56.760
+like I have just shown you that humans are really biased - so
+
+0:54:57.010,0:55:02.580
+Why are why are we talking about algorithmic bias and people have brought this up kind of like what's what's the fuss about it?
+
+0:55:03.670,0:55:05.670
+and there I
+
+0:55:06.310,0:55:11.369
+Think algorithmic bias is a very significant worth talking about and I'm going to share four reasons
+
+0:55:11.890,0:55:15.119
+For that one is the machine learning can amplify bias
+
+0:55:15.220,0:55:17.820
+So it's not just encoding existing biases
+
+0:55:17.820,0:55:22.019
+But in some cases it's making them worse and there have been a few studies on this one
+
+0:55:22.020,0:55:26.070
+I like is from Maria de arteaga of CMU and
+
+0:55:27.070,0:55:33.719
+here they were they took people's I think job descriptions from LinkedIn and what they found is that
+
+0:55:34.270,0:55:37.780
+Imbalances ended up being pounded and so in the group of surgeons
+
+0:55:38.690,0:55:46.510
+Only 14% were women however in the true positives so they were trying to predict the the job title from the summary
+
+0:55:48.380,0:55:53.710
+Women were only 11% in the true positives. So this kind of imbalance has gotten worse
+
+0:55:53.710,0:55:58.510
+And basically there was kind of this asymmetry where the you know, the algorithm has learned it's safer
+
+0:55:59.330,0:56:02.590
+For for women to kind of not not guess surgeon
+
+0:56:07.040,0:56:10.360
+Another so this is one reason another reason that
+
+0:56:12.560,0:56:18.009
+Algorithmic bias is a concern is that algorithms are used very differently than human decision-makers in practice
+
+0:56:18.010,0:56:22.570
+and so people sometimes talk about them as though they are plug-and-play and are changeable of you know with
+
+0:56:22.970,0:56:27.820
+Humans this bias and the algorithm is you know, this bias. Why don't we just substitute it in?
+
+0:56:28.250,0:56:32.679
+However, your the the whole system around it ends up kind of being different and in practice
+
+0:56:33.590,0:56:39.850
+One one kind of aspect of this is people are more likely to assume algorithms are objective or error-free
+
+0:56:40.580,0:56:45.159
+Even if they're given the option of a human override and so if you give a person, you know
+
+0:56:45.160,0:56:47.649
+Even if you just say hey, I'm just giving the judge this recommendation
+
+0:56:47.650,0:56:48.850
+They don't have to follow it
+
+0:56:48.850,0:56:54.219
+If it's coming from a computer many people are gonna take that as objective in some cases
+
+0:56:54.220,0:57:00.550
+Also, there may be, you know pressure from their boss to you know, not disagree with the computer more times, you know
+
+0:57:00.550,0:57:03.129
+Nobody's gonna get fired by going with the computer recommendation
+
+0:57:05.630,0:57:11.830
+Algorithms are more likely to be implemented with no appeals process in place. And so we saw that earlier when we were talking about recourse
+
+0:57:13.850,0:57:18.459
+Algorithms are often used. It's scale. They can be replicating an identical bias at scale and
+
+0:57:19.460,0:57:26.199
+Algorithmic systems are cheap and all of these I think are interconnected. So in many cases, I think that
+
+0:57:27.200,0:57:31.659
+algorithmic systems are being implemented not because they produce better outcomes for everyone but has
+
+0:57:32.090,0:57:34.239
+They're kind of a cheaper way to do things at scale
+
+0:57:34.250,0:57:41.350
+You know offering a recourse process is more expensive being on the lookout for errors is more expensive. So this is kind of cost-cutting
+
+0:57:41.960,0:57:46.689
+Measures and Cathy O'Neil talks about many of these themes in her book weapons of mass destruction
+
+0:57:47.420,0:57:53.290
+Kind of under the idea that the the privileged a process by people the pourer process by algorithms. There's a question
+
+0:57:53.809,0:57:55.240
+Your questions. Hmm
+
+0:57:55.240,0:57:58.689
+This seems like an intensely deep topic aiding specialized
+
+0:57:58.880,0:58:04.690
+Expertise to avoid getting it wrong if you were building an ml product. Would you approach an academic institution?
+
+0:58:05.690,0:58:08.679
+Haitian on this you see a data product
+
+0:58:09.050,0:58:13.719
+Development triad becoming IDEO quartet involving an ethics or data privacy. Yes
+
+0:58:17.270,0:58:21.369
+So I think interdisciplinary work is very important I would I
+
+0:58:22.790,0:58:30.489
+Would definitely focus on trying to find kind of domain experts on whatever your particular domain is who understand the intricacies of that domain?
+
+0:58:31.160,0:58:32.599
+is important
+
+0:58:32.599,0:58:34.490
+And I think with yeok
+
+0:58:34.490,0:58:39.219
+With the academic it depends you do want to make sure you get someone who is kind of applied enough to
+
+0:58:39.710,0:58:44.020
+Kind of understand how how things are happening in an industry
+
+0:58:44.020,0:58:49.509
+But yeah, I think involving more people and people from more fields is is a good a good approach on the whole
+
+0:58:51.079,0:58:58.359
+Someone invents and publishes a better ml technique like attention or transformers and then next to graduate student demonstrates using it to improve
+
+0:58:58.460,0:59:01.659
+Facial recognition by 5% and then a small start-up publish
+
+0:59:01.660,0:59:08.049
+There's an app that does better facial recognition and then a government uses the app to study downtown walking patterns and endangered species and after
+
+0:59:08.049,0:59:15.729
+These successes for court-ordered monitoring and then a repressive government then takes that method to identify in this ethnicity and then you get a genocide
+
+0:59:16.160,0:59:20.740
+No one's made a huge ethical error at any incremental step yet. The result is horrific
+
+0:59:20.780,0:59:27.129
+I have no doubt that Amazon will soon serve up a personally customized price for each item that maximizes their profits
+
+0:59:27.619,0:59:34.959
+How can such ethical creep be addressed where the effect is remote for many small causes?
+
+0:59:36.440,0:59:42.940
+And it's all yeah, so that that's a great summary of how yeah, these things can happen somewhat incrementally
+
+0:59:42.940,0:59:45.010
+I'll talk about some tools to implement
+
+0:59:45.740,0:59:50.679
+It kind of towards the end of this lesson that hopefully can help us so some of it is
+
+0:59:50.680,0:59:54.639
+I think we do need to get better at kind of trying to think a few more steps ahead. Then we have been
+
+0:59:56.150,0:59:59.740
+You know in particular we've seen examples of people, you know
+
+0:59:59.740,1:00:05.209
+There was the study of how do I identify protesters in a crowd even when they had scarves or sunglasses their hats on?
+
+1:00:05.550,1:00:08.119
+You know and when the the researchers on that were questioned
+
+1:00:08.790,1:00:12.050
+They were like, oh it never even occurred to us that bad guys would use this, you know
+
+1:00:12.050,1:00:14.569
+We just thought it would be for finding bad people
+
+1:00:15.240,1:00:20.510
+And so I do think kind of everyone should be building their
+
+1:00:21.599,1:00:27.529
+Ability to think a few more steps ahead and part of this is like it's great to do this in teams. Preferably in diverse teams
+
+1:00:28.500,1:00:34.849
+Can help with that that process I mean on this question of computer vision there has been you know, just in the last few months
+
+1:00:35.819,1:00:37.819
+Is it Joe Redman?
+
+1:00:38.069,1:00:43.699
+creator of Yolo who has said that he's no longer working on computer vision just because he thinks the the
+
+1:00:44.550,1:00:47.839
+Misuse is so far outweigh the the positives
+
+1:00:48.810,1:00:51.169
+Intimidate gabru said she's she's considering that as well
+
+1:00:52.380,1:00:55.190
+So I think there are there are times where you have to consider
+
+1:00:57.150,1:00:59.150
+And then I think also really
+
+1:00:59.430,1:01:05.060
+Actively thinking about how to what safeguards do we need to put in place to kind of address the the misuses that are happening
+
+1:01:06.000,1:01:10.219
+Yes, I just wanted to say somebody really liked the Kathy O'Neil quote
+
+1:01:10.859,1:01:18.289
+Privileged are processed by people the poor processed by algorithms thing. They're looking forward to learning more reading more from Kathy O'Neal's head of
+
+1:01:19.530,1:01:26.749
+Yes. Yeah and in Kathy Anya also writes in the in Kathy O'Neill's a fellow fellow math PhD and
+
+1:01:28.140,1:01:30.530
+But she also has written a number of good articles
+
+1:01:31.410,1:01:37.639
+And it the book kind of goes through a number of those case studies of how algorithms are being used in different places
+
+1:01:41.940,1:01:44.210
+So kind of in in summary of
+
+1:01:45.480,1:01:49.040
+Humans are biased why do why are we making a fuss about algorithmic bias?
+
+1:01:49.589,1:01:53.839
+So one is we saw earlier machine learning can create feedback loops. So it's you know, it's not just
+
+1:01:54.839,1:02:00.289
+Kind of observing what's happening in the world? But it's also determining outcomes and it's kind of determining what future data is
+
+1:02:00.900,1:02:02.900
+Machine learning can amplify bias
+
+1:02:03.599,1:02:09.679
+Algorithms and humans are used very differently in practice and it'll also say technology is power and with that comes responsibility
+
+1:02:09.990,1:02:14.899
+and I think for all of us to have access to deep learning we're still in a kind of very
+
+1:02:16.090,1:02:20.879
+Fortunate and small percentage of the world that is able to use this technology right now
+
+1:02:20.880,1:02:25.410
+And I hope I hope we will all use it responsibly and really take our power
+
+1:02:26.080,1:02:27.670
+seriously
+
+1:02:27.670,1:02:31.710
+and I just I just noticed the time and I think we're about to start a
+
+1:02:33.100,1:02:35.100
+next section on on
+
+1:02:35.590,1:02:37.590
+analyzing or
+
+1:02:37.600,1:02:41.579
+Kind of steps steps we can take so this would be a good a good place to take a break. So
+
+1:02:42.280,1:02:43.960
+Let's meet back in
+
+1:02:43.960,1:02:45.790
+seven minutes at
+
+1:02:45.790,1:02:47.790
+7:45
+
+1:02:48.910,1:02:53.940
+All right, let's start back up and actually I was at a slightly different place than I thought
+
+1:02:55.840,1:02:57.430
+But just a few
+
+1:02:57.430,1:03:03.780
+Questions that that you can ask about projects you're working on and I hope you will ask about projects you're working on
+
+1:03:04.990,1:03:08.159
+The first is should we should we even be doing this?
+
+1:03:08.950,1:03:12.659
+And considering that maybe there's some work that we shouldn't do
+
+1:03:13.540,1:03:17.129
+There's a paper when the implication is not to design technology
+
+1:03:17.980,1:03:21.780
+As engineers we often tend to respond to problems with you know
+
+1:03:21.780,1:03:27.629
+What can I make or build to address this but sometimes the answer is to not make or build anything?
+
+1:03:29.650,1:03:35.730
+One example of research that I think has a huge amount of downside and really no upside I see was
+
+1:03:36.340,1:03:41.279
+Kind of to identify the ethnicity particularly for people of ethnic minorities
+
+1:03:41.280,1:03:47.820
+And so there was work done identifying the Chinese we Gers which is the Muslim minority in western China
+
+1:03:47.820,1:03:51.629
+Which has since you know over a million people have been placed in internment camps
+
+1:03:52.420,1:03:56.520
+And I think this is a very very harmful harmful line of research. I
+
+1:03:58.270,1:04:00.270
+Think that the
+
+1:04:00.490,1:04:03.179
+You know there have been at least two attempts of building
+
+1:04:04.180,1:04:06.180
+building a classifier to try to identify
+
+1:04:06.640,1:04:08.640
+someone's sexuality which is
+
+1:04:09.730,1:04:11.020
+it's
+
+1:04:11.020,1:04:14.009
+Probably just picking up on kind of stylistic differences
+
+1:04:14.010,1:04:19.379
+But this is something that a call could also be quite quite dangerous as in many countries. It's it's illegal
+
+1:04:19.960,1:04:21.960
+To be gay. Yes
+
+1:04:22.150,1:04:25.230
+So this is a question for me, which I don't know the answer to yeah
+
+1:04:26.950,1:04:31.359
+As that title says a standard scientist says he built the gate art
+
+1:04:31.549,1:04:36.099
+Using the lamest AI possible to prove the point and my understanding is that pointless to say
+
+1:04:36.950,1:04:40.720
+you know, I guess it's something like hey, you could use fast AI lesson 1
+
+1:04:42.140,1:04:45.309
+For an arrow too. You can build this thing. Anybody can do it
+
+1:04:46.220,1:04:50.290
+you know, how do you feel about this idea that there's a role to
+
+1:04:51.230,1:04:55.809
+Demonstrate what's readily available with the technology we have? Yeah, that's the thing that I think
+
+1:04:58.490,1:05:06.369
+So I appreciate that and I'll talk about this a little bit later open ai with GPT 2 I think was trying to raise a
+
+1:05:07.099,1:05:08.869
+raise a debate around
+
+1:05:08.869,1:05:12.338
+Around dual use and what is responsible release of of?
+
+1:05:12.890,1:05:13.970
+dual use
+
+1:05:13.970,1:05:17.439
+Technology and what's a kind of responsible way to raise?
+
+1:05:19.309,1:05:27.219
+Raise awareness of what is possible in the in the cases of researchers that have done this on the sexuality question?
+
+1:05:27.859,1:05:28.480
+to me
+
+1:05:28.480,1:05:36.429
+it hasn't seemed like they've put adequate thought into how they're conducting that and who they're collaborating with to ensure that it is something that
+
+1:05:37.339,1:05:38.750
+is
+
+1:05:38.750,1:05:41.770
+Leading to kind of helping address the problem
+
+1:05:43.819,1:05:48.699
+But I think you're right that I think there is probably some place for letting people ya know
+
+1:05:48.700,1:05:52.869
+What is probably widely available now? It reminds me a bit of my pen testing
+
+1:05:53.540,1:05:55.540
+Info? Yeah, where where
+
+1:05:55.819,1:06:02.048
+It's kind of considered it. Well, there's an ethical way that you can go about pointing out that it's fairly easy to be a
+
+1:06:02.599,1:06:04.250
+system
+
+1:06:04.250,1:06:07.929
+Yes. Yeah, I would I would agree with that that there there is an ethical way
+
+1:06:07.930,1:06:09.930
+But I think that's something that we as a community
+
+1:06:11.030,1:06:13.839
+Still have more work to do and even determining what that is
+
+1:06:16.490,1:06:21.490
+Other questions to consider are what biases in the data and something I should highlight is
+
+1:06:22.099,1:06:24.099
+People often ask me. You know, how can I
+
+1:06:24.619,1:06:31.149
+Devious my data or ensure that its bias free and that's not possible all data contains bias. And the
+
+1:06:31.490,1:06:34.599
+kind of most most important thing is just to
+
+1:06:35.089,1:06:39.999
+Understand kind of how your data set was created and what its limitations are so that you're not blindsided by that
+
+1:06:40.330,1:06:44.949
+But you're never going to fully remove it and some of the I think most promising
+
+1:06:45.560,1:06:47.560
+approaches in this area are
+
+1:06:48.470,1:06:51.399
+Work like timid Abreu's data sheets for data sets
+
+1:06:51.400,1:06:56.380
+Which is kind of going through and asking kind of a bunch of questions about how your data set was created
+
+1:06:56.380,1:06:59.589
+And for what purposes and how it's being moved maintained and you know
+
+1:06:59.590,1:07:05.350
+what are the risk in that just to really kind of be aware of of the context of your data and
+
+1:07:06.830,1:07:13.899
+The code and data be audited. I think particularly in the United States. We have a lot of issues with when private companies are
+
+1:07:15.350,1:07:20.079
+Creating software that's really impacting people through the criminal justice system, or hiring
+
+1:07:20.660,1:07:21.880
+and when these things are
+
+1:07:21.880,1:07:25.299
+You know kind of their proprietary black boxes that are protected in court
+
+1:07:25.520,1:07:30.999
+That's this creates a lot of kind of of issues of you know, what are what are our rights around that?
+
+1:07:32.630,1:07:37.839
+Looking at error rates for different subgroups is really important and that's what so kind of so powerful about
+
+1:07:38.030,1:07:41.019
+Joy, Balam wienies work if she had just looked at
+
+1:07:41.930,1:07:46.360
+Light-skinned versus dark skin and men versus women she wouldn't have identified
+
+1:07:46.360,1:07:50.049
+Just how poorly the algorithms were doing on dark-skinned women
+
+1:07:51.800,1:07:56.890
+What is the accuracy of a simple rule based alternative and this is something I think Jeremy talked about last week
+
+1:07:56.890,1:08:01.839
+Which is just kind of good good machine learning practice to have a baseline
+
+1:08:02.360,1:08:05.739
+but particularly in cases like the compass recidivism where this
+
+1:08:06.620,1:08:07.850
+130
+
+1:08:07.850,1:08:10.959
+Variable black box is not doing much better than a linear classifier
+
+1:08:11.180,1:08:15.460
+On three variables that race is kind of a question of why are why are we using this?
+
+1:08:16.400,1:08:22.779
+And then what processes are in place to handle appeals or mistakes because there will be errors in the data
+
+1:08:22.779,1:08:27.189
+There may be bugs and the implementation and we need to have a process for recourse
+
+1:08:28.640,1:08:30.470
+Yes
+
+1:08:30.470,1:08:32.470
+Can your explicit for me know?
+
+1:08:33.440,1:08:35.440
+Nobody voted them up at all
+
+1:08:37.880,1:08:40.750
+What's the thinking behind this idea that a simpler model
+
+1:08:41.690,1:08:45.940
+Is you gotta take a simpler model or other things being the same? You should pick the simpler one?
+
+1:08:46.130,1:08:50.529
+Is that what this baselines for what and if so, what's the kind of thinking behind that?
+
+1:08:52.100,1:08:55.479
+Well with the compass recidivism algorithm
+
+1:08:57.679,1:08:59.739
+Some of this for me is linked to the
+
+1:09:00.319,1:09:06.548
+Proprietary black box nature and so you're right if maybe if we had a way to introspect and what we're our rights around appealing something
+
+1:09:06.829,1:09:11.949
+But I would say yeah, like why use the more complex thing if the the simpler one works the same
+
+1:09:14.690,1:09:20.710
+And then how diverse is the team that built it and I'll talk more about team diversity later later in this lesson
+
+1:09:23.270,1:09:25.719
+Okay, Jeremy at the start, but I'm not the teacher
+
+1:09:25.719,1:09:30.669
+So it actually there's Jeremy do you think transfer learning makes this tougher?
+
+1:09:30.920,1:09:35.859
+Auditing the data that led to the initial model. I assume they mean Jeremy, please ask Rachel
+
+1:09:36.920,1:09:38.920
+No, they were they were asking you
+
+1:09:40.880,1:09:42.880
+That's that's a good question
+
+1:09:46.279,1:09:47.650
+Again, I think it's important
+
+1:09:47.650,1:09:54.009
+I would I would say I think it's important to have information probably on both datasets what the initial data set used was and
+
+1:09:54.860,1:09:57.279
+What the the data set you use to fine-tune it?
+
+1:09:59.210,1:10:01.389
+Do you have thoughts on that what she said
+
+1:10:04.790,1:10:06.790
+And then I'll see so while
+
+1:10:07.760,1:10:12.489
+Bias and fairness as well as accountability and transparency are important. They aren't everything
+
+1:10:13.099,1:10:18.339
+and so there's this great paper a mulching proposal by aw skis at all and
+
+1:10:20.540,1:10:27.609
+Here they talk about a system for turning the elderly into high nutrient slurry, so this is something that it's clearly an ethical but they
+
+1:10:28.219,1:10:34.089
+Proposed a way to do it that is fair and accountable and transparent and meets these qualifications
+
+1:10:34.090,1:10:39.429
+and so that kind of shows that some of the limitations of this framework as well as kind of being a good a
+
+1:10:39.530,1:10:41.530
+good technique for
+
+1:10:42.050,1:10:43.400
+kind of
+
+1:10:43.400,1:10:46.089
+inspecting whatever framework you are using of
+
+1:10:46.699,1:10:51.638
+Trying to find something that's clearly unethical that code that can meet meet the standards. You've put forth
+
+1:10:53.570,1:11:00.460
+That that technique I really like it it's like a it's my favorite technique from philosophy. It's this idea that you
+
+1:11:01.070,1:11:03.250
+You say okay given this premise?
+
+1:11:04.850,1:11:08.679
+Here's what it implies and then you try and find an implied
+
+1:11:09.350,1:11:11.739
+Result which intuitively is clearly
+
+1:11:12.679,1:11:16.029
+Saying and it's a really it's it's yeah, it's the number one
+
+1:11:17.179,1:11:19.809
+philosophical thinking tall I got out of university and I
+
+1:11:20.449,1:11:22.629
+sometimes we can have a lot of fun with it like this time to
+
+1:11:23.600,1:11:25.600
+Thank you
+
+1:11:27.710,1:11:32.770
+All right, so the next kind of big case study your topic I want to discuss is disinformation
+
+1:11:34.400,1:11:37.389
+So in 2016 in
+
+1:11:38.690,1:11:43.509
+Houston a group called heart of Texas posted about
+
+1:11:44.989,1:11:47.109
+protests outside an Islamic Center
+
+1:11:47.659,1:11:51.429
+And they told people to come armed another Facebook group
+
+1:11:52.010,1:11:54.010
+posted about a counter protest
+
+1:11:54.199,1:11:57.039
+to show up supporting freedom of religion and
+
+1:11:58.280,1:12:00.400
+inclusivity and so
+
+1:12:01.070,1:12:08.320
+there were kind of a lot of people present is this more people on the the side supporting freedom of religion and
+
+1:12:08.780,1:12:11.710
+A reporter though for the Houston Chronicle noticed something odd
+
+1:12:11.710,1:12:15.759
+which he was not able to get in touch with the organizers for either side and
+
+1:12:16.070,1:12:21.369
+It came out many months later that both sides had been organized by Russian trolls
+
+1:12:21.980,1:12:24.369
+And so this is something where you had
+
+1:12:25.310,1:12:27.459
+The people protesting were you know?
+
+1:12:28.010,1:12:29.630
+genuine Americans
+
+1:12:29.630,1:12:35.440
+kind of protesting their beliefs, but they were doing it in this way that had been kind of completely framed very
+
+1:12:36.050,1:12:37.310
+disingenuously
+
+1:12:37.310,1:12:39.310
+by by Russian operatives
+
+1:12:42.080,1:12:43.219
+And
+
+1:12:43.219,1:12:46.599
+So when thinking about disinformation it is not
+
+1:12:47.480,1:12:49.480
+people often think about
+
+1:12:49.610,1:12:54.009
+So-called fake news, you know and inspecting like a single post is this, you know
+
+1:12:54.010,1:12:55.460
+Is this true or false?
+
+1:12:55.460,1:13:02.259
+But really disinformation is often about orchestrated campaigns of manipulation and that it involves
+
+1:13:03.020,1:13:07.060
+Kind of all the seeds of truth kind of the best propaganda
+
+1:13:07.550,1:13:12.369
+Always involves kernels of truth at least it also involves kind of misleading
+
+1:13:12.679,1:13:17.979
+Context and and can can involve very kind of sincere sincere people that get good swept in it
+
+1:13:21.110,1:13:28.839
+a report came out this fall and investigation from Stanford's Internet Observatory where Rene arrests
+
+1:13:28.840,1:13:30.840
+and Alex Stamos work of
+
+1:13:31.460,1:13:33.460
+Russia's kind of most recent
+
+1:13:34.100,1:13:37.659
+disinformation or most recently identified disinformation campaign
+
+1:13:38.420,1:13:41.920
+And it was operating in six different countries in Africa
+
+1:13:42.850,1:13:45.399
+It often purported to be local news sources
+
+1:13:46.190,1:13:50.589
+It was multi-platform. They were encouraging people to join their whatsapp and telegram groups
+
+1:13:51.320,1:13:56.830
+and they were hiring local people's reporters and a lot a lot of the content was not
+
+1:13:57.830,1:14:05.049
+Not necessarily disinformation. It was stuff on culture and sports and local weather. I mean there was a lot of kind of very
+
+1:14:06.110,1:14:08.110
+pro-russia coverage
+
+1:14:08.210,1:14:10.210
+But that it covered a range of topics
+
+1:14:10.280,1:14:12.080
+and so this is kind of a very
+
+1:14:12.080,1:14:18.549
+Sophisticated phase of disinformation and in many cases it was hiring hiring locals kind of as reporters
+
+1:14:19.159,1:14:21.159
+to work for these sites
+
+1:14:22.550,1:14:28.449
+And I should say well I've just given two examples of Russia Russia - certainly does not have a monopoly on disinformation there are
+
+1:14:28.969,1:14:30.380
+plenty of
+
+1:14:30.380,1:14:32.710
+Plenty of people involved and producing it
+
+1:14:34.340,1:14:36.610
+Kind of on a topical
+
+1:14:37.489,1:14:38.750
+topical
+
+1:14:38.750,1:14:41.529
+Issue, there's been a lot of disinformation around
+
+1:14:42.230,1:14:44.709
+around coronavirus in kovat 19
+
+1:14:45.500,1:14:47.500
+I
+
+1:14:47.510,1:14:54.760
+In terms of kind of a personal level if you're looking for advice on spotting disinformation or to share with loved ones about this
+
+1:14:55.190,1:14:59.500
+Mike Caulfield is a great person to follow and he's even
+
+1:14:59.929,1:15:06.009
+So he tweets ed Holden and then he has started an info Demick blog specifically about the about kovat 19
+
+1:15:06.830,1:15:09.069
+but he he talks about his approach and how
+
+1:15:09.770,1:15:12.219
+People have been trained in schools for 12 years
+
+1:15:12.219,1:15:16.539
+Here's a text read it use your critical thinking skills to figure out what you think about it
+
+1:15:16.730,1:15:22.419
+But professional fact checkers do the opposite they get to a page and they immediately get off of it and look for kind of higher
+
+1:15:22.580,1:15:25.959
+higher quality sources to see if they can find confirmation and
+
+1:15:26.929,1:15:29.259
+Caulfield also really promotes the idea of
+
+1:15:29.990,1:15:33.260
+A lot of critical thinking techniques that have been taught
+
+1:15:33.990,1:15:40.159
+Take a long time. And you know, we're not going to spend 30 minutes evaluating each tweet that we see in our Twitter stream
+
+1:15:40.160,1:15:44.749
+It's better to give people an approach that they can do in 30 seconds that you know
+
+1:15:44.750,1:15:45.620
+It's not gonna be fail proof
+
+1:15:45.620,1:15:47.330
+If you're just doing something for 30 seconds
+
+1:15:47.330,1:15:51.769
+But it's better to to check than to have something that takes 30 minutes that you're just not going to do at all
+
+1:15:52.620,1:15:55.220
+So I wanted to kind of put this out there as a resource
+
+1:15:55.680,1:16:02.180
+I mean as a whole kind of set of lessons at lessons dot check, please see see and he's a he's a professor
+
+1:16:03.810,1:16:05.810
+And I in the
+
+1:16:06.030,1:16:12.530
+Data, ethics course I'm teaching right now. I made my first lesson the first half of which is kind of specifically about
+
+1:16:13.320,1:16:20.570
+Coronavirus disinformation I've made that available on YouTube. I've already shared it. And so I'll add a link on the forums
+
+1:16:21.090,1:16:26.989
+If you want if you want a lot more detail on on disinformation than just kind of this the short bit here
+
+1:16:27.870,1:16:30.499
+But so going back to kind of like what is disinformation?
+
+1:16:31.140,1:16:38.180
+It's important to think of it as an ecosystem again, it's not just a single post or a single news story that
+
+1:16:39.090,1:16:43.880
+You know, it's misleading or has false elements in it. But it's this really this broader ecosystem
+
+1:16:44.730,1:16:46.320
+Claire Wartell
+
+1:16:46.320,1:16:48.320
+first draft news, who is a
+
+1:16:48.390,1:16:53.599
+Leading expert on this and does a lot around kind of training journalists and how journalists can report responsibly
+
+1:16:53.970,1:16:57.230
+talks about the trumpet of amplification and this is where I
+
+1:16:58.320,1:17:00.320
+rumors or
+
+1:17:00.360,1:17:05.960
+Memes or things can start on 4chan and h han and then move to closed messaging groups
+
+1:17:06.420,1:17:11.179
+Such as whatsapp telegram Facebook messenger from there to community
+
+1:17:12.540,1:17:16.850
+concern reddit or YouTube then to kind of more mainstream social media and then
+
+1:17:17.100,1:17:19.050
+picked up by the professional media and
+
+1:17:19.050,1:17:24.079
+Politicians and so this can make it very hard to address that it is this kind of multi-platform in many cases
+
+1:17:24.870,1:17:26.700
+campaigns may be
+
+1:17:26.700,1:17:31.400
+Utilizing kind of the differing roles or loopholes between between the different platforms
+
+1:17:32.160,1:17:35.990
+And I think we've certainly are seeing more and more examples where it doesn't have to go through all these steps
+
+1:17:36.150,1:17:39.259
+But can can can jump jump forward
+
+1:17:41.540,1:17:46.420
+And online discussion is very very significant because people
+
+1:17:48.440,1:17:54.159
+It helps us form our opinions and then this is tough because I think most of us think of ourselves as pretty independent minded but
+
+1:17:54.740,1:17:58.539
+discussion really does you know we evolved as kind of social beings and to be
+
+1:17:58.640,1:18:05.170
+Influenced by by people in our in group and in opposition to people in our out group and so online discussion impacts us
+
+1:18:05.420,1:18:07.420
+people discuss all sorts of things online
+
+1:18:07.790,1:18:12.160
+here's a reddit discussion about whether the US should cut defense spending and
+
+1:18:13.040,1:18:19.510
+you have comments you're wrong and the defense budget is a good example of how badly the u.s. Spends money on the military and
+
+1:18:20.360,1:18:26.079
+Someone else says yeah, but that's already happening. There's a huge increase in the military budget the Pentagon budgets already increasing
+
+1:18:26.870,1:18:30.610
+I didn't mean to stop a sound like stop paying for the military
+
+1:18:30.620,1:18:35.440
+I'm not saying that we cannot pay the bills, but I think it would make sense to cut defense spending
+
+1:18:36.710,1:18:40.029
+Does anyone want to guess what subreddit this is from?
+
+1:18:47.900,1:18:54.279
+On popular opinion news changed my view net neutrality is
+
+1:18:56.750,1:18:59.979
+Heard good guesses but they're wrong. I love the way you say though
+
+1:19:01.310,1:19:04.120
+This is all from what it is. It's from the
+
+1:19:04.760,1:19:07.599
+Sub simulator gptt oh, so these comments are all
+
+1:19:08.270,1:19:13.930
+Written by GPT too, and this is in good fun. It was clearly labeled on the subreddit
+
+1:19:15.500,1:19:21.610
+That it's coming in GP g2 is a language model from open AI that was kind of in a
+
+1:19:23.270,1:19:26.050
+Trajectory of research that many many groups were on
+
+1:19:27.800,1:19:32.259
+And so it was released I guess about a year ago and
+
+1:19:34.730,1:19:37.690
+Should I read the unicorn story Jeremy, okay
+
+1:19:37.690,1:19:43.479
+So if many of you have probably have probably seen this so here and then this this was cherry-pick
+
+1:19:43.480,1:19:45.480
+But this is still very very impressive
+
+1:19:45.740,1:19:52.539
+So human written prompt was given to the language model in a shocking finding scientists discovered a herd of unicorns
+
+1:19:52.910,1:19:56.499
+living in a remote previously unexplored Valley in the Andes Mountains
+
+1:19:57.230,1:20:04.899
+Even more surprising to the researchers was the fact that the unicorn spoke perfect English and then the next part is all
+
+1:20:05.389,1:20:11.319
+Generated by the language model. So this is a deep learning model that produced this and the the computer model
+
+1:20:12.079,1:20:18.879
+Generated dr. Jorge Perez what appeared to be a natural fountain surrounded by two peaks of rock and silver snow?
+
+1:20:19.730,1:20:22.209
+Perez and the others then ventured further into the valley
+
+1:20:22.520,1:20:28.149
+By the time we reached the top of one peak the water looked blue with some crystals on tops at Perez
+
+1:20:29.449,1:20:32.348
+Perez and his friends were astonished to see the Unicorn heard
+
+1:20:32.510,1:20:37.750
+These creatures could be seen from the air without having to move too much to see them. They were so close
+
+1:20:37.750,1:20:39.619
+They could touch their horns
+
+1:20:39.619,1:20:45.578
+While examining these bizarre creatures the scientists discovered that the creatures also spoke some fairly regular English
+
+1:20:46.310,1:20:51.939
+Perez stated we can see for example that they have a common language something like a dialect or dialectic
+
+1:20:52.219,1:20:58.089
+And so I think this is really compelling prose to have been have been generated by a computer in this form
+
+1:21:03.110,1:21:05.799
+So we've also have seen advances in
+
+1:21:06.590,1:21:09.759
+computers generating pictures as specifically gans
+
+1:21:10.639,1:21:16.959
+so Katie Jones was listed on LinkedIn as a Russia and Eurasia fellow she was connected to
+
+1:21:17.420,1:21:20.649
+several people from mainstream Washington think tanks and
+
+1:21:21.050,1:21:26.290
+The Associated Press discovered that she is not a real person. This photo was generated by a gang
+
+1:21:29.780,1:21:33.070
+And so this, I think it's kind of scary when we start thinking about how
+
+1:21:33.920,1:21:38.170
+How compelling the text that's being generated is and combining that with
+
+1:21:39.110,1:21:43.480
+Pictures these photos are all from this person does not exist dot-com
+
+1:21:44.510,1:21:46.510
+generated by Ganz
+
+1:21:46.909,1:21:49.179
+and there's a very very
+
+1:21:50.150,1:21:55.509
+Real and eminent risk that online discussion will be swamped with fake manipulative agents
+
+1:21:55.880,1:22:02.619
+To have even greater extent than it than it already has and that this this can be used to influence public opinion
+
+1:22:04.550,1:22:06.120
+So
+
+1:22:06.120,1:22:08.760
+Oh, actually I guess it well no keep going
+
+1:22:09.550,1:22:11.550
+going back in time to
+
+1:22:11.710,1:22:16.140
+2017 the FCC was considering repealing net neutrality
+
+1:22:16.140,1:22:18.930
+And so they opened up for comments to see you know
+
+1:22:18.930,1:22:26.490
+How do Americans feel about net neutrality and this is a sample of many of the comments that were opposed to net neutrality?
+
+1:22:26.490,1:22:30.780
+They wanted to repeal it and included. I'll just read a few clips
+
+1:22:31.690,1:22:36.780
+Americans as opposed to Washington bureaucrats deserve to enjoy the services they desire
+
+1:22:37.750,1:22:42.930
+Individual citizens as opposed to Washington bureaucrats should be able to select whichever services they desire
+
+1:22:43.780,1:22:48.360
+People like me as opposed to so-called experts should be free to buy whatever products they choose
+
+1:22:48.940,1:22:54.450
+And these have been helpfully color-coded so you can kind of see a pattern that this was a bit of a Mad Libs
+
+1:22:54.820,1:22:58.259
+Where you had a few choices for green for the first?
+
+1:22:58.960,1:23:01.290
+noun and then in
+
+1:23:01.930,1:23:06.269
+Orange or red? I guess it's as opposed to or rather than
+
+1:23:07.930,1:23:13.769
+Orange we've got either Washington bureaucrats so-called experts the FCC and so on and
+
+1:23:15.130,1:23:16.360
+this
+
+1:23:16.360,1:23:19.289
+this analysis was done by Jeff Cao who's now a
+
+1:23:19.840,1:23:25.649
+Computational journalist at Pro Publica doing great work and he did this analysis
+
+1:23:26.830,1:23:28.660
+discovering this
+
+1:23:28.660,1:23:30.660
+this campaign in which
+
+1:23:30.940,1:23:37.140
+These comments were designed to look unique but had been created kind of through through some mail merge style
+
+1:23:37.720,1:23:39.340
+Kind of putting together
+
+1:23:39.340,1:23:41.340
+Mad libs. Yes
+
+1:23:44.290,1:23:48.749
+So this was this was great work by Jeff he found that
+
+1:23:49.360,1:23:54.299
+So while they received the FCC received over 22 million comments
+
+1:23:55.060,1:24:00.840
+Less than 4% of them were truly unique and this is this is not all malicious activity
+
+1:24:00.840,1:24:06.090
+You know, there are many kind of ways where you get a template to contact your legislator about something
+
+1:24:06.670,1:24:12.270
+But you know in the example kind of shown previously. These were designed to look like they were unique when they weren't
+
+1:24:13.510,1:24:15.510
+and
+
+1:24:15.970,1:24:20.010
+More than 99% of the truly unique comments wanted to keep net new to allottee
+
+1:24:20.010,1:24:24.239
+However, that was not not the case if you looked at the full the full 22 million comments
+
+1:24:25.330,1:24:29.189
+However, this was this was in 2017, which may not sound that long ago
+
+1:24:29.410,1:24:34.950
+but in in the field of natural language processing we've had like an entire kind of a
+
+1:24:35.350,1:24:41.880
+Revolution since then there's just been so much progress made and this would be I think virtually impossible to catch today
+
+1:24:42.610,1:24:47.489
+Using it, you know if someone was using a sophisticated language model to to generate comments
+
+1:24:48.310,1:24:51.720
+So chess asks a question, which I'm gonna treat it as a two-part question
+
+1:24:51.720,1:24:55.679
+I think it's not necessarily what happens when there's so much AI trolling
+
+1:24:56.560,1:25:00.269
+That most of what gets straight from the web is AI generated text
+
+1:25:00.940,1:25:05.220
+And then the second part and then what happens when you use that to generate more AI generated text
+
+1:25:05.740,1:25:10.800
+Yes for the first part. Yeah, this is a real risk or not risk
+
+1:25:10.800,1:25:17.579
+But kind of challenge we're facing of real humans can get drowned out when so much text
+
+1:25:17.580,1:25:20.370
+It's gonna it's gonna be AI trolling
+
+1:25:21.370,1:25:22.630
+and
+
+1:25:22.630,1:25:26.309
+And we're already seeing and ie in the interest of time
+
+1:25:26.310,1:25:31.410
+I have I can talk about disinformation for hours and I had to cut a lot of stuff out and but
+
+1:25:32.410,1:25:38.400
+Many people have talked about how kind of the the new form of censorship is about drowning people out
+
+1:25:38.400,1:25:42.659
+and so it's not necessarily kind of forbidding someone from saying something but just totally
+
+1:25:43.240,1:25:45.659
+totally just drowning them out with the
+
+1:25:46.420,1:25:48.420
+massive quantity of
+
+1:25:49.960,1:25:57.300
+Text and information and comments and AI can really facilitate that and so I do not have a good solution to that
+
+1:25:58.420,1:26:00.420
+in terms of AI
+
+1:26:00.730,1:26:02.730
+learning from AI
+
+1:26:03.340,1:26:09.269
+Text I mean, I think you're gonna get systems that are potentially kind of less and less relevant to
+
+1:26:10.030,1:26:16.709
+humans, and may have harmful effects if they're kind of being used to create software that is
+
+1:26:17.860,1:26:20.909
+interacting with or impacting humans, so that's a
+
+1:26:22.630,1:26:26.549
+Concern I mean one of the things I find fascinating about this is
+
+1:26:28.780,1:26:30.780
+We could get to a point where
+
+1:26:32.140,1:26:36.220
+99.99% of to it's and fast AI forum posts, whatever
+
+1:26:37.340,1:26:43.360
+Auto-generated particularly on kind of more like political type places where a lot of it's pretty low content pretty basic
+
+1:26:44.810,1:26:47.259
+And the thing is like if it was actually good
+
+1:26:48.080,1:26:49.880
+You wouldn't even know
+
+1:26:49.880,1:26:50.960
+so
+
+1:26:50.960,1:26:54.759
+What if I told you that seventy five percent of the people you're talking to on the forum right now?
+
+1:26:54.760,1:26:57.640
+I actually bots can tell which ones they are
+
+1:26:58.250,1:27:00.250
+How would you prove whether I'm right or wrong?
+
+1:27:01.160,1:27:03.700
+Yeah, I know name day. I think this is a real issue on Twitter
+
+1:27:04.340,1:27:06.340
+You know particularly
+
+1:27:06.530,1:27:11.740
+People you don't know of you know wondering like is this an actual person or a bot? I think it's a
+
+1:27:12.470,1:27:14.470
+common question people people wonder about
+
+1:27:15.620,1:27:17.620
+And can be hard to tell
+
+1:27:19.580,1:27:22.870
+But I think it has significance for
+
+1:27:24.500,1:27:28.899
+Has a lot of significance for kind of how human government works, you know
+
+1:27:28.900,1:27:36.580
+I think there's something about humans being in society and having norms and rules and mechanisms that
+
+1:27:37.430,1:27:39.430
+this can really
+
+1:27:39.800,1:27:41.800
+undermine and make difficult
+
+1:27:46.790,1:27:54.220
+And so when when gp2 2 came out Jeremy Howard co-founder of fast AI was quoted in
+
+1:27:55.550,1:27:57.010
+The Verge article on it
+
+1:27:57.010,1:27:59.290
+I've been trying to warn people about this for a while
+
+1:27:59.570,1:28:04.270
+We have the technology to totally fill Twitter Email in the web up with reasonable sounding
+
+1:28:04.610,1:28:09.460
+Context appropriate prose which would drown out all of their speech and be impossible to filter
+
+1:28:13.610,1:28:15.610
+So one kind of
+
+1:28:17.060,1:28:19.060
+step towards addressing this
+
+1:28:20.120,1:28:24.009
+Is the need for digital signatures or an Etsy on e?
+
+1:28:25.160,1:28:29.589
+the head of the Allen Institute on AI wrote about this in HBR
+
+1:28:30.290,1:28:37.390
+He wrote recent developments at AI point to an age where forgery of documents pictures audio recordings videos and online
+
+1:28:37.610,1:28:44.380
+Identities will occur with unprecedented ease AI is poised to make high fidelity forgery inexpensive and automated
+
+1:28:44.660,1:28:48.999
+Leading to potentially disastrous consequences for democracy security and society
+
+1:28:49.640,1:28:54.489
+and proposes kind of digital signatures as a means for authentication and
+
+1:28:56.360,1:29:01.450
+I will say here a kind of one of the one of the additional risk of kind of
+
+1:29:02.780,1:29:05.500
+All this forgery and fakes. Is that it also?
+
+1:29:06.440,1:29:12.279
+Undermines people speaking the truth and Zainab's fxg who does a lot of research on
+
+1:29:13.460,1:29:17.919
+Protests around the world and in different social movements has said that she's often
+
+1:29:18.650,1:29:24.549
+approached by kind of whistleblowers and dissidents who in many cases will risk their lives to try to
+
+1:29:25.130,1:29:29.170
+publicize like a wrongdoing or human rights violation only to have
+
+1:29:29.989,1:29:32.799
+Kind of bad actors say oh that picture was photoshopped
+
+1:29:33.050,1:29:34.820
+that was faked and
+
+1:29:34.820,1:29:38.710
+that it's kind of now this big issue for for whistleblowers and dissidents of how
+
+1:29:38.780,1:29:41.950
+How can they verify what they are saying and that kind of that need?
+
+1:29:42.860,1:29:44.860
+need for verification
+
+1:29:46.310,1:29:50.859
+And then someone you should definitely be following on this topic is Renee - Resta
+
+1:29:52.430,1:29:56.079
+And and she wrote a great article with Mike Godwin last year
+
+1:29:56.450,1:30:04.359
+Framing that we really need to think disinformation as as a cybersecurity problem, you know, it sees kind of coordinated campaigns of manipulation
+
+1:30:04.880,1:30:07.750
+And bad actors and there's I think some
+
+1:30:08.750,1:30:11.319
+Important work happening at Stanford as well on this
+
+1:30:14.660,1:30:16.869
+All right questions on disinformation
+
+1:30:20.150,1:30:23.650
+Okay, so uh next step at the coal foundations
+
+1:30:23.810,1:30:24.590
+so now
+
+1:30:24.590,1:30:30.580
+So the fast day I approach we always like to kind of ground everything and what are the real-world case studies before we get to?
+
+1:30:30.800,1:30:36.100
+Kind of the the theory underpinning it and I'm not going to go too deep on this at all. And
+
+1:30:37.489,1:30:44.589
+So if there is a fun article, what would an Avenger do and hat tip to Casey fees? Ler for suggesting this?
+
+1:30:46.040,1:30:51.160
+And it goes through kind of three common ethical philosophies
+
+1:30:53.330,1:30:57.659
+Utilitarianism and gives the example of iron man. I'm trying to max good
+
+1:30:58.599,1:31:06.299
+Deontological ethics of Captain America being an example of this adhering to the right and then virtue ethics Thor
+
+1:31:06.369,1:31:09.839
+Living by a code of honor and so I thought that was a nice reading. Yes
+
+1:31:14.920,1:31:19.230
+Where do you stand on the argument that social media companies are just
+
+1:31:19.540,1:31:26.399
+Neutral platforms and that problematic content is the entire responsibility if he uses just the same way that phone companies
+
+1:31:26.679,1:31:33.749
+Aren't held responsible when phones are used for scams or car companies held responsible when vehicles used to say terrorist attacks
+
+1:31:34.059,1:31:36.299
+And so I do not think that
+
+1:31:38.290,1:31:42.299
+The plot that the platforms are neutral because they make a number of
+
+1:31:43.900,1:31:49.949
+Design decisions and enforcement decisions around even kind of what their what their Terms of Service are and how those are
+
+1:31:50.710,1:31:53.520
+Enforced and that in keeping in mind
+
+1:31:54.429,1:31:57.719
+harassment can drive many people off of platforms and so
+
+1:31:58.690,1:32:00.690
+kind of
+
+1:32:01.599,1:32:08.159
+Many of those decisions is not that Oh, everybody gets to keep free. Speech when there's no enforcement. It's
+
+1:32:09.520,1:32:12.540
+Just changing kind of who who who is silenced
+
+1:32:12.540,1:32:18.899
+I do think that there are a lot of really difficult questions that are raised about this
+
+1:32:19.869,1:32:22.529
+Because I also I think that the the platform's
+
+1:32:23.619,1:32:25.619
+You know, it's they are they're not
+
+1:32:27.010,1:32:30.780
+Publishers, but they are in this I think kind of a intermediate
+
+1:32:33.099,1:32:36.089
+Area where they are performing many of the functions that
+
+1:32:36.670,1:32:42.270
+Publishers used to perform so, you know like a newspaper whiskey which is curating which which articles are in it
+
+1:32:42.639,1:32:45.299
+Which is not what platforms are doing, but they are
+
+1:32:48.219,1:32:50.219
+Getting closer closer to that
+
+1:32:50.920,1:32:55.739
+I mean I something I come back to is it is it is an uncomfortable amount of power
+
+1:32:56.650,1:33:02.159
+For for private companies to have yeah, and so it does raise a lot of difficult decisions
+
+1:33:02.199,1:33:04.949
+But I I do not believe that they are they are neutral
+
+1:33:06.969,1:33:13.889
+So, um for for this part I mentioned the markoulis Center earlier definitely check out their site ethics and technology practice
+
+1:33:13.890,1:33:15.890
+They have a lot of useful
+
+1:33:16.630,1:33:18.630
+Useful resources
+
+1:33:18.880,1:33:24.960
+And I'm gonna go through these relatively quickly as just kind of examples so they give some kind of deontological
+
+1:33:25.270,1:33:27.779
+questions that technologists could ask and so
+
+1:33:28.780,1:33:31.230
+Deontological ethics or where you kind of have various?
+
+1:33:33.460,1:33:37.259
+Kind of rights or duties that you might want to respect and this can include
+
+1:33:38.350,1:33:40.350
+principles like
+
+1:33:40.420,1:33:42.420
+privacy or autonomy
+
+1:33:44.680,1:33:49.200
+How might the dignity and autonomy of each stakeholder be impacted by this project
+
+1:33:50.020,1:33:53.609
+What considerations of trust and of justice or relevant?
+
+1:33:55.210,1:34:02.969
+This is some project involved any conflicting moral duties to others in some cases, you know, there'll be a kind of conflict between different
+
+1:34:03.850,1:34:08.579
+Different rights or duties you're considering and so this is this kind of an example and they have more
+
+1:34:09.190,1:34:15.329
+More in the reading of the types of questions you could be asking kind of when evaluating of just even how do you evaluate?
+
+1:34:16.030,1:34:19.259
+Kind of whether whether a project is ethical
+
+1:34:21.190,1:34:23.140
+Consequentialist questions
+
+1:34:23.140,1:34:26.760
+Who will be directly affected who will be indirectly affected?
+
+1:34:27.790,1:34:30.540
+Well, the end consequentialist includes
+
+1:34:31.300,1:34:33.300
+Utilitarianism as well as common good
+
+1:34:34.090,1:34:38.759
+Will the effects in aggregate create more good than harm and what types of good and harm?
+
+1:34:39.910,1:34:43.829
+Are you thinking about all the relevant types of harm and benefits including psychological?
+
+1:34:44.470,1:34:52.290
+political environmental moral cognitive emotional institutional cultural also looking at long term long term benefits and harms
+
+1:34:53.320,1:34:59.279
+And then who experiences them? Is this something where the risk of the harm are gonna fall disproportionately on the least powerful
+
+1:35:00.040,1:35:02.790
+Who's going to be the ones to accrue the benefits?
+
+1:35:03.820,1:35:07.829
+Have you considered dual use and so these are these they're again kind of questions
+
+1:35:07.830,1:35:11.310
+you could use when trying to trying to evaluate a project and
+
+1:35:11.590,1:35:15.299
+I think and the recommendation of the markoulis Center is that this is a
+
+1:35:15.580,1:35:18.660
+Great activity to kind of to be doing as a team and as a group
+
+1:35:22.410,1:35:24.410
+Yes, I
+
+1:35:24.660,1:35:27.349
+was gonna say like I can't I
+
+1:35:29.550,1:35:33.860
+Can't overstate how useful this tool is like it, you know, I think oh, it's just a list of questions
+
+1:35:34.080,1:35:37.490
+Yeah, you know but like this is kind of to me
+
+1:35:37.490,1:35:42.559
+This is that this is the big gun tool for for how you how you handle
+
+1:35:42.560,1:35:47.600
+This is like if somebody is helping you think about the right set of questions and then you let go through them with a diverse
+
+1:35:47.600,1:35:49.760
+Group of people and discuss the questions. I
+
+1:35:50.640,1:35:53.510
+Mean that's that. It's this is this is goal
+
+1:35:53.510,1:35:57.229
+like don't, you know go back and reread these and don't don't just skip over them because
+
+1:35:58.530,1:36:02.630
+Take them to work use them next time you're talking about a project. They're a really great
+
+1:36:03.390,1:36:06.349
+Great set of questions to use a great tool in your toolbox
+
+1:36:06.780,1:36:10.130
+yeah, and go to the original reading has even kind of more detail and
+
+1:36:11.280,1:36:13.340
+more elaboration on the questions
+
+1:36:16.080,1:36:20.899
+And then they kind of give a summary of five potential ethical lenses
+
+1:36:21.570,1:36:26.299
+The the rights approach which option in best respects the rights of all who have a stake
+
+1:36:26.790,1:36:31.970
+The justice approach which option treats people equally or proportionally and so these two are both a deontological
+
+1:36:33.180,1:36:37.789
+The utilitarian approach which option will produce the most good and do the least harm
+
+1:36:38.460,1:36:43.460
+the common good approach which option best serves the community as a whole not just some members and
+
+1:36:44.010,1:36:46.849
+so here three and four are both a
+
+1:36:47.700,1:36:49.440
+consequentialist and then
+
+1:36:49.440,1:36:54.830
+Virtue approach which option leads me to act as the sort of person I want to be and that can involve, you know particular
+
+1:36:55.770,1:36:59.749
+Virtues of you know, do you value trustworthiness or truth or courage?
+
+1:37:01.560,1:37:08.419
+And so I mean a great activity if this is something that you're studying or talking about it work with your teammates
+
+1:37:08.610,1:37:10.880
+The the Markkula Center has a number of case studies
+
+1:37:11.220,1:37:14.840
+That you can talk through and will even ask you to kind of evaluate them
+
+1:37:14.880,1:37:18.859
+you know evaluate them through these five lenses and how does that kind of impact your
+
+1:37:19.860,1:37:22.489
+your take on what the what the right thing to do is
+
+1:37:25.980,1:37:30.860
+It's kind of weird for a programmer or a computer program or data science in some way in some ways to like
+
+1:37:31.940,1:37:38.469
+think of these as tools like a steai your pants or whatever but I mean they absolutely are this is like
+
+1:37:39.620,1:37:46.690
+These like software tools for your brain, you know to help you you kind of go through a program that might help you
+
+1:37:47.390,1:37:48.560
+debug
+
+1:37:48.560,1:37:50.560
+your thinking
+
+1:37:50.810,1:37:52.810
+Great. Thank you. And
+
+1:37:54.290,1:37:57.790
+Then if someone brought up earlier, so that was a kind of very Western centric
+
+1:37:58.520,1:38:02.050
+intro to ethical philosophy there are other ethical lenses and other
+
+1:38:02.570,1:38:07.809
+Cultures and I've been doing some reading particularly on the the Maori worldview. I
+
+1:38:08.330,1:38:09.620
+Don't feel
+
+1:38:09.620,1:38:15.970
+Confident enough in my understanding that I could represent it, but it is very good to be mindful that yeah
+
+1:38:15.970,1:38:19.809
+there are other other ethical lenses out there and I do very much think that
+
+1:38:21.530,1:38:23.330
+You know the people being impacted by a
+
+1:38:23.330,1:38:23.830
+technology
+
+1:38:23.830,1:38:29.979
+like their their ethical lens is kind of what matters and that this is is a particular issue and we have so many kind of
+
+1:38:31.340,1:38:33.340
+multinational corporations
+
+1:38:33.770,1:38:38.260
+there's an interesting project going on in New Zealand now or the New Zealand government is kind of
+
+1:38:38.600,1:38:44.680
+Considering its AI approach and is at least ostensibly kind of wanting to wanting to include the Maori view on that
+
+1:38:47.510,1:38:50.229
+So that's a that's kind of a little a little bit of theory
+
+1:38:50.230,1:38:53.920
+But now I want to talk about some kind of practices you can implement in the workplace
+
+1:38:54.470,1:38:56.350
+Again, this is from the markoulis Center
+
+1:38:56.350,1:39:03.670
+So this is their ethics toolkit, which I particularly like and I'm just I'm not going to go through all of them
+
+1:39:03.670,1:39:05.540
+I'm just going to tell you a few of my favorites
+
+1:39:05.540,1:39:12.100
+So tool one is ethical risk sweeping and this I think is similar to the idea of kind of pen testing that
+
+1:39:13.250,1:39:16.210
+Jeremy mentioned earlier from security but to have
+
+1:39:17.690,1:39:20.679
+regularly-scheduled ethical risk sqweep's and
+
+1:39:22.670,1:39:24.670
+While no vulnerability
+
+1:39:24.710,1:39:29.679
+Vulnerabilities found is generally good news. That doesn't mean that it was a wasted effort and you keep doing it
+
+1:39:30.740,1:39:34.240
+Keep looking for for ethical risk. One moment
+
+1:39:34.790,1:39:38.320
+And then assume that you missed some risk in the initial project development
+
+1:39:38.630,1:39:44.199
+Also, you have to set up the incentives properly where you're rewarding team members for spotting new ethical risk
+
+1:39:46.380,1:39:47.639
+All right
+
+1:39:47.639,1:39:49.320
+Yet so got some comments here
+
+1:39:49.320,1:39:54.469
+So my comment here is about the learning rate finder and I'm not going to bother with the exact mathematical
+
+1:39:54.869,1:40:01.518
+Definition partly because I'm a terrible mathematician and partly because it doesn't matter but if you just remember, oh, sorry, that's actually not me
+
+1:40:01.519,1:40:03.519
+I am just reading something that
+
+1:40:03.749,1:40:10.609
+Patti Hendricks has trained a language model of me. So that was me greeting the language model of me
+
+1:40:11.429,1:40:13.429
+the real me
+
+1:40:15.030,1:40:16.860
+Thank you
+
+1:40:16.860,1:40:22.400
+This is a tool one. I would say another kind of example of this. I think it's like bread teaming of, you know, having a
+
+1:40:23.190,1:40:26.719
+team within your get sky and to find your vulnerabilities a
+
+1:40:27.690,1:40:29.400
+tool 3
+
+1:40:29.400,1:40:32.179
+Another one. I really like expanding the ethical circle
+
+1:40:33.329,1:40:40.549
+So whose interest desires skills experiences and values have we just assumed rather than actually consulted?
+
+1:40:40.979,1:40:43.549
+Who are all the stakeholders who will be directly affected?
+
+1:40:44.639,1:40:47.209
+And have we actually asked them what their interests are
+
+1:40:49.949,1:40:57.529
+Who might use this product that we didn't expect to use it or for purposes that we didn't initially intend and so then a great
+
+1:40:58.110,1:40:59.610
+implementation of this
+
+1:40:59.610,1:41:03.559
+comes from the University of Washington's Tech policy lab
+
+1:41:04.769,1:41:06.769
+did a
+
+1:41:07.289,1:41:10.789
+Project called diverse voices and it's neat they have both a
+
+1:41:11.639,1:41:14.449
+Academic paper on it and then they also kind of have like a guy
+
+1:41:15.570,1:41:20.420
+Lengthy guide on how you would implement this but the idea is how to kind of organize
+
+1:41:21.300,1:41:23.300
+expert panels
+
+1:41:23.729,1:41:25.260
+around
+
+1:41:25.260,1:41:30.139
+Around new technology and so they they did a few samples one
+
+1:41:30.139,1:41:37.819
+Was there considering augmented reality and they held expert panels with people with disabilities people who are formerly are currently incarcerated
+
+1:41:38.159,1:41:41.929
+And with women to cut their get their input and make sure that that was included
+
+1:41:42.059,1:41:44.449
+They did a second one on an autonomous vehicle
+
+1:41:44.849,1:41:52.609
+strategy document and organized expert panels with youth with people that don't drive cars and with extremely low-income people and
+
+1:41:52.860,1:41:58.340
+So I think this is a great guide if you're kind of unsure of how do you even go about?
+
+1:41:58.770,1:42:00.770
+setting something like this up to
+
+1:42:01.470,1:42:05.090
+expand your circle include include more people and get
+
+1:42:05.760,1:42:09.829
+Get perspectives that may be underrepresented by your employees
+
+1:42:10.500,1:42:13.520
+So I just want to let you know that this resource is out there
+
+1:42:17.250,1:42:20.030
+Tool six is think about the terrible people
+
+1:42:21.480,1:42:24.649
+And and this can be hard because I think we're often
+
+1:42:25.530,1:42:27.510
+you know thinking
+
+1:42:27.510,1:42:30.139
+Kind of positively or thinking about people like ourselves
+
+1:42:31.350,1:42:34.519
+who don't have terrible intentions, but really think about
+
+1:42:35.100,1:42:40.640
+Who might want to abuse steal misinterpret hacks Troy or weaponize? What we build?
+
+1:42:41.940,1:42:45.080
+Who will use it with alarming stupidity or rationality?
+
+1:42:46.410,1:42:51.200
+What rewards incentives openings has our design inadvertently created for those people?
+
+1:42:51.200,1:42:53.749
+And so kind of remembering back to the section on metrics
+
+1:42:53.750,1:42:57.830
+you know, how are people going to be trying to game or manipulate this and
+
+1:42:58.920,1:43:05.570
+How can how can we then remove those rewards or incentives? And so this is this is an important kind of important step to take
+
+1:43:07.260,1:43:08.700
+And
+
+1:43:08.700,1:43:13.579
+Then tool seven is closing the loop ethical feedback and iteration
+
+1:43:14.250,1:43:16.850
+remembering this is never a finished task and
+
+1:43:17.460,1:43:21.439
+identifying feedback channels that will give you kind of reliable data and
+
+1:43:22.050,1:43:25.969
+integrating this process with quality management and user support and
+
+1:43:26.520,1:43:28.729
+developing formal procedures and chains of
+
+1:43:28.980,1:43:35.750
+Responsibility for ethical iteration and this tool reminded me of a blog post by Alex Pierce that I really like
+
+1:43:36.000,1:43:40.010
+Alex fearest was previously the chief legal officer at medium and
+
+1:43:41.340,1:43:42.930
+Yeah, I guess this was a year ago
+
+1:43:42.930,1:43:48.139
+he interviewed or something like 15 or 20 people that have worked in trust in safety and
+
+1:43:48.480,1:43:53.600
+trust in safety includes content moderation, although it's not not solely content moderation and
+
+1:43:55.650,1:44:01.370
+Kind of one of the ideas that came up that I really liked was one of one of the people and so many of these
+
+1:44:01.370,1:44:04.099
+People have worked interest in safety for years at big-name companies
+
+1:44:05.130,1:44:11.630
+and one of them said the separation of product people in trust people worries me because in a world where product managers and
+
+1:44:11.960,1:44:16.069
+engineers and visionaries cared about the stuff it would be baked into how things get built if
+
+1:44:16.350,1:44:23.239
+Things stay this way that product and engineering our Mozart and everyone else is Alfred the butler. The big stuff is not going to change
+
+1:44:23.760,1:44:30.200
+And so I think at least two people in this kind of talk about this idea of needing to better integrate trust and safety
+
+1:44:30.200,1:44:32.450
+Which are often kind of on the front lines of seeing?
+
+1:44:32.969,1:44:38.449
+Abuse and misuse of a technology product integrating that more closely with product and ends
+
+1:44:39.030,1:44:44.540
+so that it can kind of be more directly incorporated and you can have a tighter feedback loop there about
+
+1:44:44.940,1:44:49.100
+What's going wrong? And and how how that can be designed against?
+
+1:44:51.000,1:44:53.450
+Okay, so those were these were well I
+
+1:44:54.060,1:45:00.259
+Link to a few blog posts and research I thought relevant but inspired by the mark Markkula centers tools
+
+1:45:00.750,1:45:06.589
+For protects and hopefully those are practices you could think about potentially implementing at your at your company
+
+1:45:09.600,1:45:16.039
+So next I want to get into a diversity, which I know came up earlier and so
+
+1:45:17.820,1:45:24.350
+Only 12% of machine learning researchers are women as this is kind of a very very dire statistic
+
+1:45:25.230,1:45:29.330
+There's also a kind of extreme lack of racial diversity and age diversity
+
+1:45:30.180,1:45:32.180
+and other factors
+
+1:45:32.280,1:45:34.430
+and this is this is significant a
+
+1:45:37.140,1:45:42.950
+Kind of positive example of what diversity can help with and a post Tracy Chow who was a
+
+1:45:43.380,1:45:46.910
+early early an engineer at Quora and later at Pinterest
+
+1:45:48.210,1:45:52.759
+Wrote that the first feature and so I think she was like one of the first five employees at Quora
+
+1:45:53.070,1:45:56.270
+The first feature I built when I worked at Quora was the block button
+
+1:45:56.270,1:46:02.629
+I was eager to work on the feature because I personally felt antagonized and abused on the site and she goes on to say that
+
+1:46:02.820,1:46:04.370
+If she hadn't been there, you know
+
+1:46:04.370,1:46:08.450
+they might not have added the the block button as soon and so that's kind of like a direct example of how
+
+1:46:08.550,1:46:10.550
+How having a diverse team can help?
+
+1:46:12.450,1:46:14.450
+Somebody kind of
+
+1:46:14.610,1:46:16.200
+kee-kee advice
+
+1:46:16.200,1:46:22.999
+for anyone wanting to increase diversity is to start at the opposite end of the pipeline from from where people talk about
+
+1:46:23.250,1:46:26.340
+The the work play I wrote a blog post
+
+1:46:26.830,1:46:30.839
+Five years ago if you think women and tack is just a pipeline problem. You haven't been paying attention
+
+1:46:30.910,1:46:34.139
+and this was the most popular thing I had ever written until
+
+1:46:34.270,1:46:40.470
+Jeremy and I wrote the the kovat 19 post last month of it. So the second most most popular thing I've written
+
+1:46:41.860,1:46:47.580
+But I linked to a ton of ton of research in there a key statistic to understand
+
+1:46:47.580,1:46:55.140
+is that 41% of women working in tack end up leaving the field compared to 17% of men and so this is something that
+
+1:46:56.140,1:47:03.059
+Recruiting more girls into in decoding or tack is not going to address this problem if they keep leaving at very high rates. I
+
+1:47:04.390,1:47:06.569
+Just had a little peek at the YouTube
+
+1:47:07.300,1:47:09.779
+Chat, and I see people are asking questions there
+
+1:47:09.780,1:47:12.390
+I just want to remind people that we are not
+
+1:47:12.820,1:47:17.460
+That grateful and I do not look at that. If you want to ask ask questions, you should use the
+
+1:47:18.310,1:47:24.239
+Forum thread and and if you see questions that you like then please put them up such as this one
+
+1:47:26.650,1:47:33.509
+How about an ethical issue bounty program just like the bug bounty programs that some companies have
+
+1:47:34.900,1:47:39.690
+No, I think that's a neat idea you have rewarding people for for finding ethical issues
+
+1:47:41.530,1:47:46.020
+And so the the reason that women are more likely to leave tech
+
+1:47:46.660,1:47:52.589
+Is and this was found in a meta-analysis of over 200 books white papers articles
+
+1:47:53.890,1:48:00.959
+Women leave the tech industry because they're treated unfairly underpaid less likely to be fast-tracked than their male colleagues and unable to advance
+
+1:48:03.490,1:48:05.350
+And and too often
+
+1:48:05.350,1:48:09.660
+Diversity efforts end up just focusing on white women, which is wrong
+
+1:48:10.480,1:48:16.859
+Interviews with 60 women of color who work in stem research found that 100 percent had experienced discrimination and their particular
+
+1:48:17.200,1:48:22.979
+Stereotypes buried by race and so it's very important to focus on women of color in in diversity efforts
+
+1:48:23.380,1:48:26.400
+as a kind of the top priority a
+
+1:48:29.830,1:48:32.249
+Study found that men's voices are
+
+1:48:32.770,1:48:38.819
+Perceived as more persuasive fact-based and logical than women's voices even when reading I denticles Scripps
+
+1:48:40.870,1:48:46.260
+Researchers found that women receive more of a feedback and personality criticism and performance evaluations
+
+1:48:46.260,1:48:50.999
+Whereas men are more likely to receive actionable advice tied to concrete business outcomes
+
+1:48:52.660,1:48:59.160
+When women receive mentorship is often advice on how they should change and gain more self-knowledge when men receive mentorship
+
+1:48:59.160,1:49:02.249
+It's public endorsement of their authority only one of these has been
+
+1:49:02.770,1:49:09.870
+Statistically linked to getting promoted. It's the public endorsement of authority and all these studies are linked to another post
+
+1:49:09.870,1:49:12.629
+I wrote called the real reason women quit tack and how to address it
+
+1:49:13.360,1:49:15.360
+that a question Jeremy or
+
+1:49:17.140,1:49:23.459
+Yeah, so if you're interested kind of a these two blog post I link to a ton of ton of relevant research on this
+
+1:49:23.980,1:49:28.680
+And I think this is kind of the the workplace is the the place to start in addressing these things
+
+1:49:32.140,1:49:36.629
+So another issue is tech interviews are terrible for everyone
+
+1:49:37.570,1:49:43.290
+So now kind of working one step back from people that are already in your in your workplace, but thinking about the interview process
+
+1:49:44.860,1:49:48.870
+And they wrote a post on how to make tech interviews a little less awful and
+
+1:49:48.970,1:49:53.189
+Went through a ton of research and I will I will say that the the interview problem I think is a hard one
+
+1:49:53.190,1:49:54.670
+I think it's very
+
+1:49:54.670,1:49:57.720
+time consuming and hard to to interview people well
+
+1:49:59.710,1:50:06.540
+But kind of the two most interesting pieces of research I came across one was from triple bite which is a
+
+1:50:08.380,1:50:10.380
+Recruiting company that
+
+1:50:10.720,1:50:11.950
+interviews
+
+1:50:11.950,1:50:16.079
+kind of does this first round technical interview for people and then
+
+1:50:17.110,1:50:23.040
+they interview it Y Combinator it's a Y Combinator company and they under review at my ax Combinator companies and they've this very
+
+1:50:23.350,1:50:27.660
+interesting data set where they've kind of given everybody the same technical interview and then they can see
+
+1:50:28.000,1:50:32.310
+Which companies people got offers from when they were, you know interviewing at many of the same?
+
+1:50:32.830,1:50:34.210
+companies and
+
+1:50:34.210,1:50:37.410
+The number one finding from their research. Is that the types of
+
+1:50:37.540,1:50:43.260
+Programmers that each company looks for often have little to do with what the company needs or does rather
+
+1:50:43.260,1:50:46.530
+they reflect company culture in the backgrounds of the founders and
+
+1:50:46.750,1:50:50.490
+This is something where they even they even gave the advice of if you're job hunting
+
+1:50:51.900,1:50:59.480
+look for try to look for companies where the founders have a similar background to you and that's something that while I
+
+1:51:01.170,1:51:07.339
+That makes sense that's going to be much easier for certain people to do than others and particularly given the the
+
+1:51:07.590,1:51:11.090
+Gender and racial disparities in VC funding that's gonna make a big difference
+
+1:51:12.150,1:51:13.469
+Yes
+
+1:51:13.469,1:51:20.479
+Actually, I would say that was the most common advice. I heard from feces when I became a founder in the Bay Area
+
+1:51:21.539,1:51:23.839
+was when recruiting focus on
+
+1:51:24.630,1:51:27.799
+getting people from your network and people that are
+
+1:51:29.010,1:51:33.920
+Like-minded and similar as possible. That was by far the most common advice that I heard
+
+1:51:34.679,1:51:36.679
+yeah, I mean this is
+
+1:51:37.440,1:51:40.489
+Controversial opinions, I I do feel like ultimately
+
+1:51:41.219,1:51:44.989
+like I get why people hire from their network and I think that long term
+
+1:51:45.809,1:51:51.949
+We all need to be developed. Well particularly white people need to be developing more diverse networks, and that's like a you know
+
+1:51:51.949,1:51:55.279
+Like ten year project. That's not something you can do right when you're
+
+1:51:56.519,1:51:58.609
+Hiring but really kind of developing
+
+1:51:59.369,1:52:05.479
+A diverse network of friends and trusted acquaintances a kind of over time
+
+1:52:06.420,1:52:08.989
+But yeah, thank you for that perspective to Jeremy
+
+1:52:09.690,1:52:12.379
+And then kind of the other study. I found really interesting
+
+1:52:13.409,1:52:15.618
+Was one where they they gave people
+
+1:52:16.289,1:52:18.619
+resumes and in one case
+
+1:52:19.619,1:52:21.679
+So one resume had more academic
+
+1:52:22.139,1:52:28.038
+Qualifications and then one had more practical experience and then they switched the gender one was a woman. When was a man?
+
+1:52:28.380,1:52:30.380
+Or you know male named a female name
+
+1:52:30.840,1:52:36.230
+And basically people were more likely to hire the male and then they would use a post-hoc justification of oh
+
+1:52:36.269,1:52:41.599
+Well, I chose him because he had more academic experience or I chose him because he had more practical experience
+
+1:52:42.210,1:52:49.339
+and that's something I think it's very human to use post hoc justifications, but it's a it's a real risk that
+
+1:52:50.250,1:52:52.250
+Definitely shows up in hiring
+
+1:52:54.210,1:52:57.289
+Ultimately AI or any other technology
+
+1:52:57.300,1:53:04.820
+I developed or implemented by companies for financial advantage ie more profit maybe the best way to incentivize ethnic open
+
+1:53:05.079,1:53:07.039
+is to tie financial or
+
+1:53:07.039,1:53:13.779
+Reputational risk to good behavior in some ways similar to how companies are now investing in cybersecurity because they don't want to be the next
+
+1:53:13.849,1:53:14.959
+Equifax
+
+1:53:14.959,1:53:20.438
+And grassroots campaigns help in better ethical behavior with regards to the use of AI. Oh
+
+1:53:21.530,1:53:25.989
+That's a good question. Yeah, and I think there are a lot of analogies with cybersecurity and I know that
+
+1:53:26.689,1:53:28.898
+For a long time I think was hard for people to make
+
+1:53:30.649,1:53:35.349
+Our people had trouble making the case to their bosses of why they should be investing in cybersecurity
+
+1:53:35.959,1:53:39.489
+Particularly because cybersecurity is you know, something like when it's working
+
+1:53:39.489,1:53:43.598
+Well, you don't notice it and so that can be can be hard to build the case
+
+1:53:44.539,1:53:47.978
+So I think that there there is a place for grassroots campaigns
+
+1:53:49.039,1:53:54.518
+And I'm gonna talk more I'm gonna talk about policy in a bit
+
+1:53:55.099,1:53:58.179
+It can be hard in in some of these cases where there
+
+1:53:58.699,1:54:01.478
+Are not necessarily meaningful alternatives
+
+1:54:04.550,1:54:12.459
+So I do think like monopolies can kind of a kind of make that harder that's it yeah a good good question
+
+1:54:16.820,1:54:18.820
+All right, so next step
+
+1:54:19.369,1:54:25.869
+Actually on this slide is the the need for policy. And so I'm gonna start with a
+
+1:54:26.510,1:54:28.249
+case study of
+
+1:54:28.249,1:54:32.228
+What what's one thing that gets companies to take action? And so
+
+1:54:32.929,1:54:34.929
+as I mentioned earlier a
+
+1:54:35.809,1:54:40.569
+investigator for the UN found that Facebook played a determining role in the ROE hanga genocide I
+
+1:54:41.300,1:54:47.199
+Think the best article I've read on this was by Timothy McLaughlin who did a super super in-depth dive
+
+1:54:48.289,1:54:50.059
+on
+
+1:54:50.059,1:54:52.059
+Facebook's role in Myanmar and
+
+1:54:53.689,1:54:58.719
+People people warned Facebook executives in 2013 and in 2014 and in 2015
+
+1:54:59.209,1:55:06.398
+How the platform was being used to spread hate speech and to incite violence one person in 2015
+
+1:55:07.129,1:55:09.219
+even told Facebook executives that
+
+1:55:10.099,1:55:14.918
+Facebook could play the same role in Myanmar that the radio broadcast played during the Rwandan genocide
+
+1:55:15.600,1:55:17.600
+and radio broadcasts played a very
+
+1:55:17.860,1:55:20.580
+terrible and kind of pivotal role in the Rwandan genocide
+
+1:55:22.150,1:55:23.230
+Somebody close to it
+
+1:55:23.230,1:55:30.990
+This said that's not 20/20 hindsight the scale of this problem was significant and it was already apparent and despite this in 2015
+
+1:55:30.990,1:55:35.399
+I believe Facebook only had four contractors who even spoke Burmese
+
+1:55:36.430,1:55:38.459
+the language of the of Myanmar
+
+1:55:39.250,1:55:40.900
+question
+
+1:55:40.900,1:55:42.060
+That's an interesting one
+
+1:55:42.060,1:55:49.800
+How do you think about our opportunity to correct biases in artificial systems versus the behaviors we see in humans?
+
+1:55:50.500,1:55:53.370
+Example a sentencing algorithm can be monitored and adjusted
+
+1:55:54.070,1:55:58.469
+This is a specific biased judge who remains in their role for a long time
+
+1:56:03.760,1:56:05.760
+I
+
+1:56:06.400,1:56:11.100
+Think I feel a bit hesitant about the it's it'll be easier to
+
+1:56:12.400,1:56:14.400
+correct bias in algorithms
+
+1:56:15.610,1:56:17.610
+because I feel like the
+
+1:56:19.990,1:56:23.340
+You still need people kind of making the decisions to
+
+1:56:23.650,1:56:29.040
+Prioritize that like it requires kind of an overhaul of the systems priorities, I think
+
+1:56:32.620,1:56:34.060
+It also
+
+1:56:34.060,1:56:36.990
+starts with the premise that there are people who can't be
+
+1:56:38.020,1:56:44.879
+Fired or disciplined or whatever I guess maybe for some judges that's true, but they're kind of maybe suggests that
+
+1:56:45.880,1:56:47.880
+judges shouldn't be
+
+1:56:48.070,1:56:50.070
+lifetime appointments
+
+1:56:51.010,1:56:56.820
+Yeah, even then I think you kind of need the the change of heart of the people advocating for the new system
+
+1:56:56.820,1:56:58.820
+Which I think can
+
+1:56:59.890,1:57:05.669
+Would be necessary another case kind of and that that's kind of the critical piece of getting the the people that are
+
+1:57:06.190,1:57:08.190
+Wanting to overhaul the values of a system
+
+1:57:09.850,1:57:12.809
+So returning to to this issue of
+
+1:57:16.180,1:57:20.579
+The Ginga genocide and this is a good kind of continuing continuing issue
+
+1:57:21.820,1:57:23.820
+Yeah, this is something that's just kind of
+
+1:57:24.440,1:57:26.440
+really stunning to me that
+
+1:57:27.860,1:57:32.440
+That there were so many warnings and that so many people tried to raise an alarm on this and that
+
+1:57:32.840,1:57:34.840
+so little action was taken and
+
+1:57:36.290,1:57:38.290
+Even this was last year
+
+1:57:39.679,1:57:42.129
+Zuckerberg finally said that Facebook would add
+
+1:57:42.710,1:57:48.040
+or maybe maybe this was actually this was probably two years ago said that Facebook would add but this is you know after
+
+1:57:48.560,1:57:50.560
+genocides already happening
+
+1:57:50.780,1:57:54.820
+Facebook would add dozens of Burmese language content reviewers
+
+1:57:56.480,1:57:58.010
+So in contrast
+
+1:57:58.010,1:58:04.870
+So we have this this is how Facebook really failed to respond in any any significant way in Myanmar
+
+1:58:06.739,1:58:11.079
+Germany passed a much stricter law about hate speech and nets
+
+1:58:11.810,1:58:13.280
+dgg
+
+1:58:13.280,1:58:15.280
+DC and
+
+1:58:15.440,1:58:16.790
+the
+
+1:58:16.790,1:58:19.629
+The potential penalty would be up to like 50 million euros
+
+1:58:21.890,1:58:27.249
+Facebook hired 1200 people in under a year because they were so worried about this penalty. And so
+
+1:58:28.219,1:58:35.169
+And I'm not saying like this is a law we want to replicate here. I'm just illustrating the difference between being told that you're
+
+1:58:35.840,1:58:40.960
+Contributing are playing a determining role in a genocide versus a significant
+
+1:58:41.690,1:58:46.480
+Financial penalty. We have seen what the one thing that makes Facebook take action is
+
+1:58:47.420,1:58:54.129
+and so I think that that is really significant in remembering what the what the power of a
+
+1:58:54.860,1:59:00.549
+Credible threat of a significant fine is and it has to be a lot more than you know, just like a cost of doing business
+
+1:59:04.219,1:59:07.749
+So I I really believe that we need both policy and
+
+1:59:08.660,1:59:16.179
+Ethical behavior within industry. I think that policy is the appropriate tool for addressing negative externalities
+
+1:59:16.760,1:59:21.040
+misaligned economic incentives race to the bottom situations and
+
+1:59:21.620,1:59:23.390
+enforcing accountability
+
+1:59:23.390,1:59:25.390
+however, ethical behavior of
+
+1:59:25.730,1:59:30.939
+Individuals and of data scientists and software engineers working in industry is very much necessary as well
+
+1:59:31.130,1:59:34.509
+Because the law is not always going to keep up. It's not going to cover all the edge cases
+
+1:59:35.210,1:59:40.210
+We really need the people in industry be making kind of ethical ethical decisions as well
+
+1:59:40.210,1:59:43.779
+And so I believe both are significant and important
+
+1:59:45.949,1:59:48.609
+And then and something to note here is that
+
+1:59:50.150,1:59:56.920
+Many many examples of kind of AI ethics issues and I haven't talked about all of these but there was
+
+1:59:59.239,2:00:03.249
+Amazon's facial recognition the ACLU did a study finding that it
+
+2:00:03.770,2:00:10.509
+correctly matched 28 members of Congress to criminal mug shots and this disproportionately included Congress people of color and
+
+2:00:11.659,2:00:13.010
+there's also
+
+2:00:13.010,2:00:17.889
+This was a terrible article. Not that the article was good, but the story is terrible of a
+
+2:00:19.489,2:00:26.019
+City that's using this IBM dashboard for predictive policing and a city official said, oh like whenever you have machine learning
+
+2:00:26.020,2:00:28.839
+it's always 99% accurate, which is
+
+2:00:29.360,2:00:30.530
+false
+
+2:00:30.530,2:00:32.530
+and quite concerning
+
+2:00:32.630,2:00:38.710
+We had we had the issue in so in 2016 Pro Publica discovered that
+
+2:00:39.590,2:00:42.489
+You could place a housing ad on Facebook and say you know
+
+2:00:42.489,2:00:47.618
+Like I don't want Latino or black people or I don't want wheelchair users to see this housing ad
+
+2:00:48.020,2:00:51.759
+which seems like a violation of the the Fair Housing Act and
+
+2:00:52.820,2:00:56.889
+So there's this article and Facebook was like we're so sorry and then over a year later
+
+2:00:57.170,2:01:01.600
+It was still going on ProPublica went back and wrote another article about it
+
+2:01:03.050,2:01:06.130
+There's also this issue of dozens of companies were
+
+2:01:06.320,2:01:10.239
+Placing ads on facebook job ads and saying like we only want young people to see this
+
+2:01:13.570,2:01:18.340
+There's the Amazon creating the recruiting tool that penalized
+
+2:01:19.400,2:01:21.400
+resumes that had the word Women's in that
+
+2:01:21.710,2:01:25.480
+and so something something to note about these examples and many of the examples we've
+
+2:01:25.550,2:01:29.230
+Talked about today is that many of these are about human rights and civil rights?
+
+2:01:31.940,2:01:34.839
+It's a good article by dominique harrison of the
+
+2:01:35.600,2:01:37.580
+Aspen Institute on this
+
+2:01:37.580,2:01:44.439
+And I kind of agree with an email - is framing I mean he wrote there is no technology industry anymore
+
+2:01:44.780,2:01:47.980
+Tech is being used in every industry. And so I think in particular
+
+2:01:48.500,2:01:50.500
+We need to consider
+
+2:01:50.969,2:01:52.620
+human rights and civil rights
+
+2:01:52.620,2:01:54.300
+such as housing education
+
+2:01:54.300,2:02:01.880
+employment criminal justice voting and medical care and think about what rights we we want a safeguard and I do think policy is
+
+2:02:02.250,2:02:04.250
+The appropriate way to do that
+
+2:02:05.670,2:02:11.870
+And I think I mean it's very easy to be discouraged about about regulation
+
+2:02:12.540,2:02:16.129
+But I think sometimes we overlook the the positive
+
+2:02:17.160,2:02:19.489
+Or the cases where where it's worked well
+
+2:02:19.739,2:02:25.159
+And so something I really liked about data sheets for data sets by - Nick Abreu at all. Is that
+
+2:02:25.650,2:02:28.279
+they go through three case studies of how
+
+2:02:29.130,2:02:31.020
+standardization and regular
+
+2:02:31.020,2:02:33.020
+Regulation came to different industries
+
+2:02:33.690,2:02:37.640
+And so it's the electronics industry around circuits and resistors
+
+2:02:37.640,2:02:40.369
+And so there that's kind of around the standardization of you know
+
+2:02:40.370,2:02:42.589
+what the specs are and what you write down about them and
+
+2:02:42.810,2:02:46.999
+The pharmaceutical industry and car safety and and none of these are perfect
+
+2:02:47.000,2:02:50.899
+But it's still it was a kind of very illuminating the the case studies there
+
+2:02:50.900,2:02:55.460
+I mean in particular I got very interested in the car safety one, and there's also a great
+
+2:02:56.160,2:03:02.569
+99% invisible episode. This is a design podcast about it. And so some some things I learned is that
+
+2:03:03.690,2:03:10.669
+Early cars had sharp metal knobs on the knobs on the dashboard that could Lodge in people's skulls in a crash
+
+2:03:11.940,2:03:18.980
+Non collapsible steering columns would frequently impale drivers and then even after the collapsible steering column was invented
+
+2:03:18.980,2:03:22.069
+It wasn't actually implemented because there was no economic incentive to do so
+
+2:03:23.040,2:03:25.790
+But it's the collapsible steering column has
+
+2:03:26.429,2:03:31.399
+This had saved more lives than anything other than the seatbelt when it comes to car safety
+
+2:03:32.610,2:03:38.690
+And there was also this just this widespread belief that cars were dangerous because of the people driving them and it took it took
+
+2:03:39.120,2:03:46.699
+Consumer safety advocates decades to just even change the culture of discussion around this and to start kind of gathering and tracking the data
+
+2:03:47.280,2:03:49.969
+and to put more of an onus on car companies
+
+2:03:50.730,2:03:52.380
+around safety
+
+2:03:52.380,2:03:54.739
+GM hired a private detective to
+
+2:03:55.350,2:03:58.160
+Trail Ralph Nader and try to dig up dirt on him
+
+2:03:58.530,2:04:02.810
+and so this was really a battle that we kind of I take for granted now and
+
+2:04:04.300,2:04:05.949
+and so
+
+2:04:05.949,2:04:09.509
+Kind of shows how much how much it can take to to change
+
+2:04:09.879,2:04:12.809
+Change the needle they are and then that kind of a more recent
+
+2:04:14.050,2:04:17.189
+Issue is that it wasn't until I believe
+
+2:04:17.679,2:04:25.318
+2011 that it was required that crash test dummies start representing the average female anatomy in addition to
+
+2:04:26.229,2:04:30.719
+Previously was kind of just crash test dummies or like men and that
+
+2:04:31.510,2:04:34.199
+in a crash with the same impact women were
+
+2:04:34.329,2:04:38.489
+40% more likely to be injured than men because that's kind of who the the cars were being designed for
+
+2:04:39.129,2:04:44.279
+So I thought I thought all this was very interesting and it can be helpful to kind of remember and remember some of the successes
+
+2:04:44.280,2:04:45.999
+we've had
+
+2:04:45.999,2:04:48.958
+and another area that's very relevant is
+
+2:04:51.339,2:04:54.659
+Environmental protections and kind of looking back and
+
+2:04:56.859,2:05:00.359
+May check the cloud ski has a great article on this but you know
+
+2:05:00.359,2:05:03.269
+just remembering like in the US we used to have rivers that would catch on fire and
+
+2:05:04.300,2:05:07.409
+London had terrible terrible smog and that these are things that were
+
+2:05:08.050,2:05:15.539
+You know very would not have been possible to kind of solve as an individual. We really needed kind of coordinated coordinated regulation on
+
+2:05:17.109,2:05:19.109
+All right, is then on a
+
+2:05:19.389,2:05:25.558
+Kind of closing note. So I think a lot of the problems I've touched fun tonight are really
+
+2:05:26.349,2:05:27.489
+huge
+
+2:05:27.489,2:05:31.708
+huge and difficult problems and they're often kind of very complicated and I
+
+2:05:33.819,2:05:38.729
+When I go into more detail on this in the course, so please please check out the course once it's once it's released
+
+2:05:38.729,2:05:44.759
+I always try to offer some like steps towards solutions, but I realize they're not they're not always
+
+2:05:44.760,2:05:51.959
+you know as satisfying as I would like of like this is gonna solve it and that's cuz these are really really difficult problems and
+
+2:05:52.569,2:05:54.309
+Julia Angwin a
+
+2:05:54.309,2:05:55.989
+former
+
+2:05:55.989,2:05:59.158
+Journalist from ProPublica and now the editor in chief of the mark-up
+
+2:06:01.749,2:06:06.958
+Gave a really great interview on privacy last year that I liked and found very encouraging
+
+2:06:06.959,2:06:10.139
+She said I strongly believe that in order to solve a problem
+
+2:06:10.139,2:06:14.429
+You have to diagnose it and that we're still in the dot the diagnosis phase of this
+
+2:06:15.099,2:06:22.179
+If you think about the turn of the entry and industrialization, we had I don't know 30 years of child labor
+
+2:06:22.880,2:06:28.119
+unlimited work hours terrible working conditions and it took a lot of journalists muckraking and
+
+2:06:28.610,2:06:35.049
+Advocacy to diagnose the problem and have some understanding of what it was and then the activism to get laws changed. I
+
+2:06:37.760,2:06:41.860
+See my role is trying to make as clear as possible what the downsides are and
+
+2:06:42.320,2:06:48.070
+Diagnosing them really accurately so that they can be solvable that's hard work and lots more people need to be doing it
+
+2:06:48.289,2:06:53.709
+Once I found that really encouraging and that I do I do think we should be working towards solutions
+
+2:06:53.719,2:07:00.879
+But I think just at this point even better diagnosing and understanding kind of the complex problems. We're facing is valuable work
+
+2:07:03.380,2:07:08.980
+Couple of people are very keen to see your full course on ethics. Is that something that they might be able to
+
+2:07:10.280,2:07:16.119
+Attend or buy or something. So it will be released for free at some point this summer
+
+2:07:17.510,2:07:19.510
+and it was there was a
+
+2:07:19.909,2:07:24.699
+paid in person version and offered at the data Institute as a certificate kind of
+
+2:07:25.460,2:07:30.069
+Similar to how this this course will was supposed to be offered, you know in person
+
+2:07:30.650,2:07:33.969
+The data ethics one was in person and that took place in January in February
+
+2:07:33.969,2:07:39.729
+and then I'm currently teaching a version version for the Masters of data science students at USF and I will be
+
+2:07:39.949,2:07:43.569
+releasing the free online version and yeah later
+
+2:07:44.599,2:07:46.520
+Sometime before July
+
+2:07:46.520,2:07:48.520
+Thank you. I will see you next time
