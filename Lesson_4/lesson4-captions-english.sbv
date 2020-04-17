@@ -1,0 +1,4667 @@
+0:00:03.020,0:00:05.020
+Welcome back and
+
+0:00:05.210,0:00:07.210
+here is lesson or
+
+0:00:07.850,0:00:10.989
+which is where we get deep into the weeds of
+
+0:00:11.780,0:00:15.400
+Exactly. What is going on when we are training a neural network and
+
+0:00:15.920,0:00:19.180
+We started looking at this in the previous lesson
+
+0:00:19.180,0:00:22.569
+We were looking at the casted gradient descent
+
+0:00:22.939,0:00:27.219
+And so to remind you we were looking at what Arthur Samuel said
+
+0:00:28.710,0:00:35.849
+Suppose we arrange for some automatic means of testing the effectiveness of any current weight assignment or we would call it
+
+0:00:35.950,0:00:39.330
+parameter assignment in terms of actual performance and
+
+0:00:39.820,0:00:44.520
+Provide a mechanism for altering the weight assignment so as to maximize that performance
+
+0:00:45.550,0:00:53.400
+So we could make that entirely automatic and a machine so programmed would learn from its experience and that was error well
+
+0:00:54.340,0:01:00.659
+So our initial tempt attempt on the amnesty data set was not really based on on that
+
+0:01:01.390,0:01:04.229
+We didn't really have any parameters. So then
+
+0:01:04.960,0:01:07.800
+Last week we tried to figure out how we could
+
+0:01:08.770,0:01:11.729
+Parameterize it how we could create a function that had parameters
+
+0:01:12.880,0:01:19.049
+And what we thought we could do would be to have something where that say the probability of being some particular number
+
+0:01:19.869,0:01:27.389
+was expressed in terms of the pixels of that number and some weights and then we would just multiply them together and
+
+0:01:28.090,0:01:30.090
+Add them up
+
+0:01:31.600,0:01:33.600
+So we looked at
+
+0:01:34.270,0:01:41.759
+al stochastic gradient descent worked last week and the basic idea is that we start out by
+
+0:01:43.210,0:01:45.960
+initializing the parameters randomly
+
+0:01:46.690,0:01:51.840
+We use them to make a prediction using a function such as this one
+
+0:01:54.000,0:01:58.919
+We then see how good that prediction is by measuring using a loss function
+
+0:01:59.830,0:02:07.080
+We then calculate the gradient which is how much with the loss change if I changed one parameter by a little bit
+
+0:02:08.020,0:02:13.619
+We then use that to make a small step to change each of the parameters by a little bit
+
+0:02:14.770,0:02:16.799
+By multiplying the learning rate by the gradient
+
+0:02:17.350,0:02:21.299
+to get a new set of predictions and so we went round and round and round a few times until
+
+0:02:22.450,0:02:28.530
+Eventually we decided to stop and so these are the basic seven steps
+
+0:02:29.920,0:02:35.220
+That we went through and so we did that for simple quadratic equation
+
+0:02:38.430,0:02:44.010
+And we had something which looked like this and so by the end we had this nice
+
+0:02:47.610,0:02:49.830
+Curve getting closer and closer closer
+
+0:02:55.290,0:02:57.180
+So I have a little
+
+0:02:57.180,0:03:03.109
+Summary at the start of this section summarize in gradient descent that silver and I have in the notebooks in the book
+
+0:03:03.840,0:03:07.849
+Of what we just did so you can review that and make sure it makes sense to you
+
+0:03:10.220,0:03:14.259
+So now let's use this to create our M nest
+
+0:03:14.930,0:03:17.349
+Threes vs. Sevens model and
+
+0:03:18.049,0:03:24.309
+so to create a model we're going to need to create something that we can pass into a function like
+
+0:03:26.569,0:03:28.569
+Let's see where it was
+
+0:03:29.060,0:03:31.600
+Passing to a function like this one so we need
+
+0:03:32.270,0:03:37.929
+Just some pixels that are all lined up and some parameters that are all lined up and then we're going to sum them up
+
+0:03:41.060,0:03:43.060
+So our exes are
+
+0:03:43.670,0:03:50.079
+Going to be pixels and so in this case because we're just going to multiply each pixel by a parameter and add them up
+
+0:03:50.300,0:03:52.840
+the effect that they're laid out in a grid is not
+
+0:03:53.660,0:03:55.660
+important so let's
+
+0:03:56.300,0:03:58.250
+reshape those
+
+0:03:58.250,0:04:00.250
+Those grids and turn them into vectors
+
+0:04:00.770,0:04:08.770
+The way we reshape things in pi torch is by using the view method and so the view method you can pass to it
+
+0:04:09.230,0:04:11.230
+How large you want each
+
+0:04:11.930,0:04:15.670
+dimension to be and so in this case we want the
+
+0:04:17.239,0:04:21.429
+Number of columns to be equal to the total number of pixels in each picture
+
+0:04:22.220,0:04:29.320
+Which is 28 times 28 because they're 28 by 28 images. And then the number of rows will be however many rows
+
+0:04:29.320,0:04:32.050
+There are in the data and so if you just use minus one
+
+0:04:32.690,0:04:34.690
+when you call you that means
+
+0:04:35.420,0:04:37.479
+You know as many as there are in the data
+
+0:04:37.480,0:04:42.219
+So this will create something of the same with the same total number of elements that we had before so
+
+0:04:43.580,0:04:45.580
+We can grab all our threes
+
+0:04:45.650,0:04:49.480
+we can concatenate them to watch CAD with all of our sevens and
+
+0:04:50.180,0:04:53.230
+then reshape that into a
+
+0:04:53.960,0:04:56.679
+matrix where each row is one
+
+0:04:57.380,0:05:02.080
+Image with all of the rows and columns of the image all lined up in a single vector
+
+0:05:04.560,0:05:09.060
+Then we're going to need labels, so that's our X so we're going to need labels our labels will be a 1
+
+0:05:09.669,0:05:14.249
+the H of the 3s and a 0 for H of the 7s so our
+
+0:05:14.770,0:05:17.160
+Basically, we're creating is 3 model
+
+0:05:20.130,0:05:26.809
+So that's going to create a vector we actually need it to be a matrix in
+
+0:05:27.780,0:05:32.059
+In pi torch so unscrews will add an additional
+
+0:05:33.210,0:05:35.210
+unit
+
+0:05:35.310,0:05:38.569
+Dimension to wherever I've asked for so here in position one
+
+0:05:38.790,0:05:42.170
+so in other words, this is going to turn up from something which is a
+
+0:05:42.720,0:05:46.160
+vector of twelve thousand three hundred and ninety six long
+
+0:05:46.890,0:05:51.199
+Into a matrix with twelve thousand three hundred ninety-six rows and one column
+
+0:05:52.500,0:05:55.429
+That's just what pi torch expects to see
+
+0:05:57.150,0:06:03.650
+So now we're going to turn our X&Y into a data set and a data set is a very specific
+
+0:06:04.500,0:06:09.919
+Concept in pi torch. It's something which we can index into using square brackets
+
+0:06:11.040,0:06:15.890
+And when we do so it's expected to return a double
+
+0:06:17.760,0:06:20.460
+So here if we look at
+
+0:06:23.020,0:06:25.020
+How we're going to create this data set
+
+0:06:25.570,0:06:30.029
+and when we index into it, it's going to return a tuple containing our
+
+0:06:30.670,0:06:32.670
+independent variable and a dependent variable
+
+0:06:33.730,0:06:35.530
+For each
+
+0:06:35.530,0:06:36.970
+particular row and
+
+0:06:36.970,0:06:44.580
+so to do that we can use the Python zip function which takes one element of the first thing and
+
+0:06:46.420,0:06:51.839
+Combines it with concatenates it with one element of the second thing and then it does that again and again and again and
+
+0:06:52.150,0:06:55.709
+so then if we create a list of those it gives us a
+
+0:06:56.410,0:07:03.869
+It is as a data set. It gives us a list which when we index into it, it's going to contain one image and
+
+0:07:04.510,0:07:11.159
+one label and so here you can see why there's my label and my image I won't print out the whole thing, but it's a
+
+0:07:12.250,0:07:14.250
+784 long vector
+
+0:07:14.710,0:07:21.840
+So that's a really important concept a data set is something that you can index into and get back at Apple
+
+0:07:23.280,0:07:26.220
+And Here I am this is called destructuring the tupple
+
+0:07:26.220,0:07:28.350
+which means I'm taking the two parts of the tupple and
+
+0:07:28.510,0:07:34.200
+Putting the first part in one variable in the second part in the other variable, which is something we do a lot in Python
+
+0:07:34.200,0:07:36.779
+It's pretty handy a lot of other languages support that as well
+
+0:07:38.610,0:07:45.770
+Repeat the same three steps for a validation set. So we've now got a training data set and a validation data set
+
+0:07:47.550,0:07:49.760
+Right, so now we need to
+
+0:07:50.820,0:07:52.820
+initialize our parameters and
+
+0:07:53.610,0:07:58.880
+So to do that as we've discussed we just do it randomly. So here's a function. They're given some
+
+0:07:59.550,0:08:00.870
+size
+
+0:08:00.870,0:08:02.870
+Some some shape if you like
+
+0:08:03.360,0:08:04.500
+we'll
+
+0:08:04.500,0:08:06.500
+randomly initialize
+
+0:08:07.950,0:08:15.710
+Using a normal random number distribution in pi torch that's what Rand in does and we can hit shift tab to see
+
+0:08:17.340,0:08:19.340
+That works, okay
+
+0:08:23.790,0:08:26.029
+And it says here that it's going to have a variance of one
+
+0:08:26.670,0:08:29.329
+So I probably shouldn't call this standard deviation
+
+0:08:29.330,0:08:31.640
+I probably should call this variance actually
+
+0:08:32.039,0:08:38.598
+so multiply it by the variance - to change its variance to whatever is requested which will default to one and
+
+0:08:39.900,0:08:41.900
+then as we talked about when it comes to
+
+0:08:42.659,0:08:45.769
+Calculating our gradients we have to tell PI torch
+
+0:08:46.380,0:08:51.499
+Which things we want gradients for and the way we do that is requires gred underscore
+
+0:08:51.870,0:08:56.150
+Remember this underscore at the end is a special magic symbol which tells python
+
+0:08:56.400,0:09:02.299
+Tells play torch that we want this function to actually change the thing that it's referring to so this will change
+
+0:09:03.480,0:09:05.480
+this
+
+0:09:06.450,0:09:07.650
+Tensor
+
+0:09:07.650,0:09:09.650
+Such that it requires radiance
+
+0:09:10.260,0:09:12.289
+So here's some weights so our weights
+
+0:09:12.870,0:09:14.820
+are going to need to be
+
+0:09:14.820,0:09:21.770
+28 by 28 by one shape 28 by 28 because every pixel is going to need a weight and
+
+0:09:22.500,0:09:26.929
+Then one because we're going to need again. We're going to need to have that that that unit
+
+0:09:28.740,0:09:30.740
+Access to make it into a column
+
+0:09:32.070,0:09:34.070
+So that's what piped watch expects
+
+0:09:35.529,0:09:37.529
+So there's our weights
+
+0:09:38.740,0:09:44.939
+Now just weights by pixels actually isn't going to be enough because weights by pixels were always equals zero
+
+0:09:45.430,0:09:48.449
+When the pixels are equal to zero, it has a zero intercept
+
+0:09:48.459,0:09:55.289
+So we really want something where it's like W X plus B a line. So the B is we call the bias and
+
+0:09:55.990,0:10:01.019
+So that's just going to be a single number. So let's grab a single number for our bias
+
+0:10:02.379,0:10:03.519
+so
+
+0:10:03.519,0:10:09.568
+Remember I told you there's a difference between the parameters and weights. So actually speaking so here the weights are
+
+0:10:10.540,0:10:12.540
+the W in this equation
+
+0:10:12.910,0:10:18.089
+the bias is B in this equation and the whites and bias together is
+
+0:10:18.519,0:10:22.739
+The parameters of the function they're all the things that we're going to change
+
+0:10:22.740,0:10:25.259
+They're all the things that have gradients that we're going to update
+
+0:10:26.589,0:10:31.679
+So there's an important bit of jargon for you the weights and biases of the model are the parameters
+
+0:10:34.279,0:10:36.378
+We can yes question
+
+0:10:39.120,0:10:43.160
+What's the difference between gradient descent and stochastic gradient descent
+
+0:10:45.570,0:10:50.030
+So far we've only done gradient descent will be doing stochastic gradient descent in a few minutes
+
+0:10:52.339,0:10:57.469
+We can now create a calculated prediction for one image so we can take an image such as the first one and
+
+0:10:57.899,0:11:05.179
+multiply by the weights only to transpose them to make them line up in terms of the rows and columns and add it up and
+
+0:11:05.519,0:11:07.729
+add the bias and there is a
+
+0:11:08.490,0:11:10.490
+prediction
+
+0:11:11.069,0:11:17.748
+We want to do that for every image we could do that with a for loop and that would be really really slow
+
+0:11:18.779,0:11:24.948
+it wouldn't run on the GPU and it wouldn't run in optimize and see code so we actually want to use
+
+0:11:25.259,0:11:29.449
+Always to do kind of like looping over pixels looping over images
+
+0:11:30.180,0:11:33.739
+You always need to try to make sure you're doing that without a Python or loop
+
+0:11:34.889,0:11:36.480
+in this case
+
+0:11:36.480,0:11:41.269
+Doing this calculation for lots of rows and columns is a mathematical
+
+0:11:41.910,0:11:43.969
+operation called matrix multiply
+
+0:11:44.790,0:11:46.790
+so if you've
+
+0:11:47.399,0:11:51.529
+Forgotten your matrix multiplication or maybe never quite got around to it at a high school
+
+0:11:53.009,0:11:57.229
+It would be a good idea to he'll look at Khan Academy or something to learn
+
+0:11:57.779,0:12:05.779
+About what it is, but it's actually I'll give you the quick answer. This is from Wikipedia if these are two matrices a and B
+
+0:12:06.959,0:12:12.258
+then this element here 1 comma 2 in the output is going to be equal to
+
+0:12:12.959,0:12:19.518
+The first bit here times the first bit here plus the second bit here times the second bit here
+
+0:12:19.519,0:12:22.698
+So it's going to be a 1 2 times a 1 1
+
+0:12:23.009,0:12:28.188
+Plus B 2 2 times a 1 2 that's you can see the orange matches the orange
+
+0:12:29.890,0:12:31.890
+Ditto for over here
+
+0:12:31.890,0:12:38.849
+this would be equal to b1 3 times a 3 1 plus B 2 3 times a 3 2 and so forth for every
+
+0:12:49.440,0:12:51.440
+Here's a great picture of that in action
+
+0:12:51.440,0:12:52.529
+If you look at matrix
+
+0:12:52.529,0:12:59.119
+multiplication X Y Z another way to think of it is we can kind of flip the second bit over on top and then
+
+0:13:00.149,0:13:02.149
+Multiply each bit together and add them up
+
+0:13:03.480,0:13:08.489
+multiplied each bit together and add them up and you can see always the second one here and ends up in the second spot and
+
+0:13:08.490,0:13:10.490
+The first one ends up in the first bud
+
+0:13:14.490,0:13:16.950
+And that's what matrix multiplication is
+
+0:13:18.279,0:13:20.849
+so we can do our
+
+0:13:23.010,0:13:26.939
+Up by using matrix multiplication and in
+
+0:13:27.730,0:13:33.270
+Python and therefore pay torch matrix multiplication is the @ sign operator
+
+0:13:33.280,0:13:36.449
+So when you see that, that means matrix multiply
+
+0:13:37.630,0:13:39.630
+so here is our
+
+0:13:40.959,0:13:44.549
+20.2 336 if I do a matrix multiply of
+
+0:13:46.110,0:13:47.830
+Our
+
+0:13:47.830,0:13:51.660
+Training set by our weights and then we add the bias and
+
+0:13:52.180,0:13:57.420
+Here is our twenty point three three six for the first one and you can see though. It's doing every single
+
+0:13:57.940,0:14:04.109
+One, okay. So that's really important is the matrix model location gives us an optimized way to do these
+
+0:14:04.930,0:14:09.030
+Simple linear functions, whereas many kind of rows and columns as we want
+
+0:14:11.300,0:14:15.039
+So this is one of the two fundamental equations of any neural network
+
+0:14:17.809,0:14:21.309
+Some rows of data rows and columns of data much use multiplied
+
+0:14:21.309,0:14:26.499
+Some ways add some bias and the second one which was here in a moment is an activation function
+
+0:14:29.600,0:14:35.920
+So that is some predictions from our randomly initialized model so we can check how good our
+
+0:14:36.410,0:14:40.270
+Model is and so to do that we can decide that
+
+0:14:40.790,0:14:42.790
+Anything greater than zero?
+
+0:14:43.370,0:14:49.989
+We will call a three and anything less than zero we will call a seven so Preds
+
+0:14:51.329,0:14:55.469
+Greater than zero tells us whether or not something is predicted to be a tree or not
+
+0:14:56.889,0:14:58.589
+Then turn that into a float
+
+0:14:58.589,0:15:02.488
+so rather than true and false make it one in zero because it's what our training set contains and then
+
+0:15:03.309,0:15:05.199
+check with our our
+
+0:15:05.199,0:15:06.639
+our
+
+0:15:06.639,0:15:08.290
+thresholded predictions
+
+0:15:08.290,0:15:13.139
+Are equal to our training set and this will return true
+
+0:15:13.629,0:15:17.279
+Every time a row is correctly predicted and false. Otherwise
+
+0:15:18.309,0:15:23.999
+So if we take all those trues and falses and turn them into floats, so that'll be ones and zeroes and then take their mean
+
+0:15:25.520,0:15:32.629
+It's point four nine so not surprisingly our randomly initialized model is right about half the time at predicting three years from sevens I
+
+0:15:33.300,0:15:35.330
+Added one more method here, which is dot item
+
+0:15:36.360,0:15:38.360
+without item
+
+0:15:38.910,0:15:40.910
+This would return a tensor
+
+0:15:40.950,0:15:45.109
+It's a rank zero tensor. It has no rows. It has no columns
+
+0:15:45.110,0:15:48.649
+it just it's just a number on its own, but I actually wanted to
+
+0:15:49.980,0:15:54.800
+Unwrap it to create a normal Python scaler mainly just because I wanted to see them easily see the full
+
+0:15:55.230,0:16:02.420
+Set of decimal places and the reason for that is I want to show you how we're going to calculate the derivative on the accuracy
+
+0:16:03.209,0:16:05.599
+By changing a parameter a tiny bit
+
+0:16:06.480,0:16:10.670
+so let's take one parameter which will be weights zero and
+
+0:16:11.730,0:16:14.570
+Multiply it by one point zero one
+
+0:16:15.810,0:16:18.150
+and so that's going to make it a little bit bigger and
+
+0:16:18.910,0:16:20.910
+then if I calculate how the
+
+0:16:23.500,0:16:29.580
+The accuracy changes based on the change in that weight that will be the gradient of
+
+0:16:30.279,0:16:35.249
+The accuracy with respect to that parameter so I can do that by calculating
+
+0:16:36.190,0:16:41.429
+my new set of predictions and then I can threshold them and then I can check whether they're equal to the training set and
+
+0:16:41.800,0:16:43.480
+Then take the mean
+
+0:16:43.480,0:16:45.220
+And I get back
+
+0:16:45.220,0:16:47.580
+Exactly the same number
+
+0:16:48.279,0:16:50.279
+so remember that
+
+0:16:52.150,0:16:53.590
+Gradient is
+
+0:16:53.590,0:16:55.570
+equal to
+
+0:16:55.570,0:17:01.710
+Rise over run if you remember back to your calculus or if you'd forgotten your calculus. Hopefully you've reviewed it on Khan Academy
+
+0:17:02.710,0:17:04.710
+so
+
+0:17:04.839,0:17:09.938
+The change in the Y so why new - why old which is
+
+0:17:11.300,0:17:17.019
+0.49 1 2 etc minus 0.49 1 2 etc, which is 0
+
+0:17:19.430,0:17:21.199
+This change
+
+0:17:21.199,0:17:26.139
+will give us 0 so at this point we have a problem our derivative is
+
+0:17:27.380,0:17:29.380
+Zero so we have zero gradients
+
+0:17:29.720,0:17:35.439
+Which means our step will be zero which means our prediction will be unchanged
+
+0:17:38.760,0:17:40.020
+Okay
+
+0:17:40.020,0:17:46.430
+so we have a problem and our problem is that our gradient is zero and with a gradient of
+
+0:17:46.860,0:17:53.029
+Zero we can't take a step and we can't get better predictions. And so
+
+0:17:53.430,0:17:54.140
+Intuitively speaking
+
+0:17:54.140,0:18:00.710
+the reason that our gradient is zero is because when we change a single pixel by a tiny bit
+
+0:18:01.140,0:18:09.110
+we might not ever in any way change an actual prediction to change from a three predicting a three to a seven or
+
+0:18:09.900,0:18:13.940
+Vice versa because we have this we have this threshold
+
+0:18:16.060,0:18:18.249
+And so in other words our
+
+0:18:20.890,0:18:22.220
+Our accuracy
+
+0:18:22.220,0:18:28.450
+Loss function here is very bumpy. It's like flat step flat step flat step. So it's got this
+
+0:18:29.060,0:18:30.170
+this
+
+0:18:30.170,0:18:35.379
+Zero gradient all over the place. So what we need to do is use something other than
+
+0:18:36.500,0:18:37.910
+accuracy as
+
+0:18:37.910,0:18:39.910
+our loss function
+
+0:18:41.150,0:18:47.920
+So, let's try and create a new function and what this new function is going to do is it's going to
+
+0:18:49.520,0:18:51.520
+Give us a better value
+
+0:18:52.970,0:18:54.970
+Kind of in in much the same way that
+
+0:18:55.550,0:18:59.649
+Accuracy gives a better value. So this is the loss member of small losses better
+
+0:18:59.809,0:19:05.319
+so to give us a lower loss when the accuracy is better, but it won't have a
+
+0:19:06.260,0:19:07.880
+zero
+
+0:19:07.880,0:19:09.880
+gradient
+
+0:19:10.269,0:19:15.429
+A slightly better prediction needs to have a slightly better loss
+
+0:19:17.149,0:19:19.149
+So, let's have a look an example
+
+0:19:19.369,0:19:21.049
+let's say our
+
+0:19:21.049,0:19:24.338
+Targets our labels of like that there is three. Oh
+
+0:19:24.950,0:19:29.349
+There's just three rows three images here one zero one, okay
+
+0:19:29.959,0:19:37.179
+And we've made some predictions from a neural net and those predictions gave us point. Nine point four point two
+
+0:19:38.479,0:19:40.479
+so now consider
+
+0:19:40.700,0:19:46.779
+This loss function a loss function. We're going to use torch dot where which is basically the same as
+
+0:19:47.479,0:19:55.059
+This list comprehension is basically an if statement so it's going to say for for where target equals one
+
+0:19:56.209,0:20:01.479
+We're going to return 1 minus predictions. So here target is one so it'll be 1 minus 0.9 and
+
+0:20:02.479,0:20:06.189
+Where target is not 1 it'll just be predictions
+
+0:20:07.640,0:20:09.640
+so well these
+
+0:20:09.870,0:20:12.410
+Examples here. The first one target equals 1
+
+0:20:13.350,0:20:15.150
+will be 1
+
+0:20:15.150,0:20:17.359
+minus 0.9 0.1
+
+0:20:19.080,0:20:24.380
+The next one is target equals 0 so to piss people the prediction just 0.4
+
+0:20:24.380,0:20:28.070
+And then for the third one, it's a 1/4 target
+
+0:20:28.070,0:20:34.579
+So it'll be 1 minus prediction, which is 0.8. And so you can see here when the
+
+0:20:35.430,0:20:38.690
+Prediction is correct. Correct. In other words, it's a number, you know
+
+0:20:38.690,0:20:44.539
+It's a high number when the target is 1 and a low number when the target is 0
+
+0:20:45.150,0:20:50.089
+These numbers are going to be smaller. So the worst one is when we predicted
+
+0:20:51.390,0:20:54.619
+0.2. So we're pretty we really thought that was actually a zero
+
+0:20:54.620,0:21:00.530
+But it's actually a 1 so we ended up with a 0.8 here because this is 1 minus prediction
+
+0:21:01.080,0:21:03.080
+1 minus 0.2
+
+0:21:03.210,0:21:04.560
+0.8
+
+0:21:04.560,0:21:10.729
+So we can then take the mean of all of these to calculate a loss
+
+0:21:11.160,0:21:13.519
+So if you think about it this loss
+
+0:21:14.280,0:21:16.639
+will be the smallest if
+
+0:21:17.550,0:21:21.529
+The predictions are exactly right. So if we did
+
+0:21:23.450,0:21:25.450
+Frictions
+
+0:21:26.730,0:21:29.610
+Is actually identical to the targets
+
+0:21:32.909,0:21:34.909
+We'll be
+
+0:21:35.169,0:21:37.169
+Zero zero zero
+
+0:21:37.450,0:21:41.460
+okay, where else if they were exactly wrong though say they were
+
+0:21:42.549,0:21:44.549
+one -
+
+0:21:45.830,0:21:47.830
+And it's 1 1 1
+
+0:21:47.970,0:21:55.010
+So it's going to be the loss will be better ie smaller when the predictions are closer to the targets
+
+0:21:57.900,0:22:03.719
+And so here we can now take the mean and when we do we get here point four three three
+
+0:22:06.530,0:22:08.530
+Let's say we change
+
+0:22:09.690,0:22:14.450
+This last bad one in accurate prediction from zero point two
+
+0:22:14.970,0:22:16.560
+to zero
+
+0:22:16.560,0:22:18.120
+point eight and
+
+0:22:18.120,0:22:25.910
+The loss gets better from point four three to 0.23 but this is just this function is torched. We're not mean
+
+0:22:26.580,0:22:33.799
+So this is actually pretty good. This is actually a loss function which pretty closely tracks accuracy was the accuracies better
+
+0:22:33.800,0:22:35.370
+The loss will be smaller
+
+0:22:35.370,0:22:41.450
+But also it doesn't have these zero gradients because every time we change the prediction the loss changes
+
+0:22:41.700,0:22:46.309
+Because the prediction is literally harder the loss that's pretty neat, isn't it?
+
+0:22:47.340,0:22:52.849
+One problem is this is only going to work. Well, as long as the predictions are between 0 & 1
+
+0:22:53.220,0:22:55.940
+Otherwise, this one - prediction thing is going to look a bit funny
+
+0:22:57.610,0:23:01.780
+We should try and find a way to ensure that the predictions are always between
+
+0:23:02.480,0:23:07.209
+zero and one and that's also going to just make a lot more intuitive sense because you know
+
+0:23:07.210,0:23:09.340
+we like to be able to kind of think of these as if they're like
+
+0:23:09.890,0:23:12.009
+probabilities or at least nicely scaled numbers
+
+0:23:13.220,0:23:16.329
+so we need some function that can take our
+
+0:23:17.570,0:23:19.570
+numbers
+
+0:23:19.670,0:23:21.670
+Have a look
+
+0:23:23.850,0:23:31.010
+Ex-something which can take these big numbers and turn them all into numbers between zero and one and it so happens that we have
+
+0:23:32.160,0:23:34.790
+Exactly the right function. It's called
+
+0:23:35.730,0:23:37.730
+the sigmoid function
+
+0:23:37.860,0:23:39.890
+so the sigmoid function looks like this if
+
+0:23:40.320,0:23:44.180
+You pass in a really small number you get a number very close to zero
+
+0:23:44.400,0:23:47.809
+If you pass in a big number you get a number very close to 1
+
+0:23:48.940,0:23:50.940
+it never gets past one and
+
+0:23:51.499,0:23:57.249
+It never goes smaller than zero and then it's kind of like this smooth curve between and in the middle
+
+0:23:57.259,0:23:59.289
+It looks a lot like the y equals x line
+
+0:24:00.440,0:24:03.580
+This is the definition of the sigmoid function
+
+0:24:03.919,0:24:08.589
+It's 1 over 1 plus e to the minus X
+
+0:24:10.610,0:24:15.640
+What is X X is just e to the power of
+
+0:24:16.490,0:24:17.630
+something
+
+0:24:17.630,0:24:19.630
+so if we look at e
+
+0:24:23.740,0:24:30.030
+It's just a number like pi this is so simple, it's just a number that has a particular value right? So if we go a
+
+0:24:32.060,0:24:34.629
+Squared and we look at
+
+0:24:39.370,0:24:42.579
+It's going to be a tensor here's PI torch
+
+0:24:45.590,0:24:47.590
+It could have float
+
+0:24:48.860,0:24:55.849
+There we go and you can see that these are the same number so that's what torch dot X means
+
+0:24:59.450,0:25:04.999
+Okay, so you know for me when I see these kinds of interesting functions, I don't worry too much about
+
+0:25:06.030,0:25:09.920
+The definition what I care about is the shape
+
+0:25:10.140,0:25:10.640
+alright
+
+0:25:10.640,0:25:14.150
+So you can have a play around with graphing calculators or whatever to kind of see
+
+0:25:14.400,0:25:18.499
+Why it is that you end up with this shape from this particular equation
+
+0:25:19.380,0:25:22.970
+but for me, I just never think about that it never
+
+0:25:23.580,0:25:30.379
+Really matters to me what's important is this sigmoid shape, which is what we want. It's something that squashes
+
+0:25:31.380,0:25:34.249
+every number to be between naught and 1
+
+0:25:36.110,0:25:43.840
+So we can change em nest loss to be exactly the same as it was before but first we can make everything into sigmoid
+
+0:25:44.810,0:25:51.340
+First and then use torch don't wear so that is a loss function that has all the properties we want. It's
+
+0:25:52.130,0:25:55.510
+At something which is going to be have not have any of those nasty
+
+0:25:56.390,0:26:01.150
+Zero gradients and we've ensured that the input to the wear
+
+0:26:02.150,0:26:04.150
+Is between Norton one
+
+0:26:05.490,0:26:07.490
+So
+
+0:26:07.690,0:26:12.429
+The reason we did this is because our our accuracy
+
+0:26:13.940,0:26:15.860
+Was
+
+0:26:15.860,0:26:23.110
+Kind of what we really care about is a good accuracy. We can't use it to get our gradients. Just just to create our step
+
+0:26:23.750,0:26:25.750
+to improve our parameters
+
+0:26:29.840,0:26:31.730
+So we can change
+
+0:26:31.730,0:26:36.759
+Our our accuracy to another function that is similar in terms of it
+
+0:26:36.759,0:26:42.699
+It's better when the accuracy is better, but it also does not have these zero gradients
+
+0:26:42.700,0:26:46.419
+And so you can see now where why we have a metric and a loss
+
+0:26:46.549,0:26:53.648
+the metric is the thing we actually care about the loss is the thing that's similar to what we care about but has a
+
+0:26:54.200,0:26:55.940
+nicely behaved
+
+0:26:55.940,0:26:57.830
+gradient
+
+0:26:57.830,0:27:03.939
+Sometimes the thing you care about your metric does have a nicely defined gradient and you can use it directly as a loss
+
+0:27:04.309,0:27:06.339
+For example, we often use means grade error
+
+0:27:07.429,0:27:09.429
+but for classification
+
+0:27:10.129,0:27:12.129
+unfortunately not
+
+0:27:12.680,0:27:15.579
+So we need to now use this to
+
+0:27:17.150,0:27:19.150
+To update the parameters
+
+0:27:20.140,0:27:25.869
+And so there's a couple of ways we could do this one would be to loop through every image
+
+0:27:27.260,0:27:29.260
+Calculate a prediction for that image
+
+0:27:30.050,0:27:32.050
+and then
+
+0:27:32.480,0:27:35.320
+calculate a loss and then do a step and
+
+0:27:35.660,0:27:41.019
+Then step the other parameters and then do that again for the next image in the next image in the next image
+
+0:27:42.030,0:27:43.750
+That's going to be really slow
+
+0:27:43.750,0:27:47.849
+Because we're we're doing a single step for a single image
+
+0:27:48.850,0:27:53.130
+So that would mean an epoch would take quite a while. We could go much faster
+
+0:27:53.890,0:27:57.839
+By doing every single image in the data set
+
+0:27:58.720,0:28:00.510
+so a big matrix multiplication
+
+0:28:00.510,0:28:04.499
+It can all be paralyzed on the GPU and then so then we can
+
+0:28:04.870,0:28:09.390
+We could then do a step based on the gradients looking at the entire
+
+0:28:09.910,0:28:11.910
+Notice it
+
+0:28:12.430,0:28:15.209
+But now that's going to be like a lot of work
+
+0:28:16.210,0:28:21.180
+to just update the weights once remember sometimes our datasets have
+
+0:28:21.850,0:28:25.560
+Millions or tens of millions of items. So that's probably a bad idea
+
+0:28:26.230,0:28:27.790
+too
+
+0:28:27.790,0:28:31.739
+So why not compromise? Let's grab a few data items at a time
+
+0:28:32.620,0:28:35.280
+To calculate our loss and our step
+
+0:28:35.560,0:28:40.649
+now if we grab a few data items at a time those two data items are called a mini ditch and
+
+0:28:40.840,0:28:42.840
+a mini batch just means a
+
+0:28:43.390,0:28:45.390
+few pieces of data
+
+0:28:45.820,0:28:51.360
+And so the size of your mini batch is called not surprisingly the batch size, right?
+
+0:28:51.360,0:28:57.180
+so the bigger the batch size the closer you get to the full size of your data set the longer it's going to take to
+
+0:28:57.280,0:28:59.280
+Calculate a single
+
+0:28:59.440,0:29:01.620
+Set of losses a single step
+
+0:29:02.290,0:29:06.269
+But the the more accurate it's going to be it's going to be like the gradients are going to be
+
+0:29:07.060,0:29:09.719
+much closer to the true data set gradients and
+
+0:29:10.360,0:29:17.280
+then the smaller the batch size the faster each step we'll be able to do but those steps will represent a
+
+0:29:17.470,0:29:20.430
+Smaller number of items and so they won't be such an accurate
+
+0:29:21.280,0:29:23.910
+approximation of the real gradient of the whole data set
+
+0:29:26.830,0:29:32.160
+Is there a reason the mean of the loss is calculated over say doing a median and
+
+0:29:32.350,0:29:35.550
+The median is less prone to getting influenced by outliers
+
+0:29:38.279,0:29:42.898
+The example you gave if the third point which was wrongly predicted as an outlier
+
+0:29:42.899,0:29:48.598
+Then the derivative would push the function away while doing SGD and a median could be better in that case
+
+0:29:52.260,0:29:54.260
+Honestly, I've never tried using a median
+
+0:29:55.529,0:30:01.879
+The problem with a median is it ends up really only caring about one number which is the number in the middle?
+
+0:30:03.210,0:30:05.210
+So it could end up
+
+0:30:05.220,0:30:07.220
+really pretty much ignoring
+
+0:30:07.590,0:30:11.480
+All of the things at each end and that all it really cares about is the order of things
+
+0:30:12.269,0:30:16.669
+So my guess is that you would end up with something that is only good at predicting
+
+0:30:17.760,0:30:19.760
+one thing in the middle
+
+0:30:19.889,0:30:22.669
+But I haven't tried it be interesting to see
+
+0:30:24.059,0:30:30.319
+well, I guess the other thing that would happen with a median is you would have a lot of zero gradients I think because it's
+
+0:30:30.320,0:30:33.439
+Picking the thing in the middle and you could you know change
+
+0:30:34.350,0:30:36.350
+Your values and the thing in the middle
+
+0:30:36.750,0:30:41.750
+Might well wouldn't be zero gradients, but bumpy gradients. I think in the middle would suddenly jump to being a different item
+
+0:30:42.720,0:30:48.589
+So it might not behave very well. That's that's my guess. You should try it
+
+0:30:50.970,0:30:52.970
+Okay, so how do we
+
+0:30:53.200,0:30:55.799
+Ask for a few items at a time
+
+0:30:56.679,0:31:03.419
+It turns out that pi torch and faster. I provide something to do that for you you can pass in
+
+0:31:04.150,0:31:08.099
+any data set to this class core data loader and
+
+0:31:08.920,0:31:14.699
+It will grab a few items from that data set at a time. You can ask for how many by asking for a batch size
+
+0:31:16.090,0:31:18.540
+And then you can yeah
+
+0:31:18.540,0:31:23.459
+Well, as you can see, it will grab a few items at a time until it's grabbed all of them
+
+0:31:23.500,0:31:27.569
+So here I'm saying let's create a collection that just contains all the numbers from nought to 14
+
+0:31:29.140,0:31:32.219
+Let's pass that into a data loader with a batch size of five
+
+0:31:33.460,0:31:37.110
+And then that's going to be something it's called an iterator in Python
+
+0:31:37.110,0:31:42.630
+It's something that you can ask for one more thing from an iterator if you pass an iterator to list in Python
+
+0:31:42.630,0:31:46.919
+It returns all of the things from the iterator. So here are my three
+
+0:31:47.470,0:31:50.640
+Mini batches and you'll see here all the numbers from naught to 15 appear
+
+0:31:50.799,0:31:57.299
+They appear in a random order and they appear five at a time. They appear in random order because shuffle equals true, so
+
+0:31:57.880,0:32:00.900
+Normally in the training set we ask for things to be shuffled
+
+0:32:01.090,0:32:05.880
+So it gives us a little bit more randomization more randomization is it's good
+
+0:32:06.220,0:32:09.870
+Because it makes it harder for it to kind of learn what the data set looks like
+
+0:32:11.980,0:32:15.599
+So that's what a data loader weather that's how our date loader is created
+
+0:32:17.590,0:32:19.590
+Now
+
+0:32:19.630,0:32:23.549
+Remember though that our data sets actually return
+
+0:32:24.160,0:32:28.589
+Tuples and here I've just got single intz so let's actually create a tuple
+
+0:32:28.840,0:32:34.319
+So if we enumerate all the letters of English, then that means that returns
+
+0:32:34.840,0:32:40.770
+Zero A 1 B 2 C cetera. Let's make that our data set. So if we pass that
+
+0:32:41.350,0:32:46.500
+To a data loader with a batch size of 6 and as you can see it returns
+
+0:32:47.590,0:32:48.970
+tuples
+
+0:32:48.970,0:32:50.650
+containing
+
+0:32:50.650,0:32:57.689
+6 of the first things and the associated six of the second things. So this is like our
+
+0:32:58.600,0:33:01.050
+independent variable and this is like our
+
+0:33:01.570,0:33:08.790
+Dependent variable. Okay, and so and then at the end, you know that with the batch size weren't necessarily exactly
+
+0:33:10.000,0:33:13.800
+Divided nicely into the full size of the data set you might end up with a smaller
+
+0:33:14.500,0:33:16.500
+batch
+
+0:33:19.170,0:33:23.659
+So basically then we already have a data set remember
+
+0:33:24.540,0:33:28.999
+and so we could pass it to a data loader and then we can basically say this an
+
+0:33:29.280,0:33:32.119
+Iterator in Python is something that you can actually loop through
+
+0:33:32.280,0:33:37.430
+So when we say for in data loader, it's going to return a tuple
+
+0:33:37.950,0:33:42.649
+we can D structure it into the first bit and the second bit and
+
+0:33:43.470,0:33:46.339
+So that's going to be our x and y we can calculate our predictions
+
+0:33:47.100,0:33:54.079
+we can calculate our loss from the predictions and the targets we can ask it to calculate our gradients and
+
+0:33:55.020,0:34:02.060
+Then we can update our parameters just like we did in our toy SGD example for the quadratic equation
+
+0:34:03.480,0:34:11.030
+so that's reinitialize our weights and bias with the same two lines of code before let's create the data loader this time from our
+
+0:34:11.429,0:34:14.929
+Actual M. Nest data set and create a nice big batch size
+
+0:34:14.929,0:34:18.049
+So we do plenty of work each time and just to take a look
+
+0:34:18.419,0:34:25.909
+Let's just grab the first thing from the data loader first is a fast AI function which just grabs the first thing from an iterator
+
+0:34:26.040,0:34:29.870
+It's just useful to look at you know, we're kind of an arbitrary mini batch
+
+0:34:31.770,0:34:35.509
+So here is the shape we're going to have the first mini batch is
+
+0:34:36.330,0:34:42.499
+256 rows of 784 long that's 28 by 28. So 256 flattened out images and
+
+0:34:43.500,0:34:45.030
+256
+
+0:34:45.030,0:34:51.140
+Labels that are 1 1 because there's just the number 0 or the number 1 depending on whether as a 3 or a 7
+
+0:34:52.650,0:34:56.150
+Who the same for the validation set so here's a validation data loader
+
+0:34:58.800,0:35:02.729
+And so let's grab a
+
+0:35:04.390,0:35:10.890
+Batch here testing pass it into well, why do we do that? We should
+
+0:35:12.400,0:35:14.400
+What look
+
+0:35:16.950,0:35:18.300
+Yeah, I guess yeah
+
+0:35:18.300,0:35:24.810
+Actually for our testing, I'm going to just manually grab the first four things just so that we can make sure everything lines up
+
+0:35:24.810,0:35:28.169
+So so let's grab just the first four things. We'll call that a batch
+
+0:35:29.470,0:35:35.970
+Pass it into that linear function. We created earlier or remember linear
+
+0:35:39.640,0:35:46.099
+Was just ex patch at weights matrix model play + bias
+
+0:35:51.250,0:35:52.040
+And
+
+0:35:52.040,0:35:58.209
+So that's going to give us four results. That's a prediction or each of those four images and
+
+0:35:59.120,0:36:03.729
+So then we can calculate the loss using that loss function. We just used and let's just grab the first four
+
+0:36:04.340,0:36:07.209
+Items of the training set and there's the loss
+
+0:36:08.180,0:36:14.020
+Okay, and so now we can calculate the gradients and so the gradients are
+
+0:36:15.950,0:36:16.900
+784 by one
+
+0:36:16.900,0:36:17.770
+so in other words
+
+0:36:17.770,0:36:19.730
+it's a column where every
+
+0:36:19.730,0:36:27.429
+weight as a gradient is its what's the change in loss for a small change in that parameter and
+
+0:36:28.370,0:36:33.849
+Then the bias has a gradient. That's a single number because the bias is just a single number
+
+0:36:37.240,0:36:39.310
+We can take those three steps and put it in a function
+
+0:36:39.980,0:36:43.300
+So if you pass if you this is calculate gradient
+
+0:36:43.300,0:36:48.369
+You pass it an X batch or Y batch and some model then it's going to calculate the predictions
+
+0:36:49.010,0:36:51.399
+calculate the loss and do the backward step and
+
+0:36:52.460,0:36:55.990
+Here we see calculate gradient and so we can get there
+
+0:36:56.330,0:37:00.279
+just to take a look the mean of the weights gradient and the bias gradient and
+
+0:37:00.920,0:37:02.920
+There it is
+
+0:37:03.420,0:37:06.690
+A second time and look notice. I have not done any
+
+0:37:07.329,0:37:12.989
+Step here. This is exactly the same parameters. I get a different value
+
+0:37:14.410,0:37:19.119
+To concern you would expect to get the same gradient every time you called it with the same data
+
+0:37:20.030,0:37:22.030
+Why if the gradients changed?
+
+0:37:22.609,0:37:28.179
+That's because los dot backward does not just calculate the gradients
+
+0:37:28.490,0:37:35.439
+It calculates the gradients and adds them to the existing gradients the things in the dot grad
+
+0:37:35.960,0:37:37.960
+attribute
+
+0:37:38.119,0:37:42.578
+The reasons for that we'll come to later but that's a now the thing to know is just it does that
+
+0:37:43.160,0:37:46.149
+So actually what we need to do is to call
+
+0:37:46.819,0:37:52.749
+grad, zero underscore so dot zero returns a tensor containing zeros and
+
+0:37:53.299,0:37:56.319
+Remember underscore does it in place so that updates?
+
+0:37:57.049,0:38:01.209
+The weights grad attribute, which is a tensor to contain zeros
+
+0:38:02.700,0:38:07.129
+So now if I do that and call it again, I will get exactly the same number
+
+0:38:08.490,0:38:10.110
+so here is
+
+0:38:10.110,0:38:11.250
+how you
+
+0:38:11.250,0:38:17.419
+Train one epoch with SGD loop through the data loader grabbing the X patch in the Y batch
+
+0:38:18.480,0:38:20.480
+Calculate the gradient
+
+0:38:20.780,0:38:22.780
+prediction loss backward
+
+0:38:24.970,0:38:29.260
+Each other parameters we're going to be passing those in so there's going to be the
+
+0:38:30.260,0:38:33.879
+768 weights and the one bias and then for each of those
+
+0:38:34.790,0:38:36.790
+Update the parameter
+
+0:38:37.190,0:38:41.440
+To go - equals gradient times learning rate. That's our
+
+0:38:42.349,0:38:47.649
+Gradient descent step and then zero it out for the next time around the loop
+
+0:38:49.010,0:38:53.080
+I'm not just saying P minus equals I'm saying P
+
+0:38:53.930,0:38:57.430
+Data- equals and the reason for that. Is that remember
+
+0:38:57.830,0:39:03.789
+PI torch keeps track of all of the calculations we do so that it can calculate the gradient
+
+0:39:04.700,0:39:07.270
+well, I don't want to calculating the gradient of my
+
+0:39:07.910,0:39:12.099
+Gradient descent step. That's like not part of the model, right?
+
+0:39:12.410,0:39:20.349
+So dot data is a special attribute in pi touch where if you write to it, it tells play torch not to
+
+0:39:21.349,0:39:25.809
+Update the gradients using that calculation. So this is your most basic
+
+0:39:26.480,0:39:28.480
+standard
+
+0:39:28.650,0:39:35.660
+SGD stochastic gradient descent loop so now we can answer that earlier question the difference between stochastic gradient descent and
+
+0:39:36.090,0:39:40.549
+Gradient descent is that gradient descent does not have this
+
+0:39:42.930,0:39:44.920
+That loops through each
+
+0:39:44.920,0:39:51.720
+mini-batch for gradient descent it does it on the whole data set each time around so train epoch or
+
+0:39:52.059,0:39:56.939
+Gradient descent would simply not have the ball loop at all
+
+0:39:56.940,0:40:00.240
+but instead it would calculate the gradient for the whole data set and
+
+0:40:00.490,0:40:05.490
+Update the parameters based on the whole data set which we never really do in practice. We always use
+
+0:40:06.099,0:40:08.429
+mini vetches for various sizes
+
+0:40:16.070,0:40:18.429
+Okay, so we can take the
+
+0:40:19.130,0:40:22.179
+Function we had before where we compare the predictions to
+
+0:40:23.090,0:40:27.309
+Whether that well that we used to be comparing the predictions to whether they were greater or less than zero, right?
+
+0:40:27.530,0:40:33.159
+But now that we're doing the sigmoid remember the sigmoid will squish everything between Norton one
+
+0:40:33.470,0:40:38.800
+So now we should compare the predictions to whether they're greater than 0.5 or not if they're greater than 0.5
+
+0:40:39.470,0:40:41.590
+Just to look back at our sigmoid function
+
+0:40:46.030,0:40:51.040
+So zero, what used to be zero is now on the sigmoid is 0.5
+
+0:40:51.710,0:40:55.689
+Okay, so we need to just to make that slight change to our measure of accuracy
+
+0:41:01.890,0:41:08.690
+So to calculate the accuracy for some X batch and some Y batch oh this is actually assumed this is actually the predictions
+
+0:41:09.480,0:41:15.950
+Then we take the sigmoid of the predictions. We compare them to 0.5 to tell us whether it's a 3 or not
+
+0:41:16.170,0:41:19.519
+we check what the actual target was to see which ones are correct and
+
+0:41:20.280,0:41:22.280
+Then we take the mean of those
+
+0:41:22.740,0:41:24.740
+after converting the boolean stir floats
+
+0:41:26.040,0:41:31.759
+So we can check that accuracy. Let's take our batch put it through our simple linear model
+
+0:41:32.430,0:41:36.680
+Compare it to the four items of the training set and there's the accuracy
+
+0:41:38.400,0:41:44.929
+So if we do that for every batch in the validation set then we can loop through with a list comprehension
+
+0:41:45.420,0:41:47.600
+every batch in the validation set
+
+0:41:50.640,0:41:52.980
+Accuracy based on some model
+
+0:41:54.460,0:42:00.869
+stack those all up together so that this is a list right if we want to turn that list into a tensor where the
+
+0:42:01.000,0:42:05.129
+Items of the list of the tensor are the items of the list. That's what stack does
+
+0:42:06.040,0:42:08.040
+So we can stack up all those
+
+0:42:08.680,0:42:10.680
+Take the mean
+
+0:42:11.140,0:42:14.700
+Convert it to a standard Python scalar. We're calling that item
+
+0:42:15.910,0:42:20.399
+round it to four decimal places just for display and so here is our
+
+0:42:21.400,0:42:25.319
+Validation set accuracy as you would expect it's about 50% because it's random
+
+0:42:27.250,0:42:29.399
+So we can now train for one epoch so
+
+0:42:30.370,0:42:31.930
+we can say
+
+0:42:31.930,0:42:33.880
+remember train epoch
+
+0:42:33.880,0:42:34.900
+needed
+
+0:42:34.900,0:42:40.740
+The parameters so our parameters in this case are the weights tensor and the bias tensor
+
+0:42:42.960,0:42:49.919
+One epoch using the linear one model with the learner with a learning rate of one with these two parameters and
+
+0:42:50.470,0:42:52.919
+Then validate and order that
+
+0:42:54.609,0:42:56.539
+Accuracy is now
+
+0:42:56.539,0:42:59.768
+68.8% So we've we've trained an epoch
+
+0:43:00.650,0:43:02.920
+So let's just repeat that
+
+0:43:03.799,0:43:05.359
+many times
+
+0:43:05.359,0:43:12.098
+Brain invalidate and you can see the accuracy goes up and up and up and up and up to about 97%
+
+0:43:13.960,0:43:15.960
+So
+
+0:43:16.140,0:43:18.140
+Scroll we've built an
+
+0:43:18.910,0:43:21.839
+SGD optimizer of a simple linear function that
+
+0:43:22.480,0:43:28.919
+Is getting about 97 percent on our simplified m nest where there's just the threes in the sevens
+
+0:43:31.140,0:43:35.879
+So a lot of steps there, let's simplify this through some refactoring
+
+0:43:36.850,0:43:39.510
+So the kind of simple refactoring we're going to do
+
+0:43:39.610,0:43:43.589
+We're going to do a couple but the basic idea is we're going to create something called an optimizer us
+
+0:43:44.710,0:43:46.859
+The first thing we'll do is we'll get rid of
+
+0:43:48.370,0:43:50.370
+The linear one function
+
+0:43:51.630,0:43:53.630
+But remember the linear one function
+
+0:43:55.109,0:43:58.379
+Does X at W plus B
+
+0:44:00.009,0:44:04.559
+There's actually a class imply torch that does that equation for us so we may as well use it
+
+0:44:04.829,0:44:09.988
+It's called n n dot linear and n n dot linear does two things it does
+
+0:44:10.509,0:44:11.650
+that
+
+0:44:11.650,0:44:17.460
+Function for us and it also initializes the parameters for us so we don't have to do
+
+0:44:18.910,0:44:21.420
+weights and bias in it params
+
+0:44:22.239,0:44:23.380
+anymore
+
+0:44:23.380,0:44:28.950
+We just create an N n dot linear class and that's going to create a matrix of size
+
+0:44:29.829,0:44:33.719
+28 by 28 comma 1 and a bias of size 1
+
+0:44:34.359,0:44:39.389
+It will set requires grade equals true for us. It's all going to be encapsulated in this class
+
+0:44:39.390,0:44:42.509
+And then when I call that as a function
+
+0:44:43.480,0:44:45.339
+it's going to do my
+
+0:44:45.339,0:44:47.339
+X at W plus B
+
+0:44:48.760,0:44:53.880
+So to see the parameters in it, we would expect it to contain
+
+0:44:54.670,0:45:01.649
+784 weights in one bias, we can just call that parameters and we can D structure it to W comma B and C
+
+0:45:01.650,0:45:03.190
+Yep, it is
+
+0:45:03.190,0:45:04.600
+784 and
+
+0:45:04.600,0:45:07.140
+One for the weights and bias
+
+0:45:08.410,0:45:10.410
+So that's cool. So this is just
+
+0:45:10.490,0:45:14.979
+You could you know, it could be an interesting exercises for you to create this class yourself from scratch
+
+0:45:15.760,0:45:17.949
+You should be able to at this point
+
+0:45:18.890,0:45:24.339
+So that you can confirm that you can recreate something that behaves exactly like a tenth linear
+
+0:45:26.019,0:45:31.109
+So now that we've got this object which contains our parameters in a parameters
+
+0:45:32.229,0:45:40.139
+Method we could now create an optimizer. So if you optimize that we're going to pass it the parameters to optimize and a learning rate
+
+0:45:40.839,0:45:42.839
+will store them away and
+
+0:45:43.269,0:45:47.909
+We'll have something called step which goes through each parameter and does that thing?
+
+0:45:47.910,0:45:52.649
+we just saw P type data - equals P grad x learning rate and
+
+0:45:53.410,0:45:57.029
+it's also going to have something called zero grad which goes through each parameter and
+
+0:45:57.549,0:45:59.669
+Zeroes it out, or we could even just set it to none
+
+0:46:01.070,0:46:06.219
+So that's the thing. We're going to call basic optimizer. So those is exactly the same lines of code
+
+0:46:06.220,0:46:10.810
+We've already seen wrapped up into a class so we can now create an optimizer
+
+0:46:11.510,0:46:16.540
+passing in the parameters of the linear model with ease and our learning rate and
+
+0:46:17.630,0:46:19.630
+so now our training loop is
+
+0:46:19.940,0:46:22.029
+Look through each mini batch in the data loader
+
+0:46:22.760,0:46:24.350
+Calculate the gradient
+
+0:46:24.350,0:46:26.350
+opt step
+
+0:46:26.660,0:46:28.660
+up to zero grad
+
+0:46:29.450,0:46:31.450
+That's it
+
+0:46:32.500,0:46:34.500
+Function doesn't have to change
+
+0:46:36.170,0:46:43.879
+Put our training loop into a function that's going to loop through a bunch of epochs call an epoch print validate epoch
+
+0:46:45.410,0:46:48.319
+And then run it and it's the same
+
+0:46:49.230,0:46:51.409
+we're getting a slightly different result here, but
+
+0:46:52.080,0:46:54.590
+Much much the same idea. Okay
+
+0:46:55.470,0:46:57.470
+so
+
+0:46:57.990,0:47:00.079
+That's cool, right we've now
+
+0:47:01.800,0:47:04.190
+Refactoring using you know, create our own optimizer
+
+0:47:04.980,0:47:09.500
+And using faster plate Watchers built-in in and linnea class
+
+0:47:10.290,0:47:11.850
+And you know, by the way
+
+0:47:11.850,0:47:18.799
+we don't actually need to use our own basic optim not surprisingly pate which comes with something which does exactly this and
+
+0:47:19.740,0:47:21.740
+Not surprisingly. It's called STD
+
+0:47:22.470,0:47:28.970
+So and actually this SGD is provided by fast AI first AI and pi torch provides some overlapping functionality
+
+0:47:29.970,0:47:34.220
+Then work much the same way so you can pass to SGD
+
+0:47:34.590,0:47:39.049
+Your parameters and your learning rate just like basic opt-in. Okay, and
+
+0:47:40.290,0:47:42.560
+Train it and get the same result
+
+0:47:44.260,0:47:46.260
+So as you can see these
+
+0:47:46.630,0:47:49.559
+classes that are in fast, I am pay torch and not
+
+0:47:50.350,0:47:52.350
+mysterious they're just
+
+0:47:52.810,0:47:56.159
+Pretty you know in wrappers around
+
+0:47:57.340,0:48:01.620
+Functionality that we've now written ourself. So there's quite a few steps there
+
+0:48:02.380,0:48:06.630
+And if you haven't done gradient descent before then, there's a lot of unpacking
+
+0:48:07.480,0:48:09.959
+so so this this lesson
+
+0:48:11.830,0:48:15.759
+Is kind of the key lesson it's the one where you know like we should you know
+
+0:48:15.760,0:48:22.420
+Really take us stop and a deep breath at this point and make sure you're comfortable. What's the data set?
+
+0:48:23.000,0:48:24.830
+What's the data loader?
+
+0:48:24.830,0:48:26.540
+What's in n dot Linea?
+
+0:48:26.540,0:48:33.580
+What's SGD and if you you know if want any any or all of those don't make sense go back to where we defined it
+
+0:48:33.950,0:48:35.950
+from scratch using
+
+0:48:36.500,0:48:42.550
+Python code well the data loader we didn't define from scratch, but it you know, the functionality is not particularly
+
+0:48:43.430,0:48:49.209
+Interesting, you can certainly create your own from scratch if you wanted to that would be another pretty good exercise
+
+0:48:52.069,0:48:54.069
+Let's refactor some more
+
+0:48:55.780,0:49:01.769
+Buster has a data loaders class which is as we've mentioned before is a tiny class
+
+0:49:02.260,0:49:08.760
+That just you pass it a bunch of data loaders and it just stores them away as a dot train and a dot valid
+
+0:49:09.490,0:49:14.189
+Even though it's a tiny class. It's it's super handy because with that we now have a
+
+0:49:15.400,0:49:20.820
+single object that knows all the data we have and so it can make sure that your
+
+0:49:21.070,0:49:26.309
+Training data loader is shuffle and your validation loader isn't shuffled, you know, make sure everything works properly
+
+0:49:27.550,0:49:32.580
+so that's what the data loaders class is you can pass in the training and valid data loader and
+
+0:49:33.460,0:49:37.080
+then the next thing we have in fast AI is the learner class and
+
+0:49:37.390,0:49:40.230
+the learner class is something where we're going to pass in our
+
+0:49:40.780,0:49:43.409
+data loaders, we're going to pass in our
+
+0:49:44.470,0:49:46.470
+Model we're going to pass in
+
+0:49:46.990,0:49:53.070
+Our optimization function we're going to pass in our loss function. We're going to pass in our metrics
+
+0:49:53.740,0:49:56.669
+So all the stuff we've just done manually
+
+0:49:57.430,0:50:01.589
+That's all learner does is it's just going to do that for us?
+
+0:50:01.589,0:50:06.659
+So it's just going to call this train model and this train epoch
+
+0:50:06.760,0:50:11.369
+It's just you know, it's inside learner. So now if we go
+
+0:50:11.950,0:50:13.950
+my own dot fit
+
+0:50:14.450,0:50:18.409
+You can see again. It's doing the same thing getting the same result
+
+0:50:19.200,0:50:20.960
+And it's got some nice functionality
+
+0:50:20.960,0:50:26.060
+It's printing it out into a pretty table for us and it's showing us the losses and the accuracy and how long it takes
+
+0:50:27.000,0:50:31.010
+But there's nothing magic right you've been able to do exactly the same thing
+
+0:50:31.680,0:50:33.680
+by hand using
+
+0:50:34.140,0:50:36.140
+Python and PI torch, okay
+
+0:50:36.140,0:50:42.530
+So these abstractions are here to like let you write less code and to save some time and to save some
+
+0:50:43.020,0:50:47.089
+Cognitive overhead, but they're not doing anything. You can't do yourself
+
+0:50:48.839,0:50:53.818
+And that's important right because if the if if if they're doing things you can't do yourself
+
+0:50:54.549,0:50:56.410
+Then you can't
+
+0:50:56.410,0:51:00.749
+Customize them you can't debug with them. You know, you can't profile them
+
+0:51:01.869,0:51:04.258
+so we want to make sure that the the
+
+0:51:04.930,0:51:08.219
+The stuff we're using is stuff that we understand what it's doing
+
+0:51:10.960,0:51:15.159
+So this is just a linear function is not great we want a neural network
+
+0:51:16.310,0:51:18.310
+So, how do we turn this?
+
+0:51:18.560,0:51:20.560
+into a neural network or
+
+0:51:21.260,0:51:22.430
+remember
+
+0:51:22.430,0:51:28.240
+This is a linear function X set W plus B to turn it into a neural network
+
+0:51:29.000,0:51:31.179
+We have two linear functions
+
+0:51:32.480,0:51:35.889
+Exactly the same but with different weights and different biases and in between
+
+0:51:36.590,0:51:38.590
+This magic line of code
+
+0:51:39.410,0:51:45.339
+Which takes the result of our first linear function and then does a max between that and zero
+
+0:51:46.220,0:51:53.709
+So a max of res and a zero is going to take any negative numbers and turn them into zeros
+
+0:51:54.230,0:51:56.230
+So we're going to do a linear function
+
+0:51:56.690,0:52:02.169
+We're going to replace the negatives with zero and then we're going to take that and put it through another linear function that
+
+0:52:02.990,0:52:05.619
+Believe it or not is a neuro net
+
+0:52:07.059,0:52:08.619
+so
+
+0:52:08.619,0:52:14.129
+W1 and w2 were weight tensors b1 and b2 abayas tensors just like before so we can initialize them
+
+0:52:14.890,0:52:20.699
+Just like before and we could now call exactly the same training code that we did before to
+
+0:52:21.729,0:52:23.729
+roll these
+
+0:52:25.290,0:52:28.620
+So res dot max zero
+
+0:52:31.240,0:52:34.990
+Linear unit, but you will always see referred to as
+
+0:52:35.690,0:52:37.070
+value and
+
+0:52:37.070,0:52:40.600
+So here is and and in pi torch it already has
+
+0:52:41.270,0:52:48.639
+This function it's called f dot value. And so if we plot it you can see it's as you'd expect
+
+0:52:48.640,0:52:54.100
+It's zero or negative numbers and then it's y equals x for positive numbers
+
+0:52:56.289,0:52:58.289
+So
+
+0:52:58.509,0:53:00.509
+You know, here's some jargon
+
+0:53:00.759,0:53:07.049
+Rectified linear units sounds scary sounds complicated, but it's actually this incredibly tiny
+
+0:53:07.690,0:53:11.999
+line of code this incredibly simple function and this happens a lot in
+
+0:53:12.729,0:53:18.899
+deep learning things that sound complicated and sophisticated and impressive turnout to be
+
+0:53:19.690,0:53:23.339
+Normally super simple frankly at least once, you know what it is
+
+0:53:24.609,0:53:25.839
+so
+
+0:53:25.839,0:53:27.839
+Why do we do?
+
+0:53:27.880,0:53:33.749
+Linear layer really many Alea. Well if we got rid of the middle
+
+0:53:38.980,0:53:40.980
+If we got rid of the middle
+
+0:53:41.359,0:53:44.049
+Value and just went linear layer linear layer
+
+0:53:44.480,0:53:52.480
+then you could rewrite that as a single linear layer when your model playthings an ad and then multiply things and add and
+
+0:53:52.790,0:53:56.560
+You can just change the coefficients and make it into a single multiply and then add
+
+0:53:56.930,0:54:01.570
+So no matter how many linear layers we stack on top of each other we can never make anything more
+
+0:54:02.390,0:54:06.310
+And of effective than a simple linear model
+
+0:54:07.560,0:54:11.039
+But if you put a non-linearity between the linear layers
+
+0:54:12.380,0:54:14.750
+Then actually you have the opposite. This is now aware
+
+0:54:15.509,0:54:23.329
+Something called the universal approximation theorem holds which is that if the size of the weight and bias matrices are big enough
+
+0:54:24.000,0:54:26.449
+This can actually approximate any
+
+0:54:27.240,0:54:28.859
+arbitrary function
+
+0:54:28.859,0:54:33.018
+including the function of how do I recognize threes from sevens or
+
+0:54:33.660,0:54:35.660
+Or whatever
+
+0:54:36.599,0:54:42.679
+So that's kind of amazing, right this tiny thing is actually a universal function approximator
+
+0:54:43.589,0:54:46.758
+as long as you have W 1 B 1 W 2 and B 2
+
+0:54:47.549,0:54:51.799
+Have the right numbers and we know how to make them the right numbers use SGD
+
+0:54:52.950,0:54:55.549
+Could take a very long time. It could take a lot of memory
+
+0:54:58.170,0:55:03.540
+But the basic idea is that there is some solution to any computable problem and
+
+0:55:04.690,0:55:06.690
+This is one of the biggest challenges
+
+0:55:08.559,0:55:15.819
+A lot of beginners have to deep learning is that there's nothing else to it like that? There's often this like
+
+0:55:16.519,0:55:18.519
+Okay, how do I make a neural net?
+
+0:55:19.210,0:55:21.210
+Oh, that is the neural net. Well, how do I?
+
+0:55:22.720,0:55:24.730
+Learning training with SGD
+
+0:55:25.520,0:55:27.520
+there's things to like
+
+0:55:27.619,0:55:33.549
+Make a train a bit faster. There's you know things to mean you need a few less parameters
+
+0:55:34.400,0:55:36.400
+but everything from here is
+
+0:55:36.830,0:55:38.830
+just
+
+0:55:40.090,0:55:41.600
+Performance tweaks
+
+0:55:41.600,0:55:43.600
+honestly, right
+
+0:55:43.730,0:55:45.969
+So this is you know, this is the key
+
+0:55:47.180,0:55:50.680
+understanding of of training a neural network
+
+0:55:53.960,0:55:56.229
+Okay, we can simplify things a bit more
+
+0:55:56.990,0:56:00.550
+We already know that we can use n n linear to replace
+
+0:56:01.400,0:56:03.400
+Their weight and bias, so let's do that
+
+0:56:04.730,0:56:11.200
+for both of the linear layers, and then since we're simply taking
+
+0:56:13.619,0:56:18.199
+The result of one function and passing it into the next
+
+0:56:19.579,0:56:23.089
+The result of that function passive to the next and so forth and then returned the end
+
+0:56:23.459,0:56:26.929
+this is called function composition function composition is when you just
+
+0:56:27.599,0:56:32.149
+Take the result of one function pass it to a new one take a result of one function. Pass it to a new one
+
+0:56:32.729,0:56:38.539
+and so every pretty much neural network is just doing function composition of
+
+0:56:39.209,0:56:41.209
+linear layers and
+
+0:56:41.489,0:56:44.659
+These are called activation functions or nonlinearities
+
+0:56:45.269,0:56:49.218
+So hi torch provides something to do function composition for us
+
+0:56:49.529,0:56:53.958
+And it's called n n dot sequential so it's gonna do a linear layer
+
+0:56:54.089,0:56:58.129
+Ask the result to a rel you pass the result to a linear layer
+
+0:56:58.650,0:57:02.150
+You'll see here. I'm not using F value. I'm using n n value
+
+0:57:02.150,0:57:05.719
+This is identical returns exactly the same thing, but this is a class
+
+0:57:06.989,0:57:09.468
+Rather than a function. Yes, Rachel
+
+0:57:12.089,0:57:14.089
+By using the non-linearity
+
+0:57:14.940,0:57:22.220
+Won't using a function that makes all negative output zero make many of the gradients in the network zero and stop the learning process due
+
+0:57:22.220,0:57:24.220
+to many zero gradients
+
+0:57:25.950,0:57:30.319
+Well, that's a fantastic question and the answer is yes, it does
+
+0:57:32.470,0:57:34.750
+But they won't be zero for every image and
+
+0:57:35.480,0:57:37.839
+remember the mini-batches a shuffled so
+
+0:57:38.359,0:57:43.029
+Even if it's zero for every image in one mini batch, it won't be for the next mini batch
+
+0:57:43.030,0:57:45.759
+And it won't be the next time around we go for another epoch. So
+
+0:57:47.359,0:57:50.889
+Yes, it can create zeros and if
+
+0:57:52.270,0:57:54.270
+The neural net ends up with a set of parameters
+
+0:57:55.070,0:58:02.799
+That's that lots and lots of inputs end up as zeros. You can end up with whole mini batches that are zero and
+
+0:58:05.600,0:58:10.929
+You can end up in a situation where some of the neurons
+
+0:58:12.780,0:58:17.370
+In active inactive means their zero and they're basically dead units
+
+0:58:18.160,0:58:20.160
+And this is a huge problem
+
+0:58:21.090,0:58:23.579
+It basically means you're wasting computation
+
+0:58:23.890,0:58:30.089
+So there's a few tricks to avoid that which we'll be learning about a lot one. Simple trick is to
+
+0:58:31.600,0:58:35.969
+Not make this thing flat here, but just make it a less steep
+
+0:58:36.490,0:58:42.150
+Mine that's called a leaky. Well, you leaky rectified linear unit and
+
+0:58:42.700,0:58:44.700
+It that they helped a bit
+
+0:58:44.830,0:58:49.709
+As well learn though even better is to make sure that we just kind of initialize two
+
+0:58:50.770,0:58:56.159
+sensible initial values that are not too big and not too small and step by sensible announce that are
+
+0:58:56.980,0:59:02.429
+particularly not too big and generally if we do that we can keep things in the zone where they're
+
+0:59:02.800,0:59:05.640
+positive most of the time but we are going to learn about
+
+0:59:05.950,0:59:11.909
+how to actually analyze inside a network and find out how many dead units we have how many of these zeros we have because
+
+0:59:11.980,0:59:16.590
+As is as you point out they are they are bad news. They don't do any work
+
+0:59:18.240,0:59:23.639
+Continue to not do any work if enough of the inputs end up being zero
+
+0:59:29.760,0:59:32.510
+Okay, so now that we've got a neural net
+
+0:59:33.300,0:59:37.910
+We can use exactly the same learner we had before but this time we pass in the simple net
+
+0:59:38.400,0:59:42.079
+Instead of the linear one. Everything else is assumed and
+
+0:59:42.780,0:59:45.440
+we can call fit just like before and
+
+0:59:46.320,0:59:50.720
+Generally as your models get deeper. So here we've gone from one layer. Ooh
+
+0:59:51.290,0:59:57.590
+And I'm only counting the parameterised layers as layers. You could say it's three. I was going to call it two. There's two
+
+0:59:58.140,1:00:04.309
+Trainable layers. So I've gone from one layer to I've checked dropped my learning rate from 1 to 0.1
+
+1:00:04.890,1:00:06.890
+because the deeper models
+
+1:00:07.080,1:00:12.769
+It all tend to be kind of bumpier less nicely behaved so often you need to use lower learning rates
+
+1:00:12.770,1:00:14.770
+And so we trained it for a while
+
+1:00:15.270,1:00:17.270
+okay, and
+
+1:00:19.099,1:00:26.238
+Can actually find out what that training looks like by looking inside our learner and there's an attribute we create for your chord recorder and
+
+1:00:26.400,1:00:28.400
+That's going to record
+
+1:00:28.799,1:00:30.799
+Well everything that appears in this table
+
+1:00:31.349,1:00:36.469
+Basically, well these three things the training loss the validation loss and the accuracy or any metrics
+
+1:00:37.499,1:00:39.529
+so recorded values
+
+1:00:40.349,1:00:45.709
+contains that kind of table of results and so item number two of
+
+1:00:46.410,1:00:49.309
+Each row will be the accuracy
+
+1:00:50.680,1:00:52.680
+and so the
+
+1:00:52.940,1:00:57.460
+capital L class, which I'm using here as a
+
+1:00:58.070,1:01:02.350
+nice little method chord item got that will will get
+
+1:01:03.350,1:01:08.650
+The second item from every row and then I can plot that
+
+1:01:10.830,1:01:14.400
+How the training went and I can get the final accuracy
+
+1:01:16.660,1:01:20.020
+By grabbing the last row of the table and grabbing the second
+
+1:01:20.900,1:01:26.410
+It's indexed to 0 1 2 then my final accuracy. Not bad
+
+1:01:27.440,1:01:29.440
+98.3%
+
+1:01:29.809,1:01:35.379
+So this is pretty amazing, we now have a function that can solve any problem
+
+1:01:36.020,1:01:41.530
+To any level of accuracy if we can find the right parameters and we have a way to find
+
+1:01:42.200,1:01:46.389
+Hopefully the best or at least a very good that our parameters for any function
+
+1:01:48.440,1:01:51.399
+So this is kind of the magic yes, Rachel
+
+1:01:54.330,1:01:58.999
+How could we use what we're learning here to get an idea of what the network is learning along the way
+
+1:01:59.310,1:02:01.699
+Like Sylar and Fergus did more or less
+
+1:02:04.290,1:02:06.290
+We will look at that later
+
+1:02:07.020,1:02:09.020
+Not in the full detail of their paper
+
+1:02:09.900,1:02:11.900
+but basically
+
+1:02:11.910,1:02:16.129
+You can look in the dot parameters to see the values of those parameters
+
+1:02:16.890,1:02:18.420
+and
+
+1:02:18.420,1:02:23.360
+At this point. Well, I mean, why don't you try it yourself? Right? You've actually got now
+
+1:02:25.380,1:02:31.460
+The parameters, so if you want to grab the model you can actually see learned up model
+
+1:02:34.410,1:02:42.170
+So we can we can look inside learned up model to see the actual model that we just trained and
+
+1:02:45.430,1:02:49.270
+You can see it's got the three things in it. They're linear that rather than linear
+
+1:02:49.970,1:02:53.889
+And you know, what I kind of like to do is to put that into a variable
+
+1:02:56.240,1:02:58.240
+Bit easy to work with
+
+1:02:58.779,1:03:00.938
+Can grab one Leia by indexing in
+
+1:03:03.440,1:03:05.440
+Parameters
+
+1:03:07.589,1:03:08.589
+And
+
+1:03:08.589,1:03:10.619
+That just gives me a something called a generator
+
+1:03:10.619,1:03:16.318
+It's something that will give me a list of the parameters when I ask for them. I could just go white comma bias equals
+
+1:03:17.079,1:03:20.008
+2d structure them and so the weight
+
+1:03:24.569,1:03:25.950
+Here's
+
+1:03:25.950,1:03:28.220
+birdie by 784
+
+1:03:29.460,1:03:34.159
+Because that's what I asked for. So one of the things to note here is
+
+1:03:35.069,1:03:37.050
+that
+
+1:03:37.050,1:03:39.050
+to create a
+
+1:03:39.599,1:03:42.139
+Neural net so something that's more than one layer. I
+
+1:03:42.869,1:03:48.229
+Actually have thirty outputs not just one right so I'm kind of generating lot
+
+1:03:48.230,1:03:50.000
+So if you can think of as generating lots of features
+
+1:03:50.000,1:03:57.020
+So it's kind of like 30 different linear of linear models here and then I combined those 30 back into one
+
+1:03:58.230,1:04:00.230
+So you could look at
+
+1:04:00.930,1:04:04.099
+one of those by having a look at
+
+1:04:06.880,1:04:12.740
+Yeah, so there's first bro, we could reshape that
+
+1:04:17.920,1:04:25.470
+Into the the original shape of the images and we could even have a look
+
+1:04:31.040,1:04:38.029
+And there it is right so you can see this is something Sothis cool right we can actually see here we've got something which is
+
+1:04:43.720,1:04:48.359
+Which is kind of learning to find things at the top and the bottom and the middle
+
+1:04:49.710,1:04:51.710
+And so we could look at the second one
+
+1:04:53.570,1:04:55.570
+Okay, no idea what that's showing
+
+1:04:57.450,1:05:02.760
+And so some of them are kind of you know, I probably got far more than I need which is why they're not that obvious
+
+1:05:03.339,1:05:06.539
+But you can see yeah, here's another thing that's looking pretty similar
+
+1:05:09.349,1:05:11.349
+Kind of looking for this little bit in the middle
+
+1:05:12.779,1:05:14.779
+So yeah, this is the basic idea
+
+1:05:15.180,1:05:21.829
+To understand the features that are not the first layer but later layers, you have to be a bit more sophisticated
+
+1:05:23.130,1:05:26.450
+But yet I see the first layer ones you can you can just plot them
+
+1:05:31.040,1:05:34.810
+Okay, so then, you know just to compare we could
+
+1:05:35.990,1:05:38.469
+Use the full faster a toolkit
+
+1:05:38.470,1:05:45.399
+So grab our data loaders by using data loaders from folder as we've done before and create a CNN learner and a res net
+
+1:05:46.550,1:05:48.700
+and fit it for a single epoch and
+
+1:05:49.640,1:05:55.329
+Roll 99.7. All right, so we did 40 epochs and got
+
+1:05:56.240,1:06:00.909
+98.3 as I said using all the tricks you can
+
+1:06:01.640,1:06:06.549
+Really speed things up and make things a lot better and so by the end of this course
+
+1:06:08.420,1:06:16.180
+Or at least both parts of this course, you'll be able to from scratch at this 99.7 in a single
+
+1:06:16.850,1:06:18.850
+epoch
+
+1:06:19.810,1:06:21.810
+Um, all right, so
+
+1:06:23.279,1:06:25.279
+Jargon
+
+1:06:26.970,1:06:31.519
+So Jagan just remind us value function that returns zero for negatives
+
+1:06:32.339,1:06:37.429
+mini-batch a few inputs and labels, which optionally are
+
+1:06:38.279,1:06:39.989
+randomly selected
+
+1:06:39.989,1:06:42.949
+The forward pass is the bit where we calculate the predictions
+
+1:06:43.140,1:06:46.999
+the loss is the function that we're going to take the derivative of and
+
+1:06:47.309,1:06:51.919
+Then the gradient is the derivative of the loss with respect to each parameter
+
+1:06:52.769,1:06:55.728
+The backward pass is when we calculate those gradients
+
+1:06:57.059,1:07:03.738
+gradient descent is that full thing of taking a step in the direction opposite to the gradients by capital after calculating the loss and
+
+1:07:03.930,1:07:07.519
+Then the learning rate is the size of the step that we take
+
+1:07:08.750,1:07:10.750
+you
+
+1:07:14.420,1:07:16.420
+Other things to know
+
+1:07:16.980,1:07:22.639
+Perhaps the two most important pieces of jargon are all of the numbers that are in a neural network the
+
+1:07:23.070,1:07:26.119
+numbers that we're learning are called parameters and
+
+1:07:27.150,1:07:34.730
+Then the numbers that we're calculating so every value that's calculated every matrix multiplication element that's calculated
+
+1:07:35.060,1:07:36.810
+They're called activations
+
+1:07:36.810,1:07:39.139
+so activations and parameters are
+
+1:07:39.750,1:07:45.770
+All of the numbers in the neural net and so be very careful when I say from here on in in these lessons
+
+1:07:46.290,1:07:48.290
+activations or parameters
+
+1:07:48.420,1:07:55.550
+You've got to make sure you know what those mean because that's that's the entire basically almost the entire set of numbers that exist
+
+1:07:55.770,1:07:58.939
+Inside a neural net so activations are calculated
+
+1:07:59.640,1:08:01.640
+Parameters are learned
+
+1:08:02.910,1:08:08.240
+We're doing this stuff with tensors and tensors are just regularly shaped to raise
+
+1:08:08.970,1:08:14.629
+Rank zero tensors, we call scalars rank 1 tensors. We call vectors rank two tensors
+
+1:08:14.630,1:08:20.989
+we call matrices and we continue on to rank 3 tensors rank 4 tensors and so forth and
+
+1:08:21.420,1:08:27.739
+Rag five tensors are very common in deep learning. So don't be scared of going up to higher numbers of dimensions
+
+1:08:29.430,1:08:33.470
+Okay, so let's have a break oh we got a question, okay
+
+1:08:34.680,1:08:39.379
+Is there a rule of thumb for what non-linearity to choose given that there are many?
+
+1:08:40.560,1:08:47.779
+Yeah, there are many non Nerys to choose from and it doesn't generally matter very much which you choose so there's two Israeli
+
+1:08:48.509,1:08:50.719
+or Leakey irelia or
+
+1:08:51.420,1:08:53.930
+Yeah, whatever any anyone
+
+1:08:54.509,1:08:59.719
+Should work fine later on we'll we'll look at the minor differences between between them
+
+1:09:00.720,1:09:04.699
+But it's not so much something that you pick on a per problem
+
+1:09:04.830,1:09:10.459
+It's more like some take a little bit longer and a little bit more accurate and some over it faster and a little bit less
+
+1:09:10.460,1:09:12.460
+accurate
+
+1:09:13.039,1:09:19.789
+That's a good question, okay. So before you move on it's really important that you finish the questionnaire for this chapter because
+
+1:09:20.579,1:09:27.379
+there's a whole lot of concepts that we've just done so, you know try to go through the questionnaire go back and relook at the
+
+1:09:28.289,1:09:32.869
+Notebook and please run the code through the cat experiments and make sure it makes sense
+
+1:09:33.630,1:09:35.630
+All right. Let's have a
+
+1:09:35.759,1:09:39.348
+Seven minute break see you back here in seven minutes time
+
+1:09:44.980,1:09:46.980
+Okay, welcome back
+
+1:09:48.460,1:09:52.319
+So now that we know how to create and train an ear on it
+
+1:09:53.589,1:10:00.448
+Let's cycle back and look deeper at some applications. And so we're going to try to kind of
+
+1:10:01.900,1:10:07.440
+Interpolate in from one end we've done they're kind of from scratch version at the other end
+
+1:10:07.440,1:10:11.730
+We've done the kind of four lines of code version and we're going to gradually nibble at each end
+
+1:10:12.159,1:10:16.919
+Until we find ourselves in the middle and we've we've we've touched on all of it
+
+1:10:17.860,1:10:21.449
+so let's go back up to the kind of the four lines of code version and and
+
+1:10:22.210,1:10:24.210
+Delve a little deeper
+
+1:10:24.670,1:10:26.670
+So
+
+1:10:27.940,1:10:29.940
+Let's go back to pets
+
+1:10:30.530,1:10:33.260
+And let's think though about like
+
+1:10:34.110,1:10:35.820
+How do you actually?
+
+1:10:35.820,1:10:39.380
+it'll start with a new data set and
+
+1:10:40.350,1:10:42.350
+Figure out how to use it
+
+1:10:44.610,1:10:45.750
+So it you know
+
+1:10:45.750,1:10:51.899
+The the data sets we provide it's easy enough to untie them you to say untie that or download it and hire it
+
+1:10:53.619,1:10:58.979
+If it's a data set that you're getting you can just use the terminal or I
+
+1:10:59.770,1:11:01.679
+Throw a Python or whatever
+
+1:11:01.679,1:11:02.230
+um
+
+1:11:02.230,1:11:09.689
+So let's assume we have a path that's pointing at something so initially you don't you don't know what that something is
+
+1:11:11.409,1:11:15.689
+So we can start by doing LS to have a look and see what's inside there
+
+1:11:15.690,1:11:18.869
+So the pets data set that we saw in Lesson one
+
+1:11:20.170,1:11:23.580
+contains three things annotations images and models and
+
+1:11:24.130,1:11:26.130
+You'll see we have this little trick here
+
+1:11:26.290,1:11:29.219
+where we say path based path equals and
+
+1:11:29.350,1:11:34.589
+Then the path to our data and that just does a little simple thing. Where when we print it out
+
+1:11:34.630,1:11:40.020
+It just doesn't show us. It just shows us relative to this path, which is a bit convenient
+
+1:11:41.680,1:11:43.680
+So
+
+1:11:44.670,1:11:49.379
+Go and have a look at the readme for the original pets data set
+
+1:11:49.540,1:11:55.379
+It tells you what these images and annotations folders are and not surprisingly the images path
+
+1:11:55.660,1:12:02.399
+So if we go path slash images, that's how we use path Lib to grab her sub directory and then LS
+
+1:12:03.010,1:12:07.350
+We can see here are the names that the paths through the images?
+
+1:12:09.510,1:12:15.140
+As it mentions here most functions and methods in Farsi I which returned a collection don't return a
+
+1:12:15.930,1:12:20.449
+Python list that they returned a capital L and a capital L
+
+1:12:20.850,1:12:27.049
+As we briefly mentioned is basically an enhanced list. One of the enhancements is the way it prints the
+
+1:12:28.020,1:12:32.629
+Representation of it starts by showing you. How many items there are in the list in the collection?
+
+1:12:32.630,1:12:35.299
+so there's seven thousand three hundred and ninety four images and
+
+1:12:36.989,1:12:44.869
+It it if there's more than ten things it truncates it and just says dot dot to avoid filling up your screen
+
+1:12:47.070,1:12:49.130
+So there's a couple of little conveniences there
+
+1:12:50.370,1:12:55.339
+And so we can see from this output that a file name
+
+1:12:56.130,1:12:58.130
+as we mentioned in
+
+1:12:58.440,1:13:03.109
+lesson 1 if the first letter is a capital it means it's a cat and
+
+1:13:03.750,1:13:05.750
+If the first letter is lowercase
+
+1:13:06.150,1:13:07.860
+It means it's a dog
+
+1:13:07.860,1:13:11.270
+But this time we've got to do something a bit more complex a lot more complex
+
+1:13:11.270,1:13:14.779
+Which is figure out what breed it is and so you can see the breed
+
+1:13:15.570,1:13:19.250
+Is kind of everything up to after the in the file name?
+
+1:13:19.400,1:13:24.080
+It's everything up to the the last underscore and before this number is the breed
+
+1:13:25.369,1:13:27.369
+so
+
+1:13:27.530,1:13:32.559
+We want to label everything with its breed, so we're going to take advantage of this structure
+
+1:13:35.690,1:13:37.690
+So
+
+1:13:38.810,1:13:45.319
+Their way I would do this is to use a regular expression a regular expression is something that looks at a string and
+
+1:13:46.050,1:13:51.889
+Basically lets you kind of pull it apart into its pieces in very flexible way. It is kind of simple little
+
+1:13:52.470,1:13:57.470
+Language for doing that. Um, if you haven't used regular expressions before um,
+
+1:13:57.470,1:14:03.019
+Please Google regular expression tutorial now and look it's going to be like one of the most useful tools
+
+1:14:03.020,1:14:05.629
+You'll come across in your life. I use them almost every day
+
+1:14:06.570,1:14:08.220
+I
+
+1:14:08.220,1:14:13.550
+Will go to details about how to use them since there's so many great tutorials. And there's also a lot of great like
+
+1:14:14.130,1:14:21.200
+Exercises, you know, there's regex regex is short for regular expression. There's regex crosswords. There's rich xqa is
+
+1:14:21.870,1:14:26.059
+All kinds of core regex things a lot of people like me love this tool
+
+1:14:27.000,1:14:29.000
+in order to
+
+1:14:29.010,1:14:35.119
+There's also a regex lesson in the fast AI and LP course, maybe even to regex lessons. Oh, yeah
+
+1:14:35.730,1:14:38.600
+I'm sorry for forgetting about the first day. I know because
+
+1:14:39.930,1:14:41.930
+What an excellent resource that is?
+
+1:14:46.740,1:14:47.970
+So
+
+1:14:47.970,1:14:52.740
+Regular expressions are how to get right the first time. So the best thing to do is to get a sample string
+
+1:14:52.740,1:14:58.440
+So good - good way to do that would be to just grab one of the file names. So let's pop it in F name
+
+1:14:59.140,1:15:01.590
+and then you can experiment with
+
+1:15:04.150,1:15:09.869
+Vector expressions. So re is the regular expression module in Python and
+
+1:15:10.510,1:15:12.510
+Find all we'll just grab
+
+1:15:12.820,1:15:16.349
+All the parts of a regular expression that have parentheses around them
+
+1:15:16.660,1:15:20.639
+So this regular expression and R is a special kind of string in Python
+
+1:15:20.950,1:15:28.019
+Which basically says don't treat backslash is special because normally in Python like backslash n means a newline
+
+1:15:29.080,1:15:31.230
+So here's us a string
+
+1:15:32.140,1:15:34.140
+Which I'm going to capture
+
+1:15:35.100,1:15:36.910
+Any letter
+
+1:15:36.910,1:15:38.910
+one or more times
+
+1:15:38.950,1:15:40.950
+followed by an underscore
+
+1:15:41.050,1:15:43.320
+followed by a digit one or more times
+
+1:15:45.830,1:15:52.899
+Followed by anything I published have use backslash dot for this phone followed by the letters jpg followed by the end of the string
+
+1:15:54.320,1:16:00.340
+and so if I call that vector expression against my bio names name Oh
+
+1:16:01.670,1:16:03.790
+Looks good, right so we kind of check it out
+
+1:16:05.210,1:16:07.389
+So now that seems to work we can create a data block
+
+1:16:08.570,1:16:10.280
+where the
+
+1:16:10.280,1:16:17.020
+Independent variables are images the dependent variables are categories just like before get items is going to be get image files
+
+1:16:18.500,1:16:20.679
+We're going to spit it randomly as per usual
+
+1:16:22.880,1:16:29.049
+And then we're going to get the label by calling regex labeler, which is a
+
+1:16:30.950,1:16:32.950
+Just a handy little
+
+1:16:33.140,1:16:36.669
+faster class which labels things with a regular expression
+
+1:16:37.640,1:16:43.660
+We can't call the regular expression this particular regular expression directly on the path lib path object
+
+1:16:43.970,1:16:47.259
+we actually want to call it on the name attribute and
+
+1:16:47.660,1:16:54.639
+fast AI has a nice little function chord using Etra using attribute which takes this function and
+
+1:16:55.400,1:17:02.830
+Changes it to a function which will be passed this attribute that's going to be using regex labeler on the name attribute
+
+1:17:06.719,1:17:10.459
+And then from that data block we can create the data loaders as usual
+
+1:17:11.280,1:17:13.820
+There's two interesting lines here
+
+1:17:14.940,1:17:16.800
+resize
+
+1:17:16.800,1:17:23.599
+and/or transforms log transforms we have seen before in notebook 2
+
+1:17:26.880,1:17:28.949
+In the section core data augmentation
+
+1:17:30.300,1:17:33.559
+and so ork transforms was the thing which
+
+1:17:34.170,1:17:41.119
+can zoom in and zoom out and warp and rotate and change contrast and change brightness and so forth and flip
+
+1:17:41.789,1:17:48.589
+To kind of give us almost. It's like giving us more data being generated synthetically from the data. We already have
+
+1:17:54.430,1:17:56.650
+And we also learned about random resize crop
+
+1:17:57.710,1:18:00.490
+Which is a kind of a really cool way of
+
+1:18:01.160,1:18:02.810
+getting
+
+1:18:02.810,1:18:06.729
+ensuring you get square images at the same time that you're
+
+1:18:08.150,1:18:10.150
+augmenting the data
+
+1:18:11.030,1:18:12.200
+Here
+
+1:18:12.200,1:18:15.670
+We have a resize to a really large image
+
+1:18:15.950,1:18:20.260
+but you know by deep learning standards for 60 by for 60 is a really large image and
+
+1:18:21.080,1:18:22.910
+Then we're using
+
+1:18:22.910,1:18:28.329
+Oak transforms with a size. So that's actually going to use random resize crop to a smaller size
+
+1:18:29.270,1:18:31.270
+Why are we doing that?
+
+1:18:35.850,1:18:42.680
+This particular combination of two steps does something which I think is unique to fast AI which we call pre sizing and
+
+1:18:43.170,1:18:46.190
+The best way is I will show you this beautiful
+
+1:18:48.150,1:18:50.150
+Example of
+
+1:18:51.729,1:18:53.729
+Wizardry that I'm so excited about
+
+1:18:54.039,1:18:56.039
+to show how pre sizing works
+
+1:18:56.039,1:19:03.418
+What pre sizing does is that first step where we say resize to 460 by 460 is it grabs a square?
+
+1:19:04.730,1:19:10.970
+And it grabs it randomly if it's a kind of landscape orientation photo, it'll grab it randomly
+
+1:19:10.970,1:19:14.749
+So it'll take the whole height and randomly grab somewhere from along the side
+
+1:19:15.450,1:19:19.249
+If it's a portrait orientation, then it or grab it
+
+1:19:19.250,1:19:23.750
+You know take the full wits and grab a grant and grab a random bit from top to bottom
+
+1:19:25.050,1:19:27.050
+So then we take this area here and here
+
+1:19:27.390,1:19:28.730
+It is right
+
+1:19:28.730,1:19:35.569
+And so that's what the first resize does and then the second org transforms bit will grab a random
+
+1:19:36.540,1:19:37.920
+wat
+
+1:19:37.920,1:19:39.920
+crop
+
+1:19:40.000,1:19:45.669
+Be rotated from in here and we'll turn that into a square and
+
+1:19:47.060,1:19:48.620
+so it does
+
+1:19:48.620,1:19:52.329
+So there's two steps its first of all resize to a square. That's big and
+
+1:19:52.700,1:19:57.369
+then the second step is to a kind of rotation and warping and
+
+1:19:57.980,1:20:00.730
+zooming stage to something smaller
+
+1:20:01.430,1:20:03.430
+in this case 224 by 224
+
+1:20:04.940,1:20:07.330
+Because his first step creates something that's Square
+
+1:20:08.450,1:20:15.789
+And always is the same size the second step can happen on the GPU and because normally things like rotating an image whopping
+
+1:20:16.400,1:20:18.400
+Actually pretty slow
+
+1:20:18.890,1:20:24.519
+Also normally doing a zoom and rotate and a warp
+
+1:20:26.000,1:20:31.479
+Actually is really destructive to the image because each one of those things requires an interpolation step
+
+1:20:31.520,1:20:35.589
+Which it's not just slow it actually makes the image really
+
+1:20:36.200,1:20:38.200
+quite low quality
+
+1:20:38.270,1:20:41.589
+So we do it in a very special way in faster. I think it's unique
+
+1:20:42.440,1:20:49.960
+Where we do all of the all of these kind of coordinate transforms like rotations and warps and zooms and so forth
+
+1:20:52.490,1:20:56.349
+Not on the actual pixels, but instead we kind of keep track of the
+
+1:20:57.530,1:21:03.970
+Changing coordinate values in a in a non lossy way so the full floating-point value and then once at the very end
+
+1:21:04.190,1:21:06.190
+We then do the interpolation
+
+1:21:08.390,1:21:10.390
+There is also quite striking
+
+1:21:11.940,1:21:13.940
+Here is what the difference looks like
+
+1:21:15.360,1:21:18.079
+Hopefully you can see this on on the video
+
+1:21:18.600,1:21:22.220
+on the left is our pre sizing approach and
+
+1:21:22.590,1:21:30.529
+On the right is the standard approach that other libraries use and you can see that the one on the right is a lot less
+
+1:21:31.620,1:21:36.439
+Nicely focused and it also has like weird things like this should be grass here
+
+1:21:36.440,1:21:38.540
+But it's actually got its kind of bum sticking way out
+
+1:21:39.390,1:21:43.430
+This has a little bit of weird distortions. This has got loads of weird distortions
+
+1:21:44.190,1:21:48.740
+So you can see the pre sized version really ends up. I'm way way better and
+
+1:21:49.710,1:21:51.710
+I think we have a question Rachel
+
+1:21:53.370,1:21:55.880
+Are the blocks in the data block an ordered list
+
+1:21:56.550,1:22:03.050
+They specify the input and output structures respectively. Are there always two blocks or can there be more than two?
+
+1:22:03.420,1:22:08.389
+For example, if you wanted a segmentation model with the second block be something about segmentation
+
+1:22:12.050,1:22:14.470
+So so, yeah, this is an ordered list
+
+1:22:15.770,1:22:18.609
+So the first item says I want to create an image
+
+1:22:19.130,1:22:24.160
+And then the second item says I want to create a category. So that's my independent and dependent variable
+
+1:22:24.830,1:22:29.799
+You can't have one thing here. You can have three things here. You can have any amount of things here you want
+
+1:22:30.560,1:22:35.169
+Obviously the vast majority of the time it'll be two only there's an independent variable and a dependent variable
+
+1:22:35.930,1:22:37.989
+We'll be seeing this in more detail later
+
+1:22:38.270,1:22:44.379
+Although if you go back to the earlier lesson when we introduced data blocks, I do have a picture kind of showing how these pieces
+
+1:22:44.930,1:22:46.930
+Get together
+
+1:22:53.429,1:22:59.089
+So after you've put together datablock created your data loaders you want to make sure it's working correctly
+
+1:22:59.700,1:23:04.369
+so the obvious thing to do for a computer vision data block is show batch and
+
+1:23:05.730,1:23:07.910
+Show batch will show you
+
+1:23:10.829,1:23:12.829
+The items and you can kind of just make sure they look
+
+1:23:13.360,1:23:15.539
+Sensible that looks like the labels are reasonable
+
+1:23:15.539,1:23:21.959
+If you add a unique equals true, then it's going to show you the same image with all the different augmentations
+
+1:23:21.960,1:23:23.999
+This is a good way to make sure your augmentations work
+
+1:23:24.519,1:23:28.379
+If you make a mistake in your data block in this example, there's no
+
+1:23:28.900,1:23:30.989
+resize so that different
+
+1:23:31.510,1:23:35.219
+Images are going to be different sizes or be impossible to collate them
+
+1:23:36.039,1:23:40.139
+Into a batch, so if you call dot summary
+
+1:23:40.929,1:23:42.849
+This is a really neat thing
+
+1:23:42.849,1:23:49.469
+Which we'll go through and tell you everything that's happening though. I collecting the items. How many did I find?
+
+1:23:49.780,1:23:51.780
+What happened when I split them?
+
+1:23:51.909,1:23:53.909
+What are the different?
+
+1:23:54.039,1:23:58.649
+Variables independent independent variables on creating let's try and create one of these
+
+1:24:00.070,1:24:02.070
+peers each step
+
+1:24:02.289,1:24:04.289
+Create my image
+
+1:24:04.599,1:24:08.909
+Categorize is what the first thing gave me an American Bulldog
+
+1:24:09.400,1:24:14.309
+is the final sample is this image this size this category and
+
+1:24:15.699,1:24:23.428
+Then eventually it says oh, oh it's not possible to collect your items. I tried to collect the zero index members of your tuples
+
+1:24:23.429,1:24:31.109
+So in other words, that's the independent variable and I got this was size 500 by 375. This was 375 by 500
+
+1:24:31.110,1:24:34.380
+Oh, I can't collate these into a tensor because they're different sizes
+
+1:24:34.690,1:24:40.230
+So this is a super great debugging tool for debugging your data blocks ever question
+
+1:24:42.309,1:24:44.788
+How does the item transforms
+
+1:24:45.280,1:24:48.809
+Precise work if the resize is smaller than the image is
+
+1:24:48.940,1:24:54.359
+A whole width or height still taken or is it just a random crop with the revised value?
+
+1:24:55.329,1:24:57.389
+so if you remember back to
+
+1:24:59.739,1:25:01.739
+To
+
+1:25:03.150,1:25:05.299
+We looked at the different ways of
+
+1:25:08.420,1:25:10.420
+Creating these things you can use squish
+
+1:25:12.230,1:25:14.230
+Can use pad
+
+1:25:15.409,1:25:17.409
+Or you can use crop
+
+1:25:17.909,1:25:22.129
+so if your image is smaller than the precise value then
+
+1:25:22.949,1:25:28.819
+Squish will really be zoom so it will just small stretch. It'll stretch it and then
+
+1:25:30.329,1:25:35.449
+Pattern crop will do much the same thing. And so you'll just end up with a you're not the same
+
+1:25:36.119,1:25:42.708
+This looks like these but it'll be a kind of lower more pixelated lower resolution because it's having to zoom in a little bit
+
+1:25:48.010,1:25:53.159
+Okay, so a lot of people say that you should do a hell of a lot of data cleaning before you model
+
+1:25:53.920,1:25:56.850
+We don't we say model as soon as you can
+
+1:25:57.760,1:25:58.930
+because
+
+1:25:58.930,1:26:05.639
+Remember what we found in in notebook - your your model can teach you about the problems in?
+
+1:26:06.520,1:26:07.990
+your data
+
+1:26:07.990,1:26:10.649
+so as soon as I've got to a point where I have a data block
+
+1:26:11.560,1:26:14.370
+That's working and I have data loaders. I'm going to build a model
+
+1:26:15.450,1:26:21.809
+And so here I'm you know, it also tells me how I'm going. So I'm getting 7% era. Wow, that's actually really good or
+
+1:26:22.330,1:26:26.850
+A pets model and so at this point now that I have a model I can do that stuff
+
+1:26:26.850,1:26:32.850
+We learned about earlier in our to the notebook or to where we trained our model and use it to clean the data
+
+1:26:33.190,1:26:35.729
+So we can look at the classification a confusion matrix
+
+1:26:36.790,1:26:38.710
+top losses
+
+1:26:38.710,1:26:42.000
+The image cleaner widget, you know so forth
+
+1:26:47.180,1:26:53.769
+Okay, now one thing interesting here is in book 4 we
+
+1:26:55.190,1:26:59.919
+Included a loss function when we created a loner and here we don't pass in our loss function
+
+1:27:01.050,1:27:05.070
+Why is that and that's because plus say I will try to
+
+1:27:06.160,1:27:08.819
+Automatically pick a somewhat sensible loss function for you
+
+1:27:11.420,1:27:18.530
+And so for a image classification task it knows what loss function is the normal one to pick and it's done it for you
+
+1:27:19.170,1:27:21.800
+but let's have a look and see what actually
+
+1:27:22.560,1:27:24.060
+did pick
+
+1:27:24.060,1:27:26.060
+So we could have a look
+
+1:27:33.039,1:27:37.858
+At learned loss funk and we will see it is cross-entropy loss
+
+1:27:38.530,1:27:43.109
+Why don't know this' cross-entropy loss i'm glad you asked let's find out
+
+1:27:44.760,1:27:49.160
+Cross entropy loss is really much the same as the
+
+1:27:49.920,1:27:54.710
+Amnesty lost we created with that with that sigmoid and the one minus
+
+1:27:55.650,1:27:57.650
+predictions and predictions
+
+1:27:58.290,1:28:01.640
+But it's it's a kind of extended version of that
+
+1:28:02.670,1:28:05.239
+now and the extended version of that is that
+
+1:28:05.880,1:28:12.049
+that torch dot where that we looked at in notebook for only works when you have um a
+
+1:28:12.600,1:28:15.890
+Binary outcome in that case it was is it a three or not?
+
+1:28:16.800,1:28:18.800
+but in this case we've got
+
+1:28:19.410,1:28:21.649
+Which of the thirty-seven pet breeds is it?
+
+1:28:22.770,1:28:24.770
+So we want to kind of create
+
+1:28:25.800,1:28:32.330
+something just like that sigmoid and torch don't wear that which also works nicely for
+
+1:28:33.510,1:28:35.510
+more than two
+
+1:28:35.610,1:28:37.610
+categories
+
+1:28:37.920,1:28:43.790
+So, let's see how we can do that, so first of all, let's grab a batch yes a question
+
+1:28:48.860,1:28:54.850
+Why do we want to build a model before cleaning the data I would think a clean dataset would help in training
+
+1:28:57.050,1:29:04.210
+Yeah, absolutely a current clean dataset helps in training but remember as we saw in notebook o2
+
+1:29:05.690,1:29:11.529
+An initial model helps you clean the data set. So remember how plot top losses helped us identify
+
+1:29:12.320,1:29:14.680
+mislabeled images and the
+
+1:29:15.380,1:29:17.380
+confusion matrix helps us recognize
+
+1:29:17.810,1:29:21.310
+which things we were getting confused and might need you know fixing and
+
+1:29:21.830,1:29:24.219
+the image classifier cleaner actually
+
+1:29:24.219,1:29:29.709
+Let us find things like an image that contain two bears rather than one bear and clean it up
+
+1:29:30.020,1:29:33.129
+so a model is just a fantastic way to
+
+1:29:33.620,1:29:40.569
+Help you zoom in on the data that matters which things into have the problems which things are most important
+
+1:29:41.239,1:29:43.569
+Stuff like that so you would go through and you clean it
+
+1:29:44.210,1:29:49.029
+With the model helping you and then you go back and train it again with the clean data
+
+1:29:50.300,1:29:52.300
+Thanks. Let go question
+
+1:29:55.040,1:29:57.040
+Okay, so
+
+1:29:57.440,1:30:03.549
+In order to understand cross-entropy loss. Let's grab a batch of data which we can use deals one batch
+
+1:30:06.890,1:30:14.300
+And that's going to grab a batch from the training set we could also go first DL strain
+
+1:30:16.820,1:30:18.820
+And that's going to do exactly the same thing
+
+1:30:21.300,1:30:26.280
+And so then we destructor that into the independent independent variable and so the dependent variable
+
+1:30:27.100,1:30:31.379
+Shows us we've got a batch size of 64. So it shows us the 64
+
+1:30:32.380,1:30:34.380
+categories
+
+1:30:39.960,1:30:41.410
+And
+
+1:30:41.410,1:30:47.669
+Remember those numbers simply refer to the index of into the vocab. So for example 16
+
+1:30:49.879,1:30:51.629
+Is a boxer and
+
+1:30:51.629,1:30:56.569
+So that all happens for you automatically when we say show batch it shows us those strings
+
+1:30:57.749,1:31:00.409
+So is a first mini batch
+
+1:31:02.219,1:31:06.959
+So now we can view the predictions that is the activations of the final layer of the network
+
+1:31:08.110,1:31:10.110
+by calling get prints and
+
+1:31:10.329,1:31:13.799
+You can pass in a data loader
+
+1:31:14.650,1:31:17.429
+And a DOTA loader can really be anything that's going to return
+
+1:31:19.210,1:31:26.909
+A sequence of mini batches so we can just pass in a list containing our mini batch as a data loader
+
+1:31:26.909,1:31:30.239
+And so that's going to get the predictions for one mini batch
+
+1:31:30.820,1:31:32.820
+So here's some predictions
+
+1:31:33.880,1:31:37.480
+Okay, so the actual predictions if we go
+
+1:31:38.600,1:31:45.729
+Preds zero-sum to grab the predictions for the first image and add them all up. They add up to one and
+
+1:31:46.730,1:31:48.650
+there are
+
+1:31:48.650,1:31:55.389
+37 of them so that makes sense. Right? It's like the very first thing is what is the probability that that is a
+
+1:31:56.780,1:31:58.780
+Else. Oh cab
+
+1:32:00.380,1:32:03.139
+The first thing is what's the probability it's an Abyssinian cat
+
+1:32:03.929,1:32:05.929
+It's ten to the negative six
+
+1:32:06.179,1:32:08.419
+You see and so forth
+
+1:32:08.420,1:32:14.029
+So it's basically like it's not this it's not this it's not this and you can look through and oh here this one here
+
+1:32:14.150,1:32:16.150
+You know don't see what other things it is
+
+1:32:18.150,1:32:19.290
+So
+
+1:32:19.290,1:32:20.880
+How did it?
+
+1:32:20.880,1:32:26.120
+you know, so we we obviously want the probabilities to sum to one because it would be pretty weird if
+
+1:32:26.850,1:32:28.580
+if they didn't it would say
+
+1:32:28.580,1:32:34.999
+You know that the the probability of being one of these things is more than 1 or less than 1 which would be extremely odd
+
+1:32:37.590,1:32:39.090
+So
+
+1:32:39.090,1:32:41.480
+How do we go about creating these?
+
+1:32:42.179,1:32:46.219
+Predictions where each one is between zero and one and they all add up to 1
+
+1:32:47.159,1:32:49.159
+To do that we use something called softmax
+
+1:32:51.770,1:32:56.529
+Softmax is basically an extension of sigmoid the handle more than
+
+1:32:57.290,1:33:02.080
+Two levels two categories. So remember the sigmoid function looked like this
+
+1:33:04.719,1:33:06.908
+Use that for our 3s vs. 7s model
+
+1:33:08.489,1:33:10.210
+So what if we want
+
+1:33:10.210,1:33:11.560
+37
+
+1:33:11.560,1:33:16.859
+Categories rather than two categories. We need one activation for every category
+
+1:33:18.379,1:33:19.769
+So actually
+
+1:33:19.769,1:33:21.769
+the threes and sevens model
+
+1:33:22.649,1:33:24.889
+Rather than thinking of that as an is-3
+
+1:33:25.649,1:33:28.399
+Model we could actually say oh that has two categories
+
+1:33:28.800,1:33:36.709
+so let's actually create two activations one representing how three like something is and one representing how seven like something is
+
+1:33:38.070,1:33:40.999
+so let's say you know, let's just
+
+1:33:42.809,1:33:44.809
+Say that we have
+
+1:33:45.389,1:33:47.389
+6m nest digits and
+
+1:33:48.719,1:33:50.719
+These were the
+
+1:33:52.710,1:33:57.750
+Can I do this and this first column were the activations of
+
+1:33:59.470,1:34:01.390
+My model
+
+1:34:01.390,1:34:03.390
+for for one
+
+1:34:03.910,1:34:06.809
+Activation and the second column was for a second activation
+
+1:34:06.810,1:34:11.700
+So my final layer actually has two activations now. So this is like how much like a3 is it?
+
+1:34:11.700,1:34:15.209
+And this is how much like a7 is it? But this one is not at all
+
+1:34:15.790,1:34:18.479
+Like a3 and it's slightly not like a seven
+
+1:34:19.150,1:34:20.110
+this is
+
+1:34:20.110,1:34:23.610
+Very much like a three and not much like a seven and so forth
+
+1:34:23.680,1:34:26.459
+So we can take that model and rather having rather than having one
+
+1:34:26.710,1:34:32.939
+Activation food-like is three we can have two activations for how much like a three how much like a seven?
+
+1:34:34.000,1:34:36.899
+So if we take the sigmoid of that
+
+1:34:37.900,1:34:39.960
+We get two numbers between Norton one
+
+1:34:40.600,1:34:42.840
+But they don't add up
+
+1:34:43.840,1:34:50.789
+To one so that doesn't make any sense. It can't be 0.66 chance. It's a three and point five six chance
+
+1:34:50.790,1:34:54.330
+It's a seven because every digit in that data set is only one or the other
+
+1:34:55.360,1:34:57.360
+So that's not going to work
+
+1:34:58.180,1:35:03.990
+but what we could do is we could take the difference between this value and this value and
+
+1:35:04.570,1:35:07.409
+Say that's how likely it is to be a three
+
+1:35:08.110,1:35:13.169
+So in other words this one here with a high number here and a low number here is very likely to be a three
+
+1:35:15.620,1:35:18.220
+So we could basically say in the binary case
+
+1:35:19.070,1:35:25.659
+These activations that what really matters is their relative confidence of being a three versus a seven
+
+1:35:26.330,1:35:34.090
+So we could create collect the difference between column one and column two and column index zero and column index one, right? And here's the
+
+1:35:34.760,1:35:39.579
+Difference between the two columns. There's that big difference and we could take the sigmoid of that
+
+1:35:42.140,1:35:43.320
+Okay, and
+
+1:35:43.320,1:35:45.380
+so this is now giving us a
+
+1:35:45.990,1:35:48.920
+single number between Norton one and
+
+1:35:49.470,1:35:51.470
+So then since we wanted two columns
+
+1:35:52.200,1:35:53.670
+We could make
+
+1:35:53.670,1:36:00.889
+column index zero the sigmoid and column index one could be one minus that and now look these all
+
+1:36:02.190,1:36:04.120
+Add up to one
+
+1:36:04.120,1:36:11.370
+So here's probability of three probability of seven, but the second one probably three properly seven and so forth
+
+1:36:13.150,1:36:16.650
+So like that's a way that we could go from
+
+1:36:18.250,1:36:20.250
+Having
+
+1:36:20.430,1:36:23.330
+Activations for every image
+
+1:36:24.180,1:36:31.760
+- creating two probabilities each of which is between Norton one and each pair of which adds to one
+
+1:36:33.910,1:36:37.709
+Great how do we extend that to more than two columns?
+
+1:36:39.130,1:36:42.719
+how to extend it to more than two columns we use this function
+
+1:36:43.540,1:36:45.540
+Which is called soft max
+
+1:36:46.180,1:36:49.889
+Those soft max is equal to e to the X
+
+1:36:52.300,1:36:54.460
+By some of a to the X
+
+1:36:58.110,1:37:03.319
+Just to show you if I go softmax on my activations I get
+
+1:37:04.739,1:37:07.069
+0.6 o2 five point three nine seventy five
+
+1:37:07.979,1:37:11.119
+Point six zero two five point three nine seven five I get exactly the same thing
+
+1:37:12.360,1:37:16.489
+Right. So softmax in the binary case is
+
+1:37:17.519,1:37:18.780
+identical to
+
+1:37:18.780,1:37:20.840
+The sigmoid that we just looked at
+
+1:37:24.030,1:37:26.030
+But in the multi category case
+
+1:37:26.429,1:37:31.519
+We basically end up with something like this. Let's say we were doing the teddy bear grizzly bear brown bear and
+
+1:37:32.760,1:37:39.230
+For that remember our neural net is going to have the final layer will have three activations. So let's say it was 0.02
+
+1:37:39.870,1:37:41.730
+negative 2.49
+
+1:37:41.730,1:37:46.069
+1.25. So to calculate softmax. I first go e to the power of
+
+1:37:46.679,1:37:47.810
+each of these three things
+
+1:37:47.810,1:37:50.209
+so here's E to the power of point O two e
+
+1:37:50.370,1:37:52.819
+to the power of negative two point four nine e
+
+1:37:52.920,1:37:56.089
+To the power of three point 4 e to the power of one point two five
+
+1:37:56.760,1:37:58.380
+Ok, then I add them up
+
+1:37:58.380,1:38:05.659
+so there's the sum of the X and then softmax will simply be one point O two divided by four point six and
+
+1:38:06.179,1:38:11.749
+Then this one will be 0.08 divided by four point six. And this one will be three point four nine divided by four point six
+
+1:38:12.360,1:38:19.159
+So since each one of these represents each number divided by the sum, that means that the total is one
+
+1:38:20.659,1:38:22.340
+okay, and
+
+1:38:22.340,1:38:27.369
+Because all of these are positive and each one is an item divided by the sum
+
+1:38:27.369,1:38:29.499
+It means all of these must be between naught and one
+
+1:38:30.079,1:38:32.079
+So this shows you that
+
+1:38:32.300,1:38:33.800
+softmax
+
+1:38:33.800,1:38:37.540
+Always gives you numbers between naught and 1 and they always add up to 1
+
+1:38:40.380,1:38:43.290
+That in practice you can just call torch dot softmax
+
+1:38:45.039,1:38:47.039
+We'll give you this result of this
+
+1:38:47.989,1:38:49.989
+dysfunction
+
+1:38:50.289,1:38:52.289
+So you should experiment with
+
+1:38:52.479,1:38:57.929
+This in your own time, you know write this out by hand and try putting in
+
+1:38:58.719,1:39:00.070
+these numbers
+
+1:39:00.070,1:39:03.179
+Right and and see how that you get back the numbers
+
+1:39:03.179,1:39:05.609
+I claim you're going to get back and make sure this makes sense to you
+
+1:39:06.729,1:39:09.479
+so one of the interesting points about softmax is
+
+1:39:11.380,1:39:15.479
+Remember I told you that X is e to the power of something and
+
+1:39:15.999,1:39:20.159
+Now what that means? Is that e to the power of something
+
+1:39:20.800,1:39:25.439
+Grows, very very fast. Right? So like
+
+1:39:28.949,1:39:30.949
+Exper for
+
+1:39:31.550,1:39:33.550
+Is 54
+
+1:39:34.630,1:39:36.949
+XP of eight
+
+1:39:38.920,1:39:42.730
+Is 29 2009 80 right it grows super fast and
+
+1:39:43.640,1:39:48.999
+What that means is that if you have one activation, it's just a bit bigger than the others
+
+1:39:49.400,1:39:52.449
+It's softmax will be a lot bigger than the others
+
+1:39:53.120,1:39:55.419
+So intuitively the softmax function
+
+1:39:56.719,1:39:58.719
+Really wants to pick one class
+
+1:39:59.390,1:40:01.070
+among the others
+
+1:40:01.070,1:40:04.449
+Which is generally what you want right when you're trying to train a classifier
+
+1:40:05.510,1:40:11.949
+To say which breed is it you kind of want it to to pick one and kind of go for it, right?
+
+1:40:11.949,1:40:13.949
+And so that's what softmax
+
+1:40:14.960,1:40:16.190
+does
+
+1:40:16.190,1:40:18.190
+That's not what you always want
+
+1:40:18.190,1:40:21.429
+So sometimes an inference time you want it to be a bit cautious
+
+1:40:21.500,1:40:26.109
+And so you kind of got to remember that softmax isn't always the perfect approach
+
+1:40:26.810,1:40:31.959
+But it's the default. It's what we use most of the time and it works well on a lot of situations
+
+1:40:34.500,1:40:36.500
+So that is
+
+1:40:36.930,1:40:38.400
+softmax
+
+1:40:38.400,1:40:42.319
+now in the binary case for the amnesty three versus sevens
+
+1:40:42.420,1:40:50.210
+This was how we calculated amnesty law suite oook the sigmoid and then we did either one minus that or that as our loss function
+
+1:40:51.710,1:40:56.359
+Um just fine as you saw it it worked, right?
+
+1:40:59.720,1:41:01.720
+Could do this
+
+1:41:01.980,1:41:08.209
+Exactly the same thing. We can't use torch dot wear anymore because targets aren't just zero or one targets could be any number from naught
+
+1:41:08.210,1:41:09.780
+to 36
+
+1:41:09.780,1:41:11.780
+So we could do that by
+
+1:41:12.660,1:41:14.780
+replacing the torch dot wear with
+
+1:41:15.510,1:41:21.139
+Indexing. So here's an example for the binary case. Let's say these are our targets
+
+1:41:22.260,1:41:24.289
+0 1 0 1 1 0 and
+
+1:41:24.750,1:41:30.500
+These are our softmax activation x' which we calculated before notice from some random numbers just for a toy example
+
+1:41:32.430,1:41:35.119
+So one way to do instead of doing torch dot where
+
+1:41:36.540,1:41:38.540
+We could instead
+
+1:41:38.910,1:41:39.800
+Have a look at this
+
+1:41:39.800,1:41:46.790
+I could say I could grab all the numbers from naught to 5 and if I index into here
+
+1:41:47.190,1:41:51.739
+With all the numbers from 0 to 5 and then my targets
+
+1:41:54.579,1:41:59.939
+0 1 0 1 0 1 1 0 then what that's going to do is it's going to pick a
+
+1:42:00.489,1:42:02.669
+row 0 it'll pick
+
+1:42:03.579,1:42:05.669
+0.6. And then for Row 1
+
+1:42:06.309,1:42:08.309
+It'll pick one
+
+1:42:08.440,1:42:12.449
+0.49 a row 2. It'll pick 0
+
+1:42:13.119,1:42:15.269
+point 1 3 0 4
+
+1:42:16.030,1:42:17.530
+It'll pick
+
+1:42:17.530,1:42:22.559
+1.00 3 and so forth. So this is a super nifty
+
+1:42:23.500,1:42:25.360
+indexing expression
+
+1:42:25.360,1:42:27.159
+which
+
+1:42:27.159,1:42:33.539
+You should definitely play with right and it's basically this trick of passing multiple things to the PI torch
+
+1:42:34.360,1:42:40.679
+Indexer, the first thing says which rows should you return and the second thing says for each of those rows?
+
+1:42:41.079,1:42:44.819
+Which column should you return? So this is returning all the rows and
+
+1:42:46.420,1:42:51.540
+These columns for each one and so this is actually identical
+
+1:42:53.560,1:42:55.290
+Don't wear
+
+1:42:55.290,1:43:03.060
+Or isn't that tricky? And so the nice thing is we can now use that for more than just two values
+
+1:43:04.929,1:43:11.228
+And so here's here's the fully worked out thing, so I've got my three is column I've got my sevens column
+
+1:43:11.229,1:43:18.999
+Here's that target is the indexes from naught one, two, three, four five. And so here's zero zero point six one one
+
+1:43:19.610,1:43:22.029
+five point nine zero two point
+
+1:43:22.579,1:43:24.579
+one three and so forth
+
+1:43:27.670,1:43:30.489
+So yeah this works just as well with more than two columns
+
+1:43:31.010,1:43:33.010
+So we can add
+
+1:43:33.230,1:43:37.419
+You know for doing a full amnesty, you know, so all the digits from naught to nine
+
+1:43:37.429,1:43:41.319
+We could have ten columns and we would just be indexing into the ten
+
+1:43:45.800,1:43:48.650
+So this thing we're doing where we're going -
+
+1:43:49.710,1:43:51.710
+our activations matrix
+
+1:43:52.140,1:43:55.640
+all of the numbers from naught to N and then our targets
+
+1:43:56.580,1:44:03.440
+Is exactly the same as something that already exists in PI torch called F dot ll us as you can see
+
+1:44:03.870,1:44:09.050
+Exactly the same at so again, we're kind of seeing that these things inside PI torch and fast AI
+
+1:44:10.200,1:44:12.800
+Are just little shortcuts for stuff we can write ourselves
+
+1:44:14.430,1:44:15.970
+And ll los
+
+1:44:15.970,1:44:22.679
+Stands for negative log likelihood again, it sounds complex, but actually it's just this indexing expression
+
+1:44:25.000,1:44:30.600
+Rather confusingly, there's no log in it. We'll see why in a moment
+
+1:44:33.429,1:44:35.429
+So let's talk about logs
+
+1:44:36.380,1:44:37.880
+So
+
+1:44:37.880,1:44:39.880
+This locks this loss function
+
+1:44:40.100,1:44:43.870
+works quite well as we as we saw in the notebook o4
+
+1:44:43.870,1:44:49.240
+It's basically this it is exactly the same as we learn no Paco for just a different way of expressing it
+
+1:44:50.390,1:44:52.390
+But we can actually make it better
+
+1:44:52.520,1:44:56.290
+because remember the probabilities we're looking at are between
+
+1:44:56.960,1:45:00.340
+Norton one so they can't be smaller than zero. They can't be greater than one
+
+1:45:00.920,1:45:06.760
+Which means that if our model is trying to decide whether to protect point nine nine zero point nine nine nine
+
+1:45:07.430,1:45:11.889
+It's going to think that those numbers are very very close together, but won't really care
+
+1:45:13.299,1:45:15.169
+But actually if you think about the error
+
+1:45:15.169,1:45:18.909
+You know if there's like a hundred thing a thousand things
+
+1:45:19.519,1:45:22.869
+Then this would like be ten things are wrong
+
+1:45:22.869,1:45:28.568
+And this would be like one thing is wrong. But this is really like ten times better than this
+
+1:45:29.869,1:45:31.039
+so
+
+1:45:31.039,1:45:38.588
+Really? What we'd like to do is to transform the numbers between zero and one two instead but three be between negative infinity and infinity
+
+1:45:38.629,1:45:39.919
+and
+
+1:45:39.919,1:45:42.669
+There's a function that does exactly that which is called
+
+1:45:43.669,1:45:45.669
+logarithm
+
+1:45:46.930,1:45:52.769
+Okay, so as the so the numbers we could have can be between zero and one
+
+1:45:53.620,1:45:56.279
+and as we get closer and closer to
+
+1:45:58.690,1:45:59.740
+Zero
+
+1:45:59.740,1:46:03.809
+It goes down to infinity and then at one
+
+1:46:04.330,1:46:07.289
+It's going to be zero and we can't go
+
+1:46:07.870,1:46:09.870
+above zero because
+
+1:46:10.450,1:46:13.649
+Our loss function we want to be negative
+
+1:46:15.770,1:46:16.910
+So
+
+1:46:16.910,1:46:20.949
+This logarithm in case you forgot hopefully use vaguely
+
+1:46:20.950,1:46:22.730
+Remember what logarithm is from high school?
+
+1:46:22.730,1:46:30.489
+but that basically the definition is is is this if you have some number that is why that is B to the power of a
+
+1:46:30.980,1:46:33.310
+Then logarithm is defined such that
+
+1:46:33.980,1:46:35.390
+a
+
+1:46:35.390,1:46:40.629
+Equals the logarithm of Y comma B in other words it tells you
+
+1:46:42.770,1:46:46.029
+B to the power of what equals y
+
+1:46:48.410,1:46:50.410
+Which is
+
+1:46:51.130,1:46:55.900
+Not that interesting of itself but one of the really interesting things about logarithms is this
+
+1:46:56.840,1:47:00.190
+Very cool relationship, which is that log of a times B
+
+1:47:01.130,1:47:03.130
+Equals log of a plus log of B
+
+1:47:04.309,1:47:08.748
+And we use that all the time in deep learning and machine learning
+
+1:47:09.479,1:47:11.069
+because
+
+1:47:11.069,1:47:16.789
+This number here a times B can get very very big or very very small if you multiply things
+
+1:47:16.889,1:47:18.469
+a lot of small things together
+
+1:47:18.469,1:47:21.799
+You'll get a tiny number if you multiply a lot of big things together
+
+1:47:21.800,1:47:28.969
+You'll get a huge number it can get so big or so small that the the kind of the precision in your computer's floating-point
+
+1:47:30.030,1:47:32.030
+Gets really bad
+
+1:47:32.340,1:47:39.140
+Where else this thing here adding is not going to get out of control. So we really love using logarithms
+
+1:47:40.739,1:47:43.158
+Like particularly in a deep neural net where there's lots of layers
+
+1:47:43.350,1:47:48.890
+We're kind of multiplying and adding many times though. This kind of tends to come out quite nicely
+
+1:47:51.989,1:47:53.989
+So
+
+1:47:54.739,1:47:56.859
+When we take thee
+
+1:47:59.090,1:48:02.779
+The probabilities that we saw before the
+
+1:48:04.260,1:48:07.520
+Deck the things that came out of this function
+
+1:48:09.130,1:48:11.549
+And retake their logs
+
+1:48:14.010,1:48:17.909
+And we take the main that is called negative log-likelihood
+
+1:48:19.940,1:48:26.210
+And so this ends up being kind of a really nicely behaved number because of this property of the log that we described
+
+1:48:27.630,1:48:32.000
+So if you take the softmax and then take the log
+
+1:48:33.570,1:48:40.710
+Then pass that to an ll loss because remember that didn't actually take the log at all despite the name that gives you
+
+1:48:42.030,1:48:44.030
+Russ entropy loss
+
+1:48:45.450,1:48:47.899
+So that leaves an obvious question of
+
+1:48:48.900,1:48:50.160
+Why?
+
+1:48:50.160,1:48:52.519
+doesn't nll loss actually take the log and
+
+1:48:53.310,1:48:56.149
+The reason for that is that it's more convenient
+
+1:48:57.000,1:49:02.899
+Computationally to actually take the log back at the softmax step. So pi torch has a function called
+
+1:49:07.520,1:49:09.429
+Softmax
+
+1:49:09.429,1:49:12.969
+So since it's actually easier to do the log at the softmax stage
+
+1:49:12.969,1:49:19.868
+It's just a faster and more accurate pay torch assumes that you use soft log max and then pass that to n ll us
+
+1:49:20.749,1:49:26.499
+So an L. Our loss does not do the log. It assumes that you've done the log beforehand
+
+1:49:27.139,1:49:32.498
+So log softmax followed by n ll loss is the definition of cross-entropy loss in pay torch
+
+1:49:34.170,1:49:40.160
+So that's our loss function and so you can pass that some activations and some targets and get back a number and
+
+1:49:41.310,1:49:45.439
+Pretty much everything in in pi torch every every one of these kinds of functions
+
+1:49:45.990,1:49:53.059
+You can either use the NN version as a class like this and then call that object as if it's a function
+
+1:49:53.430,1:49:55.459
+Or you can just use F dot
+
+1:49:56.490,1:50:01.159
+With the camelcase name as a function directly and as you can see, they're exactly the same number
+
+1:50:04.530,1:50:06.530
+People normally use the class version
+
+1:50:08.640,1:50:14.929
+In the documentation in pi torch, you'll see it normally uses a class version so will tend to use the class version as well
+
+1:50:16.770,1:50:19.100
+You'll see that it's returning a single number and
+
+1:50:19.320,1:50:25.670
+that's because it takes the mean because a loss needs to be as we've discussed the main but if you want to see the underlying
+
+1:50:26.280,1:50:30.800
+numbers before taking the mean you can just pass in reduction equals none and
+
+1:50:31.500,1:50:34.699
+That shows you the individual cross-entropy losses before
+
+1:50:35.580,1:50:37.580
+taking the mean
+
+1:50:41.659,1:50:43.659
+Okay
+
+1:50:50.300,1:50:54.880
+Great so this is a good place to stop with our
+
+1:50:56.510,1:50:58.510
+Discussion of
+
+1:50:58.550,1:51:03.340
+Loss functions and such things rich or were there any questions about this?
+
+1:51:11.510,1:51:14.199
+Why does the loss function need to be negative
+
+1:51:18.639,1:51:21.029
+Well, okay, I mean I guess it doesn't but it's
+
+1:51:22.780,1:51:27.150
+We want something that that the lower it is the better
+
+1:51:30.730,1:51:32.730
+And we kind of need it to cut off
+
+1:51:33.410,1:51:34.550
+somewhere
+
+1:51:34.550,1:51:39.670
+I have to think about this more more during the week because I'm it's a bit tough a bit tired
+
+1:51:42.070,1:51:45.519
+Yeah, so let me let me refresh my memory when I'm awake
+
+1:51:46.969,1:51:48.969
+Okay now
+
+1:51:50.709,1:51:52.709
+Next week
+
+1:51:55.170,1:52:02.070
+Well, nope not for the video next week actually happened last week so it's the thing I'm about to say is actually your
+
+1:52:05.590,1:52:07.590
+So next week we're going to be talking about
+
+1:52:08.590,1:52:12.450
+data ethics, and I wanted to kind of segue into that by talking about
+
+1:52:13.450,1:52:15.220
+My weeks gone
+
+1:52:15.220,1:52:17.170
+because
+
+1:52:17.170,1:52:19.980
+a week or two ago in a did a
+
+1:52:20.710,1:52:22.710
+as part of a lesson I
+
+1:52:23.140,1:52:26.459
+actually talked about the efficacy of
+
+1:52:27.340,1:52:32.430
+Masks, I mean specifically wearing masks in public and I pointed out that
+
+1:52:33.430,1:52:38.999
+The efficacy of masks seemed like it could be really high and maybe everybody should be wearing them
+
+1:52:40.530,1:52:42.530
+And
+
+1:52:43.489,1:52:45.489
+Somehow I
+
+1:52:45.969,1:52:50.109
+myself as the face of a global advocacy campaign
+
+1:52:51.019,1:52:55.599
+and so if you go to masks or
+
+1:52:56.239,1:52:58.239
+Osseo
+
+1:52:58.310,1:53:00.310
+Ah you will find
+
+1:53:02.219,1:53:03.949
+Website
+
+1:53:03.949,1:53:05.949
+um
+
+1:53:06.380,1:53:07.639
+Talking about
+
+1:53:07.639,1:53:09.999
+masks and I've been on
+
+1:53:10.820,1:53:18.070
+you know TV shows in South Africa and the US and England and Australia and on radio and
+
+1:53:18.290,1:53:20.290
+blah blah blah talking about
+
+1:53:20.780,1:53:22.369
+masks
+
+1:53:22.369,1:53:25.569
+Why is this? Well, it's because as
+
+1:53:26.389,1:53:28.389
+a data scientist
+
+1:53:28.460,1:53:30.460
+you know, I
+
+1:53:30.530,1:53:32.530
+noticed that the data around masks
+
+1:53:33.619,1:53:39.189
+Seem to be getting misunderstood and it seemed that that misunderstanding was costing possibly
+
+1:53:40.330,1:53:42.330
+hundreds of thousands of lives
+
+1:53:42.680,1:53:50.530
+you know literally in the places that were using masks it seemed to be associated with you know orders of magnitude fewer deaths and
+
+1:53:53.460,1:53:59.850
+To talk about next week is like, you know, what's your role is a data scientist and and you know
+
+1:53:59.850,1:54:05.129
+I strongly believe that it's to understand the data and then do something about it and
+
+1:54:05.800,1:54:07.800
+So nobody was talking about this
+
+1:54:08.950,1:54:10.950
+so I
+
+1:54:11.170,1:54:14.069
+Ended up writing an article that appeared in The Washington Post
+
+1:54:15.400,1:54:19.290
+That basically called on people to really consider
+
+1:54:23.300,1:54:26.900
+Asks which is this article and
+
+1:54:29.950,1:54:34.149
+You know, I was I was I managed to kind of get a huge team of brilliant
+
+1:54:34.789,1:54:39.669
+Not I'm not huge a pretty decent-sized team of brilliant volunteers who helped?
+
+1:54:39.670,1:54:45.069
+You know kind of build this website and kind of some PR folks and stuff like that
+
+1:54:46.130,1:54:48.609
+But what these came clear was?
+
+1:54:49.980,1:54:57.270
+and I was talking to politicians, you know, and it is laughs is what was becoming clear is that
+
+1:54:58.610,1:55:02.929
+people weren't convinced by the science, which is fair enough because it's it's hard to
+
+1:55:04.110,1:55:06.739
+you know when the whro and the CDC is saying
+
+1:55:07.170,1:55:13.009
+You don't need to wear a mask and some random data scientist is saying but doesn't seem to be what the data is showing
+
+1:55:13.830,1:55:18.859
+You know, you've got half a brain you would pick the whu-oh in the CDC not the random data scientist
+
+1:55:19.470,1:55:23.720
+So I really felt like I if I was going to be an effective advocate I needed
+
+1:55:24.510,1:55:26.510
+sort the science out and it
+
+1:55:26.910,1:55:29.300
+You know credentialism is strong
+
+1:55:29.910,1:55:33.290
+And so it wouldn't be enough for me to say it. I needed to find other people to say it
+
+1:55:33.510,1:55:35.510
+so I put together a team of
+
+1:55:37.920,1:55:39.120
+19
+
+1:55:39.120,1:55:40.740
+scientists
+
+1:55:40.740,1:55:43.490
+Including you know a professor of sociology
+
+1:55:44.460,1:55:47.000
+a professor of aerosol dynamics
+
+1:55:48.660,1:55:54.619
+The founder of an African movement that's that kind of studied preventive methods for methods for tuberculosis
+
+1:55:57.480,1:56:00.020
+a Stanford professor who studies
+
+1:56:01.620,1:56:03.120
+Mask
+
+1:56:03.120,1:56:05.120
+disposal and cleaning methods
+
+1:56:05.460,1:56:08.270
+see a bunch of Chinese scientists who study
+
+1:56:09.450,1:56:11.280
+epidemiology modeling
+
+1:56:11.280,1:56:13.280
+a UCLA professor
+
+1:56:13.920,1:56:15.920
+who is
+
+1:56:15.990,1:56:17.990
+one of the top
+
+1:56:18.540,1:56:21.139
+Infectious disease epidemiologist experts
+
+1:56:21.930,1:56:26.510
+and so forth so like this kind of all-star team of people from all around the world and
+
+1:56:27.330,1:56:31.339
+I had never met any of these people before so well, I don't know not quite sure
+
+1:56:31.340,1:56:34.400
+I knew Austin a little bit and I knew they nip a little bit
+
+1:56:35.700,1:56:37.700
+And helix a little bit
+
+1:56:39.520,1:56:43.090
+But on the whole you know, and well Reshma, we all know she's awesome
+
+1:56:43.090,1:56:47.529
+So it's great to actually have a pastor a community person there too. And
+
+1:56:48.650,1:56:51.369
+So but yeah, I kind of tried to pull together
+
+1:56:52.640,1:56:58.780
+people from you know, there's many geographies as possible and as many areas of expertise as possible and
+
+1:57:00.800,1:57:04.480
+You know the kind of the global community helped me find
+
+1:57:06.740,1:57:14.650
+Papers about about everything about you know how different materials work about how droplets form about
+
+1:57:16.540,1:57:18.540
+Epidemiology about
+
+1:57:20.170,1:57:21.980
+Case studies of
+
+1:57:21.980,1:57:24.939
+people infecting with and without masks blah blah blah and
+
+1:57:25.760,1:57:29.770
+We ended up in the last week. Basically we wrote this paper
+
+1:57:30.610,1:57:32.610
+It contains 84
+
+1:57:33.199,1:57:34.900
+citations
+
+1:57:34.900,1:57:36.900
+um and
+
+1:57:37.910,1:57:41.500
+You know, we basically worked around the clock on it as a team and
+
+1:57:43.310,1:57:51.100
+It's out and it's been sent to a number of some of the earlier versions three or four days ago we sent to some
+
+1:57:52.460,1:57:56.560
+Governments, so one of the things is in this team. I try to look for people who
+
+1:57:57.560,1:58:04.120
+Well what you know working closely with government leaders, not just that they're scientists. And so this this went out to a number of
+
+1:58:04.790,1:58:06.790
+government ministers and
+
+1:58:06.860,1:58:10.509
+in the last few days, I've heard that it was a
+
+1:58:11.270,1:58:13.270
+very significant part of
+
+1:58:14.180,1:58:16.900
+decisions by governments to change their
+
+1:58:18.620,1:58:21.399
+To change their guidelines around masks
+
+1:58:22.610,1:58:28.929
+And you know the fights not over by any means and in particular the UK is a bit of a holdout
+
+1:58:29.720,1:58:31.720
+But I'm going to be on
+
+1:58:32.240,1:58:35.469
+ITV tomorrow and then BBC the next day
+
+1:58:37.070,1:58:41.920
+You know, it's it's kind of required stepping out to be a lot more than just a data scientist so I've had to
+
+1:58:42.620,1:58:44.620
+Pull together, you know
+
+1:58:44.720,1:58:47.980
+Politicians and staffers I've had to you know
+
+1:58:49.580,1:58:55.059
+You know hassle with the media to try and get you know coverage and you know today I'm now
+
+1:58:55.460,1:58:59.529
+Starting to do a lot of work with unions to try to get unions to understand this, you know
+
+1:58:59.530,1:59:02.530
+It's really a case of like saying okay as a data scientist
+
+1:59:03.380,1:59:05.380
+and income in conjunction with
+
+1:59:05.900,1:59:07.900
+real scientists
+
+1:59:08.390,1:59:11.079
+We've built this really strong understanding that
+
+1:59:12.650,1:59:16.120
+Masks, you know this simple, but incredibly powerful tool
+
+1:59:17.140,1:59:20.590
+That doesn't do anything unless I can effectively communicate this to
+
+1:59:21.320,1:59:24.789
+Decision-makers. So today I was you know on the phone to
+
+1:59:25.610,1:59:28.779
+You know one of the top union leaders in the country
+
+1:59:30.410,1:59:33.999
+Explaining what this means basically it turns out that in buses
+
+1:59:34.640,1:59:39.519
+In America, the kind of the air conditioning is set up so that it blows from the back to the front
+
+1:59:40.370,1:59:43.300
+and there's actually case studies in the medical literature of how
+
+1:59:44.210,1:59:48.220
+People that are seated and of downwind of an air conditioning unit
+
+1:59:48.920,1:59:56.649
+In a restaurant ended up all getting sick with Co at 19 and so we can see why like bus drivers are dying
+
+1:59:59.300,2:00:06.079
+Because they're like, they're right in the wrong spot here and their passengers aren't wearing masks so I could have unexplained this science
+
+2:00:08.490,2:00:10.490
+To union leaders
+
+2:00:10.680,2:00:13.309
+So that they understand that to keep the workers safe
+
+2:00:13.740,2:00:20.150
+It's not enough just for the driver to wear a mask. But all the people on the bus needed to be wearing masks as well
+
+2:00:21.419,2:00:23.419
+so, you know all this is basically to say
+
+2:00:26.480,2:00:31.120
+You know as data scientists, I think we have a responsibility to
+
+2:00:33.620,2:00:37.160
+The study the data and then do something about it, it's not just a
+
+2:00:38.460,2:00:42.260
+Research, you know exercise it's not just a computation exercise
+
+2:00:42.270,2:00:46.669
+You know, what? What's the point of doing things if it doesn't lead to anything?
+
+2:00:48.270,2:00:50.270
+So
+
+2:00:52.599,2:00:54.469
+Um, yeah, so
+
+2:00:54.469,2:00:58.509
+Next week. We'll be talking about this a lot more but I think you know
+
+2:00:58.510,2:01:02.409
+this is a really to me kind of interesting example of how
+
+2:01:05.419,2:01:11.349
+Digging into the data can lead to really amazing things happening. And and in this case I
+
+2:01:12.409,2:01:17.078
+strongly believe and a lot of people are telling me they strongly believe that this kind of
+
+2:01:17.479,2:01:25.269
+Advocacy work that's come out of this data analysis is is already saving lives. And so I hope this might help inspire you
+
+2:01:25.969,2:01:30.549
+To to take your data analysis and to take it to places that it really makes a difference
+
+2:01:31.429,2:01:33.969
+So thank you very much, and I'll see you next week
