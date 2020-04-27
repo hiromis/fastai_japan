@@ -1,2645 +1,2659 @@
 0:00:03.020,0:00:05.020
-Welcome back and
+みなさんこんにちは
 
 0:00:05.210,0:00:07.210
-here is lesson or
+レッスン4です。
 
 0:00:07.850,0:00:10.989
-which is where we get deep into the weeds of
+今回からようやく、実際にニューラルネットの
 
 0:00:11.780,0:00:15.400
-Exactly. What is going on when we are training a neural network and
+訓練を深掘りしていきます。
 
 0:00:15.920,0:00:19.180
-We started looking at this in the previous lesson
+前回からこのテーマに入り、
 
 0:00:19.180,0:00:22.569
-We were looking at the casted gradient descent
+確率的勾配降下法（SGD）を勉強しました。
 
 0:00:22.939,0:00:27.219
-And so to remind you we were looking at what Arthur Samuel said
+復習ですが、アーサー・サミュエルのアイデア、つまり、
 
 0:00:28.710,0:00:35.849
-Suppose we arrange for some automatic means of testing the effectiveness of any current weight assignment or we would call it
+実際のパフォーマンスからその時点での重みの有効性を自動で評価する方法と、
 
 0:00:35.950,0:00:39.330
-parameter assignment in terms of actual performance and
+
 
 0:00:39.820,0:00:44.520
-Provide a mechanism for altering the weight assignment so as to maximize that performance
+パフォーマンスを最大化するための重み更新メカニズムを用意できれば、
 
 0:00:45.550,0:00:53.400
-So we could make that entirely automatic and a machine so programmed would learn from its experience and that was error well
+完全自動で、自らの経験から学習するプログラムができるのです。
 
 0:00:54.340,0:01:00.659
-So our initial tempt attempt on the amnesty data set was not really based on on that
+前回のMNISTへのアプローチは実際にはこの方法に基づいていませんでした。
 
 0:01:01.390,0:01:04.229
-We didn't really have any parameters. So then
+パラメータがなかったからです。
 
 0:01:04.960,0:01:07.800
-Last week we tried to figure out how we could
+そこで、最後に、
 
 0:01:08.770,0:01:11.729
-Parameterize it how we could create a function that had parameters
+どのようにパラメタライズするか、つまり、パラメータを持つ関数をどう作るか考えました。
 
 0:01:12.880,0:01:19.049
-And what we thought we could do would be to have something where that say the probability of being some particular number
+そこで考えたのは、ある数字の画像である確率というものは、
 
 0:01:19.869,0:01:27.389
-was expressed in terms of the pixels of that number and some weights and then we would just multiply them together and
+その画像のピクセルと重みで表現できて、数式としては、それらを要素毎に掛けてから
 
 0:01:28.090,0:01:30.090
-Add them up
+和をとるというものです。
 
 0:01:31.600,0:01:33.600
-So we looked at
+そしてさらに、
 
 0:01:34.270,0:01:41.759
-al stochastic gradient descent worked last week and the basic idea is that we start out by
+確率的勾配降下法が動く様子も見ました。基本的な考えとしては、ランダムに初期化した
 
 0:01:43.210,0:01:45.960
-initializing the parameters randomly
+パラメータから始め、まずそれらを使って
 
 0:01:46.690,0:01:51.840
-We use them to make a prediction using a function such as this one
+何かしらの関数に従って予測を計算し、
 
 0:01:54.000,0:01:58.919
-We then see how good that prediction is by measuring using a loss function
+その予測を損失関数を使って評価します。そのあと、
 
 0:01:59.830,0:02:07.080
-We then calculate the gradient which is how much with the loss change if I changed one parameter by a little bit
+あるパラメータの微小変化による損失の変化である勾配を計算します。
 
 0:02:08.020,0:02:13.619
-We then use that to make a small step to change each of the parameters by a little bit
+最後に、その勾配を使ってパラメータを更新するのですが、更新する時は
 
 0:02:14.770,0:02:16.799
-By multiplying the learning rate by the gradient
+パラメータから勾配に学習率をかけた値を引きます。
 
 0:02:17.350,0:02:21.299
-to get a new set of predictions and so we went round and round and round a few times until
+そしてその更新されたパラメータで予測を計算し、、、という流れを繰り返します。
 
 0:02:22.450,0:02:28.530
-Eventually we decided to stop and so these are the basic seven steps
+これが基本の7ステップで、
 
 0:02:29.920,0:02:35.220
-That we went through and so we did that for simple quadratic equation
+前回は簡単な二次関数にこれを使いました。
 
 0:02:38.430,0:02:44.010
-And we had something which looked like this and so by the end we had this nice
+パラメータの推移はこんな感じで、最終的にはこのようにどんどん近づいていき
 
 0:02:47.610,0:02:49.830
-Curve getting closer and closer closer
+良い曲線になりました。
 
 0:02:55.290,0:02:57.180
-So I have a little
+
 
 0:02:57.180,0:03:03.109
-Summary at the start of this section summarize in gradient descent that silver and I have in the notebooks in the book
+“Summarizing gradient descent”は簡潔なまとめで、各章で
 
 0:03:03.840,0:03:07.849
-Of what we just did so you can review that and make sure it makes sense to you
+勉強したことの要約ですから復習に使ってください。
 
 0:03:10.220,0:03:14.259
-So now let's use this to create our M nest
+今からこの方法を使って、MNISTの3と7を
 
 0:03:14.930,0:03:17.349
-Threes vs. Sevens model and
+識別するモデルを作りましょう。
 
 0:03:18.049,0:03:24.309
-so to create a model we're going to need to create something that we can pass into a function like
+まず、関数の入力を作る必要があります。
 
 0:03:26.569,0:03:28.569
-Let's see where it was
+
 
 0:03:29.060,0:03:31.600
-Passing to a function like this one so we need
+このような関数です。
 
 0:03:32.270,0:03:37.929
-Just some pixels that are all lined up and some parameters that are all lined up and then we're going to sum them up
+ですので、1行に並べられたピクセルとそれと同様のパラメータが必要です。
 
 0:03:41.060,0:03:43.060
-So our exes are
+ですから、xは
 
 0:03:43.670,0:03:50.079
-Going to be pixels and so in this case because we're just going to multiply each pixel by a parameter and add them up
+ピクセルです。今回はピクセルとパラメータを要素毎に掛け合わせてから和をとるので、
 
 0:03:50.300,0:03:52.840
-the effect that they're laid out in a grid is not
+グリッドであること自体はさほど
 
 0:03:53.660,0:03:55.660
-important so let's
+重要ではないですから
 
 0:03:56.300,0:03:58.250
-reshape those
+
 
 0:03:58.250,0:04:00.250
-Those grids and turn them into vectors
+ベクトルに変形してしまいましょう。
 
 0:04:00.770,0:04:08.770
-The way we reshape things in pi torch is by using the view method and so the view method you can pass to it
+PyTorchではviewメソッドで変形します。引数は、変形後のshape、つまり
 
 0:04:09.230,0:04:11.230
-How large you want each
+そもそも何次元にするか、そして
 
 0:04:11.930,0:04:15.670
-dimension to be and so in this case we want the
+各次元の大きさです。ここでは、列の数は
 
 0:04:17.239,0:04:21.429
-Number of columns to be equal to the total number of pixels in each picture
+1枚の画像に含まれるピクセル数、つまり
 
 0:04:22.220,0:04:29.320
-Which is 28 times 28 because they're 28 by 28 images. And then the number of rows will be however many rows
+28x28で、行の数はデータセットに含まれる画像の枚数になります。
 
 0:04:29.320,0:04:32.050
-There are in the data and so if you just use minus one
+この-1は
 
 0:04:32.690,0:04:34.690
-when you call you that means
+
 
 0:04:35.420,0:04:37.479
-You know as many as there are in the data
+データセットの大きさと等価です。
 
 0:04:37.480,0:04:42.219
-So this will create something of the same with the same total number of elements that we had before so
+
 
 0:04:43.580,0:04:45.580
 We can grab all our threes
+ここで3と7全て用意して
 
 0:04:45.650,0:04:49.480
-we can concatenate them to watch CAD with all of our sevens and
+cat関数で結合しました。そして最後にviewメソッドで
 
 0:04:50.180,0:04:53.230
-then reshape that into a
+行列に変形しています。
 
 0:04:53.960,0:04:56.679
-matrix where each row is one
+その行列は各行が
 
 0:04:57.380,0:05:02.080
-Image with all of the rows and columns of the image all lined up in a single vector
+1枚の画像に対応しています。
 
 0:05:04.560,0:05:09.060
-Then we're going to need labels, so that's our X so we're going to need labels our labels will be a 1
+次にラベルを用意します。ここではラベル1が3、
 
 0:05:09.669,0:05:14.249
-the H of the 3s and a 0 for H of the 7s so our
+ラベル0が7に対応しています。
 
 0:05:14.770,0:05:17.160
-Basically, we're creating is 3 model
+
 
 0:05:20.130,0:05:26.809
-So that's going to create a vector we actually need it to be a matrix in
+この部分はベクトルを作っていますが、ラベルも行列で表したいので、
 
 0:05:27.780,0:05:32.059
-In pi torch so unscrews will add an additional
+PyTorchのunsqueezeメソッドを使って
 
 0:05:33.210,0:05:35.210
-unit
+
 
 0:05:35.310,0:05:38.569
-Dimension to wherever I've asked for so here in position one
+欲しい場所に次元を追加します。
 
 0:05:38.790,0:05:42.170
-so in other words, this is going to turn up from something which is a
+つまり、ここでの処理は12396個の要素があるベクトルを
 
 0:05:42.720,0:05:46.160
-vector of twelve thousand three hundred and ninety six long
+列が1、行が12396の行列に変えています。
 
 0:05:46.890,0:05:51.199
-Into a matrix with twelve thousand three hundred ninety-six rows and one column
+
 
 0:05:52.500,0:05:55.429
-That's just what pi torch expects to see
+
 
 0:05:57.150,0:06:03.650
-So now we're going to turn our X&Y into a data set and a data set is a very specific
+このxとyをデータセットに整形します。
 
 0:06:04.500,0:06:09.919
-Concept in pi torch. It's something which we can index into using square brackets
+データセットは、[]を使って要素にアクセスができて、
 
 0:06:11.040,0:06:15.890
-And when we do so it's expected to return a double
+各要素はタプルです。
 
 0:06:17.760,0:06:20.460
-So here if we look at
+
 
 0:06:23.020,0:06:25.020
-How we're going to create this data set
+ここでデータセットを作り、
 
 0:06:25.570,0:06:30.029
-and when we index into it, it's going to return a tuple containing our
+要素を取得すると、タプルで、それは、インデックスに対応する列の
 
 0:06:30.670,0:06:32.670
-independent variable and a dependent variable
+独立変数と従属変数を持っています。
 
 0:06:33.730,0:06:35.530
-For each
+
 
 0:06:35.530,0:06:36.970
-particular row and
+
 
 0:06:36.970,0:06:44.580
-so to do that we can use the Python zip function which takes one element of the first thing and
+これを作るにはPythonのzip関数を使います。入力それぞれの対応する位置の要素を
 
 0:06:46.420,0:06:51.839
-Combines it with concatenates it with one element of the second thing and then it does that again and again and again and
+タプルにしていく関数です。
 
 0:06:52.150,0:06:55.709
-so then if we create a list of those it gives us a
+zip関数の戻り値をlistにすればデータセットになります。
 
 0:06:56.410,0:07:03.869
-It is as a data set. It gives us a list which when we index into it, it's going to contain one image and
+dsetはリストになっていて、各要素は
 
 0:07:04.510,0:07:11.159
-one label and so here you can see why there's my label and my image I won't print out the whole thing, but it's a
+1枚の画像とそれに対応するラベルです。
 
 0:07:12.250,0:07:14.250
-784 long vector
+
 
 0:07:14.710,0:07:21.840
-So that's a really important concept a data set is something that you can index into and get back at Apple
+これは重要なコンセプトです。データセットはインデクシングできて、各要素がタプルです。
 
 0:07:23.280,0:07:26.220
-And Here I am this is called destructuring the tupple
+これはタプルの展開です。
 
 0:07:26.220,0:07:28.350
-which means I'm taking the two parts of the tupple and
+タプルを0番目と1番目以降の2つに分けて、
 
 0:07:28.510,0:07:34.200
-Putting the first part in one variable in the second part in the other variable, which is something we do a lot in Python
+各変数に代入しています。
 
 0:07:34.200,0:07:36.779
-It's pretty handy a lot of other languages support that as well
+
 
 0:07:38.610,0:07:45.770
-Repeat the same three steps for a validation set. So we've now got a training data set and a validation data set
+ここまでの3ステップをバリデーションセットに対しても行います。これでデータセットの準備ができました。
 
 0:07:47.550,0:07:49.760
-Right, so now we need to
+では次にパラメータを初期化します。
 
 0:07:50.820,0:07:52.820
-initialize our parameters and
+
 
 0:07:53.610,0:07:58.880
-So to do that as we've discussed we just do it randomly. So here's a function. They're given some
+ただランダムに初期化すれば良いのです。これがその関数です。
 
 0:07:59.550,0:08:00.870
-size
+
 
 0:08:00.870,0:08:02.870
-Some some shape if you like
+パラメータのshapeを与えれば
 
 0:08:03.360,0:08:04.500
-we'll
+
 
 0:08:04.500,0:08:06.500
-randomly initialize
+標準分布からのサンプリングで
 
 0:08:07.950,0:08:15.710
-Using a normal random number distribution in pi torch that's what Rand in does and we can hit shift tab to see
+パラメータを初期化します。shit+tabでrandnのドキュメントも見れます。
 
 0:08:17.340,0:08:19.340
-That works, okay
+
 
 0:08:23.790,0:08:26.029
-And it says here that it's going to have a variance of one
+これは分散が1と言っています。
 
 0:08:26.670,0:08:29.329
-So I probably shouldn't call this standard deviation
+ここはstd（標準偏差）ではなくvar（分散）にするべきでしたね。
 
 0:08:29.330,0:08:31.640
-I probably should call this variance actually
+
 
 0:08:32.039,0:08:38.598
-so multiply it by the variance - to change its variance to whatever is requested which will default to one and
+分散を掛け合わせることで調整します。
 
 0:08:39.900,0:08:41.900
-then as we talked about when it comes to
+そして、このパラメータに関する
 
 0:08:42.659,0:08:45.769
-Calculating our gradients we have to tell PI torch
+勾配を計算する必要があるので
 
 0:08:46.380,0:08:51.499
-Which things we want gradients for and the way we do that is requires gred underscore
+requires_grad_を呼びます。
 
 0:08:51.870,0:08:56.150
-Remember this underscore at the end is a special magic symbol which tells python
+このアンダースコアは
 
 0:08:56.400,0:09:02.299
-Tells play torch that we want this function to actually change the thing that it's referring to so this will change
+呼び出し元に対してさ要することを意味します。
 
 0:09:03.480,0:09:05.480
-this
+
 
 0:09:06.450,0:09:07.650
-Tensor
+
 
 0:09:07.650,0:09:09.650
-Such that it requires radiance
+つまりこのTensorは勾配が必要だということです。
 
 0:09:10.260,0:09:12.289
-So here's some weights so our weights
+ここで重みを初期化しています。
 
 0:09:12.870,0:09:14.820
-are going to need to be
+
 
 0:09:14.820,0:09:21.770
-28 by 28 by one shape 28 by 28 because every pixel is going to need a weight and
+shapeは(28*28, 1)です。28*28なのは各ピクセルに対応する重みが必要だからで
 
 0:09:22.500,0:09:26.929
-Then one because we're going to need again. We're going to need to have that that that unit
+1は、出力の大きさを1にしたいからです。
 
 0:09:28.740,0:09:30.740
-Access to make it into a column
+
 
 0:09:32.070,0:09:34.070
-So that's what piped watch expects
+
 
 0:09:35.529,0:09:37.529
-So there's our weights
+
 
 0:09:38.740,0:09:44.939
-Now just weights by pixels actually isn't going to be enough because weights by pixels were always equals zero
+重みとピクセルの積では不十分かもしれません。なぜならもしピクセルが全て0なら
 
 0:09:45.430,0:09:48.449
-When the pixels are equal to zero, it has a zero intercept
+出力が常に0になってしまうからです。
 
 0:09:48.459,0:09:55.289
-So we really want something where it's like W X plus B a line. So the B is we call the bias and
+そこでwx+bという式にするためにバイアスbを用意します。
 
 0:09:55.990,0:10:01.019
-So that's just going to be a single number. So let's grab a single number for our bias
+これはただの数字です。これも乱数で初期化します。
 
 0:10:02.379,0:10:03.519
-so
+
 
 0:10:03.519,0:10:09.568
-Remember I told you there's a difference between the parameters and weights. So actually speaking so here the weights are
+パラメータと重みは違うと話しました。ここでは重みがwで、
 
 0:10:10.540,0:10:12.540
-the W in this equation
+
 
 0:10:12.910,0:10:18.089
-the bias is B in this equation and the whites and bias together is
+バイアスはb、そしてこの2つともが関数のパラメータで
 
 0:10:18.519,0:10:22.739
-The parameters of the function they're all the things that we're going to change
+訓練によって調整されるものです。
 
 0:10:22.740,0:10:25.259
-They're all the things that have gradients that we're going to update
+つまり、勾配を必要とし、値が更新されるものです。
 
 0:10:26.589,0:10:31.679
-So there's an important bit of jargon for you the weights and biases of the model are the parameters
+モデルの重みとバイアスがパラメータです。
 
 0:10:34.279,0:10:36.378
-We can yes question
+
 
 0:10:39.120,0:10:43.160
-What's the difference between gradient descent and stochastic gradient descent
+（受講生からの質問）勾配降下法と確率的勾配降下法の違いはなんですか？
 
 0:10:45.570,0:10:50.030
-So far we've only done gradient descent will be doing stochastic gradient descent in a few minutes
+ここまでやってきたのは勾配降下法で、確率的勾配降下法はこのあとやります。
 
 0:10:52.339,0:10:57.469
-We can now create a calculated prediction for one image so we can take an image such as the first one and
+さて、まずデータセットの最初の画像のラベルを予測を計算しましょう。
 
 0:10:57.899,0:11:05.179
-multiply by the weights only to transpose them to make them line up in terms of the rows and columns and add it up and
+ここではweightsを転置することで要素積にし、それからsumで和を計算しています。最後に
 
 0:11:05.519,0:11:07.729
-add the bias and there is a
+バイアスを加えれば
 
 0:11:08.490,0:11:10.490
-prediction
+予測です。
 
 0:11:11.069,0:11:17.748
-We want to do that for every image we could do that with a for loop and that would be really really slow
+全ての画像の予測計算はfor-loopでもできますが、それだとGPUを有効活用できず、
 
 0:11:18.779,0:11:24.948
-it wouldn't run on the GPU and it wouldn't run in optimize and see code so we actually want to use
+また、最適化もされないので大変遅いです。
 
 0:11:25.259,0:11:29.449
-Always to do kind of like looping over pixels looping over images
+画像やピクセルに繰り返し処理を適用したい場合は
 
 0:11:30.180,0:11:33.739
-You always need to try to make sure you're doing that without a Python or loop
+なるべくPythonのfor-loopを使わないようにしてください。
 
 0:11:34.889,0:11:36.480
-in this case
+
 
 0:11:36.480,0:11:41.269
-Doing this calculation for lots of rows and columns is a mathematical
+この予測の計算は行列積と呼ばれるものです。
 
 0:11:41.910,0:11:43.969
-operation called matrix multiply
+
 
 0:11:44.790,0:11:46.790
-so if you've
+
 
 0:11:47.399,0:11:51.529
-Forgotten your matrix multiplication or maybe never quite got around to it at a high school
+行列積を知らなかった、もしくは忘れてしまったという人はKhan Academyか何かで
 
 0:11:53.009,0:11:57.229
-It would be a good idea to he'll look at Khan Academy or something to learn
+復習することをおすすめします。
 
 0:11:57.779,0:12:05.779
-About what it is, but it's actually I'll give you the quick answer. This is from Wikipedia if these are two matrices a and B
+簡単に説明します。このイラストはwikipdeiaから持ってきたものです。行列AとBがあります。
 
 0:12:06.959,0:12:12.258
-then this element here 1 comma 2 in the output is going to be equal to
+計算結果の(1, 2)に入るのは、行列Aのこの部分と
 
 0:12:12.959,0:12:19.518
-The first bit here times the first bit here plus the second bit here times the second bit here
+行列Bのこの部分の要素積の和です。
 
 0:12:19.519,0:12:22.698
-So it's going to be a 1 2 times a 1 1
+つまり、a_{1, 1} * b_{1, 2}
 
 0:12:23.009,0:12:28.188
-Plus B 2 2 times a 1 2 that's you can see the orange matches the orange
++ a_{1, 2} * b_{2, 2}です。
 
 0:12:29.890,0:12:31.890
-Ditto for over here
+ここも同じようにして、
 
 0:12:31.890,0:12:38.849
-this would be equal to b1 3 times a 3 1 plus B 2 3 times a 3 2 and so forth for every
+b_{1, 3} * a_{3, 1} + b_{2, 3} * a_{3, 2}となります。
 
 0:12:49.440,0:12:51.440
-Here's a great picture of that in action
+
 
 0:12:51.440,0:12:52.529
-If you look at matrix
+
 
 0:12:52.529,0:12:59.119
-multiplication X Y Z another way to think of it is we can kind of flip the second bit over on top and then
+matrixmultiplication.xyzも行列積の良い説明です。右側の行列を反時計回りに90度回し左の行列の上に書きます。
 
 0:13:00.149,0:13:02.149
-Multiply each bit together and add them up
+そして、それぞれを掛けて足し合わせるのです。
 
 0:13:03.480,0:13:08.489
-multiplied each bit together and add them up and you can see always the second one here and ends up in the second spot and
+2つ目のものがこの位置に入り、2番目の場所で終わります。
 
 0:13:08.490,0:13:10.490
-The first one ends up in the first bud
+
 
 0:13:14.490,0:13:16.950
-And that's what matrix multiplication is
+これが行列積です。
 
 0:13:18.279,0:13:20.849
-so we can do our
+
 
 0:13:23.010,0:13:26.939
-Up by using matrix multiplication and in
+予測は行列積で計算できます。
 
 0:13:27.730,0:13:33.270
-Python and therefore pay torch matrix multiplication is the @ sign operator
+PyTorchでは@で行列積を表します。
 
 0:13:33.280,0:13:36.449
-So when you see that, that means matrix multiply
+
 
 0:13:37.630,0:13:39.630
-so here is our
+1つ目のデータに対する予測は
 
 0:13:40.959,0:13:44.549
-20.2 336 if I do a matrix multiply of
+20.2336でした。行列積を用いて
 
 0:13:46.110,0:13:47.830
-Our
+
 
 0:13:47.830,0:13:51.660
-Training set by our weights and then we add the bias and
+データセット全体に対する予測を計算すると、
 
 0:13:52.180,0:13:57.420
-Here is our twenty point three three six for the first one and you can see though. It's doing every single
+ここに20.2336があり、その他データに対する予測結果も計算されています。
 
 0:13:57.940,0:14:04.109
-One, okay. So that's really important is the matrix model location gives us an optimized way to do these
+行列積を用いることで簡単な線形の関数を高速に計算できることは覚えておいてください。
 
 0:14:04.930,0:14:09.030
-Simple linear functions, whereas many kind of rows and columns as we want
+
 
 0:14:11.300,0:14:15.039
-So this is one of the two fundamental equations of any neural network
+この式はニューラルネットワークで登場する基本的な2つの式の1つです。
 
 0:14:17.809,0:14:21.309
-Some rows of data rows and columns of data much use multiplied
+いくつかのデータを表す行列に重みを掛けて、バイアスを加えるという式です。
 
 0:14:21.309,0:14:26.499
-Some ways add some bias and the second one which was here in a moment is an activation function
+もう1つの基本的な式は活性化関数です。
 
 0:14:29.600,0:14:35.920
-So that is some predictions from our randomly initialized model so we can check how good our
+ランダムに初期化したモデルの予測を計算したので評価しましょう。
 
 0:14:36.410,0:14:40.270
-Model is and so to do that we can decide that
+評価のために予測が0以上なら
 
 0:14:40.790,0:14:42.790
-Anything greater than zero?
+3の画像、そうでなければ7
 
 0:14:43.370,0:14:49.989
-We will call a three and anything less than zero we will call a seven so Preds
+というふうにしましょう。
 
 0:14:51.329,0:14:55.469
-Greater than zero tells us whether or not something is predicted to be a tree or not
+preds > 0は予測が3ならばTrue、そうでなければFalseを返し、それを
 
 0:14:56.889,0:14:58.589
-Then turn that into a float
+floatに変換します。
 
 0:14:58.589,0:15:02.488
-so rather than true and false make it one in zero because it's what our training set contains and then
+こうすることで先ほど用意したラベルと比較できます。
 
 0:15:03.309,0:15:05.199
-check with our our
+
 
 0:15:05.199,0:15:06.639
-our
+
 
 0:15:06.639,0:15:08.290
-thresholded predictions
+
 
 0:15:08.290,0:15:13.139
-Are equal to our training set and this will return true
+(preds>0.0).float() == train_yは正解ならTrue、間違いならFalse
 
 0:15:13.629,0:15:17.279
-Every time a row is correctly predicted and false. Otherwise
+を返します。
 
 0:15:18.309,0:15:23.999
 So if we take all those trues and falses and turn them into floats, so that'll be ones and zeroes and then take their mean
+さらにこれをfloatに変換し、平均を求めると、
 
 0:15:25.520,0:15:32.629
-It's point four nine so not surprisingly our randomly initialized model is right about half the time at predicting three years from sevens I
+0.49、つまり現時点でモデルは50%正しく識別できるということです。
 
 0:15:33.300,0:15:35.330
-Added one more method here, which is dot item
+ここでitemメソッドを使っています。
 
 0:15:36.360,0:15:38.360
-without item
+これなしだと
 
 0:15:38.910,0:15:40.910
-This would return a tensor
+tensorが返されます。
 
 0:15:40.950,0:15:45.109
-It's a rank zero tensor. It has no rows. It has no columns
+ランク0のtensorです。
 
 0:15:45.110,0:15:48.649
-it just it's just a number on its own, but I actually wanted to
+
+
 
 0:15:49.980,0:15:54.800
-Unwrap it to create a normal Python scaler mainly just because I wanted to see them easily see the full
+ここでは小数点以下を見やすくするためにPythonのスカラーを使いたかったので、itemを使いました。
 
 0:15:55.230,0:16:02.420
-Set of decimal places and the reason for that is I want to show you how we're going to calculate the derivative on the accuracy
+そして、こうすることでパラメータの微小変化によるaccuracyの変化を
 
 0:16:03.209,0:16:05.599
-By changing a parameter a tiny bit
+見やすくしたかったのです。
 
 0:16:06.480,0:16:10.670
-so let's take one parameter which will be weights zero and
+さて、ここでweights[0]に1.0001掛けて少し大きくしましょう。
 
 0:16:11.730,0:16:14.570
-Multiply it by one point zero one
+
 
 0:16:15.810,0:16:18.150
-and so that's going to make it a little bit bigger and
+
 
 0:16:18.910,0:16:20.910
-then if I calculate how the
+そして、この新たな
 
 0:16:23.500,0:16:29.580
-The accuracy changes based on the change in that weight that will be the gradient of
+重みで計算した予測のaccuracyと先ほどのaccuracyの差が
 
 0:16:30.279,0:16:35.249
-The accuracy with respect to that parameter so I can do that by calculating
+weights[0]に関するaccuracyの勾配です。予測は先ほどと同様に
 
 0:16:36.190,0:16:41.429
-my new set of predictions and then I can threshold them and then I can check whether they're equal to the training set and
+計算し、閾値で0/1にし、ラベルと比較し、平均を取れば新たなパラメータによる予測です。
 
 0:16:41.800,0:16:43.480
-Then take the mean
+
 
 0:16:43.480,0:16:45.220
-And I get back
+
 
 0:16:45.220,0:16:47.580
-Exactly the same number
+そしてaccuracyは全く同じでした。
 
 0:16:48.279,0:16:50.279
-so remember that
+
 
 0:16:52.150,0:16:53.590
-Gradient is
+勾配は
 
 0:16:53.590,0:16:55.570
-equal to
+
 
 0:16:55.570,0:17:01.710
-Rise over run if you remember back to your calculus or if you'd forgotten your calculus. Hopefully you've reviewed it on Khan Academy
+入力の変化に対する出力の変化です。忘れていたらKhan Academyなどで復習してください。
 
 0:17:02.710,0:17:04.710
-so
+
 
 0:17:04.839,0:17:09.938
-The change in the Y so why new - why old which is
+yの変化、つまりy_new - y_oldは
 
 0:17:11.300,0:17:17.019
-0.49 1 2 etc minus 0.49 1 2 etc, which is 0
+0.4912… - 0.4912… で0です。
 
 0:17:19.430,0:17:21.199
-This change
+weights[0]の変化は
 
 0:17:21.199,0:17:26.139
-will give us 0 so at this point we have a problem our derivative is
+全くaccuracyを変えませんでした。
 
 0:17:27.380,0:17:29.380
-Zero so we have zero gradients
+つまり勾配が0です。
 
 0:17:29.720,0:17:35.439
-Which means our step will be zero which means our prediction will be unchanged
+つまりパラメータも変わらないので予測も不変です。
 
 0:17:38.760,0:17:40.020
-Okay
+
 
 0:17:40.020,0:17:46.430
-so we have a problem and our problem is that our gradient is zero and with a gradient of
+勾配が0というのは問題です。
 
 0:17:46.860,0:17:53.029
-Zero we can't take a step and we can't get better predictions. And so
+勾配が0だとパラメータは更新されず予測も改善されません。
 
 0:17:53.430,0:17:54.140
-Intuitively speaking
+直感的にいうと、
 
 0:17:54.140,0:18:00.710
-the reason that our gradient is zero is because when we change a single pixel by a tiny bit
+勾配が0な理由は、画像の1ピクセルだけを変えたところで、
 
 0:18:01.140,0:18:09.110
-we might not ever in any way change an actual prediction to change from a three predicting a three to a seven or
+その変化は予測が3だったものを7に変えることもまたその逆も起こさないだろうということです。
 
 0:18:09.900,0:18:13.940
-Vice versa because we have this we have this threshold
+というのもこの閾値を使っているからです。
 
 0:18:16.060,0:18:18.249
-And so in other words our
+言い換えると
 
 0:18:20.890,0:18:22.220
-Our accuracy
+今使おうとしている
 
 0:18:22.220,0:18:28.450
-Loss function here is very bumpy. It's like flat step flat step flat step. So it's got this
+accuracy損失関数は凸凹です。それは平らな部分と段差でできてます。
 
 0:18:29.060,0:18:30.170
-this
+
 
 0:18:30.170,0:18:35.379
-Zero gradient all over the place. So what we need to do is use something other than
+多くのところで勾配が0です。この場合、私たちはaccuracyではない損失関数を
 
 0:18:36.500,0:18:37.910
-accuracy as
+
 
 0:18:37.910,0:18:39.910
-our loss function
+用意する必要があります。
 
 0:18:41.150,0:18:47.920
-So, let's try and create a new function and what this new function is going to do is it's going to
+では新しい関数を作りましょう。その関数はaccuracyが改善されたら
 
 0:18:49.520,0:18:51.520
-Give us a better value
+改善されるようなものです。
 
 0:18:52.970,0:18:54.970
-Kind of in in much the same way that
+
 
 0:18:55.550,0:18:59.649
-Accuracy gives a better value. So this is the loss member of small losses better
+損失は小さいほど良いので、
 
 0:18:59.809,0:19:05.319
-so to give us a lower loss when the accuracy is better, but it won't have a
+損失が小さければaccuracyも良くなる必要があります。ですが、
 
 0:19:06.260,0:19:07.880
-zero
+
 
 0:19:07.880,0:19:09.880
-gradient
+勾配0は避ける必要があります。
 
 0:19:10.269,0:19:15.429
-A slightly better prediction needs to have a slightly better loss
+予測が少しでもよければ、損失も良くなる必要があります。
 
 0:19:17.149,0:19:19.149
-So, let's have a look an example
+では例を見ましょう。
 
 0:19:19.369,0:19:21.049
-let's say our
+
 
 0:19:21.049,0:19:24.338
-Targets our labels of like that there is three. Oh
+ラベルをtargetsとしましょう。データは3つです。
 
 0:19:24.950,0:19:29.349
-There's just three rows three images here one zero one, okay
+3つのデータがあり、ラベルは1, 0, 1とします。
 
 0:19:29.959,0:19:37.179
-And we've made some predictions from a neural net and those predictions gave us point. Nine point four point two
+そして、あるニューラルネットで予測を計算し、その予測自体は(0.9, 0.4, 0.2)です。
 
 0:19:38.479,0:19:40.479
-so now consider
+
 
 0:19:40.700,0:19:46.779
-This loss function a loss function. We're going to use torch dot where which is basically the same as
+そしてこの関数を損失関数とします。torch.dotを使います。これは基本的に
 
 0:19:47.479,0:19:55.059
-This list comprehension is basically an if statement so it's going to say for for where target equals one
+リスト内包で、if文です。ここではtargetが1なら1 - 予測を返します。
 
 0:19:56.209,0:20:01.479
-We're going to return 1 minus predictions. So here target is one so it'll be 1 minus 0.9 and
+この要素はtargetが1なので損失は1 - 0.9です。
 
 0:20:02.479,0:20:06.189
-Where target is not 1 it'll just be predictions
+そうでなければ予測をそのまま返します。
 
 0:20:07.640,0:20:09.640
-so well these
+ですのでこの例では、
 
 0:20:09.870,0:20:12.410
-Examples here. The first one target equals 1
+1つめのターゲットは1なので
 
 0:20:13.350,0:20:15.150
-will be 1
+損失は1-0.9で
 
 0:20:15.150,0:20:17.359
-minus 0.9 0.1
+0.1
 
 0:20:19.080,0:20:24.380
-The next one is target equals 0 so to piss people the prediction just 0.4
+その次は0なので予測の0.4がそのまま損失、
 
 0:20:24.380,0:20:28.070
-And then for the third one, it's a 1/4 target
+3つ目はターゲットが1なので
 
 0:20:28.070,0:20:34.579
-So it'll be 1 minus prediction, which is 0.8. And so you can see here when the
+1 - 0.2で0.8。
 
 0:20:35.430,0:20:38.690
-Prediction is correct. Correct. In other words, it's a number, you know
+この関数だと、ターゲットが1なら予測が大きく、
 
 0:20:38.690,0:20:44.539
-It's a high number when the target is 1 and a low number when the target is 0
+ターゲットが0なら予測が小さくなります。
 
 0:20:45.150,0:20:50.089
-These numbers are going to be smaller. So the worst one is when we predicted
+この例で最も外れた予測は0.2と予測しているものです。
 
 0:20:51.390,0:20:54.619
-0.2. So we're pretty we really thought that was actually a zero
+つまり、ここでは0と予測しているけれどラベルは1という状態です。
 
 0:20:54.620,0:21:00.530
-But it's actually a 1 so we ended up with a 0.8 here because this is 1 minus prediction
+そのため損失は0.8になっています。
 
 0:21:01.080,0:21:03.080
-1 minus 0.2
+
 
 0:21:03.210,0:21:04.560
-0.8
+
 
 0:21:04.560,0:21:10.729
-So we can then take the mean of all of these to calculate a loss
+こうして得た各予測に対する損失の平均を計算します。
 
 0:21:11.160,0:21:13.519
-So if you think about it this loss
+この損失はが最小になるのは
 
 0:21:14.280,0:21:16.639
-will be the smallest if
+予測が全て正しい時です。
 
 0:21:17.550,0:21:21.529
-The predictions are exactly right. So if we did
+
 
 0:21:23.450,0:21:25.450
-Frictions
+つまり、
 
 0:21:26.730,0:21:29.610
-Is actually identical to the targets
+予測がラベルと全く同じ時
 
 0:21:32.909,0:21:34.909
-We'll be
+損失は
 
 0:21:35.169,0:21:37.169
-Zero zero zero
+0, 0, 0です。
 
 0:21:37.450,0:21:41.460
-okay, where else if they were exactly wrong though say they were
+しかし、全く間違っている場合は、つまり、
 
 0:21:42.549,0:21:44.549
-one -
+1 - targetsのとき
 
 0:21:45.830,0:21:47.830
-And it's 1 1 1
+1,1,1となります。
 
 0:21:47.970,0:21:55.010
-So it's going to be the loss will be better ie smaller when the predictions are closer to the targets
+損失は予測がラベルに近い時に小さくなります。
 
 0:21:57.900,0:22:03.719
-And so here we can now take the mean and when we do we get here point four three three
+ここで平均を取ると、その値は0.433ですが、
 
 0:22:06.530,0:22:08.530
-Let's say we change
+ここの最も間違っている
 
 0:22:09.690,0:22:14.450
-This last bad one in accurate prediction from zero point two
+予測を0.2から0.8に変えると
 
 0:22:14.970,0:22:16.560
-to zero
+
 
 0:22:16.560,0:22:18.120
-point eight and
+
 
 0:22:18.120,0:22:25.910
-The loss gets better from point four three to 0.23 but this is just this function is torched. We're not mean
+損失は0.433から0.23になります。
 
 0:22:26.580,0:22:33.799
-So this is actually pretty good. This is actually a loss function which pretty closely tracks accuracy was the accuracies better
+この損失関数は実際のaccuracyに近い挙動を示します。
 
 0:22:33.800,0:22:35.370
-The loss will be smaller
+accuracyが上がれば損失は小さくなります。
 
 0:22:35.370,0:22:41.450
-But also it doesn't have these zero gradients because every time we change the prediction the loss changes
+しかも、この損失関数では勾配0が起きません。
 
 0:22:41.700,0:22:46.309
-Because the prediction is literally harder the loss that's pretty neat, isn't it?
+
 
 0:22:47.340,0:22:52.849
-One problem is this is only going to work. Well, as long as the predictions are between 0 & 1
+一つ問題をあげるとすれば、予測が0から1の間でないとこの損失が使えないことです。
 
 0:22:53.220,0:22:55.940
-Otherwise, this one - prediction thing is going to look a bit funny
+そうでないと、1 - predictionの結果はおかしなことになります。
 
 0:22:57.610,0:23:01.780
-We should try and find a way to ensure that the predictions are always between
+ですから、常に予測が0-1に収まることを保証する必要があります。
 
 0:23:02.480,0:23:07.209
-zero and one and that's also going to just make a lot more intuitive sense because you know
+そして、そうすることは直感的にも意味があると感じるでしょう。なぜなら、
 
 0:23:07.210,0:23:09.340
-we like to be able to kind of think of these as if they're like
+予測を確率のようなもの、あるいは最低でも
 
 0:23:09.890,0:23:12.009
-probabilities or at least nicely scaled numbers
+そのスケールを表す数字にしたいからです。
 
 0:23:13.220,0:23:16.329
-so we need some function that can take our
+そこで、予測結果をうけとり、
 
 0:23:17.570,0:23:19.570
-numbers
+
 
 0:23:19.670,0:23:21.670
-Have a look
+
 
 0:23:23.850,0:23:31.010
-Ex-something which can take these big numbers and turn them all into numbers between zero and one and it so happens that we have
+入力としてはこのような大きな数字にも対応し、0-1に変換する関数が必要です。
 
 0:23:32.160,0:23:34.790
-Exactly the right function. It's called
+そのような関数は実際に存在し、
 
 0:23:35.730,0:23:37.730
-the sigmoid function
+シグモイド関数と呼ばれています。
 
 0:23:37.860,0:23:39.890
-so the sigmoid function looks like this if
+シグモイド関数はこのような形です。
 
 0:23:40.320,0:23:44.180
-You pass in a really small number you get a number very close to zero
+小さい数字には0に近い数字を返し、
 
 0:23:44.400,0:23:47.809
-If you pass in a big number you get a number very close to 1
+大きい数字を入力すると1に近い数字を返します。
 
 0:23:48.940,0:23:50.940
 it never gets past one and
+そして、その結果は
 
 0:23:51.499,0:23:57.249
-It never goes smaller than zero and then it's kind of like this smooth curve between and in the middle
+0より小さくなることも1より大きくなることもなく、0-1の間では滑らかな曲線で
 
 0:23:57.259,0:23:59.289
-It looks a lot like the y equals x line
+中心ではy=xのような動きをします。
 
 0:24:00.440,0:24:03.580
-This is the definition of the sigmoid function
+シグモイド関数の定義は
 
 0:24:03.919,0:24:08.589
-It's 1 over 1 plus e to the minus X
+1 / (1 + e(-x))です。
 
 0:24:10.610,0:24:15.640
-What is X X is just e to the power of
+exp(x)というのは　　　
 
 0:24:16.490,0:24:17.630
-something
+eのx乗です。
 
 0:24:17.630,0:24:19.630
-so if we look at e
+eというのは
 
 0:24:23.740,0:24:30.030
-It's just a number like pi this is so simple, it's just a number that has a particular value right? So if we go a
+円周率πのような値です。
 
 0:24:32.060,0:24:34.629
-Squared and we look at
+
 
 0:24:39.370,0:24:42.579
-It's going to be a tensor here's PI torch
+
 
 0:24:45.590,0:24:47.590
-It could have float
+
 
 0:24:48.860,0:24:55.849
-There we go and you can see that these are the same number so that's what torch dot X means
+
 
 0:24:59.450,0:25:04.999
-Okay, so you know for me when I see these kinds of interesting functions, I don't worry too much about
+私は、面白い関数を見た時にその定義は特に気にすることなく、
 
 0:25:06.030,0:25:09.920
-The definition what I care about is the shape
+どんな形かを気にします。
 
 0:25:10.140,0:25:10.640
-alright
+
 
 0:25:10.640,0:25:14.150
-So you can have a play around with graphing calculators or whatever to kind of see
+ですので、みなさんもグラフを描画してみて、
 
 0:25:14.400,0:25:18.499
-Why it is that you end up with this shape from this particular equation
+その特定の式がどんな形になるか確認してみてください。
 
 0:25:19.380,0:25:22.970
-but for me, I just never think about that it never
+しかし私は関数の定義自体が
 
 0:25:23.580,0:25:30.379
-Really matters to me what's important is this sigmoid shape, which is what we want. It's something that squashes
+本当に重要だと考えたことは一度もありません。重要なのはこのシグモイド関数の形です。
 
 0:25:31.380,0:25:34.249
-every number to be between naught and 1
+全ての数字を0と1の間に押し込めるのです。
 
 0:25:36.110,0:25:43.840
-So we can change em nest loss to be exactly the same as it was before but first we can make everything into sigmoid
+では、mnist_lossを元通りにする前に予測をシグモイド関数に渡しましょう。
 
 0:25:44.810,0:25:51.340
-First and then use torch don't wear so that is a loss function that has all the properties we want. It's
+それから、torch.where、今回はこれが損失関数の肝になります。
 
 0:25:52.130,0:25:55.510
-At something which is going to be have not have any of those nasty
+この関数を使えば勾配0を避けることができます。
 
 0:25:56.390,0:26:01.150
-Zero gradients and we've ensured that the input to the wear
+
 
 0:26:02.150,0:26:04.150
-Is between Norton one
+
 
 0:26:05.490,0:26:07.490
-So
+
 
 0:26:07.690,0:26:12.429
-The reason we did this is because our our accuracy
+ここでこうする理由は、accuracyが
 
 0:26:13.940,0:26:15.860
-Was
+
 
 0:26:15.860,0:26:23.110
-Kind of what we really care about is a good accuracy. We can't use it to get our gradients. Just just to create our step
+本当に気にしているものですが、accuracyではパラメータ更新に十分な勾配が得られません。
 
 0:26:23.750,0:26:25.750
-to improve our parameters
+
 
 0:26:29.840,0:26:31.730
-So we can change
+そこで、accuracyのかわりに
 
 0:26:31.730,0:26:36.759
-Our our accuracy to another function that is similar in terms of it
+その関数の値がよければaccuracyも良いことを意味し、
 
 0:26:36.759,0:26:42.699
-It's better when the accuracy is better, but it also does not have these zero gradients
+さらに勾配0をもたない関数を使うのでした。
 
 0:26:42.700,0:26:46.419
-And so you can see now where why we have a metric and a loss
+これで私たちがメトリクスと損失を使う理由がわかったと思います。
 
 0:26:46.549,0:26:53.648
-the metric is the thing we actually care about the loss is the thing that's similar to what we care about but has a
+メトリクスは本当に気にしているもので損失は、メトリクスに似ていて、なおかつ
 
 0:26:54.200,0:26:55.940
-nicely behaved
+勾配がちゃんと計算できるものです。
 
 0:26:55.940,0:26:57.830
-gradient
+
 
 0:26:57.830,0:27:03.939
-Sometimes the thing you care about your metric does have a nicely defined gradient and you can use it directly as a loss
+時には勾配をきちんと計算できるメトリクスもあるので損失として使えます。
 
 0:27:04.309,0:27:06.339
-For example, we often use means grade error
+例えば、平均二乗誤差です。
 
 0:27:07.429,0:27:09.429
-but for classification
+しかし分類問題はそうではありません。
 
 0:27:10.129,0:27:12.129
-unfortunately not
+
 
 0:27:12.680,0:27:15.579
-So we need to now use this to
+ですから、この損失を使って
 
 0:27:17.150,0:27:19.150
-To update the parameters
+パラメータを更新します。
 
 0:27:20.140,0:27:25.869
-And so there's a couple of ways we could do this one would be to loop through every image
+パラメータ更新の方法はいくつかあります。1つは、画像を1枚ずつ使う方法です。
 
 0:27:27.260,0:27:29.260
-Calculate a prediction for that image
+1枚の画像のラベルを予測し、その予測に対する損失を計算し
 
 0:27:30.050,0:27:32.050
-and then
+
 
 0:27:32.480,0:27:35.320
-calculate a loss and then do a step and
+パラメータを更新する。この処理を
 
 0:27:35.660,0:27:41.019
-Then step the other parameters and then do that again for the next image in the next image in the next image
+繰り返すわけですが、これは本当に遅いプログラムになってしまします。
 
 0:27:42.030,0:27:43.750
-That's going to be really slow
+
 
 0:27:43.750,0:27:47.849
-Because we're we're doing a single step for a single image
+なぜなら、画像1枚につきパラメータ更新を1回行うのですから
 
 0:27:48.850,0:27:53.130
-So that would mean an epoch would take quite a while. We could go much faster
+1エポックがかなり長くなります。1回の更新でデータセット全体を使えば
 
 0:27:53.890,0:27:57.839
-By doing every single image in the data set
+速くなります。
 
 0:27:58.720,0:28:00.510
-so a big matrix multiplication
+巨大な行列積になります。
 
 0:28:00.510,0:28:04.499
-It can all be paralyzed on the GPU and then so then we can
+行列積はGPUで高速に実行されます。
 
 0:28:04.870,0:28:09.390
-We could then do a step based on the gradients looking at the entire
+予測と損失の計算をしたら勾配を計算してパラメータを更新します。
 
 0:28:09.910,0:28:11.910
-Notice it
+
 
 0:28:12.430,0:28:15.209
-But now that's going to be like a lot of work
+しかし、これも微妙です。
 
 0:28:16.210,0:28:21.180
-to just update the weights once remember sometimes our datasets have
+時にデータセットは何百万、何千万もの規模になるので、
 
 0:28:21.850,0:28:25.560
-Millions or tens of millions of items. So that's probably a bad idea
+1回のパラメータ更新で全データを使うのは非効率です。
 
 0:28:26.230,0:28:27.790
-too
+
 
 0:28:27.790,0:28:31.739
-So why not compromise? Let's grab a few data items at a time
+妥協策として、一度にデータセットの一部だけを使って
 
 0:28:32.620,0:28:35.280
-To calculate our loss and our step
+パラメータを更新します。
 
 0:28:35.560,0:28:40.649
-now if we grab a few data items at a time those two data items are called a mini ditch and
+この1回のパラメータ更新にもちいるいくつかのデータサンプルをミニバッチと呼びます。
 
 0:28:40.840,0:28:42.840
-a mini batch just means a
+ミニバッチというのは
 
 0:28:43.390,0:28:45.390
-few pieces of data
+データ数サンプルを表します。
 
 0:28:45.820,0:28:51.360
-And so the size of your mini batch is called not surprisingly the batch size, right?
+ミニバッチに含まれるデータの数はバッチサイズと呼ばれます。
 
 0:28:51.360,0:28:57.180
-so the bigger the batch size the closer you get to the full size of your data set the longer it's going to take to
+バッチサイズがデータセットのサイズに近ければ、1回のパラメータ更新にかかる時間は
 
 0:28:57.280,0:28:59.280
-Calculate a single
+長くなりますが、
 
 0:28:59.440,0:29:01.620
-Set of losses a single step
+
 
 0:29:02.290,0:29:06.269
-But the the more accurate it's going to be it's going to be like the gradients are going to be
+バッチサイズが大きいと、その分、勾配は実際のデータセットの勾配に近づきます。
 
 0:29:07.060,0:29:09.719
-much closer to the true data set gradients and
+
 
 0:29:10.360,0:29:17.280
-then the smaller the batch size the faster each step we'll be able to do but those steps will represent a
+一方、バッチサイズが小さければ、各ステップは早くなりますが、
 
 0:29:17.470,0:29:20.430
-Smaller number of items and so they won't be such an accurate
+勾配は実際のデータセットから計算される勾配とはあまり
 
 0:29:21.280,0:29:23.910
-approximation of the real gradient of the whole data set
+似てないかもしれません。
 
 0:29:26.830,0:29:32.160
-Is there a reason the mean of the loss is calculated over say doing a median and
+損失の平均の代わりに中央値を使うとどうなるのでしょうか？中央値は
 
 0:29:32.350,0:29:35.550
-The median is less prone to getting influenced by outliers
+平均より外れ値に対して頑健です。
 
 0:29:38.279,0:29:42.898
-The example you gave if the third point which was wrongly predicted as an outlier
+先ほどの例で3つ目がひどく間違っていましたが、その場合は
 
 0:29:42.899,0:29:48.598
-Then the derivative would push the function away while doing SGD and a median could be better in that case
+勾配がパラメータを誤った方向に移してしまうのではないでしょうか？
 
 0:29:52.260,0:29:54.260
-Honestly, I've never tried using a median
+中央値を試したことはありません。
 
 0:29:55.529,0:30:01.879
-The problem with a median is it ends up really only caring about one number which is the number in the middle?
+中央値はミニバッチのたった1つの数字しか使いませんね？
 
 0:30:03.210,0:30:05.210
-So it could end up
+
 
 0:30:05.220,0:30:07.220
-really pretty much ignoring
+つまり、
 
 0:30:07.590,0:30:11.480
-All of the things at each end and that all it really cares about is the order of things
+予測のほとんどを無視しています。
 
 0:30:12.269,0:30:16.669
-So my guess is that you would end up with something that is only good at predicting
+ですから、中央値を使って訓練したモデルは真ん中にあるものを予測するのに長けたものになると思います。
 
 0:30:17.760,0:30:19.760
-one thing in the middle
+
 
 0:30:19.889,0:30:22.669
-But I haven't tried it be interesting to see
+とはいえ試したことがないので気になりますね。
 
 0:30:24.059,0:30:30.319
-well, I guess the other thing that would happen with a median is you would have a lot of zero gradients I think because it's
+もう1つ起こりそうなことは勾配0だと思います。
 
 0:30:30.320,0:30:33.439
-Picking the thing in the middle and you could you know change
+（理解できず訳せませんでした）
 
 0:30:34.350,0:30:36.350
-Your values and the thing in the middle
+（理解できず訳せませんでした）
 
 0:30:36.750,0:30:41.750
-Might well wouldn't be zero gradients, but bumpy gradients. I think in the middle would suddenly jump to being a different item
+（理解できず訳せませんでした）
 
 0:30:42.720,0:30:48.589
-So it might not behave very well. That's that's my guess. You should try it
+あまりうまくいかないと思います。ただの推測なので試してみてください。
 
 0:30:50.970,0:30:52.970
-Okay, so how do we
+では、
 
 0:30:53.200,0:30:55.799
-Ask for a few items at a time
+ミニバッチはどう作れば良いのでしょうか。
 
 0:30:56.679,0:31:03.419
-It turns out that pi torch and faster. I provide something to do that for you you can pass in
+PyTorchとfasitaiがその機能を提供しています。
 
 0:31:04.150,0:31:08.099
-any data set to this class core data loader and
+どんなデータセットでもこのDataLoaderに渡せば、
 
 0:31:08.920,0:31:14.699
-It will grab a few items from that data set at a time. You can ask for how many by asking for a batch size
+ミニバッチを作ってくれます。バッチサイズは自分で指定できます。
 
 0:31:16.090,0:31:18.540
-And then you can yeah
+
 
 0:31:18.540,0:31:23.459
-Well, as you can see, it will grab a few items at a time until it's grabbed all of them
+そして、データセットのデータを全て使うまでミニバッチを作り続けてくれます。
 
 0:31:23.500,0:31:27.569
-So here I'm saying let's create a collection that just contains all the numbers from nought to 14
+ここでは、0から14までの数字からなるデータセットを用意し、
 
 0:31:29.140,0:31:32.219
-Let's pass that into a data loader with a batch size of five
+バッチサイズ5でDataLoaderにわたすと、
 
 0:31:33.460,0:31:37.110
-And then that's going to be something it's called an iterator in Python
+イテレータになります。
 
 0:31:37.110,0:31:42.630
-It's something that you can ask for one more thing from an iterator if you pass an iterator to list in Python
+イテレータをlist関数に渡すと、イテレータから取得できる全ての要素を
 
 0:31:42.630,0:31:46.919
-It returns all of the things from the iterator. So here are my three
+含むリストになります。つまりここにはミニバッチが3つあり
 
 0:31:47.470,0:31:50.640
-Mini batches and you'll see here all the numbers from naught to 15 appear
+0から14までの数字が含まれていることがわかります。
 
 0:31:50.799,0:31:57.299
-They appear in a random order and they appear five at a time. They appear in random order because shuffle equals true, so
+そして数字の出現する順番はランダムで1つのミニバッチに数字が5つ含まれます。
 
 0:31:57.880,0:32:00.900
-Normally in the training set we ask for things to be shuffled
+ランダムなのはshuffle=Trueとしているからで、学習データでは一般的です。
 
 0:32:01.090,0:32:05.880
-So it gives us a little bit more randomization more randomization is it's good
+このshuffleによりさらに確率化されます。これは良いことでなぜなら
 
 0:32:06.220,0:32:09.870
-Because it makes it harder for it to kind of learn what the data set looks like
+データセットがどんなものかがよりわかりにくくなるからです。
 
 0:32:11.980,0:32:15.599
-So that's what a data loader weather that's how our date loader is created
+これがDataLoaderです。
 
 0:32:17.590,0:32:19.590
-Now
+
 
 0:32:19.630,0:32:23.549
-Remember though that our data sets actually return
+ところで、私たちのデータセットはタプルを返します。
 
 0:32:24.160,0:32:28.589
-Tuples and here I've just got single intz so let's actually create a tuple
+この例ではただ整数を返しているので、タプルを返すようにしましょう。
 
 0:32:28.840,0:32:34.319
-So if we enumerate all the letters of English, then that means that returns
+アルファベットを数え上げると、(0, ‘a’), (1, ‘b’), (2, ‘c’)というふうになります。
 
 0:32:34.840,0:32:40.770
-Zero A 1 B 2 C cetera. Let's make that our data set. So if we pass that
+これをデータセットにしてみましょう。これをDataLoaderにわたし、
 
 0:32:41.350,0:32:46.500
-To a data loader with a batch size of 6 and as you can see it returns
+バッチサイズを6とすると、このdata loaderはミニバッチとしてタプルを返します。
 
 0:32:47.590,0:32:48.970
-tuples
+
 
 0:32:48.970,0:32:50.650
-containing
+
 
 0:32:50.650,0:32:57.689
-6 of the first things and the associated six of the second things. So this is like our
+このタプルは6個の数字とそれに対応するアルファベットから構成されています。
 
 0:32:58.600,0:33:01.050
-independent variable and this is like our
+左側は私たちにとっては独立変数、そして右側は
 
 0:33:01.570,0:33:08.790
-Dependent variable. Okay, and so and then at the end, you know that with the batch size weren't necessarily exactly
+従属変数のようですね。そして、最後のミニバッチですが、バッチサイズが
 
 0:33:10.000,0:33:13.800
-Divided nicely into the full size of the data set you might end up with a smaller
+データセットのサイズの約数とは限らないので最後のバッチだけ小さいです。
 
 0:33:14.500,0:33:16.500
-batch
+
 
 0:33:19.170,0:33:23.659
-So basically then we already have a data set remember
+私たちはすでにデータセットを用意しています。
 
 0:33:24.540,0:33:28.999
-and so we could pass it to a data loader and then we can basically say this an
+それをDataLoaderに渡せば、Pythonのイテレータと同等のものになり、
 
 0:33:29.280,0:33:32.119
-Iterator in Python is something that you can actually loop through
+そのイテレータを使ってloopすることができます。
 
 0:33:32.280,0:33:37.430
-So when we say for in data loader, it's going to return a tuple
+DataLoaderはデータセット同様にタプルを返すので、
 
 0:33:37.950,0:33:42.649
-we can D structure it into the first bit and the second bit and
+1つ目の要素とそれ以降の要素に展開できます。
 
 0:33:43.470,0:33:46.339
-So that's going to be our x and y we can calculate our predictions
+ここではそれがxとyです。xがあれば予測を計算できます。
 
 0:33:47.100,0:33:54.079
-we can calculate our loss from the predictions and the targets we can ask it to calculate our gradients and
+予測とyから損失を計算し、それからPyTorchに勾配を計算してもらいます。
 
 0:33:55.020,0:34:02.060
-Then we can update our parameters just like we did in our toy SGD example for the quadratic equation
+二次関数を使ったSGDの例と同様にパラメータを更新します。
 
 0:34:03.480,0:34:11.030
-so that's reinitialize our weights and bias with the same two lines of code before let's create the data loader this time from our
+ではweightsとbiasを作り直してから、MNISTのデータセットで
 
 0:34:11.429,0:34:14.929
-Actual M. Nest data set and create a nice big batch size
+DataLoaderを作り、バッチサイズも大きくしましょう。
 
 0:34:14.929,0:34:18.049
-So we do plenty of work each time and just to take a look
+いつも多くのことをやっているのでまずは
 
 0:34:18.419,0:34:25.909
-Let's just grab the first thing from the data loader first is a fast AI function which just grabs the first thing from an iterator
+1つ目のミニバッチをみましょう。firstはfastaiの関数でiteratorの1つ目の要素を撮ってきます。
 
 0:34:26.040,0:34:29.870
-It's just useful to look at you know, we're kind of an arbitrary mini batch
+任意のミニバッチを扱うのでそれを確認するのは大事です。
 
 0:34:31.770,0:34:35.509
-So here is the shape we're going to have the first mini batch is
+これが1つ目のミニバッチのshapeで
 
 0:34:36.330,0:34:42.499
-256 rows of 784 long that's 28 by 28. So 256 flattened out images and
+256行と28x28で784列です。つまり256枚のベクトルに変形された画像と
 
 0:34:43.500,0:34:45.030
-256
+
 
 0:34:45.030,0:34:51.140
-Labels that are 1 1 because there's just the number 0 or the number 1 depending on whether as a 3 or a 7
+256個のラベルで、1が3、0が7に対応しています。
 
 0:34:52.650,0:34:56.150
-Who the same for the validation set so here's a validation data loader
+バリデーションセットのDataLoaderも作ります。
 
 0:34:58.800,0:35:02.729
-And so let's grab a
+
 
 0:35:04.390,0:35:10.890
-Batch here testing pass it into well, why do we do that? We should
+ここでミニバッチを作っているのは、、、なんででしたっけ
 
 0:35:12.400,0:35:14.400
-What look
+
 
 0:35:16.950,0:35:18.300
-Yeah, I guess yeah
+
 
 0:35:18.300,0:35:24.810
-Actually for our testing, I'm going to just manually grab the first four things just so that we can make sure everything lines up
+多分私が手で確認したかっただけですね。はじめの4つもってきて、ちゃんと動いているかを。
 
 0:35:24.810,0:35:28.169
-So so let's grab just the first four things. We'll call that a batch
+4つサンプルをもってきて、batchという変数にして、
 
 0:35:29.470,0:35:35.970
-Pass it into that linear function. We created earlier or remember linear
+linear1関数に渡しています。linear1関数は
 
 0:35:39.640,0:35:46.099
-Was just ex patch at weights matrix model play + bias
+xbatch @ weights の行列積の結果にbiasを加えます。
 
 0:35:51.250,0:35:52.040
-And
+
 
 0:35:52.040,0:35:58.209
-So that's going to give us four results. That's a prediction or each of those four images and
+linear1関数は4つのサンプルの予測を計算します。
 
 0:35:59.120,0:36:03.729
-So then we can calculate the loss using that loss function. We just used and let's just grab the first four
+この予測に対する損失をこの損失関数で計算します。ここでbatchに対応するラベルを取得しています。
 
 0:36:04.340,0:36:07.209
-Items of the training set and there's the loss
+そしてこれが損失です。
 
 0:36:08.180,0:36:14.020
 Okay, and so now we can calculate the gradients and so the gradients are
+ここまで来れば勾配を計算できます。gradのshapeは(784, 1)です。
 
 0:36:15.950,0:36:16.900
-784 by one
+
 
 0:36:16.900,0:36:17.770
-so in other words
+
 
 0:36:17.770,0:36:19.730
-it's a column where every
+
 
 0:36:19.730,0:36:27.429
-weight as a gradient is its what's the change in loss for a small change in that parameter and
+各weightが少しだけ変化した時の損失の変化がgradientです。
 
 0:36:28.370,0:36:33.849
-Then the bias has a gradient. That's a single number because the bias is just a single number
+biasもgradを持ちます。biasは要素が1つだけなのでgradも1つだけです。
 
 0:36:37.240,0:36:39.310
-We can take those three steps and put it in a function
+この3つのステップは1つの関数にまとめられます。
 
 0:36:39.980,0:36:43.300
-So if you pass if you this is calculate gradient
+calc_grad関数は勾配を求める関数で、
 
 0:36:43.300,0:36:48.369
-You pass it an X batch or Y batch and some model then it's going to calculate the predictions
+xとyとモデルを入力に受け取り、予測、損失、そしてbackwardステップを実行します。
 
 0:36:49.010,0:36:51.399
-calculate the loss and do the backward step and
+
 
 0:36:52.460,0:36:55.990
-Here we see calculate gradient and so we can get there
+ここでcalc_grad関数を使っていて、
 
 0:36:56.330,0:37:00.279
-just to take a look the mean of the weights gradient and the bias gradient and
+weightの勾配の平均とbiasの勾配を確認しています。
 
 0:37:00.920,0:37:02.920
-There it is
+
 
 0:37:03.420,0:37:06.690
-A second time and look notice. I have not done any
+もう一度calc_grad関数を実行してみましょう。
 
 0:37:07.329,0:37:12.989
-Step here. This is exactly the same parameters. I get a different value
+パラメータ更新はしていません。勾配の値が変わりましたね。
 
 0:37:14.410,0:37:19.119
-To concern you would expect to get the same gradient every time you called it with the same data
+同じデータですから、同じ値になることを期待していたかもしれません。
 
 0:37:20.030,0:37:22.030
-Why if the gradients changed?
+なぜ勾配が変わったのでしょうか？
 
 0:37:22.609,0:37:28.179
-That's because los dot backward does not just calculate the gradients
+それはloss.backwardは勾配を計算するだけでなく、
 
 0:37:28.490,0:37:35.439
-It calculates the gradients and adds them to the existing gradients the things in the dot grad
+すでにパラメータが持っている勾配、つまり.gradに今計算した勾配を加えるからです。
 
 0:37:35.960,0:37:37.960
-attribute
+
 
 0:37:38.119,0:37:42.578
-The reasons for that we'll come to later but that's a now the thing to know is just it does that
+この挙動の理由はあとで説明しますが、今はそういうものであることは認識しておいてください。
 
 0:37:43.160,0:37:46.149
-So actually what we need to do is to call
+そこで、私たちが行うべきは
 
 0:37:46.819,0:37:52.749
-grad, zero underscore so dot zero returns a tensor containing zeros and
+grad.zero_()を実行することです。.zeroは0埋めされたtensorを返します。
 
 0:37:53.299,0:37:56.319
-Remember underscore does it in place so that updates?
+アンダースコアがついているのでgradが0埋めされます。
 
 0:37:57.049,0:38:01.209
-The weights grad attribute, which is a tensor to contain zeros
+つまりweights.gradもbias.gradも0になりました。
 
 0:38:02.700,0:38:07.129
-So now if I do that and call it again, I will get exactly the same number
+ここでcalc_gradを実行すると同じ結果になります。
 
 0:38:08.490,0:38:10.110
-so here is
+そしてこれが
 
 0:38:10.110,0:38:11.250
-how you
+
 
 0:38:11.250,0:38:17.419
-Train one epoch with SGD loop through the data loader grabbing the X patch in the Y batch
+SGDを使った1エポックの学習コードです。DataLoaderをループし、xとyのミニバッチを取得し、
 
 0:38:18.480,0:38:20.480
-Calculate the gradient
+calc_grad関数で
 
 0:38:20.780,0:38:22.780
 prediction loss backward
+予測、損失の計算とbackward
 
 0:38:24.970,0:38:29.260
 Each other parameters we're going to be passing those in so there's going to be the
+関数に渡す各パラメータ、
 
 0:38:30.260,0:38:33.879
 768 weights and the one bias and then for each of those
+つまり768個の重みと1つのバイアスですが、
 
 0:38:34.790,0:38:36.790
 Update the parameter
+パラメータを更新します。
 
 0:38:37.190,0:38:41.440
-To go - equals gradient times learning rate. That's our
+p.data - p.grad * lr。
 
 0:38:42.349,0:38:47.649
-Gradient descent step and then zero it out for the next time around the loop
+これが確率的勾配降下法の更新で、次のイテレーションのために勾配を0にします。
 
 0:38:49.010,0:38:53.080
-I'm not just saying P minus equals I'm saying P
+ここでp -= ではなくp.data -=としている理由は
 
 0:38:53.930,0:38:57.430
-Data- equals and the reason for that. Is that remember
+PyTorchは
 
 0:38:57.830,0:39:03.789
-PI torch keeps track of all of the calculations we do so that it can calculate the gradient
+勾配を計算するために全ての計算の履歴を残していますが、
 
 0:39:04.700,0:39:07.270
-well, I don't want to calculating the gradient of my
+勾配降下法の更新の勾配はいりません。
 
 0:39:07.910,0:39:12.099
-Gradient descent step. That's like not part of the model, right?
+モデルの一部ではありません。
 
 0:39:12.410,0:39:20.349
-So dot data is a special attribute in pi touch where if you write to it, it tells play torch not to
+.dataはPyTorchに勾配計算が不要であることを伝えたい時に使うattributeです。
 
 0:39:21.349,0:39:25.809
-Update the gradients using that calculation. So this is your most basic
+
 
 0:39:26.480,0:39:28.480
-standard
+
 
 0:39:28.650,0:39:35.660
-SGD stochastic gradient descent loop so now we can answer that earlier question the difference between stochastic gradient descent and
+これが最もシンプルな確率的勾配降下法のループです。先ほど確率的勾配降下法と勾配降下法の違いを聞かれましたが、
 
 0:39:36.090,0:39:40.549
-Gradient descent is that gradient descent does not have this
+勾配降下法はこのようなループがありません。
 
 0:39:42.930,0:39:44.920
-That loops through each
+こんなふうに
 
 0:39:44.920,0:39:51.720
-mini-batch for gradient descent it does it on the whole data set each time around so train epoch or
+勾配降下法のためのミニバッチなどはなく、データセット全体を使います。
 
 0:39:52.059,0:39:56.939
-Gradient descent would simply not have the ball loop at all
+勾配降下法では、ミニバッチではなく、データセット全体を使って
 
 0:39:56.940,0:40:00.240
-but instead it would calculate the gradient for the whole data set and
+勾配を計算し、パラメータを更新します。
 
 0:40:00.490,0:40:05.490
-Update the parameters based on the whole data set which we never really do in practice. We always use
+現実的にはほとんど使いません。
 
 0:40:06.099,0:40:08.429
-mini vetches for various sizes
+基本的にはいろんなサイズのミニバッチを使います。
 
 0:40:16.070,0:40:18.429
-Okay, so we can take the
+
 
 0:40:19.130,0:40:22.179
-Function we had before where we compare the predictions to
+以前使った関数をもう一度みていきましょう。
 
 0:40:23.090,0:40:27.309
-Whether that well that we used to be comparing the predictions to whether they were greater or less than zero, right?
+最初は予測結果が0以上かという条件でしたが、
 
 0:40:27.530,0:40:33.159
-But now that we're doing the sigmoid remember the sigmoid will squish everything between Norton one
+今はシグモイド関数、与えられた値を0-1の範囲内に押し込める関数を使っているので、
 
 0:40:33.470,0:40:38.800
-So now we should compare the predictions to whether they're greater than 0.5 or not if they're greater than 0.5
+予測を比べるべき対象は0.5です。
 
 0:40:39.470,0:40:41.590
-Just to look back at our sigmoid function
+シグモイド関数のおさらいをしましょう。
 
 0:40:46.030,0:40:51.040
-So zero, what used to be zero is now on the sigmoid is 0.5
+0はシグモイド関数では0.5です。
 
 0:40:51.710,0:40:55.689
-Okay, so we need to just to make that slight change to our measure of accuracy
+ですからaccuracyの計算する関数を少しだけ変えました。
 
 0:41:01.890,0:41:08.690
-So to calculate the accuracy for some X batch and some Y batch oh this is actually assumed this is actually the predictions
+xとyのaccuracyを計算するには、このxは予測ですね
 
 0:41:09.480,0:41:15.950
-Then we take the sigmoid of the predictions. We compare them to 0.5 to tell us whether it's a 3 or not
+まず予測のシグモイドを計算して、それから0.5と比べて3かどうかを見ます。
 
 0:41:16.170,0:41:19.519
-we check what the actual target was to see which ones are correct and
+この結果と実際のラベルを比較して、どこが正解かを見て、
 
 0:41:20.280,0:41:22.280
-Then we take the mean of those
+boolからfloatに変換した後に
 
 0:41:22.740,0:41:24.740
-after converting the boolean stir floats
+平均を計算します。
 
 0:41:26.040,0:41:31.759
-So we can check that accuracy. Let's take our batch put it through our simple linear model
+では、batchをlinear1関数に渡して、
 
 0:41:32.430,0:41:36.680
-Compare it to the four items of the training set and there's the accuracy
+対応するラベル4つと比較してaccuracyを計算しましょう。
 
 0:41:38.400,0:41:44.929
-So if we do that for every batch in the validation set then we can loop through with a list comprehension
+これをバリデーションセット全体に対して行うときはリスト内包が使えます。
 
 0:41:45.420,0:41:47.600
 every batch in the validation set
+バリデーションセットのミニバッチそれぞれの
 
 0:41:50.640,0:41:52.980
-Accuracy based on some model
+accuracyを計算して、
 
 0:41:54.460,0:42:00.869
-stack those all up together so that this is a list right if we want to turn that list into a tensor where the
+それらをstackします。ここはリストです。tensorのリストをtensorにしたいときは
 
 0:42:01.000,0:42:05.129
-Items of the list of the tensor are the items of the list. That's what stack does
+torch.stack関数を使います。
 
 0:42:06.040,0:42:08.040
-So we can stack up all those
+
 
 0:42:08.680,0:42:10.680
-Take the mean
+平均を計算して、
 
 0:42:11.140,0:42:14.700
-Convert it to a standard Python scalar. We're calling that item
+itemメソッドを使ってPythonのスカラーにします。
 
 0:42:15.910,0:42:20.399
-round it to four decimal places just for display and so here is our
+その結果を見やすさのために小数点以下4桁までに丸めます。
 
 0:42:21.400,0:42:25.319
-Validation set accuracy as you would expect it's about 50% because it's random
+これがバリデーションセットに対するaccuracyで、モデルがランダムなのでほぼ50%ですね。
 
 0:42:27.250,0:42:29.399
-So we can now train for one epoch so
+今から1エポックだけ訓練しましょう。
 
 0:42:30.370,0:42:31.930
-we can say
+
 
 0:42:31.930,0:42:33.880
-remember train epoch
+train_epoch関数の
 
 0:42:33.880,0:42:34.900
-needed
+引数は
 
 0:42:34.900,0:42:40.740
-The parameters so our parameters in this case are the weights tensor and the bias tensor
+parameters、ここではweightsとbias、
 
 0:42:42.960,0:42:49.919
-One epoch using the linear one model with the learner with a learning rate of one with these two parameters and
+linear1モデルを使って、学習率は1として、訓練した後に
 
 0:42:50.470,0:42:52.919
-Then validate and order that
+validate_epochでaccuracyを計算すると、
 
 0:42:54.609,0:42:56.539
-Accuracy is now
+accuracyは
 
 0:42:56.539,0:42:59.768
-68.8% So we've we've trained an epoch
+68.8%です。たった1エポックだけなので
 
 0:43:00.650,0:43:02.920
-So let's just repeat that
+これを何回も
 
 0:43:03.799,0:43:05.359
-many times
+繰り返します。
 
 0:43:05.359,0:43:12.098
-Brain invalidate and you can see the accuracy goes up and up and up and up and up to about 97%
+このようにaccuracyは上がり続け97%になりました。
 
 0:43:13.960,0:43:15.960
-So
+
 
 0:43:16.140,0:43:18.140
-Scroll we've built an
+素晴らしいですね。
 
 0:43:18.910,0:43:21.839
-SGD optimizer of a simple linear function that
+私たちは簡単な線形関数の確率的勾配降下法をつくり
 
 0:43:22.480,0:43:28.919
-Is getting about 97 percent on our simplified m nest where there's just the threes in the sevens
+3と7だけのMNISTを97%識別できるようになりました。
 
 0:43:31.140,0:43:35.879
-So a lot of steps there, let's simplify this through some refactoring
+処理がたくさんあるので、少しリファクタリングしましょう。
 
 0:43:36.850,0:43:39.510
-So the kind of simple refactoring we're going to do
+簡単なリファクタリングとして、
 
 0:43:39.610,0:43:43.589
-We're going to do a couple but the basic idea is we're going to create something called an optimizer us
+いくつかやることはありますが、基本的にはOptimizerと呼ばれるものを作ることです。
 
 0:43:44.710,0:43:46.859
-The first thing we'll do is we'll get rid of
+まず初めにlinear1関数を
 
 0:43:48.370,0:43:50.370
-The linear one function
+使うのをやめます。
 
 0:43:51.630,0:43:53.630
-But remember the linear one function
+でもlinear1関数が
 
 0:43:55.109,0:43:58.379
-Does X at W plus B
+x@w + bというのは覚えておいてください。
 
 0:44:00.009,0:44:04.559
-There's actually a class imply torch that does that equation for us so we may as well use it
+実はPyTorchはこれと全く同じことを行うクラス
 
 0:44:04.829,0:44:09.988
-It's called n n dot linear and n n dot linear does two things it does
+nn.Linearがあります。nn.Linearは主に2つのことをします。
 
 0:44:10.509,0:44:11.650
-that
+
 
 0:44:11.650,0:44:17.460
-Function for us and it also initializes the parameters for us so we don't have to do
+linear1の計算とパラメータの初期化です。ですから
 
 0:44:18.910,0:44:21.420
-weights and bias in it params
+weightsとbiasを管理しなくて良くなります。
 
 0:44:22.239,0:44:23.380
-anymore
+
 
 0:44:23.380,0:44:28.950
-We just create an N n dot linear class and that's going to create a matrix of size
+nn.Linearのインスタンス、これは(28x28, 1)の行列と
 
 0:44:29.829,0:44:33.719
-28 by 28 comma 1 and a bias of size 1
+大きさ1のバイアスを作ります。
 
 0:44:34.359,0:44:39.389
-It will set requires grade equals true for us. It's all going to be encapsulated in this class
+requires_gradもTrueにします。これらはすべてこのクラスに隠蔽されています。
 
 0:44:39.390,0:44:42.509
-And then when I call that as a function
+そしてこれを関数として呼ぶと
 
 0:44:43.480,0:44:45.339
-it's going to do my
+x@w + bを実行します。
 
 0:44:45.339,0:44:47.339
-X at W plus B
+
 
 0:44:48.760,0:44:53.880
-So to see the parameters in it, we would expect it to contain
+パラメータをチェックします。パラメータはそれぞれ
 
 0:44:54.670,0:45:01.649
-784 weights in one bias, we can just call that parameters and we can D structure it to W comma B and C
+weightsが784、biasが1です。.parameters()を呼んでそれをw, bに展開します。
 
 0:45:01.650,0:45:03.190
-Yep, it is
+ほら、
 
 0:45:03.190,0:45:04.600
-784 and
+784と
 
 0:45:04.600,0:45:07.140
-One for the weights and bias
+1がweightでbiasが1ですね。
 
 0:45:08.410,0:45:10.410
-So that's cool. So this is just
+
 
 0:45:10.490,0:45:14.979
-You could you know, it could be an interesting exercises for you to create this class yourself from scratch
+このクラスを1から実装することは良い練習問題でしょう。
 
 0:45:15.760,0:45:17.949
-You should be able to at this point
+できるはずです。
 
 0:45:18.890,0:45:24.339
-So that you can confirm that you can recreate something that behaves exactly like a tenth linear
+自分でnn.Linearと全く同じように動作するものを自力で実装できることを確認してください。
 
 0:45:26.019,0:45:31.109
 So now that we've got this object which contains our parameters in a parameters
+さて、nn.Linearのオブジェクトをつくり、それは.parameters()でどんなパラメータがあるか
 
 0:45:32.229,0:45:40.139
-Method we could now create an optimizer. So if you optimize that we're going to pass it the parameters to optimize and a learning rate
+わかります。ここまで来ればOptimizerを作れます。Optimizerには学習率とパラメータを渡します。
 
 0:45:40.839,0:45:42.839
-will store them away and
+
 
 0:45:43.269,0:45:47.909
-We'll have something called step which goes through each parameter and does that thing?
+そして、step関数で、各パラメータを更新します。
 
 0:45:47.910,0:45:52.649
-we just saw P type data - equals P grad x learning rate and
+この更新式は先ほどと同じで、p.data -= p.grad * lrです。
 
 0:45:53.410,0:45:57.029
-it's also going to have something called zero grad which goes through each parameter and
+zero_grad関数で全てのパラメータの勾配（p.grad）を0にします。
 
 0:45:57.549,0:45:59.669
-Zeroes it out, or we could even just set it to none
+もしくはNoneにしても良いです。
 
 0:46:01.070,0:46:06.219
-So that's the thing. We're going to call basic optimizer. So those is exactly the same lines of code
+これをBasic Optimizerとしましょう。ここのコードはどれも
 
 0:46:06.220,0:46:10.810
-We've already seen wrapped up into a class so we can now create an optimizer
+すでに使ったものでただクラスにまとめただけです。今からoptimizerのオブジェクトを
 
 0:46:11.510,0:46:16.540
-passing in the parameters of the linear model with ease and our learning rate and
+作ります。パラメータはlinearのもので、学習率は先ほどのものと同じです。
 
 0:46:17.630,0:46:19.630
-so now our training loop is
+今度は学習のループですが、
 
 0:46:19.940,0:46:22.029
-Look through each mini batch in the data loader
+DataLoaderの各ミニバッチに対して、
 
 0:46:22.760,0:46:24.350
-Calculate the gradient
+勾配を計算して、
 
 0:46:24.350,0:46:26.350
-opt step
+opt step()
 
 0:46:26.660,0:46:28.660
-up to zero grad
+opt.zero_grad()
 
 0:46:29.450,0:46:31.450
-That's it
+これだけです。
 
 0:46:32.500,0:46:34.500
-Function doesn't have to change
+バリデーション用の関数は変更要らずです。
 
 0:46:36.170,0:46:43.879
-Put our training loop into a function that's going to loop through a bunch of epochs call an epoch print validate epoch
+今度はこの学習ループを関数にまとめましょう。何エポックもtrain_epochを実行し、バリデーションaccuracyをプリントします。
 
 0:46:45.410,0:46:48.319
-And then run it and it's the same
+実行するとさっきと同じです。
 
 0:46:49.230,0:46:51.409
-we're getting a slightly different result here, but
+微妙に異なる結果ですが、
 
 0:46:52.080,0:46:54.590
-Much much the same idea. Okay
+同じアイデアです。
 
 0:46:55.470,0:46:57.470
-so
+
 
 0:46:57.990,0:47:00.079
-That's cool, right we've now
+
 
 0:47:01.800,0:47:04.190
-Refactoring using you know, create our own optimizer
+リファクタリングしました。自分たちのOptimizerを作って
 
 0:47:04.980,0:47:09.500
-And using faster plate Watchers built-in in and linnea class
+PyTorchのnn.Linearクラスを使うことで。
 
 0:47:10.290,0:47:11.850
-And you know, by the way
+しかし、
 
 0:47:11.850,0:47:18.799
-we don't actually need to use our own basic optim not surprisingly pate which comes with something which does exactly this and
+実はBasicOptimを使う必要もありません。PyTorchがすでに実装しています。
 
 0:47:19.740,0:47:21.740
-Not surprisingly. It's called STD
+SGDというクラスです。
 
 0:47:22.470,0:47:28.970
-So and actually this SGD is provided by fast AI first AI and pi torch provides some overlapping functionality
+このSGDはfastaiのものです。fastaiとpytorchの機能は一部重複しています。
 
 0:47:29.970,0:47:34.220
-Then work much the same way so you can pass to SGD
+そして同じように動きます。SGDには
 
 0:47:34.590,0:47:39.049
-Your parameters and your learning rate just like basic opt-in. Okay, and
+パラメータと学習率をBasicOptimと同じように渡せます。
 
 0:47:40.290,0:47:42.560
-Train it and get the same result
+これで訓練すると同様の結果が得られます。
 
 0:47:44.260,0:47:46.260
-So as you can see these
+これらのfastaiとPyTorchの
 
 0:47:46.630,0:47:49.559
-classes that are in fast, I am pay torch and not
+クラスは摩訶不思議で複雑怪奇なものではなく
 
 0:47:50.350,0:47:52.350
-mysterious they're just
+私たちが自分たちで
 
 0:47:52.810,0:47:56.159
-Pretty you know in wrappers around
+実装してきたものの
 
 0:47:57.340,0:48:01.620
-Functionality that we've now written ourself. So there's quite a few steps there
+ラッパーのようなものです。ここまで非常に多くのステップがありました、
 
 0:48:02.380,0:48:06.630
-And if you haven't done gradient descent before then, there's a lot of unpacking
+勾配降下法を知らなかった人は本当に多くの発見があったでしょう。
 
 0:48:07.480,0:48:09.959
-so so this this lesson
+ですから、今日のレッスンは
 
 0:48:11.830,0:48:15.759
-Is kind of the key lesson it's the one where you know like we should you know
+非常に重要なレッスンで、一度立ち止まって、
 
 0:48:15.760,0:48:22.420
-Really take us stop and a deep breath at this point and make sure you're comfortable. What's the data set?
+理解を確かめるべきです。データセットは何か。
 
 0:48:23.000,0:48:24.830
-What's the data loader?
+DataLoaderはとはどんなものか。
 
 0:48:24.830,0:48:26.540
-What's in n dot Linea?
+nn.Linearとは
 
 0:48:26.540,0:48:33.580
-What's SGD and if you you know if want any any or all of those don't make sense go back to where we defined it
+SGDとは...もしまだはっきりわからないものがあれば、私たちがPythonで実装したところまで
 
 0:48:33.950,0:48:35.950
-from scratch using
+戻りましょう。
 
 0:48:36.500,0:48:42.550
-Python code well the data loader we didn't define from scratch, but it you know, the functionality is not particularly
+DataLoaderは実装しませんでしたがその機能はそれほど面白くないです。
 
 0:48:43.430,0:48:49.209
-Interesting, you can certainly create your own from scratch if you wanted to that would be another pretty good exercise
+DataLoaderも自分で実装できるはずです。
 
 0:48:52.069,0:48:54.069
-Let's refactor some more
+もうすこしリファクタリングしましょう。
 
 0:48:55.780,0:49:01.769
-Buster has a data loaders class which is as we've mentioned before is a tiny class
+fastaiにはDataLoadersクラスがあります。これは簡単なクラスで
 
 0:49:02.260,0:49:08.760
-That just you pass it a bunch of data loaders and it just stores them away as a dot train and a dot valid
+複数のDataLoaderを渡すことができ、.trainや.validでアクセスできます。
 
 0:49:09.490,0:49:14.189
-Even though it's a tiny class. It's it's super handy because with that we now have a
+シンプルなクラスですが、便利です。
 
 0:49:15.400,0:49:20.820
-single object that knows all the data we have and so it can make sure that your
+1つのオブジェクトで私たちのデータを全て把握していて
 
 0:49:21.070,0:49:26.309
-Training data loader is shuffle and your validation loader isn't shuffled, you know, make sure everything works properly
+学習用データはシャッフルされて、バリデーションデータはシャッフルされてないこと、そして全てちゃんと動くことを確認します。
 
 0:49:27.550,0:49:32.580
-so that's what the data loaders class is you can pass in the training and valid data loader and
+DataLoadersに学習用とバリデーションようのDataLoaderを渡したら、次は
 
 0:49:33.460,0:49:37.080
-then the next thing we have in fast AI is the learner class and
+fastaiのLearnerです。
 
 0:49:37.390,0:49:40.230
-the learner class is something where we're going to pass in our
+LearnerクラスにはDataLoadersと
 
 0:49:40.780,0:49:43.409
-data loaders, we're going to pass in our
+モデル、
 
 0:49:44.470,0:49:46.470
-Model we're going to pass in
+そして、
 
 0:49:46.990,0:49:53.070
-Our optimization function we're going to pass in our loss function. We're going to pass in our metrics
+最適化の関数、そして損失関数を渡します。さらに、メトリクスも渡します。
 
 0:49:53.740,0:49:56.669
-So all the stuff we've just done manually
+今まで自分たちでやってきたことです。
 
 0:49:57.430,0:50:01.589
-That's all learner does is it's just going to do that for us?
+これからはlearnerがやってくれます。
 
 0:50:01.589,0:50:06.659
-So it's just going to call this train model and this train epoch
+つまり、train_modelやtrain_epochをやってくれます。
 
 0:50:06.760,0:50:11.369
-It's just you know, it's inside learner. So now if we go
+learnerに対して、
 
 0:50:11.950,0:50:13.950
-my own dot fit
+learn.fitを呼べば、
 
 0:50:14.450,0:50:18.409
-You can see again. It's doing the same thing getting the same result
+ほら、同じことを実行して、同じ結果が得られましたね。
 
 0:50:19.200,0:50:20.960
-And it's got some nice functionality
+しかもいくつか良い機能があります。
 
 0:50:20.960,0:50:26.060
-It's printing it out into a pretty table for us and it's showing us the losses and the accuracy and how long it takes
+結果を綺麗なテーブルで出力し、さらに損失とaccuracyさらに所要時間もわかります。
 
 0:50:27.000,0:50:31.010
-But there's nothing magic right you've been able to do exactly the same thing
+何も特別なことはありません。全く同じことを自分の手で
 
 0:50:31.680,0:50:33.680
-by hand using
+PythonとPyTorchで
 
 0:50:34.140,0:50:36.140
-Python and PI torch, okay
+実装できます。
 
 0:50:36.140,0:50:42.530
-So these abstractions are here to like let you write less code and to save some time and to save some
+こういった抽象化はコード量を減らすこと、時間を節約すること、そして、理解するための
 
 0:50:43.020,0:50:47.089
-Cognitive overhead, but they're not doing anything. You can't do yourself
+労力を節約します。特に特別なことはしていません。どれも自分でできることです。
 
 0:50:48.839,0:50:53.818
-And that's important right because if the if if if they're doing things you can't do yourself
+もしライブラリなどがあなたが自分でできないことを行っている場合、
 
 0:50:54.549,0:50:56.410
-Then you can't
+カスタマイズすることや
 
 0:50:56.410,0:51:00.749
-Customize them you can't debug with them. You know, you can't profile them
+デバッグすることは不可能です。プロファイリングすることできません。
 
 0:51:01.869,0:51:04.258
-so we want to make sure that the the
+ですから、私たちは、
 
 0:51:04.930,0:51:08.219
-The stuff we're using is stuff that we understand what it's doing
+自分たちで使っているものは理解できることをしていることを確かにしたいのです。
 
 0:51:10.960,0:51:15.159
-So this is just a linear function is not great we want a neural network
+これはただの線形関数です。これをニューラルネットにするには
 
 0:51:16.310,0:51:18.310
-So, how do we turn this?
+どうすれば良いのでしょうか？
 
 0:51:18.560,0:51:20.560
-into a neural network or
+
 
 0:51:21.260,0:51:22.430
-remember
+線形関数というのは
 
 0:51:22.430,0:51:28.240
-This is a linear function X set W plus B to turn it into a neural network
+x @ w + bです。これをニューラルネットワークにします。
 
 0:51:29.000,0:51:31.179
-We have two linear functions
+線形関数を2つ使います。
 
 0:51:32.480,0:51:35.889
-Exactly the same but with different weights and different biases and in between
+全く同じ関数ですが重みとバイアスが違います。この2行の間に
 
 0:51:36.590,0:51:38.590
-This magic line of code
+1行あります。
 
 0:51:39.410,0:51:45.339
-Which takes the result of our first linear function and then does a max between that and zero
+これは線形関数の結果と0の大きい方を返します。
 
 0:51:46.220,0:51:53.709
-So a max of res and a zero is going to take any negative numbers and turn them into zeros
+つまりmax(res, 0)はresの負の値を全て0にする操作です。
 
 0:51:54.230,0:51:56.230
-So we're going to do a linear function
+線形関数を実行し、
 
 0:51:56.690,0:52:02.169
-We're going to replace the negatives with zero and then we're going to take that and put it through another linear function that
+負の値を全て0に置き換え、そしてその結果をまた線形関数に入力します。
 
 0:52:02.990,0:52:05.619
-Believe it or not is a neuro net
+信じられないかもしれませんがこれがニューラルネットです。
 
 0:52:07.059,0:52:08.619
-so
+
 
 0:52:08.619,0:52:14.129
-W1 and w2 were weight tensors b1 and b2 abayas tensors just like before so we can initialize them
+w1とw2は重みでb1とb2はバイアスです。
 
 0:52:14.890,0:52:20.699
-Just like before and we could now call exactly the same training code that we did before to
+このモデルは先ほどと全く同じ学習コードで訓練できます。
 
 0:52:21.729,0:52:23.729
-roll these
+
 
 0:52:25.290,0:52:28.620
-So res dot max zero
+res.max(0)は
 
 0:52:31.240,0:52:34.990
-Linear unit, but you will always see referred to as
+正規化線形関数と呼ばれるものでふつう、
 
 0:52:35.690,0:52:37.070
-value and
+ReLUと書かれます。
 
 0:52:37.070,0:52:40.600
-So here is and and in pi torch it already has
+PyTorchには実装されていて、
 
 0:52:41.270,0:52:48.639
-This function it's called f dot value. And so if we plot it you can see it's as you'd expect
+F.reluです。プロットするとこのようになり、
 
 0:52:48.640,0:52:54.100
-It's zero or negative numbers and then it's y equals x for positive numbers
+xが負なら0、それ以外はy=xになっています。
 
 0:52:56.289,0:52:58.289
-So
+
 
 0:52:58.509,0:53:00.509
-You know, here's some jargon
+新しい専門用語ですが、
 
 0:53:00.759,0:53:07.049
-Rectified linear units sounds scary sounds complicated, but it's actually this incredibly tiny
+正規化線形関数というと複雑そうですが、その実態は
 
 0:53:07.690,0:53:11.999
-line of code this incredibly simple function and this happens a lot in
+ほんの数行でかける非常に簡単な関数で、深層学習でよく使われます。
 
 0:53:12.729,0:53:18.899
-deep learning things that sound complicated and sophisticated and impressive turnout to be
+複雑であったり、洗練されていたり、印象的に聞こえるものは往々にして
 
 0:53:19.690,0:53:23.339
-Normally super simple frankly at least once, you know what it is
+それがなんであるか知ってしまえば非常にシンプルであることがわかります。
 
 0:53:24.609,0:53:25.839
-so
+ところで
 
 0:53:25.839,0:53:27.839
-Why do we do?
+私たちは、
 
 0:53:27.880,0:53:33.749
-Linear layer really many Alea. Well if we got rid of the middle
+linear, ReLU, linearという計算をするのでしょうか。もし
 
 0:53:38.980,0:53:40.980
-If we got rid of the middle
+真ん中のReLUを取り除くと
 
 0:53:41.359,0:53:44.049
-Value and just went linear layer linear layer
+linear, linearとなり2つをまとめて
 
 0:53:44.480,0:53:52.480
-then you could rewrite that as a single linear layer when your model playthings an ad and then multiply things and add and
+1つのlinearで表せます。
 
 0:53:52.790,0:53:56.560
-You can just change the coefficients and make it into a single multiply and then add
+ただ重みを変えるだけで1つのlinearで表せるようになります。
 
 0:53:56.930,0:54:01.570
-So no matter how many linear layers we stack on top of each other we can never make anything more
+linearだけをどんなに使っても、結局は1つのlinearより複雑になることはありません。
 
 0:54:02.390,0:54:06.310
-And of effective than a simple linear model
+
 
 0:54:07.560,0:54:11.039
-But if you put a non-linearity between the linear layers
+でも、非線形性をいれることで
 
 0:54:12.380,0:54:14.750
-Then actually you have the opposite. This is now aware
+全く違うものになります。
 
 0:54:15.509,0:54:23.329
-Something called the universal approximation theorem holds which is that if the size of the weight and bias matrices are big enough
+これはもう、重みとバイアスが十分に大きければどんな関数でも、例えば3と7を識別する
+関数であっても
 
 0:54:24.000,0:54:26.449
-This can actually approximate any
+
 
 0:54:27.240,0:54:28.859
-arbitrary function
+近似できるという
 
 0:54:28.859,0:54:33.018
-including the function of how do I recognize threes from sevens or
+普遍性定理が成り立つものになります。
 
 0:54:33.660,0:54:35.660
-Or whatever
+
 
 0:54:36.599,0:54:42.679
-So that's kind of amazing, right this tiny thing is actually a universal function approximator
+驚くべき事実です。本の数行のコードがどんな関数も近似できるのです。
 
 0:54:43.589,0:54:46.758
-as long as you have W 1 B 1 W 2 and B 2
+もしw1, b1, w2, b2が
 
 0:54:47.549,0:54:51.799
-Have the right numbers and we know how to make them the right numbers use SGD
+良い数字ならばという条件付きですが。そしてそれらの良い数字はSGDを使えばよいのです。
 
 0:54:52.950,0:54:55.549
-Could take a very long time. It could take a lot of memory
+時間はかかるでしょう。メモリーはたくさん必要になるでしょう。
 
 0:54:58.170,0:55:03.540
-But the basic idea is that there is some solution to any computable problem and
+基本的には計算可能な問題の解は見つかるというものです。
 
 0:55:04.690,0:55:06.690
-This is one of the biggest challenges
+多くの初心者は
 
 0:55:08.559,0:55:15.819
-A lot of beginners have to deep learning is that there's nothing else to it like that? There's often this like
+深層学習のようなものは他にないのですかといった疑問や、
 
 0:55:16.519,0:55:18.519
-Okay, how do I make a neural net?
+どうやってニューラルネットを作るのですか？と聞きますが
 
 0:55:19.210,0:55:21.210
-Oh, that is the neural net. Well, how do I?
+これがニューラルネットです。どうやって
 
 0:55:22.720,0:55:24.730
-Learning training with SGD
+SGDで学習するのですか？
 
 0:55:25.520,0:55:27.520
-there's things to like
+学習を高速化する方法は
 
 0:55:27.619,0:55:33.549
-Make a train a bit faster. There's you know things to mean you need a few less parameters
+ありますか？またより少ないパラメータで行う方法はありますか？などなど。
 
 0:55:34.400,0:55:36.400
-but everything from here is
+しかしこれらはどれも
 
 0:55:36.830,0:55:38.830
-just
+
 
 0:55:40.090,0:55:41.600
-Performance tweaks
+パフォーマンス改善です。
 
 0:55:41.600,0:55:43.600
-honestly, right
+
 
 0:55:43.730,0:55:45.969
-So this is you know, this is the key
+これが
 
 0:55:47.180,0:55:50.680
-understanding of of training a neural network
+ニューラルネットの学習についての理解です。
 
 0:55:53.960,0:55:56.229
-Okay, we can simplify things a bit more
+コードをもう少し簡潔にしましょう。
 
 0:55:56.990,0:56:00.550
-We already know that we can use n n linear to replace
+すでにnn.Linearを使って、weightとbiasを
 
 0:56:01.400,0:56:03.400
-Their weight and bias, so let's do that
+置き換えられることは知っています。
 
 0:56:04.730,0:56:11.200
-for both of the linear layers, and then since we're simply taking
+両方とも置き換えましょう。そして、この関数では
 
 0:56:13.619,0:56:18.199
-The result of one function and passing it into the next
+関数の結果を次の関数に渡すということを繰り返し、
 
 0:56:19.579,0:56:23.089
-The result of that function passive to the next and so forth and then returned the end
+最後の関数の結果を返り値にしています。
 
 0:56:23.459,0:56:26.929
-this is called function composition function composition is when you just
+これは関数合成というものです。
 
 0:56:27.599,0:56:32.149
-Take the result of one function pass it to a new one take a result of one function. Pass it to a new one
+
 
 0:56:32.729,0:56:38.539
-and so every pretty much neural network is just doing function composition of
+ニューラルネットは基本的には線形関数と
 
 0:56:39.209,0:56:41.209
-linear layers and
+非線形関数の関数合成で
 
 0:56:41.489,0:56:44.659
-These are called activation functions or nonlinearities
+できています。
 
 0:56:45.269,0:56:49.218
-So hi torch provides something to do function composition for us
+PyTorchは関数合成の機能を提供しています。
 
 0:56:49.529,0:56:53.958
-And it's called n n dot sequential so it's gonna do a linear layer
+nn.Sequentialです。ここでは、最初のlinearレイヤーの
 
 0:56:54.089,0:56:58.129
-Ask the result to a rel you pass the result to a linear layer
+結果をReLUに渡し、その結果をまた次のlinearレイヤーに渡しています。
 
 0:56:58.650,0:57:02.150
-You'll see here. I'm not using F value. I'm using n n value
+ここではF.reluではなくnn.ReLUを使っています。
 
 0:57:02.150,0:57:05.719
-This is identical returns exactly the same thing, but this is a class
+これは機能としては全く同じですが、nn.ReLUはクラスです。
 
 0:57:06.989,0:57:09.468
-Rather than a function. Yes, Rachel
+質問ですか、Rachel？
 
 0:57:12.089,0:57:14.089
-By using the non-linearity
+非線形関数を使うことで、
 
 0:57:14.940,0:57:22.220
-Won't using a function that makes all negative output zero make many of the gradients in the network zero and stop the learning process due
+負の値が全て0になる結果、多くの勾配が0になり、学習を止めてしまうのではないでしょうか？
 
 0:57:22.220,0:57:24.220
-to many zero gradients
+
 
 0:57:25.950,0:57:30.319
-Well, that's a fantastic question and the answer is yes, it does
+素晴らしい質問ですね、そして答えはYesです。
 
 0:57:32.470,0:57:34.750
-But they won't be zero for every image and
+しかし、全ての画像に対して勾配を0にするわけではありません。
 
 0:57:35.480,0:57:37.839
 remember the mini-batches a shuffled so
+ミニバッチはシャッフルされているので
 
 0:57:38.359,0:57:43.029
-Even if it's zero for every image in one mini batch, it won't be for the next mini batch
+あるミニバッチでは勾配がすべて0かもしれませんが次のミニバッチでは違います。
 
 0:57:43.030,0:57:45.759
-And it won't be the next time around we go for another epoch. So
+そして次のエポックではそもそもそういうバッチはないかもしれません。
 
 0:57:47.359,0:57:50.889
-Yes, it can create zeros and if
+確かに勾配0は起こりますが、
 
 0:57:52.270,0:57:54.270
-The neural net ends up with a set of parameters
+それはニューラルネットが多くの入力に対して
 
 0:57:55.070,0:58:02.799
-That's that lots and lots of inputs end up as zeros. You can end up with whole mini batches that are zero and
+0を返すようなパラメータになってしまうときです。ミニバッチが全て0になってしまうこともあり得ますし、
 
 0:58:05.600,0:58:10.929
-You can end up in a situation where some of the neurons
+いくつかのニューロンが不活性、つまり、
 
 0:58:12.780,0:58:17.370
-In active inactive means their zero and they're basically dead units
+0になってしまうこともあり得ます。これは非常に大きな問題です。
 
 0:58:18.160,0:58:20.160
-And this is a huge problem
+
 
 0:58:21.090,0:58:23.579
-It basically means you're wasting computation
+計算資源の無駄遣いになっているわけです。
 
 0:58:23.890,0:58:30.089
-So there's a few tricks to avoid that which we'll be learning about a lot one. Simple trick is to
+いくつかこれを避けるトリックがあり今後勉強しますが、1つは
 
 0:58:31.600,0:58:35.969
-Not make this thing flat here, but just make it a less steep
+この部分を平らにするのではなく、少し傾きをゆるやかにすることです。
 
 0:58:36.490,0:58:42.150
-Mine that's called a leaky. Well, you leaky rectified linear unit and
+Leaky ReLUというものです。
 
 0:58:42.700,0:58:44.700
-It that they helped a bit
+
 
 0:58:44.830,0:58:49.709
-As well learn though even better is to make sure that we just kind of initialize two
+もう一つは、2つの重要な初期値をを大きすぎたり小さすぎたりする値に
 
 0:58:50.770,0:58:56.159
-sensible initial values that are not too big and not too small and step by sensible announce that are
+しないことです。そして、パラメータ更新の際もその幅をあまり大きい値にしないことで
 
 0:58:56.980,0:59:02.429
-particularly not too big and generally if we do that we can keep things in the zone where they're
+ほとんどの値が正になります。
 
 0:59:02.800,0:59:05.640
-positive most of the time but we are going to learn about
+しかし、私たちはこれから
 
 0:59:05.950,0:59:11.909
-how to actually analyze inside a network and find out how many dead units we have how many of these zeros we have because
+ニューラルネットワークの内部でどれくらいのユニットが不活性かを分析する方法も勉強します。
 
 0:59:11.980,0:59:16.590
-As is as you point out they are they are bad news. They don't do any work
+不活性なユニットは仕事をしておらず、その状態は
 
 0:59:18.240,0:59:23.639
-Continue to not do any work if enough of the inputs end up being zero
+十分多くの入力が0になれば続くので避けるべきです。
 
 0:59:29.760,0:59:32.510
-Okay, so now that we've got a neural net
+さて、ニューラルネットを用意しました。
 
 0:59:33.300,0:59:37.910
-We can use exactly the same learner we had before but this time we pass in the simple net
+先ほどと同じLearnerを使いますが、今回はsimple_netを渡します。
 
 0:59:38.400,0:59:42.079
-Instead of the linear one. Everything else is assumed and
+その他全ては同じで、
 
 0:59:42.780,0:59:45.440
-we can call fit just like before and
+fitが使えます。
 
 0:59:46.320,0:59:50.720
-Generally as your models get deeper. So here we've gone from one layer. Ooh
+モデルが深くなるにつれて。1層から始めました。
 
 0:59:51.290,0:59:57.590
-And I'm only counting the parameterised layers as layers. You could say it's three. I was going to call it two. There's two
+私はパラメタライズされたレイヤーを数えますので、これは3層とも言えますが、私は2層と言います。
 
 0:59:58.140,1:00:04.309
-Trainable layers. So I've gone from one layer to I've checked dropped my learning rate from 1 to 0.1
+訓練する層が2つあります。1層のときから、学習率を小さくしました。1から0.1にしました。
 
 1:00:04.890,1:00:06.890
-because the deeper models
+なぜならモデルが深くなれば
 
 1:00:07.080,1:00:12.769
-It all tend to be kind of bumpier less nicely behaved so often you need to use lower learning rates
+損失は凸凹、つまり挙動がわかりにくくなるので、学習率を小さくします。
 
 1:00:12.770,1:00:14.770
-And so we trained it for a while
+そしてこれをしばらく訓練します。
 
 1:00:15.270,1:00:17.270
-okay, and
+
 
 1:00:19.099,1:00:26.238
-Can actually find out what that training looks like by looking inside our learner and there's an attribute we create for your chord recorder and
+学習の経過はlearnerの内部を見ることでわかります。recorderアトリビュートです。
 
 1:00:26.400,1:00:28.400
-That's going to record
+それは
 
 1:00:28.799,1:00:30.799
-Well everything that appears in this table
+この表に出てきた数字を全て記録しています。
 
 1:00:31.349,1:00:36.469
-Basically, well these three things the training loss the validation loss and the accuracy or any metrics
+基本的にはトレーニングロス、バリデーションロス、そしてaccuracyなどのメトリクスの3つを記録します。
 
 1:00:37.499,1:00:39.529
-so recorded values
+記録された値は
 
 1:00:40.349,1:00:45.709
-contains that kind of table of results and so item number two of
+結果の表のようなもので、各行の2番目は
 
 1:00:46.410,1:00:49.309
-Each row will be the accuracy
+accuracyです。
 
 1:00:50.680,1:00:52.680
-and so the
+そして、
 
 1:00:52.940,1:00:57.460
-capital L class, which I'm using here as a
+ここで使っているLクラスと
 
 1:00:58.070,1:01:02.350
-nice little method chord item got that will will get
+優れたメソッドであるitemgot(2)は
 
 1:01:03.350,1:01:08.650
-The second item from every row and then I can plot that
+各行の2番目の要素を集めます。そしてこの
 
 1:01:10.830,1:01:14.400
-How the training went and I can get the final accuracy
+accuracyのグラフがかけて、最後のaccuracyは
 
 1:01:16.660,1:01:20.020
-By grabbing the last row of the table and grabbing the second
+テーブルの最終行の2番目の要素を見ればわかります。
 
 1:01:20.900,1:01:26.410
-It's indexed to 0 1 2 then my final accuracy. Not bad
+98.3%ですね。悪くありません。
 
 1:01:27.440,1:01:29.440
-98.3%
+
 
 1:01:29.809,1:01:35.379
-So this is pretty amazing, we now have a function that can solve any problem
+私たちはいま、どんな問題も任意の精度で解くことができる関数を手に入れました。
 
 1:01:36.020,1:01:41.530
-To any level of accuracy if we can find the right parameters and we have a way to find
+その条件は良いパラメータを見つけることができることです。そして、
 
 1:01:42.200,1:01:46.389
-Hopefully the best or at least a very good that our parameters for any function
+どんな関数に対しても相当良いパラメータを見つける方法があります。
 
 1:01:48.440,1:01:51.399
-So this is kind of the magic yes, Rachel
+魔法みたいですね。
 
 1:01:54.330,1:01:58.999
-How could we use what we're learning here to get an idea of what the network is learning along the way
+このネットワークが学習している内容を理解する方法はありますか？
 
 1:01:59.310,1:02:01.699
-Like Sylar and Fergus did more or less
+ZeilerとFergusがやったように。
 
 1:02:04.290,1:02:06.290
-We will look at that later
+あとで見ます。
 
 1:02:07.020,1:02:09.020
-Not in the full detail of their paper
+彼らの論文の詳細にはありませんが、
 
 1:02:09.900,1:02:11.900
-but basically
+基本的には、
 
 1:02:11.910,1:02:16.129
-You can look in the dot parameters to see the values of those parameters
+parameters()で実際の値を確認できるのです、
 
 1:02:16.890,1:02:18.420
-and
+そして、
 
 1:02:18.420,1:02:23.360
-At this point. Well, I mean, why don't you try it yourself? Right? You've actually got now
+自分でやってみることをお勧めします。実際に学習済みのパラメータが
 
 1:02:25.380,1:02:31.460
-The parameters, so if you want to grab the model you can actually see learned up model
+あります。もしモデルを使いたければlearn.modelで取れます。
 
 1:02:34.410,1:02:42.170
-So we can we can look inside learned up model to see the actual model that we just trained and
+モデルの中身はlearn.modelで実際に訓練したモデルを確認できます。
 
 1:02:45.430,1:02:49.270
-You can see it's got the three things in it. They're linear that rather than linear
+このモデルは3つの要素で構成されています。Linear, ReLU, Linearです。
 
 1:02:49.970,1:02:53.889
-And you know, what I kind of like to do is to put that into a variable
+私はこのモデルを扱いやすくするために変数に代入するのがすきです。
 
 1:02:56.240,1:02:58.240
-Bit easy to work with
+
 
 1:02:58.779,1:03:00.938
-Can grab one Leia by indexing in
+そしてインデクシングで1層だけ使うことができます。
 
 1:03:03.440,1:03:05.440
-Parameters
+parameters()でパラメータも確認できます。
 
 1:03:07.589,1:03:08.589
-And
+
 
 1:03:08.589,1:03:10.619
-That just gives me a something called a generator
+generatorオブジェクトを返しますね。
 
 1:03:10.619,1:03:16.318
-It's something that will give me a list of the parameters when I ask for them. I could just go white comma bias equals
+これはパラメータのリストのようなものです。w, b = とすれば
 
 1:03:17.079,1:03:20.008
-2d structure them and so the weight
+展開できます。重みのshapeは
 
 1:03:24.569,1:03:25.950
-Here's
+
 
 1:03:25.950,1:03:28.220
-birdie by 784
+30 x 784ですね。
 
 1:03:29.460,1:03:34.159
-Because that's what I asked for. So one of the things to note here is
+私がそうしたからです。ここで注意すべきは
 
 1:03:35.069,1:03:37.050
-that
+
 
 1:03:37.050,1:03:39.050
-to create a
+2層以上の
 
 1:03:39.599,1:03:42.139
-Neural net so something that's more than one layer. I
+ニューラルネットを作るために、
 
 1:03:42.869,1:03:48.229
-Actually have thirty outputs not just one right so I'm kind of generating lot
+1つではなく30の出力を指定してより多くの特徴量を生成していることです。
 
 1:03:48.230,1:03:50.000
-So if you can think of as generating lots of features
+もし特徴量の生成というのを
 
 1:03:50.000,1:03:57.020
-So it's kind of like 30 different linear of linear models here and then I combined those 30 back into one
+30個の線形モデルとみなせば、この30個のモデルを1つにまとめているのです。
 
 1:03:58.230,1:04:00.230
-So you could look at
+みなさんは
 
 1:04:00.930,1:04:04.099
-one of those by having a look at
+それらの1つを
 
 1:04:06.880,1:04:12.740
-Yeah, so there's first bro, we could reshape that
+つまりここでは1行目を見れば、これを変形して、
 
 1:04:17.920,1:04:25.470
-Into the the original shape of the images and we could even have a look
+画像の元々の形にしてしまえば、可視化できます。
 
 1:04:31.040,1:04:38.029
-And there it is right so you can see this is something Sothis cool right we can actually see here we've got something which is
+これを見てわかることは、
 
 1:04:43.720,1:04:48.359
-Which is kind of learning to find things at the top and the bottom and the middle
+このモデルは画像の上部中部下部で何かを見つけようと学習しようとしていることがわかります。
 
 1:04:49.710,1:04:51.710
-And so we could look at the second one
+同様にして2番目についても確認できます。
 
 1:04:53.570,1:04:55.570
-Okay, no idea what that's showing
+何がなんだかわかりません。
 
 1:04:57.450,1:05:02.760
-And so some of them are kind of you know, I probably got far more than I need which is why they're not that obvious
+これらの一部はそれほど明らかではありませんが、
 
 1:05:03.339,1:05:06.539
-But you can see yeah, here's another thing that's looking pretty similar
+お、これは先ほどのものに似ていますね。
 
 1:05:09.349,1:05:11.349
-Kind of looking for this little bit in the middle
+なんだか真ん中を見ているようです。
 
 1:05:12.779,1:05:14.779
-So yeah, this is the basic idea
+これが基本的なアイデアです。
 
 1:05:15.180,1:05:21.829
-To understand the features that are not the first layer but later layers, you have to be a bit more sophisticated
+もし第二層以降を理解したいのならばこの方法はより洗練されるべきです。
 
 1:05:23.130,1:05:26.450
-But yet I see the first layer ones you can you can just plot them
+しかし、最初の層はただプロットすればいけます。
 
 1:05:31.040,1:05:34.810
-Okay, so then, you know just to compare we could
+今から、fastaiを
 
 1:05:35.990,1:05:38.469
-Use the full faster a toolkit
+有効活用したコードを見ましょう。
 
 1:05:38.470,1:05:45.399
-So grab our data loaders by using data loaders from folder as we've done before and create a CNN learner and a res net
+DataLoaders.from_folderを使ってDataLoadersを作り、CNN LearnerをResNetで作り、
 
 1:05:46.550,1:05:48.700
-and fit it for a single epoch and
+1エポックだけ学習します。
 
 1:05:49.640,1:05:55.329
-Roll 99.7. All right, so we did 40 epochs and got
+99.7！さっきは40エポックでも
 
 1:05:56.240,1:06:00.909
-98.3 as I said using all the tricks you can
+98.3%でした。使えるトリックを全部使えば
 
 1:06:01.640,1:06:06.549
-Really speed things up and make things a lot better and so by the end of this course
+高速になるし性能も上がります。このコースが終わる頃には、
 
 1:06:08.420,1:06:16.180
-Or at least both parts of this course, you'll be able to from scratch at this 99.7 in a single
+遅くとも2つのコースを終える頃にはみなさんはスクラッチで1エポックでこの99.7%に
 
 1:06:16.850,1:06:18.850
-epoch
+到達できると思います。
 
 1:06:19.810,1:06:21.810
-Um, all right, so
+さげ、
 
 1:06:23.279,1:06:25.279
-Jargon
+
 
 1:06:26.970,1:06:31.519
-So Jagan just remind us value function that returns zero for negatives
+専門用語の確認です。ReLUは負の値を0にする関数、
 
 1:06:32.339,1:06:37.429
-mini-batch a few inputs and labels, which optionally are
+ミニバッチは入力とラベルをいくつかまとめたもので
 
 1:06:38.279,1:06:39.989
-randomly selected
+ランダムに選ばれることもあります。
 
 1:06:39.989,1:06:42.949
-The forward pass is the bit where we calculate the predictions
+forward pass（順伝播）は予測を計算することです。
 
 1:06:43.140,1:06:46.999
-the loss is the function that we're going to take the derivative of and
+損失は、私たちが導関数を計算したい関数です。
 
 1:06:47.309,1:06:51.919
-Then the gradient is the derivative of the loss with respect to each parameter
+勾配は損失のパラメータに関する勾配のことです。
 
 1:06:52.769,1:06:55.728
-The backward pass is when we calculate those gradients
+backward pass（逆伝播）は勾配を計算することです。
 
 1:06:57.059,1:07:03.738
-gradient descent is that full thing of taking a step in the direction opposite to the gradients by capital after calculating the loss and
+勾配降下は勾配を使ってパラメータを更新することです。
 
 1:07:03.930,1:07:07.519
-Then the learning rate is the size of the step that we take
+学習率はパラメータ更新の幅です。
+
 
 1:07:08.750,1:07:10.750
-you
+
 
 1:07:14.420,1:07:16.420
-Other things to know
+その他に覚えておくべきことは
 
 1:07:16.980,1:07:22.639
-Perhaps the two most important pieces of jargon are all of the numbers that are in a neural network the
+最も大事な2つの専門用語ですが、ニューラルネット内部の数字で、
 
 1:07:23.070,1:07:26.119
-numbers that we're learning are called parameters and
+私たちが学習しているのはパラメータと呼ばれることと、
 
 1:07:27.150,1:07:34.730
-Then the numbers that we're calculating so every value that's calculated every matrix multiplication element that's calculated
+計算している数字は、例えばReLUであったり行列積で求められる数字ですが、
 
 1:07:35.060,1:07:36.810
-They're called activations
+それらはactivationと呼ばれます。
 
 1:07:36.810,1:07:39.139
-so activations and parameters are
+activationとパラメータが
 
 1:07:39.750,1:07:45.770
-All of the numbers in the neural net and so be very careful when I say from here on in in these lessons
+ニューラルネットででてくる数字の全てです。今後、私がこの2つの単語、
 
 1:07:46.290,1:07:48.290
-activations or parameters
+activationとパラメータ
 
 1:07:48.420,1:07:55.550
-You've got to make sure you know what those mean because that's that's the entire basically almost the entire set of numbers that exist
+を使う場合は何を意味しているかしっかり理解してください。なぜならこの2つがニューラルネット内部の
 
 1:07:55.770,1:07:58.939
-Inside a neural net so activations are calculated
+全ての数字です。activationは計算されるもの、
 
 1:07:59.640,1:08:01.640
-Parameters are learned
+パラメータは学習されるものです。
 
 1:08:02.910,1:08:08.240
-We're doing this stuff with tensors and tensors are just regularly shaped to raise
+これらの計算はtensorを使います。
 
 1:08:08.970,1:08:14.629
-Rank zero tensors, we call scalars rank 1 tensors. We call vectors rank two tensors
+ランク0 tensorはスカラー、ランク1 tensorはベクトル、ランク2 tensorは
 
 1:08:14.630,1:08:20.989
-we call matrices and we continue on to rank 3 tensors rank 4 tensors and so forth and
+行列とも言います。rank3からはrank3 tensor、rank4 tensorというふうに呼びます。
 
 1:08:21.420,1:08:27.739
-Rag five tensors are very common in deep learning. So don't be scared of going up to higher numbers of dimensions
+深層学習ではrank5 tensorがよく使われますので数字が大きくなってもビビらないでください。
 
 1:08:29.430,1:08:33.470
-Okay, so let's have a break oh we got a question, okay
+では、休憩に入りましょうか？、質問ですか？
 
 1:08:34.680,1:08:39.379
-Is there a rule of thumb for what non-linearity to choose given that there are many?
+活性化関数はたくさんありますが、何を使うべきかの経験則はありますか？
 
 1:08:40.560,1:08:47.779
-Yeah, there are many non Nerys to choose from and it doesn't generally matter very much which you choose so there's two Israeli
+はい、確かにたくさんありますが、それほど大きな差はありません。ReLUや
 
 1:08:48.509,1:08:50.719
-or Leakey irelia or
+Leaky ReLU、
 
 1:08:51.420,1:08:53.930
-Yeah, whatever any anyone
+他にもいろいろありますが
 
 1:08:54.509,1:08:59.719
-Should work fine later on we'll we'll look at the minor differences between between them
+どれを使ってもうまくいくはずです。細かい違いは今後見ていきますが、
 
 1:09:00.720,1:09:04.699
-But it's not so much something that you pick on a per problem
+基本的にはどれか1つ使うと問題が起きるというよりは
 
 1:09:04.830,1:09:10.459
-It's more like some take a little bit longer and a little bit more accurate and some over it faster and a little bit less
+ものによっては時間がかかったり、少しだけより正確になったり、速くなったり、
 
 1:09:10.460,1:09:12.460
-accurate
+という感じです。
 
 1:09:13.039,1:09:19.789
-That's a good question, okay. So before you move on it's really important that you finish the questionnaire for this chapter because
+素晴らしい質問でした。多くのコンセプトを学んだので次に進む前に
 
 1:09:20.579,1:09:27.379
-there's a whole lot of concepts that we've just done so, you know try to go through the questionnaire go back and relook at the
+この章の質問に答えられるようにしてください。アンケートに答えて、
 
 1:09:28.289,1:09:32.869
-Notebook and please run the code through the cat experiments and make sure it makes sense
+このnotebookを見返して、実行してみることで理解を確かめてください。
 
 1:09:33.630,1:09:35.630
-All right. Let's have a
+よし、それでは
 
 1:09:35.759,1:09:39.348
-Seven minute break see you back here in seven minutes time
+7分の休憩です。
 
 1:09:44.980,1:09:46.980 =======================================================================================================================================
 Okay, welcome back
